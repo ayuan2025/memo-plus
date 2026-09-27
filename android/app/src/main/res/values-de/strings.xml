@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_daily_review_label">Zuf&#x00E4;llige &#x00DC;berpr&#x00FC;fung</string>
+    <string name="widget_quick_input_label">Schnelleingabe</string>
+    <string name="widget_stats_label">Aktivit&#x00E4;ts-Heatmap</string>
+    <string name="widget_daily_review_placeholder_title">Zuf&#x00E4;llige &#x00DC;berpr&#x00FC;fung</string>
+    <string name="widget_daily_review_placeholder_countdown">Wird bald aktualisiert</string>
+    <string name="widget_daily_review_placeholder_body">Erinnere dich an den Moment und sp&#x00FC;re die W&#x00E4;rme des Lebens.\nMach jeden Tag eine kurze R&#x00FC;ckschau.</string>
+    <string name="widget_quick_input_hint">Was ist neu?</string>
+    <string name="widget_calendar_placeholder_title">Aktivit&#x00E4;ts-Heatmap</string>
+    <string name="widget_send">Senden</string>
+</resources>

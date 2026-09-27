@@ -1,0 +1,1500 @@
+import 'dart:async';
+import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+import '../../core/app_localization.dart';
+import '../../core/measure_size.dart';
+import '../../core/memoflow_palette.dart';
+import '../../core/tag_list_mode.dart';
+import '../../core/top_toast.dart';
+import '../../state/memos/memos_providers.dart';
+import '../../state/memos/sync_queue_provider.dart';
+import '../../state/system/local_library_provider.dart';
+import '../../state/system/notifications_provider.dart';
+import '../../state/settings/workspace_preferences_provider.dart';
+import '../../state/system/session_provider.dart';
+import '../../state/memos/stats_providers.dart';
+import 'app_drawer_model.dart';
+import 'desktop/desktop_navigation_rail.dart';
+import 'desktop/desktop_navigation_sidebar.dart';
+import 'desktop/desktop_overlay_navigation_panel.dart';
+import '../settings/quick_qr_action.dart';
+import '../tags/tag_edit_sheet.dart';
+import '../tags/tag_tree.dart';
+import '../../i18n/strings.g.dart';
+
+enum AppDrawerDestination {
+  memos,
+  syncQueue,
+  explore,
+  dailyReview,
+  aiSummary,
+  collections,
+  draftBox,
+  archived,
+  tags,
+  resources,
+  recycleBin,
+  stats,
+  settings,
+  about,
+}
+
+enum AppDrawerViewMode { expandedSidebar, rail, overlayPanel }
+
+enum _DrawerTagFilter { all, frequent, recent, pinned }
+
+class AppDrawer extends ConsumerStatefulWidget {
+  const AppDrawer({
+    super.key,
+    required this.selected,
+    required this.onSelect,
+    this.onSelectTag,
+    this.onSelectDay,
+    this.onOpenNotifications,
+    this.embedded = false,
+    this.selectedTagPath,
+    this.viewMode = AppDrawerViewMode.expandedSidebar,
+  });
+
+  final AppDrawerDestination? selected;
+  final ValueChanged<AppDrawerDestination> onSelect;
+  final ValueChanged<String>? onSelectTag;
+  final ValueChanged<DateTime>? onSelectDay;
+  final VoidCallback? onOpenNotifications;
+  final bool embedded;
+  final String? selectedTagPath;
+  final AppDrawerViewMode viewMode;
+
+  static final Future<PackageInfo> _packageInfoFuture =
+      PackageInfo.fromPlatform();
+
+  @override
+  ConsumerState<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends ConsumerState<AppDrawer> {
+  static const double _drawerTagSectionMaxHeight = 208;
+
+  final Set<String> _expandedTagPaths = <String>{};
+  double _measuredTagSectionHeight = 0;
+
+  _DrawerTagFilter _drawerTagFilterFromMode(TagListMode mode) {
+    return switch (mode) {
+      TagListMode.all => _DrawerTagFilter.all,
+      TagListMode.frequent => _DrawerTagFilter.frequent,
+      TagListMode.recent => _DrawerTagFilter.recent,
+      TagListMode.pinned => _DrawerTagFilter.pinned,
+    };
+  }
+
+  TagListMode _modeFromDrawerTagFilter(_DrawerTagFilter filter) {
+    return switch (filter) {
+      _DrawerTagFilter.all => TagListMode.all,
+      _DrawerTagFilter.frequent => TagListMode.frequent,
+      _DrawerTagFilter.recent => TagListMode.recent,
+      _DrawerTagFilter.pinned => TagListMode.pinned,
+    };
+  }
+
+  List<TagStat> _applyTagFilter(
+    List<TagStat> tags,
+    _DrawerTagFilter tagFilter,
+  ) {
+    final items = List<TagStat>.of(tags, growable: false);
+    switch (tagFilter) {
+      case _DrawerTagFilter.all:
+        return items;
+      case _DrawerTagFilter.frequent:
+        final sorted = items.toList(growable: false);
+        sorted.sort((a, b) {
+          final byCount = b.count.compareTo(a.count);
+          if (byCount != 0) return byCount;
+          if (a.pinned != b.pinned) return a.pinned ? -1 : 1;
+          final byRecent = (b.lastUsedTimeSec ?? 0).compareTo(
+            a.lastUsedTimeSec ?? 0,
+          );
+          if (byRecent != 0) return byRecent;
+          return a.tag.compareTo(b.tag);
+        });
+        return sorted;
+      case _DrawerTagFilter.recent:
+        final sorted = items.toList(growable: false);
+        sorted.sort((a, b) {
+          final byRecent = (b.lastUsedTimeSec ?? 0).compareTo(
+            a.lastUsedTimeSec ?? 0,
+          );
+          if (byRecent != 0) return byRecent;
+          final byCount = b.count.compareTo(a.count);
+          if (byCount != 0) return byCount;
+          if (a.pinned != b.pinned) return a.pinned ? -1 : 1;
+          return a.tag.compareTo(b.tag);
+        });
+        return sorted;
+      case _DrawerTagFilter.pinned:
+        return items.where((tag) => tag.pinned).toList(growable: false);
+    }
+  }
+
+  String _tagFilterLabel(BuildContext context, _DrawerTagFilter filter) {
+    final languageCode = Localizations.localeOf(context).languageCode;
+    return switch (filter) {
+      _DrawerTagFilter.all => context.t.strings.legacy.msg_all_tags,
+      _DrawerTagFilter.frequent => switch (languageCode) {
+        'de' => 'Häufig',
+        'ja' => 'よく使う',
+        'zh' => '常用',
+        _ => 'Frequent',
+      },
+      _DrawerTagFilter.recent => switch (languageCode) {
+        'de' => 'Zuletzt',
+        'ja' => '最近',
+        'zh' => '最近',
+        _ => 'Recent',
+      },
+      _DrawerTagFilter.pinned => context.t.strings.legacy.msg_pinned,
+    };
+  }
+
+  IconData _tagFilterIcon(_DrawerTagFilter filter) {
+    return switch (filter) {
+      _DrawerTagFilter.all => Icons.tune,
+      _DrawerTagFilter.frequent => Icons.local_fire_department_outlined,
+      _DrawerTagFilter.recent => Icons.schedule_outlined,
+      _DrawerTagFilter.pinned => Icons.push_pin_outlined,
+    };
+  }
+
+  int _compareDrawerTagNodes(
+    TagTreeNode a,
+    TagTreeNode b,
+    _DrawerTagFilter tagFilter,
+  ) {
+    switch (tagFilter) {
+      case _DrawerTagFilter.all:
+      case _DrawerTagFilter.pinned:
+        return 0;
+      case _DrawerTagFilter.frequent:
+        final byCount = b.count.compareTo(a.count);
+        if (byCount != 0) return byCount;
+        final byRecent = (b.lastUsedTimeSec ?? 0).compareTo(
+          a.lastUsedTimeSec ?? 0,
+        );
+        if (byRecent != 0) return byRecent;
+        return 0;
+      case _DrawerTagFilter.recent:
+        final byRecent = (b.lastUsedTimeSec ?? 0).compareTo(
+          a.lastUsedTimeSec ?? 0,
+        );
+        if (byRecent != 0) return byRecent;
+        final byCount = b.count.compareTo(a.count);
+        if (byCount != 0) return byCount;
+        return 0;
+    }
+  }
+
+  void _toggleTagExpanded(String path) {
+    setState(() {
+      if (!_expandedTagPaths.add(path)) {
+        _expandedTagPaths.remove(path);
+      }
+    });
+  }
+
+  void _updateMeasuredTagSectionHeight(Size size) {
+    final nextHeight = size.height;
+    final currentOverflow =
+        _measuredTagSectionHeight > _drawerTagSectionMaxHeight;
+    final nextOverflow = nextHeight > _drawerTagSectionMaxHeight;
+    if (!currentOverflow &&
+        !nextOverflow &&
+        (nextHeight - _measuredTagSectionHeight).abs() < 0.5) {
+      return;
+    }
+    if (currentOverflow == nextOverflow &&
+        (nextHeight - _measuredTagSectionHeight).abs() < 0.5) {
+      return;
+    }
+    setState(() => _measuredTagSectionHeight = nextHeight);
+  }
+
+  Future<void> _handleTagMenuAction(
+    BuildContext context,
+    Map<String, TagStat> tagsByPath,
+    TagTreeNode node,
+    TagTreeMenuAction action,
+  ) async {
+    final tag = tagsByPath[node.path];
+    if (tag == null) return;
+
+    switch (action) {
+      case TagTreeMenuAction.edit:
+        await TagEditSheet.showEditorDialog(context, tag: tag);
+        break;
+      case TagTreeMenuAction.delete:
+        await confirmAndDeleteTag(context: context, ref: ref, tag: tag);
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = widget.selected;
+    final onSelect = widget.onSelect;
+    final onSelectTag = widget.onSelectTag;
+    final onSelectDay = widget.onSelectDay;
+    final onOpenNotifications = widget.onOpenNotifications;
+    final embedded = widget.embedded;
+    final selectedTagPath = widget.selectedTagPath;
+    final width = math.min(MediaQuery.sizeOf(context).width * 0.85, 320.0);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final account = ref.watch(appSessionProvider).valueOrNull?.currentAccount;
+    final localLibrary = ref.watch(currentLocalLibraryProvider);
+    final title = localLibrary?.name.isNotEmpty == true
+        ? localLibrary!.name
+        : (account?.user.displayName.isNotEmpty ?? false)
+        ? account!.user.displayName
+        : (account?.user.name.isNotEmpty ?? false)
+        ? account!.user.name
+        : 'MemoFlow';
+
+    final statsAsync = ref.watch(localStatsProvider);
+    final tagsAsync = ref.watch(tagStatsProvider);
+    final tagListMode = ref.watch(
+      currentWorkspacePreferencesProvider.select((prefs) => prefs.tagListMode),
+    );
+    final drawerPrefs = ref.watch(
+      currentWorkspacePreferencesProvider.select(
+        (prefs) => (
+          showDrawerExplore: prefs.showDrawerExplore,
+          showDrawerDailyReview: prefs.showDrawerDailyReview,
+          showDrawerAiSummary: prefs.showDrawerAiSummary,
+          showDrawerCollections: prefs.showDrawerCollections,
+          showDrawerDraftBox: prefs.showDrawerDraftBox,
+          showDrawerResources: prefs.showDrawerResources,
+          showDrawerArchive: prefs.showDrawerArchive,
+        ),
+      ),
+    );
+    final pendingOutboxCount =
+        ref.watch(syncQueuePendingCountProvider).valueOrNull ?? 0;
+    final unreadNotificationCount = ref.watch(unreadNotificationCountProvider);
+
+    final bg = isDark
+        ? const Color(0xFF181818)
+        : MemoFlowPalette.backgroundLight;
+    final textMain = isDark
+        ? const Color(0xFFD1D1D1)
+        : MemoFlowPalette.textLight;
+    final textMuted = textMain.withValues(alpha: isDark ? 0.4 : 0.5);
+    final hover = isDark
+        ? Colors.white.withValues(alpha: 0.05)
+        : Colors.black.withValues(alpha: 0.04);
+    final tagFilter = _drawerTagFilterFromMode(tagListMode);
+    final resolvedTags = tagsAsync.valueOrNull ?? const <TagStat>[];
+    final filteredTags = _applyTagFilter(resolvedTags, tagFilter);
+    final tagsByPath = {for (final tag in resolvedTags) tag.path: tag};
+    final fullTagTree = buildTagTree(
+      resolvedTags,
+      comparator: (a, b) => _compareDrawerTagNodes(a, b, tagFilter),
+    );
+    final filteredPaths = filteredTags.map((tag) => tag.path).toSet();
+    final shouldFilterTree =
+        tagFilter != _DrawerTagFilter.all &&
+        filteredPaths.length < resolvedTags.length;
+    final tagTreeResult = !shouldFilterTree
+        ? TagTreeFilterResult(
+            nodes: fullTagTree,
+            autoExpandedPaths: const <String>{},
+          )
+        : filterTagTree(
+            fullTagTree,
+            (node) => filteredPaths.contains(node.path),
+          );
+    final drawerExpandedPaths = <String>{
+      ..._expandedTagPaths,
+      ...tagTreeResult.autoExpandedPaths,
+      ...collectAncestorTagPaths(selectedTagPath),
+    };
+    final showScanAction =
+        kIsWeb || defaultTargetPlatform != TargetPlatform.windows;
+    final versionDate = DateFormat('yyyy.MM.dd').format(DateTime.now());
+
+    AppDrawerModel buildDrawerModel() {
+      final stats = statsAsync.valueOrNull;
+      final destinations = <AppDrawerDestinationItem>[
+        AppDrawerDestinationItem(
+          id: AppDrawerDestination.memos.name,
+          label: context.t.strings.legacy.msg_all_memos,
+          icon: Icons.grid_view,
+          selected: selected == AppDrawerDestination.memos,
+          onTap: () => onSelect(AppDrawerDestination.memos),
+        ),
+        if (drawerPrefs.showDrawerExplore)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.explore.name,
+            label: context.t.strings.legacy.msg_explore,
+            icon: Icons.public,
+            selected: selected == AppDrawerDestination.explore,
+            onTap: () => onSelect(AppDrawerDestination.explore),
+          ),
+        if (drawerPrefs.showDrawerDailyReview)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.dailyReview.name,
+            label: context.t.strings.legacy.msg_random_review,
+            icon: Icons.explore,
+            selected: selected == AppDrawerDestination.dailyReview,
+            onTap: () => onSelect(AppDrawerDestination.dailyReview),
+          ),
+        if (drawerPrefs.showDrawerAiSummary)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.aiSummary.name,
+            label: context.t.strings.legacy.msg_ai_summary,
+            icon: Icons.track_changes,
+            selected: selected == AppDrawerDestination.aiSummary,
+            onTap: () => onSelect(AppDrawerDestination.aiSummary),
+          ),
+        if (drawerPrefs.showDrawerCollections)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.collections.name,
+            label: context.t.strings.collections.drawerLabel,
+            icon: Icons.auto_stories_rounded,
+            selected: selected == AppDrawerDestination.collections,
+            onTap: () => onSelect(AppDrawerDestination.collections),
+          ),
+        if (drawerPrefs.showDrawerDraftBox)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.draftBox.name,
+            label: context.t.strings.legacy.msg_draft_box_title,
+            icon: Icons.inventory_2_outlined,
+            selected: selected == AppDrawerDestination.draftBox,
+            onTap: () => onSelect(AppDrawerDestination.draftBox),
+          ),
+        AppDrawerDestinationItem(
+          id: AppDrawerDestination.tags.name,
+          label: context.t.strings.legacy.msg_tags,
+          icon: Icons.sell_outlined,
+          selected: selected == AppDrawerDestination.tags,
+          onTap: () => onSelect(AppDrawerDestination.tags),
+        ),
+        if (drawerPrefs.showDrawerResources)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.resources.name,
+            label: context.t.strings.legacy.msg_attachments,
+            icon: Icons.attach_file,
+            selected: selected == AppDrawerDestination.resources,
+            onTap: () => onSelect(AppDrawerDestination.resources),
+          ),
+        if (drawerPrefs.showDrawerArchive)
+          AppDrawerDestinationItem(
+            id: AppDrawerDestination.archived.name,
+            label: context.t.strings.legacy.msg_archive,
+            icon: Icons.archive,
+            selected: selected == AppDrawerDestination.archived,
+            onTap: () => onSelect(AppDrawerDestination.archived),
+          ),
+        AppDrawerDestinationItem(
+          id: AppDrawerDestination.recycleBin.name,
+          label: context.t.strings.legacy.msg_recycle_bin,
+          icon: Icons.delete,
+          selected: selected == AppDrawerDestination.recycleBin,
+          onTap: () => onSelect(AppDrawerDestination.recycleBin),
+        ),
+        AppDrawerDestinationItem(
+          id: AppDrawerDestination.about.name,
+          label: context.t.strings.legacy.msg_about,
+          icon: Icons.info,
+          selected: selected == AppDrawerDestination.about,
+          onTap: () => onSelect(AppDrawerDestination.about),
+        ),
+      ];
+
+      final quickActions = <AppDrawerQuickActionItem>[
+        if (showScanAction)
+          AppDrawerQuickActionItem(
+            id: 'scan',
+            label: context.t.strings.legacy.msg_scan,
+            tooltip: context.t.strings.legacy.msg_scan,
+            icon: Icons.qr_code_scanner,
+            iconColor: textMuted,
+            onTap: () {
+              unawaited(
+                startUniversalQuickQrAction(context: context, ref: ref),
+              );
+            },
+          ),
+        AppDrawerQuickActionItem(
+          id: 'sync_queue',
+          label: context.t.strings.legacy.msg_sync_queue,
+          tooltip: context.t.strings.legacy.msg_sync_queue,
+          icon: Icons.sync,
+          iconColor: textMuted,
+          showBadge: pendingOutboxCount > 0,
+          onTap: () => onSelect(AppDrawerDestination.syncQueue),
+        ),
+        AppDrawerQuickActionItem(
+          id: 'notifications',
+          label: context.t.strings.legacy.msg_notifications,
+          tooltip: context.t.strings.legacy.msg_notifications,
+          icon: Icons.notifications,
+          iconColor: textMuted,
+          showBadge: unreadNotificationCount > 0,
+          onTap: () {
+            final handler = onOpenNotifications;
+            if (handler == null) {
+              showTopToast(
+                context,
+                context.t.strings.legacy.msg_notifications_coming_soon,
+              );
+              return;
+            }
+            handler();
+          },
+        ),
+        AppDrawerQuickActionItem(
+          id: 'settings',
+          label: context.t.strings.legacy.msg_settings,
+          tooltip: context.t.strings.legacy.msg_settings,
+          icon: Icons.settings,
+          iconColor: textMuted,
+          onTap: () => onSelect(AppDrawerDestination.settings),
+        ),
+      ];
+
+      final tags = filteredTags
+          .map(
+            (tag) => AppDrawerTagItem(
+              label: tag.tag.split('/').last,
+              path: tag.path,
+              count: tag.count,
+              selected: selectedTagPath == tag.path,
+              onTap: () {
+                final callback = onSelectTag;
+                if (callback != null) {
+                  callback(tag.path);
+                  return;
+                }
+                onSelect(AppDrawerDestination.tags);
+              },
+            ),
+          )
+          .toList(growable: false);
+
+      final statsItems = <AppDrawerStatItem>[
+        AppDrawerStatItem(
+          value: (stats?.totalMemos ?? 0).toString(),
+          label: context.t.strings.legacy.msg_memos,
+        ),
+        AppDrawerStatItem(
+          value: (stats?.activeDays ?? 0).toString(),
+          label: context.t.strings.legacy.msg_days_2,
+        ),
+      ];
+
+      return AppDrawerModel(
+        title: title,
+        selected: selected?.name ?? '',
+        selectedTagPath: selectedTagPath,
+        destinations: destinations,
+        quickActions: quickActions,
+        tags: tags,
+        stats: AppDrawerStatsModel(items: statsItems),
+        versionText: '',
+        hasUnreadNotifications: unreadNotificationCount > 0,
+        isLocalLibraryMode: localLibrary != null,
+      );
+    }
+
+    final drawerModel = buildDrawerModel();
+    final tagDividerColor = isDark
+        ? Colors.white.withValues(alpha: 0.06)
+        : Colors.black.withValues(alpha: 0.08);
+
+    PopupMenuButton<_DrawerTagFilter> buildTagFilterButton() {
+      return PopupMenuButton<_DrawerTagFilter>(
+        tooltip: context.t.strings.legacy.msg_sort,
+        initialValue: tagFilter,
+        onSelected: (value) {
+          if (value == tagFilter) return;
+          ref
+              .read(currentWorkspacePreferencesProvider.notifier)
+              .setTagListMode(_modeFromDrawerTagFilter(value));
+        },
+        itemBuilder: (context) => [
+          CheckedPopupMenuItem<_DrawerTagFilter>(
+            value: _DrawerTagFilter.all,
+            checked: tagFilter == _DrawerTagFilter.all,
+            child: Text(_tagFilterLabel(context, _DrawerTagFilter.all)),
+          ),
+          CheckedPopupMenuItem<_DrawerTagFilter>(
+            value: _DrawerTagFilter.frequent,
+            checked: tagFilter == _DrawerTagFilter.frequent,
+            child: Text(_tagFilterLabel(context, _DrawerTagFilter.frequent)),
+          ),
+          CheckedPopupMenuItem<_DrawerTagFilter>(
+            value: _DrawerTagFilter.recent,
+            checked: tagFilter == _DrawerTagFilter.recent,
+            child: Text(_tagFilterLabel(context, _DrawerTagFilter.recent)),
+          ),
+          CheckedPopupMenuItem<_DrawerTagFilter>(
+            value: _DrawerTagFilter.pinned,
+            checked: tagFilter == _DrawerTagFilter.pinned,
+            child: Text(_tagFilterLabel(context, _DrawerTagFilter.pinned)),
+          ),
+        ],
+        icon: Icon(_tagFilterIcon(tagFilter), color: textMuted, size: 20),
+      );
+    }
+
+    void openTagsPage({BuildContext? closeContext}) {
+      if (closeContext != null) {
+        Navigator.of(closeContext).pop();
+      }
+      onSelect(AppDrawerDestination.tags);
+    }
+
+    void selectTagPath(String path, {BuildContext? closeContext}) {
+      if (closeContext != null) {
+        Navigator.of(closeContext).pop();
+      }
+      final callback = onSelectTag;
+      if (callback != null) {
+        callback(path);
+        return;
+      }
+      onSelect(AppDrawerDestination.tags);
+    }
+
+    Widget buildTagTreeContent({
+      bool constrainHeight = false,
+      BuildContext? popoverContext,
+    }) {
+      return tagsAsync.when(
+        data: (tags) {
+          if (tagTreeResult.nodes.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                context.t.strings.legacy.msg_no_tags_yet,
+                style: TextStyle(color: textMuted),
+              ),
+            );
+          }
+          final tagTree = TagTreeList(
+            nodes: tagTreeResult.nodes,
+            expandedPaths: drawerExpandedPaths,
+            onToggleExpanded: _toggleTagExpanded,
+            onSelect: (path) =>
+                selectTagPath(path, closeContext: popoverContext),
+            onMenuAction: (node, action) =>
+                _handleTagMenuAction(context, tagsByPath, node, action),
+            showMenu: true,
+            compact: true,
+            selectedPath: selectedTagPath,
+            showSelectedLeadingCheck: true,
+            textMain: textMain,
+            textMuted: textMuted,
+          );
+
+          if (!constrainHeight) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: tagTree,
+            );
+          }
+
+          final showViewMore =
+              _measuredTagSectionHeight > _drawerTagSectionMaxHeight + 0.5;
+          return Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRect(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: _drawerTagSectionMaxHeight,
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: tagTree,
+                    ),
+                  ),
+                ),
+                if (showViewMore)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: openTagsPage,
+                      icon: const Icon(Icons.open_in_new, size: 16),
+                      label: Text(context.t.strings.legacy.msg_more),
+                      style: TextButton.styleFrom(
+                        foregroundColor: textMuted,
+                        visualDensity: VisualDensity.compact,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 4,
+                        ),
+                      ),
+                    ),
+                  ),
+                Offstage(
+                  offstage: true,
+                  child: IgnorePointer(
+                    child: MeasureSize(
+                      onChange: _updateMeasuredTagSectionHeight,
+                      child: tagTree,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        loading: () => Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            context.t.strings.legacy.msg_loading_2,
+            style: TextStyle(color: textMuted),
+          ),
+        ),
+        error: (e, _) => Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            context.t.strings.legacy.msg_failed_load_tags(e: e),
+            style: TextStyle(color: textMuted),
+          ),
+        ),
+      );
+    }
+
+    Widget buildRailTagsPanel(BuildContext dialogContext) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: 320,
+          maxHeight: MediaQuery.sizeOf(dialogContext).height - 16,
+        ),
+        child: Material(
+          key: const ValueKey<String>('desktop-navigation-rail-tags-popover'),
+          color: bg,
+          elevation: 18,
+          shadowColor: Colors.black.withValues(alpha: isDark ? 0.3 : 0.14),
+          borderRadius: BorderRadius.circular(20),
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: 320,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          context.t.strings.legacy.msg_tags,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      buildTagFilterButton(),
+                      IconButton(
+                        tooltip: context.t.strings.legacy.msg_open_memo,
+                        onPressed: () =>
+                            openTagsPage(closeContext: dialogContext),
+                        icon: const Icon(Icons.open_in_new_rounded),
+                      ),
+                      IconButton(
+                        tooltip: context.t.strings.legacy.msg_close,
+                        onPressed: () => Navigator.of(dialogContext).maybePop(),
+                        icon: const Icon(Icons.close_rounded),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(height: 1, color: tagDividerColor),
+                Flexible(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    child: buildTagTreeContent(popoverContext: dialogContext),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final content = SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 18),
+              children: [
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.2,
+                          color: textMain,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (showScanAction)
+                          _TopActionIconButton(
+                            tooltip: context.t.strings.legacy.msg_scan,
+                            onPressed: () async {
+                              await startUniversalQuickQrAction(
+                                context: context,
+                                ref: ref,
+                              );
+                            },
+                            icon: Icon(
+                              Icons.qr_code_scanner,
+                              color: textMuted,
+                              size: 21,
+                            ),
+                          ),
+                        _TopActionIconButton(
+                          tooltip: context.t.strings.legacy.msg_sync_queue,
+                          onPressed: () =>
+                              onSelect(AppDrawerDestination.syncQueue),
+                          icon: Consumer(
+                            builder: (context, ref, child) {
+                              final pendingOutboxAsync = ref.watch(
+                                syncQueuePendingCountProvider,
+                              );
+                              final pendingOutboxCount =
+                                  pendingOutboxAsync.valueOrNull ?? 0;
+                              final showSyncBadge = pendingOutboxCount > 0;
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  child!,
+                                  if (showSyncBadge)
+                                    Positioned(
+                                      right: -2,
+                                      top: -2,
+                                      child: Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: MemoFlowPalette.primary,
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: bg,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
+                            child: Icon(Icons.sync, color: textMuted, size: 21),
+                          ),
+                        ),
+                        _TopActionIconButton(
+                          tooltip: context.t.strings.legacy.msg_notifications,
+                          onPressed: () {
+                            final handler = onOpenNotifications;
+                            if (handler == null) {
+                              showTopToast(
+                                context,
+                                context
+                                    .t
+                                    .strings
+                                    .legacy
+                                    .msg_notifications_coming_soon,
+                              );
+                              return;
+                            }
+                            handler();
+                          },
+                          icon: Consumer(
+                            builder: (context, ref, child) {
+                              final unreadNotifications = ref.watch(
+                                unreadNotificationCountProvider,
+                              );
+                              final showNotificationBadge =
+                                  unreadNotifications > 0;
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  child!,
+                                  if (showNotificationBadge)
+                                    Positioned(
+                                      right: -2,
+                                      top: -2,
+                                      child: Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFE05555),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: bg,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
+                            child: Icon(
+                              Icons.notifications,
+                              color: textMuted,
+                              size: 21,
+                            ),
+                          ),
+                        ),
+                        _TopActionIconButton(
+                          tooltip: context.t.strings.legacy.msg_settings,
+                          onPressed: () =>
+                              onSelect(AppDrawerDestination.settings),
+                          icon: Icon(
+                            Icons.settings,
+                            color: textMuted,
+                            size: 21,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                statsAsync.when(
+                  data: (stats) {
+                    final tagCount = tagsAsync.valueOrNull?.length ?? 0;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: _DrawerStat(
+                            value: '${stats.totalMemos}',
+                            label: context.t.strings.legacy.msg_memos,
+                            textMain: textMain,
+                            textMuted: textMuted,
+                          ),
+                        ),
+                        Expanded(
+                          child: _DrawerStat(
+                            value: '$tagCount',
+                            label: context.t.strings.legacy.msg_tags,
+                            textMain: textMain,
+                            textMuted: textMuted,
+                          ),
+                        ),
+                        Expanded(
+                          child: _DrawerStat(
+                            value: '${stats.daysSinceFirstMemo}',
+                            label: context.t.strings.legacy.msg_days_2,
+                            textMain: textMain,
+                            textMuted: textMuted,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  loading: () => Row(
+                    children: [
+                      Expanded(
+                        child: _DrawerStat(
+                          value: '?',
+                          label: context.t.strings.legacy.msg_memos,
+                          textMain: textMain,
+                          textMuted: textMuted,
+                        ),
+                      ),
+                      Expanded(
+                        child: _DrawerStat(
+                          value: '?',
+                          label: context.t.strings.legacy.msg_tags,
+                          textMain: textMain,
+                          textMuted: textMuted,
+                        ),
+                      ),
+                      Expanded(
+                        child: _DrawerStat(
+                          value: '?',
+                          label: context.t.strings.legacy.msg_days_2,
+                          textMain: textMain,
+                          textMuted: textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                  error: (e, _) => Text(
+                    context.t.strings.legacy.msg_failed_load_stats(e: e),
+                    style: TextStyle(color: textMuted),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                statsAsync.when(
+                  data: (stats) => _DrawerHeatmap(
+                    dailyCounts: stats.dailyCounts,
+                    isDark: isDark,
+                    embedded: embedded,
+                    onSelectDay: onSelectDay,
+                  ),
+                  loading: () => const SizedBox(height: 84),
+                  error: (_, _) => const SizedBox(height: 84),
+                ),
+                const SizedBox(height: 16),
+                _NavButton(
+                  selected: selected == AppDrawerDestination.memos,
+                  label: context.t.strings.legacy.msg_all_memos,
+                  icon: Icons.grid_view,
+                  onTap: () => onSelect(AppDrawerDestination.memos),
+                  textMain: textMain,
+                  hover: hover,
+                ),
+                if (drawerPrefs.showDrawerExplore)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.explore,
+                    label: context.t.strings.legacy.msg_explore,
+                    icon: Icons.public,
+                    onTap: () => onSelect(AppDrawerDestination.explore),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerDailyReview)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.dailyReview,
+                    label: context.t.strings.legacy.msg_random_review,
+                    icon: Icons.explore,
+                    onTap: () => onSelect(AppDrawerDestination.dailyReview),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerAiSummary)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.aiSummary,
+                    label: context.t.strings.legacy.msg_ai_summary,
+                    icon: Icons.track_changes,
+                    onTap: () => onSelect(AppDrawerDestination.aiSummary),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerCollections)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.collections,
+                    label: context.t.strings.collections.drawerLabel,
+                    icon: Icons.auto_stories_rounded,
+                    onTap: () => onSelect(AppDrawerDestination.collections),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerDraftBox)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.draftBox,
+                    label: context.t.strings.legacy.msg_draft_box_title,
+                    icon: Icons.inventory_2_outlined,
+                    onTap: () => onSelect(AppDrawerDestination.draftBox),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerResources)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.resources,
+                    label: context.t.strings.legacy.msg_attachments,
+                    icon: Icons.attach_file,
+                    onTap: () => onSelect(AppDrawerDestination.resources),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                if (drawerPrefs.showDrawerArchive)
+                  _NavButton(
+                    selected: selected == AppDrawerDestination.archived,
+                    label: context.t.strings.legacy.msg_archive,
+                    icon: Icons.archive,
+                    onTap: () => onSelect(AppDrawerDestination.archived),
+                    textMain: textMain,
+                    hover: hover,
+                  ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.t.strings.legacy.msg_tags,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: textMuted,
+                        ),
+                      ),
+                    ),
+                    buildTagFilterButton(),
+                  ],
+                ),
+                buildTagTreeContent(constrainHeight: true),
+                const SizedBox(height: 4),
+                Divider(color: tagDividerColor),
+                const SizedBox(height: 2),
+                _BottomNavRow(
+                  label: context.t.strings.legacy.msg_recycle_bin,
+                  icon: Icons.delete,
+                  onTap: () => onSelect(AppDrawerDestination.recycleBin),
+                  textColor: textMain.withValues(alpha: isDark ? 0.6 : 0.7),
+                  hover: hover,
+                ),
+                _BottomNavRow(
+                  label: context.t.strings.legacy.msg_about,
+                  icon: Icons.info,
+                  onTap: () => onSelect(AppDrawerDestination.about),
+                  textColor: textMain.withValues(alpha: isDark ? 0.6 : 0.7),
+                  hover: hover,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
+            child: FutureBuilder<PackageInfo>(
+              future: AppDrawer._packageInfoFuture,
+              builder: (context, snapshot) {
+                final version = snapshot.data?.version.trim() ?? '';
+                final versionLabel = version.isEmpty ? 'Version' : 'V$version';
+                return Text(
+                  '$versionLabel | $versionDate',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: textMuted.withValues(alpha: 0.9),
+                    letterSpacing: 0.2,
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 14, top: 2),
+            child: Container(
+              width: 128,
+              height: 6,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(999),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final renderedContent = switch (widget.viewMode) {
+      AppDrawerViewMode.expandedSidebar => DesktopNavigationSidebar(
+        model: drawerModel,
+        backgroundColor: bg,
+        child: content,
+      ),
+      AppDrawerViewMode.rail => DesktopNavigationRail(
+        model: drawerModel,
+        tagsPanelBuilder: buildRailTagsPanel,
+      ),
+      AppDrawerViewMode.overlayPanel => DesktopOverlayNavigationPanel(
+        model: drawerModel,
+      ),
+    };
+
+    if (embedded) {
+      return renderedContent;
+    }
+
+    if (widget.viewMode == AppDrawerViewMode.expandedSidebar) {
+      return Drawer(width: width, backgroundColor: bg, child: renderedContent);
+    }
+
+    return Material(color: bg, child: renderedContent);
+  }
+}
+
+class _DrawerStat extends StatelessWidget {
+  const _DrawerStat({
+    required this.value,
+    required this.label,
+    required this.textMain,
+    required this.textMuted,
+  });
+
+  final String value;
+  final String label;
+  final Color textMain;
+  final Color textMuted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+              color: textMain,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.4,
+              color: textMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TopActionIconButton extends StatelessWidget {
+  const _TopActionIconButton({
+    required this.tooltip,
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final String tooltip;
+  final VoidCallback onPressed;
+  final Widget icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      icon: icon,
+      padding: EdgeInsets.zero,
+      visualDensity: VisualDensity.compact,
+      constraints: const BoxConstraints.tightFor(width: 34, height: 34),
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  const _NavButton({
+    required this.selected,
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    required this.textMain,
+    required this.hover,
+  });
+
+  final bool selected;
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  final Color textMain;
+  final Color hover;
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = selected ? MemoFlowPalette.primary : Colors.transparent;
+    final fg = selected ? Colors.white : textMain;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Material(
+        color: bg,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          splashColor: selected ? Colors.white.withValues(alpha: 0.12) : null,
+          hoverColor: selected ? null : hover,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Icon(icon, color: fg, size: 22),
+                const SizedBox(width: 12),
+                Text(
+                  label,
+                  style: TextStyle(fontWeight: FontWeight.w700, color: fg),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BottomNavRow extends StatelessWidget {
+  const _BottomNavRow({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    required this.textColor,
+    required this.hover,
+  });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  final Color textColor;
+  final Color hover;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          hoverColor: hover,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: Row(
+              children: [
+                Icon(icon, color: textColor, size: 22),
+                const SizedBox(width: 12),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: textColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DrawerHeatmap extends StatelessWidget {
+  const _DrawerHeatmap({
+    required this.dailyCounts,
+    required this.isDark,
+    required this.embedded,
+    this.onSelectDay,
+  });
+
+  final Map<DateTime, int> dailyCounts;
+  final bool isDark;
+  final bool embedded;
+  final ValueChanged<DateTime>? onSelectDay;
+
+  @override
+  Widget build(BuildContext context) {
+    // 18 weeks x 7 days grid.
+    const weeks = 18;
+    const daysPerWeek = 7;
+
+    final todayLocal = DateTime.now();
+    final endLocal = DateTime(
+      todayLocal.year,
+      todayLocal.month,
+      todayLocal.day,
+    );
+    final currentWeekStart = endLocal.subtract(
+      Duration(days: endLocal.weekday - 1),
+    );
+    final alignedStart = currentWeekStart.subtract(
+      Duration(days: (weeks - 1) * daysPerWeek),
+    );
+    final locale = Localizations.localeOf(context).toString();
+
+    final maxCount = dailyCounts.values.fold<int>(
+      0,
+      (max, v) => v > max ? v : max,
+    );
+
+    Color colorFor(int c) {
+      if (c <= 0) {
+        return isDark
+            ? const Color(0xFF262626)
+            : Colors.black.withValues(alpha: 0.05);
+      }
+      final t = maxCount <= 0 ? 0.0 : (c / maxCount).clamp(0.0, 1.0);
+      final accent = MemoFlowPalette.primary;
+
+      if (t <= 0.25) return accent.withValues(alpha: isDark ? 0.28 : 0.18);
+      if (t <= 0.5) return accent.withValues(alpha: isDark ? 0.48 : 0.35);
+      if (t <= 0.75) return accent.withValues(alpha: isDark ? 0.68 : 0.55);
+      return accent.withValues(alpha: isDark ? 0.9 : 0.85);
+    }
+
+    final today = endLocal;
+
+    final cells = <DateTime>[];
+    for (var row = 0; row < daysPerWeek; row++) {
+      for (var col = 0; col < weeks; col++) {
+        final day = alignedStart.add(Duration(days: col * daysPerWeek + row));
+        cells.add(day);
+      }
+    }
+
+    String monthLabel(DateTime d) {
+      return DateFormat.MMM(locale).format(d.toLocal());
+    }
+
+    final mid = alignedStart.add(
+      const Duration(days: (weeks * daysPerWeek) ~/ 2),
+    );
+    final late = alignedStart.add(
+      const Duration(days: (weeks * daysPerWeek) - 1),
+    );
+    final labelColor =
+        (isDark ? const Color(0xFFD1D1D1) : MemoFlowPalette.textLight)
+            .withValues(alpha: 0.35);
+
+    String weekdayLabel(DateTime d) {
+      return DateFormat.E(locale).format(d);
+    }
+
+    String tooltipLabel(DateTime d, int count) {
+      final dateLabel = DateFormat('yyyy-MM-dd').format(d);
+      final weekLabel = weekdayLabel(d);
+      final key = count == 1
+          ? 'legacy.app_drawer.tooltip_single'
+          : 'legacy.app_drawer.tooltip_multi';
+      return trByLanguageKey(
+        language: context.appLanguage,
+        key: key,
+        params: {'date': dateLabel, 'weekday': weekLabel, 'count': count},
+      );
+    }
+
+    void showOverlayToast(String message) {
+      showTopToast(
+        context,
+        message,
+        duration: const Duration(milliseconds: 1400),
+      );
+    }
+
+    void openDay(DateTime d, int count) {
+      if (count <= 0) {
+        showOverlayToast(context.t.strings.legacy.msg_no_memos_day);
+        return;
+      }
+      final handler = onSelectDay;
+      if (handler != null) {
+        if (!embedded) {
+          Navigator.of(context).pop();
+        }
+        handler(d);
+        return;
+      }
+      final navigator = Navigator.of(context);
+      navigator.pop();
+      navigator.pushNamed('/memos/day', arguments: d);
+    }
+
+    final tooltipCache = <DateTime, String>{};
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: weeks,
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
+          ),
+          itemCount: weeks * daysPerWeek,
+          itemBuilder: (context, index) {
+            final day = cells[index];
+            if (day.isAfter(endLocal)) {
+              return const SizedBox.shrink();
+            }
+            final count = dailyCounts[day] ?? 0;
+            final isToday = day == today;
+            final color = colorFor(count);
+            final tooltip = tooltipCache.putIfAbsent(
+              day,
+              () => tooltipLabel(day, count),
+            );
+            return Tooltip(
+              message: tooltip,
+              triggerMode: TooltipTriggerMode.longPress,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(2),
+                  onTap: () => openDay(day, count),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(2),
+                      border: isToday
+                          ? Border.all(color: MemoFlowPalette.primary, width: 1)
+                          : null,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              monthLabel(alignedStart),
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: labelColor,
+              ),
+            ),
+            Text(
+              monthLabel(mid),
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: labelColor,
+              ),
+            ),
+            Text(
+              monthLabel(late),
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: labelColor,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}

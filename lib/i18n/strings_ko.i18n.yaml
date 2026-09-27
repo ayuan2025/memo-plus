@@ -1,0 +1,2241 @@
+common:
+  back: 뒤로
+  cancel: 취소
+  confirm: 확인
+  save: 저장
+  saveSettings: 설정 저장
+  auto: 자동
+  manual: 수동
+  copiedToClipboard: 클립보드에 복사했습니다
+  serverVersion: 서버 버전
+  selectValidServerVersion: 유효한 서버 버전을 선택하세요
+  serverVersionValue: '서버 버전: $version'
+  serverVersionProbeHint: 로그인 전에는 선택한 서버 버전의 핵심 API만 확인합니다.
+  selectServerVersionRange021To026: 0.21~0.26 사이의 서버 버전을 수동으로 선택하세요
+languages:
+  system: 시스템 설정 따르기
+  zhHans: 중국어(간체)
+  zhHantTw: 중국어(번체, 대만)
+  en: 영어
+  ja: 일본어
+  de: 독일어
+  ptBr: 포르투갈어(브라질)
+  ko: 한국어
+languagesNative:
+  system: 시스템
+  zhHans: 简体中文
+  zhHantTw: 繁體中文（中國台灣）
+  en: English
+  ja: 日本語
+  de: Deutsch
+  ptBr: Português (Brasil)
+  ko: 한국어
+onboarding:
+  tagline: 간결하고 강력한 노트 스트림
+  selectLanguage: 언어 선택
+  selectMode: 모드 선택
+  modeHint: 나중에 설정에서 변경할 수 있습니다.
+  modeLocalTitle: 로컬 모드
+  modeLocalLabel: 로컬 모드
+  modeLocalDesc: 데이터가 기기에만 저장됩니다. 서버 설정이 필요 없어 개인정보 보호와 오프라인 사용에 적합합니다.
+  modeServerTitle: 서버 모드
+  modeServerLabel: 서버 모드
+  modeServerDesc: 실시간 다중 기기 동기화를 위해 Memos 백엔드에 연결합니다.
+  localLibraryNameTitle: 로컬 라이브러리 이름
+  localLibraryNameHint: 이름 입력
+  localLibraryDefaultName: 로컬 라이브러리
+  getStarted: 시작하기
+legalConsent:
+  title: 계약 검토
+  description: MemoFlow를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.
+  linksHint: 전체 내용을 검토하려면 아래 문서를 열어보세요.
+  acknowledge: 나는 사용자 계약 및 개인 정보 보호 정책을 읽었으며 이에 동의합니다.
+  continueAction: 동의하고 계속하세요
+  exitAction: 앱 종료
+login:
+  title: Memos에 연결
+  mode:
+    password: 사용자 이름 및 비밀번호
+    token: 토큰
+    descPassword: 사용자 이름과 비밀번호로 로그인
+    descToken: 개인 액세스 토큰으로 로그인
+    signInMethod: 로그인 방법
+  field:
+    serverUrlLabel: 서버 URL
+    serverUrlHint: 로컬호스트:5230
+    protocolLabel: 규약
+    usernameLabel: 사용자 이름
+    usernameHint: 사용자 이름을 입력하세요
+    passwordLabel: 비밀번호
+    passwordHint: 비밀번호를 입력하세요
+    tokenLabel: 토큰 (PAT)
+    tokenHint: 토큰 (PAT)
+  validation:
+    serverUrlRequired: 서버 URL를 입력하세요
+    serverUrlInvalid: localhost:5230 또는 memos.example.com과 같은 유효한 서버 주소를 입력하세요.
+    usernameRequired: 사용자 이름을 입력하세요
+    passwordRequired: 비밀번호를 입력해주세요
+    tokenRequired: 토큰을 입력해주세요
+  dialogs:
+    insecureHttpTitle: HTTP를 사용하시겠습니까?
+    insecureHttpMessage: HTTP는 안전하지 않으며 귀하의 계정, 비밀번호 또는 토큰을 노출할 수 있습니다. 그래도 계속하시겠습니까?
+    httpsHandshakeFailedTitle: HTTPS 연결 실패
+    httpsHandshakeFailedMessage: 현재 HTTPS를 사용하고 계십니다. 서버가 HTTP만 지원하는 경우 HTTP를 사용하고 다시 시도할 수 있습니다. 서버가 HTTPS를 지원해야 하는 경우 해당
+      인증서 또는 역방향 프록시 구성을 확인하세요.
+    switchToHttp: HTTP를 사용하고 다시 시도하세요.
+  protocol:
+    selectorTitle: 연결 프로토콜 선택
+    httpsTitle: HTTPS
+    httpsDescription: 암호화된 연결, 권장
+    httpTitle: HTTP
+    httpDescription: 암호화되지 않음. 로컬, LAN 또는 임시 테스트에만 사용하세요.
+    useSelected: 선택한 프로토콜 사용
+    encrypted: 암호화됨
+    unencrypted: 암호화되지 않음
+  compatibility:
+    title: 호환 모드
+    description: 레거시 엔드포인트 사용(이전 Memos 서버의 경우)
+  connect:
+    connecting: 연결 중…
+    action: 연결하다
+  errors:
+    authFailedToken: 인증에 실패했습니다. 토큰이 유효하고 만료되지 않았는지 확인하세요.
+    authFailedPat: 인증에 실패했습니다. 새로운 Memos의 경우 memos_pat_로 시작하는 PAT를 사용하세요(Bearer 접두사를 붙여넣지 마세요).
+    connectionFailedWithMessage: '연결 실패: $message'
+    connectionFailed: '연결 실패: $error'
+    signInFailed: 로그인에 실패했습니다. 사용자 이름과 비밀번호를 확인하세요.
+    signInFailedWithMessage: '로그인 실패: $message'
+    invalidServerUrl: 잘못된 서버 URL
+    serverUrlNormalized: 서버 URL 정규화됨(추가 경로 세그먼트 제거됨)
+settings:
+  preferences:
+    title: 환경설정
+    language: 언어
+    fontSize: 글꼴 크기
+    lineHeight: 라인 높이
+    font: 세례반
+    systemDefault: 시스템 기본값
+    noSystemFonts: 시스템 글꼴을 찾을 수 없습니다.
+    loadFontsFailed: '글꼴을 로드하지 못했습니다: $error'
+    collapseLongContent: 긴 콘텐츠 접기
+    collapseReferences: 참조 축소
+    showMemoEngagement: 좋아요와 댓글 표시
+    launchAction: 실행 작업
+    quickInputKeyboard: 빠른 입력을 위한 자동 열기 키보드
+    confirmExitOnBack: 종료 시 확인
+    editorToolbar:
+      title: 편집기 도구 모음 사용자 정의
+      description: 도구를 길게 눌러 순서를 바꾸거나 도구 상자와 도구 모음 사이에서 도구를 이동하세요.
+      dragToSort: 실시간 미리보기
+      toolbox: 도구 상자
+      toolboxDescription: 제거된 도구는 여기에 남아 있습니다. +를 탭하여 다시 추가하거나 도구 모음으로 드래그하세요.
+      createCustomButton: 관습
+      toolbarPreview: 툴바
+      toolbarDescription: 아래 도구 모음은 편집기와 일치합니다. -를 눌러 도구를 제거하거나 길게 눌러 도구를 끌어서 정렬하세요.
+      toolboxEmpty: 지금은 도구 상자에 도구가 없습니다.
+      topRow: 맨 윗줄
+      bottomRow: 맨 아래 줄
+      currentRow: 열
+      visible: 보이는
+      hidden: 숨겨진
+      emptyRow: 여기에 버튼을 드래그하세요.
+      createCustomDialogTitle: 사용자 정의 도구 모음 버튼 추가
+      createCustomDialogDescription: 마크다운 스니펫과 자주 사용되는 텍스트에 대해 재사용 가능한 삽입 버튼을 만듭니다.
+      customButtonIconLabel: 상
+      customButtonNameLabel: 이름
+      customButtonNameHint: H1
+      customButtonNameRequired: 이름을 입력하세요.
+      customButtonContentLabel: 콘텐츠 삽입
+      customButtonContentHint: '예: 재사용 가능한 Markdown 또는 텍스트'
+      customButtonContentHelp: 이 도구 모음 버튼을 탭하면 이 내용이 현재 커서 위치에 삽입됩니다.
+      customButtonContentRequired: 삽입할 내용을 입력해주세요.
+      customButtonPreview: 시사
+      customIcons:
+        heading1: 제목 1
+        heading2: 제목 2
+        heading3: 제목 3
+        quote: 인용하다
+        inlineCode: 인라인 코드
+        codeBlock: 코드 블록
+        task: 일
+        divider: 분할기
+        table: 테이블
+        note: 메모
+      actions:
+        italic: 이탤릭체
+        strikethrough: 취소선
+        inlineCode: 인라인 코드
+        bulletedList: 글머리 기호 목록
+        taskList: 작업 목록
+        quote: 인용하다
+        heading1: 제목 1
+        heading2: 제목 2
+        heading3: 제목 3
+        divider: 분할기
+        inlineMath: 인라인 수학
+        blockMath: 블록 수학
+        table: 테이블
+        cutParagraph: 단락 잘라내기
+        gallery: 갱도
+    appearance: 모습
+    themeColor: 테마 색상
+    haptics: 햅틱
+    customTheme: 맞춤 테마
+    history: 역사
+    lightMode: 라이트 모드
+    darkMode: 다크 모드
+    surfaces: 표면
+    background: 배경
+    backgroundColor: 배경색
+    card: 카드
+    cardColor: 카드 색상
+    border: 국경
+    borderColor: 테두리 색상
+locationPicker:
+  searchNearbyPlaces: 주변 장소 검색
+  latitudeValue: 위도 $value
+  longitudeValue: 경도 $value
+  noPlacesFound: 장소를 찾을 수 없습니다.
+  mapInitializeFailed: 지도를 초기화하지 못했습니다.
+  providerNotReady: 위치 제공업체가 준비되지 않았습니다.
+  providerMissingAmapKeys: 위치를 선택하기 전에 Amap Web API 키와 보안 키가 필요합니다.
+  providerMissingBaiduKey: 위치를 선택하려면 Baidu AK가 필요합니다.
+  providerMissingGoogleKey: 위치를 선택하려면 Google 지도 API 키가 필요합니다.
+  providerUnsupportedPlatform: 내장된 지도 선택기는 Android 및 Windows에서만 사용할 수 있습니다.
+aiInsight:
+  title: AI 인사이트 스튜디오
+  subtitle: AI는 다양한 각도에서 메모를 이해할 수 있도록 도와드립니다.
+  settingsTitle: AI 분석 설정
+  startAnalysis: 분석 시작
+  common:
+    enabled: 활성화됨
+    disabled: 장애가 있는
+  timeRange:
+    title: 시간 범위
+    last3Days: 지난 3일
+    last7Days: 지난 7일
+    last30Days: 지난 30일
+    customRange: 맞춤 범위
+  privacyScope:
+    title: 개인정보 보호 범위
+    includePrivateNotes: 비공개 메모 포함
+    description: 활성화되면 분석을 위해 비공개 메모도 AI 모델로 전송됩니다.
+  promptSettings:
+    title: 프롬프트 설정
+    editPromptTemplate: 프롬프트 템플릿 편집
+    description: 고급 사용자가 이 통찰력에 사용되는 AI 프롬프트를 사용자 정의할 수 있습니다.
+    emptyTemplateHint: 이 통계에는 아직 프롬프트 템플릿이 없습니다. 분석을 시작하기 전에 하나를 추가하세요.
+    editorDescription: 이 템플릿은 $insight를 실행할 때 사용됩니다.
+    editorPlaceholder: AI가 무엇에 집중하고, 비교하고, 요약하고, 강조해야 하는지 설명하세요.
+    clearTemplate: 분명한
+  contentPreview:
+    title: 콘텐츠 미리보기
+    sectionTitle: 콘텐츠 미리보기
+    notesToSend: 보낼 메모
+    estimatedTokens: 예상 토큰
+    previewContent: 콘텐츠 미리보기
+    timeRange: 시간 범위
+    loading: 미리보기 준비 중…
+    previewLoadFailed: 콘텐츠 미리보기를 준비하지 못했습니다.
+    truncatedNotice: 현재 분석 제한을 유지하기 위해 콘텐츠가 잘렸습니다.
+    emptyState: 현재 설정과 일치하는 메모가 없습니다. 시간 범위나 개인 정보 보호 범위를 변경해 보세요.
+    noteCount: $count 노트
+    tokenCount: $count 토큰
+  templates:
+    defaultTitle: 기본 템플릿
+    defaultSubtitle: 내장된 분석 보기로 시작하세요.
+    showDefault: 기본 템플릿 표시
+    hideDefault: 기본 템플릿 숨기기
+    hiddenHint: 기본 템플릿은 숨겨져 있습니다.
+    customTitle: 맞춤 템플릿
+    customSubtitle: 다양한 분석 목표에 맞게 최대 10개의 템플릿을 생성하세요.
+    newTemplate: 새 템플릿
+    emptyTitle: 아직 맞춤 템플릿이 없습니다.
+    emptyDescription: 다양한 통찰력 각도에 대해 최대 10개의 템플릿을 만듭니다.
+    maxTemplatesReached: 최대 $max 템플릿을 추가할 수 있습니다.
+    deleteDialogTitle: 맞춤 템플릿 삭제
+    deleteDialogDescription: 이 템플릿을 삭제해도 기존 기록은 삭제되지 않습니다.
+    moreActions: 추가 작업
+    editAction: 편집하다
+    deleteAction: 삭제
+  cards:
+    todayClues:
+      title: 오늘의 단서
+      description: AI는 먼저 주목해야 할 최근 사건, 긴장감 및 개방형 루프를 강조합니다.
+    emotionMap:
+      title: 감정지도
+      description: 메모의 감정 흐름을 분석하고 최근 귀하의 상태를 어떻게 형성했는지 확인하세요.
+    themeResonance:
+      title: 테마 공명
+      description: 최근 메모에서 반복되는 주제를 찾고 계속해서 되돌아오는 내용을 표면화하세요.
+    thoughtTrace:
+      title: 생각의 흔적
+      description: 숨겨진 가정, 해결되지 않은 질문, 더 깊이 탐구할 가치가 있는 사고방식을 밝혀보세요.
+    blindSpotDiscovery:
+      title: 사각지대 발견
+      description: 글을 쓰는 동안 놓치기 쉬운 간과된 신호나 미묘한 패턴을 찾아보세요.
+    relationshipView:
+      title: 관계 보기
+      description: 사람, 상호 작용, 변화하는 관계 역학의 렌즈를 통해 노트를 재구성하세요.
+    actionExtraction:
+      title: 액션 추출
+      description: 반사된 내용을 시도, 테스트 또는 후속 조치가 가능한 구체적인 다음 작업으로 전환하세요.
+    longTermTrajectory:
+      title: 장기 궤적
+      description: 시간을 통해 살펴보고 의미 있는 변화, 반복 주기 및 장기적인 변화를 식별합니다.
+aiProxy:
+  title: 프록시 설정
+  notConfigured: 구성되지 않음
+  statusHttp: HTTP · $host:$port
+  statusSocks5: SOCKS5 · $host:$port
+  protocol: 규약
+  host: 주인
+  port: 포트
+  username: 사용자 이름
+  password: 비밀번호
+  bypassLocalAddresses: 로컬/개인 주소를 자동으로 우회
+  description: 공유 프록시를 활성화하는 AI 서비스에만 영향을 미칩니다. Ollama 및 127.0.0.1과 같은 로컬 모델은 기본적으로 직접 유지됩니다.
+  useSharedProxy: 공유 프록시 사용
+  useSharedProxyDescription: 이 서비스는 AI 설정에 구성된 프록시를 사용합니다.
+  incompleteWarning: 이 서비스에는 프록시가 활성화되어 있지만 공유 프록시 설정이 불완전합니다.
+  openSettings: 프록시 설정 열기
+  saveSuccess: 프록시 설정이 저장되었습니다.
+  clearSuccess: 프록시 설정이 지워졌습니다.
+  invalidHost: 프록시 호스트를 입력하세요.
+  invalidPort: 1~65535 사이의 유효한 프록시 포트를 입력하세요.
+  incompleteError: 该服务已启 이용대리，但 AI 代理设置尚未配置完整
+  testSectionTitle: 프록시 테스트
+  testSectionDescription: 현재 양식 값을 사용하여 프록시가 대상 웹 사이트에 도달할 수 있는지 테스트합니다.
+  testUrl: URL 테스트
+  testAction: 연결 테스트
+  testing: 테스트 중...
+  invalidTestUrl: 유효한 HTTP 또는 HTTPS URL를 입력하세요.
+  testSuccess: 연결 성공 · HTTP $statusCode · $elapsedMs ms
+  testFailure: '연결 실패: $message'
+legacy:
+  msg_memos_backend_docs: Memos 백엔드 문서
+  msg_remember_moment_feel_warmth_life_take: 순간을 기억하고, 삶의 따뜻함을 느껴보세요.\\n매일 간단한 복습을 해보세요.
+  msg_sure_want_delete_shortcut: 이 바로가기를 삭제하시겠습니까?
+  msg_scan_completed: 스캔 완료
+  msg_confirm: 확인하다
+  msg_unable_open_browser_install_browser_app: 브라우저를 열 수 없습니다. 브라우저 앱을 설치해주세요.
+  msg_contributors: 기여자
+  msg_feature_in_progress: 기능이 진행 중입니다. 곧 출시됩니다.
+  msg_version_description_unknown: '버전: 알 수 없음'
+  msg_version_description_v: '버전: v$version'
+  msg_version_description_v_build: '버전: v$version ($build)'
+  msg_about_website_link: 공식 홈페이지
+  msg_about_website_link_subtitle: MemoFlow 공식 웹사이트를 방문하세요
+  msg_about_privacy_policy: 개인 정보 보호 정책
+  msg_about_privacy_policy_subtitle: 개인정보 보호 및 데이터 사용 세부정보 보기
+  msg_about_user_agreement: 사용자 계약
+  msg_about_user_agreement_subtitle: 서비스 약관 및 사용 규칙 보기
+  msg_about_help_center: 도움말 센터
+  msg_about_help_center_subtitle: FAQ 및 사용 가이드
+  msg_about_release_notes_subtitle: 버전 업데이트 및 변경 세부정보 보기
+  msg_about_submit_feedback: 피드백 제출
+  msg_about_submit_feedback_subtitle: 문제점 및 개선 제안 제출
+  msg_about_contributors_subtitle: 기부자 및 기부자 목록 보기
+  msg_status_available: 살다
+  msg_status_placeholder: 곧
+  msg_debug_tap_logo_enter_debug_tools: '디버그: 로고를 5번 탭하면 디버그 도구가 열립니다.'
+  msg_donors_intro_thanks: MemoFlow를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.
+  msg_enter_keywords_search_box_query_local: 로컬 콘텐츠와 태그를 쿼리하려면 검색 상자에 키워드를 입력하세요. 오프라인으로 작동합니다. 처음 사용하려면 로컬 인덱싱이 완료될 때까지 기다리세요.
+  msg_memo_not_found_locally: 로컬에서 메모를 찾을 수 없습니다.
+  msg_token: 토큰
+  msg_last_7_days: 지난 7일
+  msg_search_memo_content: 메모 내용 검색
+  msg_retry_started: 재시도가 시작되었습니다
+  msg_last_year_memos: '작년: $lastYearMemos 메모'
+  msg_no_content_yet: 아직 콘텐츠가 없습니다.
+  msg_no_summary_yet: 아직 요약이 없습니다.
+  msg_sooner: 빨리!
+  msg_token_copied: 토큰이 복사되었습니다.
+  msg_share: 공유하다
+  msg_gallery_permission_required: 갤러리 권한이 필요합니다
+  msg_basic_settings: 기본 설정
+  msg_bad_ssl_certificate: SSL 인증서가 잘못되었습니다.
+  msg_no_notifications: 알림 없음
+  msg_import_markdown: Markdown에서 가져오기
+  msg_upload_zip_package_md_files: .md 파일이 포함된 .zip 패키지 업로드
+  msg_request_send_timeout_try: 전송 시간 초과를 요청합니다. 다시 시도해 보세요.
+  msg_select_date_range: 기간 선택
+  msg_delete_shortcut: 바로가기 삭제
+  msg_auto_lock_time: 자동 잠금 시간
+  msg_replacing_delete_original_attachment_continue: 교체하면 원본 첨부파일이 삭제됩니다. 계속하다?
+  msg_add_least_one_condition: 조건을 하나 이상 추가하세요.
+  msg_upload_images_image_bed_append_links: 이미지베드에 이미지를 업로드하고 메모에 링크를 추가하세요.
+  msg_request_cancelled: 요청이 취소되었습니다.
+  msg_generating: 생성 중이신가요?
+  msg_permissions_denied_reminders_disabled: 권한이 거부되었습니다. 알림이 비활성화되었습니다.
+  msg_memoflow_local_reminders: MemoFlow 지역 알림
+  msg_use_legacy_endpoints_older_memos_servers: 레거시 엔드포인트를 사용합니다(이전 Memos 서버의 경우).
+  msg_no_comments_yet: 아직 댓글이 없습니다
+  msg_open: 열려 있는
+  msg_microphone_permission_required: 마이크 권한이 필요합니다
+  msg_failed_react: '반응 실패: $e'
+  msg_restore_backup: 백업을 복원하시겠습니까?
+  msg_qr_saved_gallery: QR이 갤러리에 저장되었습니다.
+  msg_no_attachments: 첨부파일 없음
+  msg_enable_reminder_permissions: 알림 권한 활성화
+  msg_created_time: 생성시간 ↑
+  msg_prompt_saved_quick_prompts: 프롬프트가 빠른 프롬프트에 저장됩니다.
+  msg_remember_password: 비밀번호 기억하기
+  msg_enter_valid_url: 유효한 URL를 입력하세요.
+  msg_may_take_few_seconds: 몇 초 정도 걸릴 수 있습니다.
+  msg_local_sync_failed: '로컬 동기화 실패($type): $memoError'
+  msg_webdav_sync: WebDAV 백업
+  msg_clear: 분명한
+  msg_clear_recycle_bin_confirm: 휴지통을 비우시겠어요? 모든 항목이 영구적으로 삭제됩니다.
+  msg_save_failed: 저장 실패
+  msg_endpoint_not_found_version_mismatch: 엔드포인트를 찾을 수 없습니다(버전 불일치?)
+  msg_enable_webdav_sync: WebDAV 백업 활성화
+  msg_local_libraries: 지역 도서관
+  msg_apply: 적용하다
+  msg_restore_only_available_local_libraries: 복원은 로컬 라이브러리에만 사용할 수 있습니다.
+  msg_sign: 로그아웃하시겠습니까?
+  msg_reminders_disabled: 알림이 비활성화되었습니다.
+  msg_downloading: 다운로드 중...
+  msg_path: 길
+  msg_match_any: 무엇이든 일치
+  msg_local_db_pending_queue: 로컬 DB + 보류 중인 대기열
+  msg_scan_failed: '스캔 실패: $e'
+  msg_user: 사용자
+  msg_pick_future_time: 미래의 시간을 선택하세요
+  msg_include_pending_queue: 보류 중인 대기열 포함
+  msg_enter_days: 요일을 입력하세요
+  msg_times: 타임스
+  msg_token_returned_only_once_cannot_fetched: 토큰은 한 번만 반환되며 다시 가져올 수 없습니다.
+  msg_quoted_lines: 인용된 $quoteLines 라인
+  msg_use_remote: 원격 사용
+  msg_enable_memo_location: 메모 위치 활성화
+  msg_failed_get_location: 위치를 가져오지 못했습니다.
+  msg_after_import_memos_sync_list_automatically: 가져온 후 메모는 자동으로 목록에 동기화됩니다. ZIP 가져오기의 경우 파일 구조가 손상되지 않았는지 확인하세요.
+  msg_legacy_mode: 레거시 모드
+  msg_signed: 로그인됨
+  msg_shortcut_includes_advanced_conditions_saving_overwrite: 이 바로가기에는 고급 조건이 포함되어 있습니다. 저장하면 덮어쓰게 됩니다.
+  msg_no_results_found: 검색결과가 없습니다
+  msg_reply: 답장 $replyName...
+  msg_copy: 복사
+  msg_enable_reminders_memos: 메모에 대한 알림을 활성화합니다.
+  msg_comment: 논평
+  msg_added_voice_attachment: 음성 첨부가 추가되었습니다.
+  msg_customize_sidebar: 사이드바 사용자 정의
+  msg_customize_quick_entries: 빠른 항목 사용자 정의
+  msg_navigation_mode: 탐색 모드
+  msg_navigation_mode_classic: 클래식 모드(하단 탐색 없음)
+  msg_navigation_mode_bottom_bar: 하단 탐색 모드
+  msg_navigation_preview: 시사
+  msg_navigation_slot_left_1: 왼쪽 슬롯 1
+  msg_navigation_slot_left_2: 왼쪽 슬롯 2
+  msg_navigation_slot_center: 센터 액션
+  msg_navigation_slot_right_1: 오른쪽 슬롯 1
+  msg_navigation_slot_right_2: 오른쪽 슬롯 2
+  msg_quick_entry_slot_1: 빠른 입력 1
+  msg_quick_entry_slot_2: 빠른 입력 2
+  msg_quick_entry_slot_3: 빠른 입력 3
+  msg_coffee_add_drumstick: 😄 커피예요 / 드럼스틱 추가
+  msg_pin: 핀
+  msg_enter_password_continue: 계속하려면 비밀번호를 입력하세요
+  msg_remove_local_library: 로컬 라이브러리를 삭제하시겠습니까?
+  msg_comment_2: 새 댓글
+  msg_sync_all: 모두 동기화
+  msg_backup_schedule: 백업 일정
+  msg_server_error: 서버 오류
+  msg_analyzing_memos: 메모 분석 중...
+  msg_notification: 공고
+  msg_policy: 정책
+  msg_failed_load: '로드 실패: $error'
+  msg_default_visibility: 기본 공개 상태
+  msg_filter: 필터
+  msg_advanced_search: 고급 검색
+  msg_imported_memos: 가져온 메모
+  msg_token_created: 토큰이 생성되었습니다.
+  msg_server_response_timeout_try: 서버 응답 시간이 초과되었습니다. 다시 시도해 보세요.
+  msg_expiring: 만료 예정
+  msg_delete_task: 할 일 삭제
+  msg_body_must_json: 본문은 JSON여야 합니다.
+  msg_enable: 할 수 있게 하다
+  msg_referenced: 참조자
+  msg_replace_image: 이미지를 교체하시겠습니까?
+  msg_debug_logs: 디버그 로그
+  msg_active_tasks: 활성 작업
+  msg_attachments: 첨부파일
+  msg_range: 범위
+  msg_no_backups_found: 백업을 찾을 수 없습니다.
+  msg_create_memo: 메모 작성
+  msg_street: 거리
+  msg_display_name: 표시 이름
+  msg_full_text_search: 전체 텍스트 검색
+  msg_create_edit_delete_actions_offline_stored: 오프라인으로 생성/편집/삭제 작업은 로컬에 저장되고 동기화를 위해 대기열에 추가됩니다. 온라인일 경우 순서대로 발송됩니다. 실수를
+    방지하기 위해 제출되지 않은 수정사항을 초안으로 보관할 수 있습니다.
+  msg_sign_2: 로그아웃
+  msg_end_time: 종료 시간
+  msg_sync_recent_content: 최근 콘텐츠 동기화
+  msg_resetting_local_data: 로컬 데이터 재설정 중...
+  msg_incorrect_password: 잘못된 비밀번호
+  msg_content_cannot_empty: 콘텐츠는 비워둘 수 없습니다.
+  msg_preparing: 준비 중
+  msg_ai_summary_failed: 'AI 요약 실패: $formatSummaryError_e'
+  msg_manage: 관리하다
+  msg_keep_data_consistent_across_devices: 복구를 위해 데이터를 WebDAV에 백업하세요.
+  msg_playback_failed: '재생 실패: $e'
+  msg_path_copied: 경로가 복사되었습니다.
+  msg_auth_settings: 인증 설정
+  msg_randomly_draw_memo_cards: 메모카드를 무작위로 뽑으세요
+  msg_copy_log_text: 로그 텍스트 복사
+  msg_yes: 예
+  msg_save_open_alipay_scan: Alipay를 저장하고 열어서 스캔하세요
+  msg_signed_but_no_token_returned: 로그인했지만 토큰이 반환되지 않았습니다.
+  msg_create_failed: '생성 실패: $formatError_e_context'
+  msg_expand: 확장하다
+  msg_local_library_only: 지역 도서관 전용
+  msg_reminder_channel: 알림 채널
+  msg_grant: 승인하다
+  msg_import_canceled: 가져오기가 취소되었습니다.
+  msg_never: 절대
+  msg_release_notes: 릴리스 노트
+  msg_failed_load_references: 참조를 로드하지 못했습니다.
+  msg_select_tags: 태그 선택
+  msg_failed_load_try: 로드하지 못했습니다. 다시 시도해 주세요.
+  msg_logs_copied: 로그가 복사되었습니다.
+  msg_shortcuts_not_supported_server: 이 서버에서는 바로가기가 지원되지 않습니다.
+  msg_reply_2: 답장 $name...
+  msg_anonymous: 익명의
+  msg_username: 사용자 이름
+  msg_update_memo: 메모 업데이트
+  msg_saved: '저장 위치: $targetPath'
+  msg_chinese_simplified: 중국어(간체)
+  msg_memo_copied: 메모가 복사되었습니다.
+  msg_collapse: 무너지다
+  msg_retry_count_controls_how_many_extra: 재시도 횟수는 실패 시 추가 시도 횟수를 제어합니다. 값이 높을수록 성공률이 높아질 수 있지만 시간이 더 오래 걸립니다.
+  msg_recording_info_missing: 녹음 정보가 누락되었습니다.
+  msg_sync_task: 동기화 작업
+  msg_clear_all_debug_logs: 디버그 로그를 모두 지우시겠습니까?
+  msg_clear_all_logs: 이 기기의 모든 로그 데이터를 삭제하시겠습니까? 내보낸 파일은 삭제되지 않습니다.
+  msg_export_finished: 수출 완료
+  msg_failed_stop_recording: '녹화를 중지하지 못했습니다: $e'
+  msg_my_profile: 내 프로필
+  msg_image_bed: 이미지베드
+  msg_failed_open_notification: '알림을 열지 못했습니다: $e'
+  msg_manual: 수동
+  msg_no_html_file_found_zip: ZIP에 HTML 파일이 없습니다.
+  msg_also_clear_local_cache_account_offline: 그러면 이 계정의 로컬 캐시(오프라인 데이터/초안/보류 중인 동기화 대기열)도 지워집니다. 이 작업은 취소할 수 없습니다.
+  msg_restore: 복원하다
+  msg_auto_backup: 자동 백업
+  msg_generate_summary: 요약 생성
+  msg_days: $stats_activeDays일
+  msg_count: '- 세다'
+  msg_weekly: 주간
+  msg_notifications: 알림
+  msg_backup_failed: 백업 실패
+  msg_private: 사적인
+  msg_filter_tags: 태그로 필터링
+  msg_clear_logs: 로그 지우기
+  msg_logs_cleared: 로그가 지워졌습니다.
+  msg_unable_open_browser: 브라우저를 열 수 없습니다
+  msg_attachment_too_large: 첨부파일이 너무 큼
+  msg_query: 질문
+  msg_match_all: 모두 일치
+  msg_record_request_response_logs: 요청/응답 로그 기록
+  msg_import_file: 파일 가져오기
+  msg_content_tags: 콘텐츠 + 태그
+  msg_feature_not_available_local_library_mode: 이 기능은 로컬 라이브러리 모드에서는 사용할 수 없습니다.
+  msg_import_failed: '가져오기 실패: $e'
+  msg_save_memo: 메모로 저장
+  msg_scan_disk_directory_merge_local_database: 디스크 디렉터리를 스캔하고 로컬 데이터베이스에 병합하시겠습니까? 누락된 파일은 삭제된 것으로 처리됩니다.
+  msg_passwords_not_match: 비밀번호가 일치하지 않습니다.
+  msg_signed_2: '다음 계정으로 로그인: $lastLoginUser'
+  msg_made_love_note_taking: 메모 작성에 대한 애정으로 제작됨
+  msg_password_updated_local: 비밀번호 업데이트됨(로컬)
+  msg_retry: 다시 해 보다
+  msg_memo_stats: 메모 통계
+  msg_shown_only_once_copy_keep_safe: 한 번만 표시되므로 복사하여 안전하게 보관하세요.
+  msg_describe_issue_time_repro_steps_etc: 문제, 시간, 재현 단계 등을 설명합니다.
+  msg_how_many_days_back: 며칠 전
+  msg_local_cache_cleared: 로컬 캐시가 지워졌습니다.
+  msg_none: 없음
+  msg_body_json: 본체(JSON)
+  msg_download_failed: '다운로드 실패: $e'
+  msg_recycle_bin: 휴지통
+  msg_unpin: 고정 해제
+  msg_advanced_security: 고급 및 보안
+  msg_run_issues_memoflow_e_g_sync: 'MemoFlow에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n'
+  msg_remove_all_reminder_times_memo: 이 메모의 모든 알림 시간을 삭제하세요.
+  msg_no_summary_save: 저장할 요약이 없습니다.
+  msg_reset_language_selection: 언어 선택 재설정
+  msg_v_30_days: 30일
+  msg_e_g_mood_check: 예를 들어 기분 체크
+  msg_note_some_tokens_returned_only_once: '팁: 일부 토큰은 한 번만 표시됩니다. 처음 표시될 때 안전하게 저장하세요.'
+  msg_probe_memo_can_delete: 이 메모는 MemoFlow API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.
+  msg_syncing: 동기화 중...
+  msg_retention: 보유
+  msg_open_login_screen: 로그인 화면 열기
+  msg_apply_all: 모두에게 적용
+  msg_write_something_supports_tag_tasks_x: '뭔가를 쓰세요... #tag 및 작업 [ ] / [x] 지원'
+  msg_http: '$base (HTTP $status): $msg'
+  msg_single: 하나의
+  msg_delete_memo: 메모를 삭제하시겠습니까?
+  msg_ai_provider: AI 공급자
+  msg_release_notes_v: 릴리스 노트 v$version
+  msg_info_only_used_background_ai_summaries: 이 정보는 AI 요약/보고서의 배경으로만 사용되며 백엔드와 동기화되지 않습니다.
+  msg_not_disturb: 방해하지 마세요
+  msg_local_library_import_failed: '로컬 라이브러리 가져오기 실패: $e'
+  msg_key_insights: 주요 통찰력
+  msg_additional_notes_optional: 추가 참고사항(선택사항)
+  msg_server_response_error: 서버 응답 오류입니다.
+  msg_sort: 종류
+  msg_newest_first: 최신순
+  msg_oldest_first: 오래된 것부터
+  msg_open_memo: 메모 열기
+  msg_api_call: API 통화
+  msg_webhooks: 웹훅
+  msg_local_library: 지역 도서관
+  msg_log_copied: 로그가 복사되었습니다.
+  msg_last_success: 마지막 성공
+  msg_restore_cloud: 클라우드에서 복원
+  msg_search_public_memos: 공개 메모 검색
+  msg_cancel: 취소
+  msg_processing: $processed / $total 처리 중
+  msg_failed_items: 실패한 항목
+  msg_recording_file_not_found: 녹음 파일을 찾을 수 없습니다
+  msg_local_db_outbox_queue: 로컬 DB + 발신함 대기열
+  msg_remove: 제거하다
+  msg_export_format: 내보내기 형식
+  msg_idle: 게으른
+  msg_ago: $months 전
+  msg_no_tags_yet: 아직 태그가 없습니다.
+  msg_version_v: 버전 v$version
+  msg_sync: 동조
+  msg_done: 완료
+  msg_gallery_permission_required_2: 갤러리 권한이 필요합니다
+  msg_insufficient_permissions: 권한이 부족합니다.
+  msg_no_download_url_available: 다운로드 가능한 URL가 없습니다.
+  msg_record_create_memos: 메모를 작성하려면 녹음하세요
+  msg_signing: 로그인 중...
+  msg_memoflow_uses_system_location_permission_get: 'MemoFlow는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를
+    통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.'
+  msg_continue: 계속하다
+  msg_notification_content_unavailable: 알림 내용을 사용할 수 없습니다.
+  msg_unable_read_file_path: 파일 경로를 읽을 수 없습니다.
+  msg_all_memos: 모든 Memos
+  msg_keywords: 키워드
+  msg_ai_search_loading_title: AI 검색으로 관련 메모를 찾고 있습니다
+  msg_ai_search_loading_message: 이 쿼리에 대한 로컬 메모를 색인화하고 삽입하고 순위를 매깁니다.
+  msg_ai_search_needs_embedding_model: AI 검색에는 임베딩 모델이 필요합니다.
+  msg_ai_search_failed: AI 검색 실패
+  msg_ai_search_configure_embedding_model: AI 설정에서 임베딩 모델을 구성한 후 다시 시도하세요.
+  msg_ai_search_back_to_keyword_search: 키워드 검색으로 돌아가기
+  msg_ai_search_no_matches: AI 일치 항목이 없습니다.
+  msg_ai_search_keyword_available: 정확한 텍스트 일치에 대한 키워드 검색은 계속 가능합니다.
+  msg_ai_search_try_related_memos: AI 검색을 통해 의미적으로 관련된 메모를 찾아보세요.
+  msg_ai_search_use_ai_search: AI 검색 사용
+  msg_ai_search_results_label: AI 의미론적 결과
+  msg_ai_search_keyword: 예어
+  msg_ai_search_use_for_related_memos: 관련 메모는 AI 검색을 이용하세요
+  msg_ai_search_index_confirm_title: AI 검색 색인을 구축하시겠습니까?
+  msg_ai_search_index_confirm_remote_message: AI 검색은 적합한 메모 청크를 먼저 색인화해야 합니다. 이렇게 하면 해당 청크가 구성된 임베딩 모델로 전송되고 공급자 할당량 또는 비용이
+    소비될 수 있습니다.
+  msg_ai_search_index_confirm_local_message: AI 검색은 적합한 메모 청크를 먼저 색인화해야 합니다. 그러면 로컬 임베딩 모델로 처리되며 로컬 리소스가 사용될 수 있습니다.
+  msg_ai_search_index_confirm_token_estimate: '예상 인덱싱 토큰: $count'
+  msg_ai_search_index_confirm_continue: AI 검색 계속하기
+  msg_import_result: 가져오기 결과
+  msg_offline_sync: 오프라인 동기화
+  msg_imported_memos_local_library: 지역 도서관에서 가져온 메모
+  msg_request_failed: 요청 실패
+  msg_log_file: 내보낸 파일
+  msg_after_confirming_support_unlock_limited_gold: 지원을 확인한 후 제한된 골드 배지를 잠금 해제하거나 영원히 광고 없는 약속을 받을 수 있습니다(광고는 없었지만).
+  msg_failed_open_system_settings: 시스템 설정을 열지 못했습니다.
+  msg_no_mood_trend: 기분 추세 없음
+  msg_memoflow_export: '# MemoFlow 내보내기'
+  msg_sync_queue: 동기화 대기열
+  msg_only_delete_sync_task_memo_kept: 동기화 작업만 삭제하세요. 메모는 보관됩니다.
+  msg_add_home_screen: 홈 화면에 추가
+  msg_past_days: 지난 날
+  msg_poster_generation_failed: 포스터 생성 실패
+  msg_failed_load_stats: '통계를 로드하지 못했습니다: $e'
+  msg_customize_notification: 알림 사용자 정의
+  msg_updated_time: 업데이트 시간 ↓
+  msg_network_connection_failed_check_network: 네트워크 연결에 실패했습니다. 네트워크를 확인하세요.
+  msg_special_thanks: '특별한 감사:'
+  msg_failed_comment: '댓글 작성 실패: $e'
+  msg_security_key_sig: 보안 키(서명)
+  msg_save_gallery: 갤러리에 저장
+  msg_request_sent_confirm_system_prompt: 요청이 전송되었습니다. 시스템 프롬프트에서 확인
+  msg_server_url: 서버 URL
+  msg_period_review: 기간 검토
+  msg_settings_updated: 설정이 업데이트되었습니다.
+  msg_backend_0_21_not_supported_import: 백엔드 0.21은 가져오기가 지원되지 않습니다. 업그레이드하고 다시 시도해 보세요.
+  msg_failed_load_tags: '태그를 로드하지 못했습니다: $e'
+  msg_enter_email: 이메일을 입력하세요
+  msg_add_webhook: 웹훅 추가
+  msg_read: 읽다
+  msg_widgets: 위젯
+  msg_default: 기본
+  msg_memo_reminders: 메모 알림
+  msg_import_flomo: 플로모에서 수입하기
+  msg_import_swashbuckler_diary: 스워시버클러 다이어리에서 가져오기
+  msg_supported_json_markdown_txt_zip: JSON / Markdown / TXT 우편번호
+  msg_format_fixed_markdown_zip: 형식은 Markdown + ZIP으로 고정됩니다.
+  msg_enter_username_password: 사용자 이름과 비밀번호를 입력하세요
+  msg_loading: 로드 중...
+  msg_test_scheduled: $timeLabel$suffix$pendingLabel에 테스트 예정
+  msg_edit_memo: 메모 편집
+  msg_save: 구하다
+  msg_laboratory: 실혐실
+  msg_use_local: 로컬 사용
+  msg_retry_sync: 동기화 재시도
+  msg_e_g_my_role_topics_interest: 예를 들어 내 역할 / 관심 주제 / 선호하는 글쓰기 스타일?
+  msg_confirm_password: 비밀번호 확인
+  msg_not_set: 설정되지 않음
+  msg_no_memos_day: 이 날에는 메모가 없습니다.
+  msg_shortcut_name: 바로가기 이름
+  msg_edit_shortcut: 바로가기 편집
+  msg_days_memos: 메모가 있는 날
+  msg_delete: 삭제
+  msg_test_reminder: 테스트 알림
+  msg_enable_reminders: 알림 활성화
+  msg_links: 모래밭
+  msg_location: 위치
+  msg_import_file_2: 파일에서 가져오기
+  msg_reply_3: 답장 $creatorDisplayName_commentCreator_commentMemo_creator...
+  msg_created: $widget_createdAtLabel를 생성했습니다.
+  msg_notifications_coming_soon: '알림: 곧 제공 예정'
+  msg_view_full_contributors: 전체 기여자 보기
+  msg_no_times_set: 시간이 설정되지 않았습니다.
+  msg_ignore_tls_errors: TLS 오류 무시
+  msg_no_content: 콘텐츠 없음
+  msg_about_15_seconds_left: 약 15초 남았습니다
+  msg_view_imported_memos: 가져온 메모 보기
+  msg_load_failed: 로드 실패
+  msg_disk_content_conflicts_local_pending_changes: 디스크 내용이 로컬 보류 중인 변경 사항과 충돌합니다. 디스크를 사용하여 로컬 콘텐츠를 덮어씁니다.
+  msg_all_history_so_far_memoflow_since: 이것이 지금까지의 모든 기록입니다.\\n2023년 이후 MEMOFLOW
+  msg_cancelling: 취소 중
+  msg_reading_file: 파일을 읽는 중...
+  msg_switch_workspace: 작업공간 전환
+  msg_optional_leave_empty_default: 선택 과목. 기본값으로 비워 두세요.
+  msg_memo_reminders_2: 메모 알림
+  msg_save_failed_2: '저장 실패: $e'
+  msg_record_create_memos_sync_later: 메모 기록 및 작성(나중에 동기화)
+  msg_use_https_avoid_ignoring_tls_errors: 자격 증명을 보호하려면 HTTPS를 사용하고 TLS 오류를 무시하지 마십시오.
+  msg_failed_load_announcement_config: 공지 구성을 로드하지 못했습니다.
+  msg_shortcuts: 단축키
+  msg_memo: 메모
+  msg_maybe_later: 이 버전에 대해 알림 안 함
+  msg_server_connection: 서버 연결
+  msg_days_2: 날
+  msg_include_archived: 보관된 항목 포함
+  msg_during_quiet_hours_reminders_silenced: 조용한 시간에는 알림이 무음으로 설정됩니다.
+  msg_preview_not_supported_type: 이 유형에는 미리보기가 지원되지 않습니다.
+  msg_failed_load_2: 로드하지 못했습니다.
+  msg_create_token: 새 토큰 생성
+  msg_enter_name: 이름을 입력하세요.
+  msg_api_url_incorrect: API URL가 올바르지 않습니다.
+  msg_user_general_settings: 사용자 일반 설정
+  msg_saved_memo: 메모로 저장됨
+  msg_restore_failed: '복원 실패: $e'
+  msg_token_tail: 토큰 테일 $tail
+  msg_manual_token: 수동 토큰
+  msg_ago_2: $years 전
+  msg_recent_searches: 최근 검색어
+  msg_restored: 복원됨
+  msg_no_contributors_yet: 아직 참여자가 없습니다.
+  msg_no_record_yet: 아직 기록이 없습니다
+  msg_reminder: 알림
+  msg_enter_api_key_ai_settings: AI 설정에 API 키를 입력하세요.
+  msg_reminder_settings: 알림 설정
+  msg_http_2: $base (HTTP $status)
+  msg_edit_webhook: 웹훅 편집
+  msg_generate_share_poster: 공유 포스터 생성
+  msg_archive_failed: '보관 실패: $e'
+  msg_comments: $widget_commentCount 댓글
+  msg_remove_account: 계정을 삭제하시겠습니까?
+  msg_chinese_traditional: 중국어(번체)
+  msg_private_2: 사적인
+  msg_current_streak: 현재 연속
+  msg_generated_ai_memoflow: AI · MemoFlow에 의해 생성됨
+  msg_edit_completed: 수정 완료
+  msg_local: 현지의
+  msg_edit: 편집하다
+  msg_text: $shortUserName_item_sender에서
+  msg_got: 알았어요
+  msg_web_api_key: 웹 API 키
+  msg_preview: 시사
+  msg_enter_password: 비밀번호를 입력해주세요
+  msg_api: API
+  msg_ok: 좋아요
+  msg_failed_load_shortcuts: 바로가기를 로드하지 못했습니다.
+  msg_after_recording_audio_added_current_draft: 녹음 후 오디오는 현재 초안에 첨부 파일로 추가되므로 보내기 전에 편집할 수 있습니다. 최대 길이는 60분입니다. 나중에 타사 서비스를
+    통해 전사를 추가할 수 있습니다.
+  msg_pull_refresh: 당겨서 새로고침
+  msg_unable_open_photo: 사진을 열 수 없습니다.
+  msg_existing_tokens: 기존 토큰
+  msg_ai_settings: AI 설정
+  msg_app_lock: 앱 잠금
+  msg_total_notes: 총 메모
+  msg_stats_loading: 통계를 로드하는 중입니다.
+  msg_enter_token_description: 토큰 설명을 입력하세요.
+  msg_enter_token: 토큰을 입력하세요
+  msg_api_plugins: API 및 플러그인
+  msg_parsing_file: 파일을 구문 분석하는 중...
+  msg_english: 영어
+  msg_activity_heatmap: 활동 히트맵
+  msg_mark_read: 읽음으로 표시
+  msg_request: 요구
+  msg_sync_failed: '동기화 실패($type): $memoError'
+  msg_error_copied: 오류가 복사되었습니다.
+  msg_only_local_index_removed_disk_files: 로컬 인덱스만 제거됩니다. 디스크 파일이 보관됩니다. 이 작업은 취소할 수 없습니다.
+  msg_switch_account: 계정 전환
+  msg_invalid_download_link: 잘못된 다운로드 링크
+  msg_about: 에 대한
+  msg_icon: 상
+  msg_reset_done_syncing: 재설정이 완료되었습니다. 동기화 중...
+  msg_enter_amap_web_api_key: Amap Web API 키를 입력하세요
+  msg_recycle_bin_coming_soon: '휴지통: 곧 제공 예정'
+  msg_empty_content: (빈 콘텐츠)
+  msg_note_most_features_offline_stats_ai: '참고: 대부분의 기능(오프라인/통계/AI 보고서/내보내기)은 백엔드 변경 없이 작동하지만 토큰은 한 번만 반환되므로 안전하게 보관하십시오.'
+  msg_fixed: '결정된:'
+  msg_allow_sharing_links_images_other_apps: 다른 앱의 링크나 이미지를 MemoFlow로 공유하도록 허용합니다.
+  msg_invalid_request_parameters: 잘못된 요청 매개변수
+  msg_enter_api_url: API URL를 입력하세요.
+  msg_pending: ($result_pendingCount 보류 중)
+  msg_days_3: $currentStreak일
+  msg_poster_not_ready_yet: 포스터가 아직 준비되지 않았습니다.
+  msg_generated_memoflow: MemoFlow에 의해 생성됨
+  msg_enter_name_2: 이름을 입력하세요
+  msg_version: 버전
+  msg_memo_missing_disk_but_has_local: 메모가 디스크에 없지만 로컬에 보류 중인 변경 사항이 있습니다. 로컬에서 삭제하려면 디스크를 사용하세요.
+  msg_legacy_api_compatibility: 레거시 API 호환성
+  msg_sync_parameters: 동기화 매개변수
+  msg_quick_prompts: 빠른 프롬프트
+  msg_share_failed: '공유 실패: $e'
+  msg_no_memos_summarize_range: 이 범위에 요약할 메모가 없습니다.
+  msg_characters: 캐릭터
+  msg_capture_every_moment_record: 녹음하는 모든 순간을 포착하세요
+  msg_vibration: 진동
+  msg_days_4: 날
+  msg_prompt_title: 프롬프트 제목
+  msg_show_all: 모두 표시
+  msg_no_memos_available: 사용할 수 있는 메모가 없습니다.
+  msg_comment_unavailable: 댓글을 사용할 수 없습니다.
+  msg_refresh: 새로 고치다
+  msg_syncing_2: 동기화 중
+  msg_body: 몸
+  msg_clear_2: 분명한
+  msg_third_party_share: 제3자 공유
+  msg_charging_station: 충전소
+  msg_attachments_2: 첨부파일
+  msg_when_enabled_must_verify_each_app: 활성화되면 앱을 시작할 때마다 확인해야 합니다. 자동 잠금 시간은 앱이 백그라운드로 전환된 후 확인이 필요한 기간을 제어합니다.
+  msg_add_prompt: 프롬프트 추가
+  msg_include: 포함하다
+  msg_created_time_2: 생성시간 ↓
+  msg_choose_data_source_start_importing_memos: 메모 가져오기를 시작하려면 데이터 소스를 선택하세요.
+  msg_describe_how_want_summary: 요약을 원하는 방식을 설명하세요...
+  msg_keep_token_safe_not_share_api: 토큰을 안전하게 보관하고 공유하지 마세요.\\nAPI 속도 제한은 분당 요청 60개입니다.
+  msg_open_2: 열려 있는
+  msg_e_g_claude_3_5_sonnet: 예를 들어 클로드-3-5-소네트-20241022
+  msg_failed_request_whitelist: 화이트리스트를 요청하지 못했습니다.
+  msg_notification_deleted: 알림이 삭제되었습니다.
+  msg_accounts: 계정
+  msg_add_local_library: 로컬 라이브러리 추가
+  msg_sign_first: 먼저 로그인하세요.
+  msg_failed_parse_query: 쿼리를 구문 분석하지 못했습니다.
+  msg_note_logs_sanitized_automatically_sensitive_data: '참고: 로그는 자동으로 삭제됩니다. 민감한 데이터가 남아 있으면 제출하기 전에 수정하세요.'
+  msg_add: 추가하다
+  msg_failed_load_3: '로드 실패: $memosError'
+  msg_max_chars_day: 최대 문자/일
+  msg_choose_what_edited_image: 편집된 이미지를 어떻게 처리할지 선택하세요.
+  msg_select: 선택하다
+  msg_unnamed_token: (이름 없는 토큰)
+  msg_name: 이름
+  msg_sure_want_delete_webhook: 이 웹훅을 삭제하시겠습니까?
+  msg_back: 뒤쪽에
+  msg_no: 아니요
+  msg_untitled: 제목 없음
+  msg_open_language_onboarding: 개방형 언어 온보딩
+  msg_voice_memos: 음성 Memos
+  msg_unable_open_browser_try: 브라우저를 열 수 없습니다. 다시 시도해 주세요.
+  msg_date_range: 기간
+  msg_not_authenticated: 인증되지 않음
+  msg_back_2: 뒤쪽에
+  msg_local_library_removed: 로컬 라이브러리가 제거되었습니다.
+  msg_exact_alarm_permission_required: 정확한 알람 권한이 필요합니다
+  msg_visibility: 시계
+  msg_failed_start_recording: '녹화 시작 실패: $e'
+  msg_mood_trend: 기분 추세
+  msg_local_library_name: 지역 도서관 이름
+  msg_no_tokens_yet: 아직 토큰이 없습니다.
+  msg_loading_2: 로드 중이신가요?
+  msg_location_permission_denied_permanently: 위치 권한이 영구적으로 거부되었습니다.
+  msg_download: 다운로드
+  msg_export_time: '- 수출 시간'
+  msg_enter_password_2: 비밀번호를 입력하세요
+  msg_no_image_available: 사용 가능한 이미지가 없습니다.
+  msg_daily: 일일
+  msg_no_likes_yet: 아직 좋아요가 없습니다.
+  msg_basics: 기초
+  msg_shortcut: 새로운 단축키
+  msg_debug_tools: 디버그 도구
+  msg_save_settings: 설정 저장
+  msg_date_range_2: 기간
+  msg_feedback: 피드백
+  msg_help_diagnostics: 도움말 및 진단
+  msg_storage_space: 저장 공간
+  msg_storage_space_subtitle: MemoFlow의 알려진 사용량을 확인하고 캐시를 지웁니다.
+  msg_image_bed_2: 이미지베드
+  msg_image_compression: 이미지 압축
+  msg_enable_image_compression: 이미지 압축 활성화
+  msg_image_compression_desc: 업로드하기 전에 새로 추가된 이미지 첨부 파일을 압축하세요.
+  msg_image_compression_scope: 새로 추가된 첨부 파일에만 적용됩니다.
+  msg_max_side: 최대면
+  msg_quality: 품질
+  msg_output_format: 출력 형식
+  msg_compression_mode: 압축 모드
+  msg_mode_quality: 품질
+  msg_mode_size: 크기
+  msg_lossless: 무손실
+  msg_keep_metadata: 메타데이터 유지
+  msg_skip_if_bigger: 더 크면 건너뛰세요
+  msg_resize: 크기 조정
+  msg_enable_resize: 크기 조정 활성화
+  msg_resize_mode: 크기 조정 모드
+  msg_resize_width: 너비
+  msg_resize_height: 키
+  msg_resize_edge: 가장자리
+  msg_do_not_enlarge: 확대하지 마세요
+  msg_resize_mode_no_resize: 크기 조정 없음
+  msg_resize_mode_dimensions: 치수
+  msg_resize_mode_percentage: 백분율
+  msg_resize_mode_short_edge: 짧은 가장자리
+  msg_resize_mode_long_edge: 긴 가장자리
+  msg_resize_mode_fixed_width: 고정폭
+  msg_resize_mode_fixed_height: 고정 높이
+  msg_jpeg: JPEG
+  msg_png: PNG
+  msg_webp: 웹P
+  msg_tiff: 사소한 말다툼
+  msg_chroma_subsampling: 크로마 서브샘플링
+  msg_chroma_auto: 자동
+  msg_chroma_444: '4:4:4'
+  msg_chroma_422: '4:2:2'
+  msg_chroma_420: '4:2:0'
+  msg_chroma_411: '4:1:1'
+  msg_progressive: 프로그레시브
+  msg_optimization_level: 최적화 수준
+  msg_method: 방법
+  msg_uncompressed: 비압축
+  msg_lzw: LZW
+  msg_deflate: 꺾다
+  msg_packbits: 팩비트
+  msg_deflate_preset: 수축 사전 설정
+  msg_fast: 빠른
+  msg_balanced: 균형 잡힌
+  msg_best: 최상의
+  msg_size_target: 대상 크기
+  msg_output_size_unit: 크기 단위
+  msg_format_auto: 자동
+  msg_output_format_same_as_input: 입력과 동일
+  msg_format_jpeg: JPEG
+  msg_format_png: PNG
+  msg_format_webp: 웹P
+  msg_format_tiff: 사소한 말다툼
+  msg_bytes: B
+  msg_kb: KB
+  msg_mb: MB
+  msg_gb: GB
+  msg_percentage: 백분율
+  msg_lossless_warning: 무손실이 활성화된 경우에도 새 형식으로 변환하거나 크기를 조정하면 품질이 저하될 수 있습니다.
+  msg_restoring: 복원 중…
+  msg_export: 내보내다
+  msg_enter_token_name: 토큰 이름을 입력하세요.
+  msg_start_time: 시작 시간
+  msg_preparing_file_structure: 파일 구조 준비 중
+  msg_sign_3: 로그인
+  msg_scan_local_library: 로컬 라이브러리 스캔
+  msg_lsky_pro: Lsky 프로
+  msg_exact_alarm_permission_off_reminders_may: 정확한 알람 권한이 꺼져 있습니다. 알림은 제 시간에 실행되지 않을 수 있습니다. 지금 설정을 여시겠어요?
+  msg_last_30_days: 지난 30일
+  msg_match: 성냥
+  msg_auth_mode: 인증 모드
+  msg_unsupported_file_type: 지원되지 않는 파일 형식입니다.
+  msg_only_delete_sync_task: 동기화 작업만 삭제하세요.
+  msg_change_password: 비밀번호 변경
+  msg_saved_2: 저장됨
+  msg_import_export: 가져오기/내보내기
+  msg_created_2: 생성됨
+  msg_ai_summary: AI 요약
+  msg_progress: 진전
+  msg_replace_memo_image: 메모 이미지 교체
+  msg_app_settings: 앱 설정
+  msg_copy_path: 경로 복사
+  msg_components: 구성요소
+  msg_no_shortcuts: 단축키 없음
+  msg_location_timed_try: 위치 시간이 초과되었습니다. 다시 시도해 주세요.
+  msg_attach_location_info_memos_show_subtle: 메모에 위치 정보를 첨부하고 미묘한 장소 이름을 표시합니다.
+  msg_send_failed: '보내기 실패: $e'
+  msg_repeat: 반복하다
+  msg_not_signed: 로그인되지 않음
+  msg_no_webhooks_configured: 구성된 웹훅이 없습니다.
+  msg_apply_token: 토큰 적용
+  msg_enable_reminder_permissions_2: 알림 권한 활성화
+  msg_enter_backup_password: 백업 비밀번호를 입력하세요
+  msg_start_backup: 백업 시작
+  msg_last_sync: 마지막 동기화
+  msg_note_export_includes_content_already_synced: '참고: 내보내기에는 로컬 데이터베이스에 이미 동기화된 콘텐츠가 포함됩니다(오프라인 데이터 포함).'
+  msg_enter_username: 사용자 이름을 입력하세요
+  msg_settings_saved: 설정이 저장되었습니다.
+  msg_no_keywords: 키워드 없음
+  msg_these_settings_apply_newly_created_memos: 이 설정은 새로 생성된 메모에 적용됩니다.
+  msg_back_home: 홈으로 돌아가기
+  msg_quiet_hours: 조용한 시간
+  msg_add_account: 계정 추가
+  msg_reset_complete: 재설정 완료
+  msg_no_shortcuts_configured: 구성된 바로가기가 없습니다.
+  msg_password: 비밀번호
+  msg_importing: 가져오기
+  msg_visibility_2: '가시성 : $visibilityLabel'
+  msg_no_logs_yet: 아직 로그가 없습니다.
+  msg_v_9_times_allowed: 최대 9회까지 허용
+  msg_last_14_days: 지난 14일
+  msg_location_disabled_enable_settings_first: 위치가 비활성화되었습니다. 먼저 설정에서 활성화하세요.
+  msg_add_2: 추가하다
+  msg_logs: 로그
+  msg_references: 참고자료
+  msg_importing_memos: 메모 가져오는 중...
+  msg_account_security: 계정 및 보안
+  msg_reminder_2: 알림
+  msg_enable_scheduled_reminder_notifications: 예약된 미리 알림을 활성화합니다.
+  msg_no_links: 링크 없음
+  msg_delete_memo_2: 메모 삭제
+  msg_one_tap_add_not_supported_add: 원터치 추가는 지원되지 않습니다. 위젯 선택기에서 추가하세요.
+  msg_password_2: 새 비밀번호
+  msg_processing_content: 콘텐츠 처리 중...
+  msg_status: 상태
+  msg_local_library_added: 로컬 라이브러리가 추가되었습니다.
+  msg_failed_open_try: 열지 못했습니다. 다시 시도해 주세요.
+  msg_removed_locally_now_deleted_server_when: 이제 로컬에서 제거되고 온라인일 때 서버에서 삭제됩니다.
+  msg_server_url_unavailable: 서버 URL를 사용할 수 없습니다.
+  msg_no_release_notes_yet: 아직 출시 노트가 없습니다.
+  msg_cancelling_2: 취소 중...
+  msg_summaries_selected_range: 선택한 범위에 대한 요약
+  msg_expand_2: 확장하다
+  msg_close: 닫다
+  msg_more_comments: $remainingComments 더 많은 댓글
+  msg_view_all_comments: "모든 댓글 보기"
+  msg_backing: 백업 중…
+  msg_view_debug_logs: 디버그 로그 보기
+  msg_location_permission_denied: 위치 권한이 거부되었습니다.
+  msg_self_repair_reset_heatmap: '자가 수리: 히트맵 재설정'
+  msg_self_repair: "\uc790\uac00 \uc218\ub9ac"
+  msg_self_repair_subtitle: "로컬 태그, 검색, 통계를 수리합니다"
+  msg_repair_abnormal_tags: "\uc774\uc0c1 \ud0dc\uadf8 \uc218\ub9ac"
+  msg_repair_abnormal_tags_subtitle: "\ud604\uc7ac \uba54\ubaa8 \ubcf8\ubb38\uc758 #tag \ud14d\uc2a4\ud2b8\ub85c \uba54\ubaa8 \ud0dc\uadf8\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud569\ub2c8\ub2e4."
+  msg_rebuild_search_index: "\uac80\uc0c9 \uc778\ub371\uc2a4 \ub2e4\uc2dc \uc0dd\uc131"
+  msg_rebuild_search_index_subtitle: "\uba54\ubaa8\ub97c \uc0ad\uc81c\ud558\uc9c0 \uc54a\uace0 \ub85c\uceec \ud0a4\uc6cc\ub4dc \uac80\uc0c9 \ub370\uc774\ud130\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud569\ub2c8\ub2e4."
+  msg_rebuild_stats_cache: "\ud1b5\uacc4 \uce90\uc2dc \ub2e4\uc2dc \uc0dd\uc131"
+  msg_rebuild_stats_cache_subtitle: "\ud788\ud2b8\ub9f5, \ud0dc\uadf8 \ud1b5\uacc4, \uc694\uc57d \uce74\uc6b4\ud130\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud569\ub2c8\ub2e4."
+  msg_clear_media_cache: "미디어 캐시 지우기"
+  msg_clear_media_cache_subtitle: "다운로드한 이미지 캐시, 이미지 메모리 캐시, 비디오 썸네일, 임시 이미지 압축 파일을 지웁니다."
+  msg_media_cache_total: "미디어 캐시 합계"
+  msg_media_cache_network_images: "네트워크 이미지 캐시"
+  msg_media_cache_memory_images: "이미지 메모리 캐시"
+  msg_media_cache_video_thumbnails: "비디오 썸네일 캐시"
+  msg_media_cache_image_compression_temp: "이미지 압축 임시 캐시"
+  msg_media_cache_calculating: "계산 중..."
+  msg_media_cache_size_unavailable: "사용할 수 없음"
+  msg_self_repair_local_only_note: "\uc774 \uc791\uc5c5\uc740 \ub85c\uceec \ud30c\uc0dd \ub370\uc774\ud130\ub9cc \uc218\ub9ac\ud569\ub2c8\ub2e4. \uba54\ubaa8, \uacc4\uc815, \ucca8\ubd80, \ud658\uacbd\uc124\uc815, WebDAV \ubc31\uc5c5, \uc6d0\uaca9 \uc11c\ubc84 \ub370\uc774\ud130\ub294 \uc0ad\uc81c\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+  msg_confirm_repair_abnormal_tags: "\uc774\uc0c1 \ud0dc\uadf8\ub97c \uc218\ub9ac\ud560\uae4c\uc694?"
+  msg_repair_abnormal_tags_confirm_message: "\uba54\ubaa8 \ud0dc\uadf8\ub294 \ud604\uc7ac \uba54\ubaa8 \ubcf8\ubb38\uc758 #tag \ud14d\uc2a4\ud2b8\ub85c \ub2e4\uc2dc \uc0dd\uc131\ub429\ub2c8\ub2e4. \ubcf8\ubb38\uc5d0 \uc5c6\ub294 \uc800\uc7a5\ub41c \ud0dc\uadf8\ub294 \uc81c\uac70\ub420 \uc218 \uc788\uc2b5\ub2c8\ub2e4. \uba54\ubaa8 \ub0b4\uc6a9\uc740 \uc0ad\uc81c\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+  msg_confirm_rebuild_search_index: "\uac80\uc0c9 \uc778\ub371\uc2a4\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud560\uae4c\uc694?"
+  msg_rebuild_search_index_confirm_message: "\ub85c\uceec \ud0a4\uc6cc\ub4dc \uac80\uc0c9 \ub370\uc774\ud130\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud569\ub2c8\ub2e4. \uba54\ubaa8 \ub0b4\uc6a9, \uacc4\uc815, \ucca8\ubd80, \ud658\uacbd\uc124\uc815, \uc6d0\uaca9 \uc11c\ubc84 \ub370\uc774\ud130\ub294 \uc0ad\uc81c\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+  msg_confirm_rebuild_stats_cache: "\ud1b5\uacc4 \uce90\uc2dc\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud560\uae4c\uc694?"
+  msg_rebuild_stats_cache_confirm_message: "\ud788\ud2b8\ub9f5, \ud0dc\uadf8 \ud1b5\uacc4, \uc694\uc57d \uce74\uc6b4\ud130\ub97c \ub85c\uceec \uba54\ubaa8\uc5d0\uc11c \ub2e4\uc2dc \uc0dd\uc131\ud569\ub2c8\ub2e4. \uba54\ubaa8 \ub0b4\uc6a9\uc740 \uc0ad\uc81c\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+  msg_confirm_clear_media_cache: "미디어 캐시를 지울까요?"
+  msg_clear_media_cache_confirm_message: "다운로드한 이미지 캐시, 이미지 메모리 캐시, 비디오 썸네일, 임시 이미지 압축 파일이 지워집니다. 메모, 계정, LocalLibrary 원본 파일, 첨부 원본 파일, 환경설정, WebDAV 백업, 대기 중인 동기화 큐, 원격 서버 데이터는 삭제되지 않습니다. 캐시된 미디어는 나중에 다시 다운로드되거나 생성될 수 있습니다."
+  msg_repair_abnormal_tags_success: "\uc774\uc0c1 \ud0dc\uadf8\ub97c \uc218\ub9ac\ud588\uc2b5\ub2c8\ub2e4"
+  msg_rebuild_search_index_success: "\uac80\uc0c9 \uc778\ub371\uc2a4\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud588\uc2b5\ub2c8\ub2e4"
+  msg_rebuild_stats_cache_success: "\ud1b5\uacc4 \uce90\uc2dc\ub97c \ub2e4\uc2dc \uc0dd\uc131\ud588\uc2b5\ub2c8\ub2e4"
+  msg_clear_media_cache_success: "미디어 캐시를 지웠습니다"
+  msg_clear_media_cache_failed: "미디어 캐시 정리에 실패했습니다"
+  msg_clear_media_cache_partial_failure: "미디어 캐시 정리가 일부 완료되었습니다"
+  msg_self_repair_failed: "\uc790\uac00 \uc218\ub9ac \uc2e4\ud328: $e"
+  msg_memoflow_known_usage: MemoFlow 알려진 사용량
+  msg_storage_device_capacity_unavailable: 기기 용량을 사용할 수 없습니다. MemoFlow 알려진 사용량과 분류는 계속 표시됩니다.
+  msg_storage_memoflow_device_usage_less_than_one_percent: MemoFlow가 기기 용량의 1% 미만을 사용합니다
+  msg_storage_memoflow_device_usage_percent: MemoFlow가 기기 용량의 $percent%를 사용합니다
+  msg_storage_cache: 캐시
+  msg_storage_note_content: 노트 내용
+  msg_storage_note_images: 노트 이미지
+  msg_storage_note_videos: 노트 동영상
+  msg_storage_note_audio: 노트 오디오
+  msg_storage_note_files: 노트 파일
+  msg_storage_cache_description: 임시 파생 미디어 데이터입니다. 지워도 노트나 첨부 원본 파일은 삭제되지 않습니다.
+  msg_storage_note_content_description: 노트에 저장된 로컬 텍스트 내용의 예상 크기입니다.
+  msg_storage_attachment_read_only_description: 보기 전용입니다. 제거하려면 관련 노트나 첨부 원본 파일을 삭제하세요.
+  msg_these_settings_changed_locally_remotely_choose: 이러한 설정은 로컬 및 원격으로 변경되었습니다. 유지할 버전을 선택하세요.
+  msg_not_authenticated_2: 인증되지 않았습니다.
+  msg_action_failed: '작업 실패: $e'
+  msg_shortcut_2: 새로운 바로가기
+  msg_url: URL
+  msg_no_memos_found_html: HTML에서 메모를 찾을 수 없습니다.
+  msg_enter_what_want_summarize: 요약하고 싶은 내용을 입력하세요...
+  msg_unable_load_audio_source: 오디오 소스를 로드할 수 없습니다.
+  msg_strategy_id: 전략 ID
+  msg_copy_failed: '복사 실패: $e'
+  msg_enable_image_bed: 이미지 베드 활성화
+  msg_active: 활동적인
+  msg_account: 계정
+  msg_invalid_webdav_server_url: 잘못된 WebDAV 서버 URL
+  msg_keep_local: 로컬 유지
+  msg_within_range: 범위 내
+  msg_generate_log_file: 로그 번들 내보내기
+  msg_ai_reports: AI 보고서
+  msg_battery_optimization: 배터리 최적화
+  msg_sync_overview: 동기화 개요
+  msg_legacy_servers_not_support_search_filters: 레거시 서버는 검색 필터를 지원하지 않습니다. 결과가 불완전할 수 있습니다.
+  msg_conflicts_detected_run_manual_sync: 충돌이 감지되었습니다. 수동 동기화를 실행하세요.
+  msg_authentication_failed_check_token: 인증에 실패했습니다. 토큰을 확인하세요.
+  msg_date_range_3: 기간
+  msg_help_ai_understand_better: AI가 당신을 더 잘 이해할 수 있도록 도와주세요
+  msg_no_search_history: 검색 기록이 없습니다
+  msg_enter_api_path: API 경로를 입력하세요
+  msg_stats: 통계
+  msg_text_2: '새로운:'
+  msg_removing_signing_clear_local_cache_account: 제거/로그아웃하면 이 계정의 로컬 캐시(오프라인 데이터/초안/보류 중인 동기화 대기열)가 지워집니다.
+  msg_updated_time_2: 업데이트 시간 ↑
+  msg_province: 주
+  msg_submitting_sync_queue: 동기화 대기열 제출 중
+  msg_failed: 실패한
+  msg_set_time: 시간 설정
+  msg_enable_local_library_backup: 로컬 라이브러리 백업 활성화
+  msg_cancel_2: 취소
+  msg_week: 이번 주
+  msg_like: 좋다
+  msg_location_services_disabled: 위치 서비스가 비활성화되었습니다
+  msg_clears_local_cache_offline_memos_pending: 이렇게 하면 로컬 캐시(오프라인 메모/보류 중인 대기열)가 지워지고 전체 재동기화가 트리거됩니다. 동기화되지 않은 콘텐츠는 손실되며
+    시간이 다소 걸릴 수 있습니다. 계속하다?
+  msg_load_more: 더 로드하기
+  msg_pull_up_to_load_more: 더 많은 것을 로드하려면 위로 당기세요.
+  msg_release_to_load_more: 더 많은 것을 로드하려면 손을 떼세요
+  msg_scroll_down_to_load_more: 더 로드하려면 아래로 스크롤하세요.
+  msg_loaded_all_content: 모든 콘텐츠가 로드되었습니다.
+  msg_pull_memo_list_refresh_sync_sync: 메모 목록을 아래로 당겨 새로고침하고 동기화하세요. 동기화는 가장 최근 항목을 먼저 가져옵니다. 통계/히트맵을 완전하게 유지하려면 주기적으로 전체
+    동기화를 실행하세요.
+  msg_server_returned_error: 서버에서 오류($code)를 반환했습니다.
+  msg_sound_feedback: 사운드 및 피드백
+  msg_memos_skipped_attachments_skipped: $exportedMemoCount 메모($skippedMemoCount 건너뛰기), $exportedAttachmentCount 첨부 파일($skippedAttachmentCount
+    건너뛰기).
+  msg_import_complete: 가져오기 완료
+  msg_text_3: 새로운
+  msg_max_per_day: 일일 최대
+  msg_permissions_denied: 권한이 거부되었습니다.
+  msg_memo_2: 새 메모
+  msg_delete_reminder: 알림 삭제
+  msg_select_month: 월 선택
+  msg_select_backup: 백업 선택
+  msg_no_keywords_2: '#키워드 없음'
+  msg_preparing_memo_content: 메모 내용 준비 중
+  msg_prompt_content: 프롬프트 내용
+  msg_default_prompt_ai_summaries_reports: AI 요약/보고서에 대한 기본 프롬프트
+  msg_intro: 소개
+  msg_monthly_stats: 월별 통계
+  msg_times_2: 타임스
+  msg_file_has_already_been_imported_skipped: 이 파일은 이미 가져왔습니다. 건너뛰었습니다.
+  msg_token_tail_unknown: 토큰 테일을 알 수 없음
+  msg_press_back_exit: 종료하려면 뒤로를 다시 누르세요.
+  msg_enter_password_3: 비밀번호를 입력하세요
+  msg_sync_conflicts: 동기화 충돌
+  msg_locale: 장소
+  msg_any: 어느
+  msg_provider: 공급자
+  msg_preview_2: 시사
+  msg_automatically_upload_images_append_links_memo: 자동으로 이미지를 업로드하고 메모에 링크를 추가합니다.
+  msg_import_file_not_found: 가져오기 파일을 찾을 수 없습니다.
+  msg_today: 오늘
+  msg_link_card: 링크 카드
+  msg_expiration: 만료
+  msg_summary_prompt_optional: 요약 프롬프트(선택 사항)
+  msg_memos: Memos
+  msg_recording_file_not_found_2: 녹화 파일을 찾을 수 없습니다.
+  msg_backup_settings: 백업 설정
+  msg_mode: 방법
+  msg_no_markdown_memos_found_zip: ZIP에서 Markdown 메모를 찾을 수 없습니다.
+  msg_archived: 보관됨
+  msg_update_failed: '업데이트 실패: $e'
+  msg_enable_app_lock: 앱 잠금 활성화
+  msg_html_zip: HTML/ZIP
+  msg_all: 모두
+  msg_model: 모델
+  msg_title: 제목
+  msg_amap_web_api: Amap 웹 API
+  msg_saved_gallery: 갤러리에 저장됨
+  msg_gallery_mobile_only: 갤러리는 모바일에서만 이용 가능합니다.
+  msg_unread: 읽히지 않는
+  msg_exporting: 내보내는 중...
+  msg_network_timeout_try: 네트워크 시간 초과. 다시 시도해 주세요.
+  msg_unlock: 터놓다
+  msg_ago_3: $diff_inDays 전
+  msg_random_walk_days_ago_exact: $days일 전
+  msg_random_walk_day_period_dawn: 새벽
+  msg_random_walk_day_period_morning: 아침
+  msg_random_walk_day_period_noon: 정오
+  msg_random_walk_day_period_afternoon: 오후
+  msg_random_walk_day_period_dusk: 황혼
+  msg_random_walk_day_period_night: 밤
+  msg_deserve_coffee_i_m_pulling_all: 이 커피를 마실 자격이 있기 위해 나는 밤새도록 100줄의 코드를 작성하고 있습니다!
+  msg_token_name: 토큰 이름
+  msg_restore_completed: 복원 완료
+  msg_restore_completed_to_path: 복원이 완료되었습니다. $path에 저장된 파일
+  msg_restore_missing_attachments: '일부 첨부 파일을 다운로드하지 못했습니다: $count'
+  msg_restore_to_directory: 디렉터리로 복원
+  msg_restore_export_only_notice: 서버 모드 복원은 선택한 디렉터리에만 파일을 다운로드하고 서버에 다시 쓰지 않습니다.
+  msg_restore_config_confirm_title: 민감한 설정을 복원하시겠습니까?
+  msg_restore_config_confirm_hint: 적용할 민감한 설정을 선택하세요. 다른 설정은 자동으로 복원됩니다.
+  msg_restore_config_item_webdav: WebDAV 설정
+  msg_restore_config_item_image_bed: 이미지 침대 설정
+  msg_restore_config_item_image_compression: 이미지 압축 설정
+  msg_restore_config_item_app_lock: 앱 잠금 설정
+  msg_restore_config_item_ai: AI 설정
+  msg_backup_plain_risk_title: 일반 텍스트 백업
+  msg_backup_plain_risk_body: 일반 텍스트 백업은 암호화되지 않으며 민감한 데이터가 노출될 수 있습니다. 계속하다?
+  msg_backup_config_scope: 백업 구성
+  msg_backup_config_none: 구성을 백업하지 마십시오
+  msg_backup_config_none_desc: 메모와 첨부파일만 백업하세요.
+  msg_backup_config_safe: 안전한 구성만
+  msg_backup_config_safe_desc: 전체 기본 설정, 미리 알림, 템플릿 및 위치를 백업하세요.
+  msg_backup_config_full: 모든 구성(민감함)
+  msg_backup_config_full_desc: WebDAV, AI, 앱 잠금, 이미지 베드, 초안이 포함되어 있습니다.
+  msg_backup_config_full_requires_encryption: 모든 구성에는 암호화된 백업이 필요합니다.
+  msg_skip: 건너뛰다
+  msg_copied_clipboard: 클립보드에 복사됨
+  msg_failed_2: $attempts 실패
+  msg_too_many_requests_try_later: 요청이 너무 많습니다. 나중에 다시 시도하세요.
+  msg_more: 더
+  msg_already_whitelisted: 이미 허용 목록에 추가됨
+  msg_local_library_backup: 로컬 라이브러리 백업
+  msg_awesome: 엄청난! ❤️
+  msg_now: 지금
+  msg_select_reminder_time: 알림 시간 선택
+  msg_protected: 보호됨
+  msg_failed_load_4: '로드 실패: $e'
+  msg_operation_failed: '작업 실패: $e'
+  msg_no_tags: 태그 없음
+  msg_create_tag: 태그 만들기
+  msg_edit_tag: 태그 수정
+  msg_tag_name: 태그 이름
+  msg_tag_name_required: 태그 이름은 필수 항목입니다.
+  msg_tag_name_invalid: 태그 이름에는 /를 포함할 수 없습니다.
+  msg_parent_tag: 상위 태그
+  msg_no_parent: 부모 없음
+  msg_tag_color: 태그 색상
+  msg_inherit: 상속
+  msg_inherit_color: 상위 색상 상속
+  msg_tag_pinned: 핀 태그
+  msg_delete_tag: 태그 삭제
+  msg_delete_tag_confirm: 이 태그를 삭제하시겠습니까?
+  msg_delete_tag_warning: 하위 태그는 상위 태그로 이동되며 이 태그는 메모에서 제거됩니다.
+  msg_server: 섬기는 사람
+  msg_improved: 개선됨
+  msg_request_2: 요구
+  msg_export_failed: '내보내기 실패: $e'
+  msg_notification_settings: 알림 설정
+  msg_related_memo_was_deleted: 관련 메모가 삭제되었습니다
+  msg_email: 이메일
+  msg_enter_password_4: 비밀번호를 입력해주세요
+  msg_retry_count: 재시도 횟수
+  msg_import_exported_html_zip_package: 내보낸 HTML 또는 ZIP 패키지 가져오기
+  msg_archive: 보관소
+  msg_reset_heatmap: 히트맵을 재설정하시겠습니까?
+  msg_token_applied: 토큰이 적용됨
+  msg_log_file_created: 로그 번들을 내보냈습니다.
+  msg_delete_sync_task: 동기화 작업 삭제
+  msg_include_archived_2: '- 보관된 내용 포함'
+  msg_memoflow_side_project_i_build_my: MemoFlow는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에
+    활력을 불어넣고 새로운 기능 출시에 도움이 됩니다
+  msg_failed_generate: '생성 실패: $e'
+  msg_search_logs: 로그 검색
+  msg_active_days: 활동적인 날
+  msg_back_top: 맨 위로 돌아가기
+  msg_month: 이번 달
+  msg_loading_references: 참조 로드 중
+  msg_silent: 조용한
+  msg_settings: 설정
+  msg_locating: 찾는 중...
+  msg_scan: 주사
+  msg_recording_path_missing: 녹음 경로가 없습니다.
+  msg_date_range_4: '- 기간'
+  msg_suggested_tags: 추천 태그
+  msg_energy_restored: ⚡ 에너지가 복원되었습니다
+  msg_username_2: 사용자 이름
+  msg_ai_summary_report: AI 요약 보고서
+  msg_all_tags: 모든 태그
+  msg_preferences: 환경설정
+  msg_image_bed_3: 이미지베드
+  msg_quick_input: 빠른 입력
+  msg_tags: 태그
+  msg_energy_critically_low: 에너지가 매우 낮습니다!
+  msg_delete_failed: '삭제 실패: $e'
+  msg_server_login: 서버 로그인
+  msg_like_2: 좋다
+  msg_save_2: 구하다
+  msg_unknown: 알려지지 않은
+  msg_release_notes_2: 릴리스 노트
+  msg_include_error_details: 오류 세부정보 포함
+  msg_write_comment: 댓글을 쓰세요...
+  msg_write_thoughts: 당신의 생각을 적어보세요...
+  msg_draft_box_title: 초안 상자
+  msg_draft_box_empty_desc: 아직 저장된 초안이 없습니다.
+  msg_draft_box_pending_hint: 초안 상자에 완료되지 않은 초안이 있습니다($count). 초안 상자를 눌러 확인하세요.
+  msg_empty_draft: 빈 초안
+  msg_editing: 편집
+  msg_delete_draft: 초안 삭제
+  msg_delete_draft_confirm: 이 초안을 삭제하시겠습니까?
+  msg_draft_deleted: 초안이 삭제되었습니다.
+  msg_local_2: 현지의
+  msg_expired: 만료됨
+  msg_fixed_2: 결정된
+  msg_upload_attachment: 첨부파일 업로드
+  msg_battery_whitelist: 배터리 화이트리스트
+  msg_district: 구역
+  msg_voice_memo: 🎙️ 음성 메모\\n
+  msg_system_default: 시스템 기본값
+  msg_all_memos_2: 모든 메모
+  msg_network_request_failed: 네트워크 요청이 실패했습니다.
+  msg_memo_not_found: 메모를 찾을 수 없습니다
+  msg_playback_failed_2: '재생 실패: $e'
+  msg_sync_settings_webdav_across_devices: 복구를 위해 설정을 WebDAV에 백업하세요.
+  msg_offline_first_client_memos_backend: Memos 백엔드를 위한 오프라인 우선 클라이언트입니다.
+  msg_user_guide: 사용자 가이드
+  msg_notice: 알아채다
+  msg_exact_alarms: 정확한 알람
+  msg_restoring_overwrite_local_library_files_rebuild: 복원하면 로컬 라이브러리 파일을 덮어쓰고 데이터베이스를 다시 작성합니다. 이 작업은 취소할 수 없습니다.
+  msg_enter_api_url_ai_settings: AI 설정에 API URL를 입력하세요.
+  msg_create_failed_2: '생성 실패: $e'
+  msg_close_search: 검색 닫기
+  msg_imported_memos_2: 가져온 메모
+  msg_explore: 탐구하다
+  msg_network_connection_failed: 네트워크 연결에 실패했습니다.
+  msg_save_failed_3: '저장 실패: $e'
+  msg_no_summary_share: 공유할 요약이 없습니다.
+  msg_custom_model: 맞춤형 모델
+  msg_sign_failed: '로그인 실패: $message'
+  msg_notification_exact_alarm_permissions_required_send: 알림을 제때 보내려면 알림 및 정확한 알람 권한이 필요합니다.
+  msg_random_review: 무작위 검토
+  msg_random_review_source_scope: 참고 출처
+  msg_random_review_source_all_notes: 모든 메모
+  msg_random_review_source_explore_notes: 노트 탐색
+  msg_random_review_source_ai_history: AI 역사
+  msg_random_review_ai_history_date_range: AI 요약 시간
+  msg_public: 공공의
+  msg_all_2: 모두
+  msg_add_custom_model: 맞춤 모델 추가
+  msg_backup_password: 백업 비밀번호
+  msg_optional_used_sign_requests: 선택 과목. 요청에 서명하는 데 사용됩니다.
+  msg_search: 찾다
+  msg_set_password: 비밀번호 설정
+  msg_submit_logs: 로그 내보내기
+  msg_logs_export_local_only: 내보내기는 로그를 로컬에만 저장합니다. 앱은 자동으로 메모를 업로드하거나 메모를 생성하지 않습니다.
+  msg_enable_network_logging_before_exporting: 로그인/동기화/백업 문제의 경우 내보내기 전에 네트워크 로깅을 활성화하세요.
+  msg_activity_heatmap_2: 활동 히트맵
+  msg_invalid_api_key_insufficient_permissions: API 키가 잘못되었거나 권한이 부족합니다.
+  msg_data_has_been_migrated_app_successfully: 귀하의 데이터가 이 앱으로 성공적으로 이전되었습니다.
+  msg_get_version: 새 버전 받기
+  msg_token_source: 토큰 소스
+  msg_send: 보내다
+  msg_no_pending_sync_tasks: 보류 중인 동기화 작업이 없습니다.
+  msg_locating_memo_content: 메모 내용 찾기
+  msg_offline_ready: 오프라인 준비
+  msg_use_relative_path: 상대 경로 사용
+  msg_total: 총
+  msg_location_2: 위치
+  msg_location_contains: 위치에 다음이 포함됨
+  msg_show_location_metadata_memos_not_configured: 메모에 위치 메타데이터를 표시합니다. 구성되지 않은 경우 좌표가 대신 표시됩니다.
+  msg_api_url: API URL
+  msg_parsing_progress: 파싱 ​​진행
+  msg_parsing: 파싱
+  msg_custom: 관습
+  msg_tags_created: 새 태그가 생성되었습니다.
+  msg_third_party_share_disabled: 타사 공유가 비활성화되었습니다.
+  msg_loading_links: 링크 로드 중...
+  msg_how_report: 신고하는 방법?
+  msg_confirm_password_2: 비밀번호 확인
+  msg_search_title_content_tags: 제목, 콘텐츠, 태그로 검색
+  msg_reset_failed: '재설정 실패: $e'
+  msg_debug_preview_update_dialog: '디버그: 업데이트 미리보기 대화상자'
+  msg_what_s: 새로운 소식은 무엇인가요?
+  msg_ringtone: 벨소리
+  msg_unable_detect_backend_version_check_server: 백엔드 버전을 감지할 수 없습니다. 서버 URL 또는 네트워크를 확인하세요.
+  msg_pending_2: 보류 중
+  msg_parsing_html: HTML을 구문 분석하는 중...
+  msg_actions: 행위
+  msg_import_complete_2: 가져오기 완료
+  msg_use_disk: 디스크 사용
+  msg_root_path: 루트 경로
+  msg_disabled: 장애가 있는
+  msg_improved_2: '개선됨:'
+  msg_city: 도시
+  msg_decoding_zip: ZIP 디코딩 중...
+  msg_notification_content: 알림 내용
+  msg_resolve_conflict: 갈등 해결
+  msg_webhooks_not_supported_server: 이 서버에서는 웹후크가 지원되지 않습니다.
+  msg_may_delayed: (지연될 수도 있습니다)
+  msg_permissions_system_settings: 권한 및 시스템 설정
+  msg_waiting_tasks_stop: 작업이 중지되기를 기다리는 중
+  msg_done_2: 완료
+  msg_parsing_memoflow_export: MemoFlow 내보내기 구문 분석 중...
+  msg_location_updated: '업데이트된 위치: $next_displayText_fractionDigits_6'
+  msg_checking_server_version: 서버 버전 확인 중...
+  msg_next_time_back_fixing_bugs: 🙌 다음에는 버그 수정으로 다시 돌아오겠습니다
+  msg_ago_4: $weeks 전
+  msg_import: 수입
+  msg_create_token_2: 토큰 생성
+  msg_marked_read: 읽음으로 표시됨
+  msg_pinned: 고정됨
+  msg_version_update: 버전 업데이트
+  msg_allow_private_memos: 비공개 메모 허용
+  msg_token_copied_clipboard: 토큰이 클립보드에 복사되었습니다.
+  msg_keeping_more_versions_uses_more_storage: 더 많은 버전을 유지하면 더 많은 저장용량을 사용합니다. 이전 버전을 정리하는 것이 좋습니다.
+  msg_delete_webhook: 웹훅 삭제
+  msg_prompt: 즉각적인
+  msg_location_precision: 위치 정밀도
+  msg_password_required: 비밀번호가 필요합니다
+  msg_exit_app: 앱 종료
+  msg_thanks_energy_fully_restored: 감사해요! 에너지가 완전히 회복되었습니다 ⚡
+  msg_connection_timeout_check_network_api_url: 연결 시간이 초과되었습니다. 네트워크 또는 API URL를 확인하세요.
+  msg_local_network_migration: 로컬 네트워크 마이그레이션
+  msg_local_network_migration_desc: 로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 MemoFlow 장치와 타사 메모 도구를 연결하세요. MemoFlow 마이그레이션 및 Obsidian은
+    현재 지원됩니다.
+  msg_connect_obsidian: 흑요석 연결
+  msg_connect_obsidian_desc: 로컬 네트워크를 통해 Obsidian과 노트 콘텐츠를 페어링하고 동기화하세요.
+  msg_local_network_migration_more_targets: 나중에 SiYuan 및 기타 타사 도구를 포함한 더 많은 대상이 여기에 추가될 예정입니다.
+  msg_memoflow_migration: MemoFlow 마이그레이션
+  msg_memoflow_migration_target_desc: 로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 MemoFlow 장치로 마이그레이션하세요.
+  msg_memoflow_migration_targets_summary: MemoFlow / 흑요석
+  msg_memoflow_migration_role_desc: 이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 MemoFlow를 포그라운드에 유지하세요.
+  msg_memoflow_migration_sender: 나는 보낸 사람이다
+  msg_memoflow_migration_sender_desc: 현재 로컬 작업 공간에서 메모와 설정을 선택한 다음 근처 수신기에 연결하세요.
+  msg_memoflow_migration_sender_only_local_mode: 보낸 사람 역할은 이 장치가 로컬 작업 공간을 사용하는 경우에만 사용할 수 있습니다.
+  msg_memoflow_migration_receiver: 나는 수신기입니다
+  msg_memoflow_migration_receiver_desc: 수신 세션을 만들고, QR 코드를 표시하고, 들어오는 메모나 설정을 가져옵니다.
+  msg_memoflow_migration_select_content: 콘텐츠 선택
+  msg_memoflow_migration_notes: 메모 내용
+  msg_memoflow_migration_notes_desc: 현재 로컬 작업공간에서 모든 메모와 첨부 파일을 보냅니다.
+  msg_memoflow_migration_settings: 설정 내용
+  msg_memoflow_migration_settings_desc: 휴대용 기본 설정과 선택적 민감한 설정을 보냅니다.
+  msg_memoflow_migration_safe_config: 안전한 설정
+  msg_memoflow_migration_sensitive_config: 민감한 설정
+  msg_memoflow_migration_prepare_package: 마이그레이션 패키지 준비
+  msg_memoflow_migration_prepare_send: 보낼 준비를 하세요
+  msg_memoflow_migration_send_method: 전송 방법
+  msg_memoflow_migration_send_method_desc: 패키지가 준비된 후 수신기에 연결하는 방법을 선택하십시오.
+  msg_memoflow_migration_prepare_send_first: 전송 방법을 선택하기 전에 이전 화면에서 패키지를 준비하세요.
+  msg_memoflow_migration_package_ready: 패키지 준비
+  msg_memoflow_migration_package_summary: $memoCount 메모 · $attachmentCount 첨부파일 · $size
+  msg_memoflow_migration_scan_receiver: 스캔 수신기
+  msg_memoflow_migration_search_receiver: 주변 수신기 검색
+  msg_memoflow_migration_discovered_receivers: 근처 수신기
+  msg_memoflow_migration_waiting_receiver: 발신자 연결을 기다리는 중…
+  msg_memoflow_migration_review_proposal: 마이그레이션 제안 검토
+  msg_memoflow_migration_receive_mode: 수신 모드
+  msg_memoflow_migration_receive_as_new_workspace: 새 로컬 작업공간으로 가져오기
+  msg_memoflow_migration_overwrite_current_workspace: 현재 로컬 작업공간 덮어쓰기
+  msg_memoflow_migration_sensitive_config_confirm: 민감한 설정에는 확인이 필요합니다.
+  msg_memoflow_migration_accept: 수락하고 받기
+  msg_memoflow_migration_reject: 거부하다
+  msg_memoflow_migration_start_receive: 수신 시작
+  msg_memoflow_migration_completed: 마이그레이션 완료
+  msg_memoflow_migration_view_result: 결과 보기
+  msg_memoflow_migration_result: 마이그레이션 결과
+  msg_memoflow_migration_sender_device: 발신 장치
+  msg_memoflow_migration_size: 예상 크기
+  msg_memoflow_migration_received_bytes: '수신됨: $size'
+  msg_memoflow_migration_applied_configs: 적용된 설정
+  msg_memoflow_migration_skipped_configs: 건너뛴 설정
+  msg_memoflow_migration_workspace_name: 작업공간
+  msg_memoflow_migration_scan_title: 스캔 수신기 QR
+  msg_memoflow_migration_scan_hint: 수신 장치에 표시된 QR 코드를 스캔하세요.
+  msg_memoflow_migration_foreground_notice: 마이그레이션 중에 두 장치 모두에서 MemoFlow를 포그라운드로 유지합니다.
+  msg_bridge_component_title: MemoFlow 다리
+  msg_bridge_component_desc: 로컬 동기화를 위해 Obsidian 플러그인과 페어링하세요.
+  msg_bridge_title: 흑요석 연결
+  msg_bridge_local_mode_only: 로컬 네트워크를 통해 Obsidian과 페어링하세요. 나중에 다른 목표가 올 수도 있습니다.
+  msg_bridge_paired_target: '페어링됨: $target'
+  msg_bridge_unpaired: 페어링되지 않음
+  msg_bridge_server: '서버: $server'
+  msg_bridge_device: '장치: $device'
+  msg_bridge_processing: 처리 중...
+  msg_bridge_action_scan_pair: 스캔하여 페어링
+  msg_bridge_action_mdns_discover: mDNS 검색
+  msg_bridge_action_searching: 수색...
+  msg_bridge_pair_code_label: 페어 코드
+  msg_bridge_pair_code_hint: Obsidian에 표시된 6자리 코드를 입력하세요.
+  msg_bridge_action_pairing: 편성...
+  msg_bridge_action_confirm_pair: 페어링 확인
+  msg_bridge_action_checking: 확인 중...
+  msg_bridge_action_health_check: 건강검진
+  msg_bridge_enable: 브리지 활성화
+  msg_bridge_pair_cleared: 페어링이 삭제되었습니다.
+  msg_bridge_clear_pair: 페어 지우기
+  msg_bridge_discovery_results: 발견 결과
+  msg_bridge_scan_title: QR 스캔
+  msg_bridge_scan_hint: Obsidian 플러그인에 표시된 QR 코드를 스캔하세요.
+  msg_bridge_qr_invalid: 잘못된 페어링 QR 코드
+  msg_bridge_pair_response_missing_token: 쌍 응답 누락 토큰
+  msg_bridge_pair_success: 페어링 성공
+  msg_bridge_pair_failed: '페어링 실패: $e'
+  msg_bridge_mdns_searching: mDNS 서비스 검색 중...
+  msg_bridge_mdns_failed: 'mDNS 검색 실패: $e'
+  msg_bridge_mdns_not_found: 브리지 서비스를 찾을 수 없습니다.
+  msg_bridge_mdns_found_count: $count 서비스를 찾았습니다.
+  msg_bridge_input_host_required: 호스트는 필수 항목입니다.
+  msg_bridge_input_port_invalid: 포트가 유효하지 않습니다
+  msg_bridge_input_pair_code_required: 쌍 코드가 필요합니다
+  msg_bridge_status_pairing: 편성...
+  msg_bridge_need_pair_first: 먼저 페어링해주세요
+  msg_bridge_status_health_checking: 브릿지 상태 확인 중...
+  msg_bridge_status_health_ok: 브릿지는 건강해요
+  msg_bridge_status_health_failed: '상태 확인 실패: $e'
+  app_language:
+    system: 시스템 설정 따르기
+    zh_hans: 중국어(간체)
+    zh_hant_tw: 중국어(번체, 대만)
+    en: 영어
+    ja: 일본어
+    de: 독일어
+    pt_br: 포르투갈어(브라질)
+    ko: 한국어
+  app_theme:
+    system: 체계
+    light: 빛
+    dark: 어두운
+  app_font_size:
+    standard: 기준
+    large: 크기가 큰
+    small: 작은
+  app_line_height:
+    classic: 권위 있는
+    compact: 콤팩트
+    relaxed: 편안한
+  launch_action:
+    none: 없음
+    sync: 동조
+    quick_input: 빠른 입력
+    daily_review: 무작위 검토
+  auto_lock_time:
+    immediately: 즉시
+    after_1_min: 1분
+    after_5_min: 5분
+    after_15_min: 15분
+  reminder:
+    default_title: 이 아이디어 기억나세요?
+    default_body: 세부정보를 보려면 탭하세요.
+  location:
+    current: 현재 위치
+  webdav:
+    not_configured: WebDAV가 구성되지 않았습니다.
+    backup_disabled: 백업이 비활성화되었습니다.
+    backup_account_missing: 백업할 계정이 없습니다.
+    backup_local_only: 백업은 로컬 라이브러리에만 가능합니다.
+    backup_password_missing: 백업 비밀번호가 없습니다.
+    backup_no_memo_files: 로컬 라이브러리에 메모 파일이 없습니다. 백업이 취소되었습니다
+    restore_account_missing: 복원할 계정이 없습니다.
+    restore_local_only: 복원은 로컬 라이브러리에만 가능합니다.
+    backup_empty: 백업이 비어 있습니다.
+    backup_no_memos: 백업에서 메모를 찾을 수 없습니다.
+    snapshot_missing: 백업 스냅샷 누락
+    snapshot_corrupted: 백업 스냅샷이 손상되었습니다.
+    object_missing: 백업 객체 누락
+    config_corrupted: 백업 구성이 손상되었습니다.
+    config_invalid: 잘못된 백업 구성
+    password_invalid: 잘못된 백업 비밀번호
+    data_corrupted: 백업 데이터가 손상되었습니다.
+    server_url_invalid: 잘못된 WebDAV 서버 URL
+    recover_password_title: 백업 비밀번호를 복구하세요
+    recover_password_button: 다시 덮다
+    recover_password_hint: 보안 코드로 백업 비밀번호 재설정
+    recovery_code_title: 보안 코드
+    recovery_code_enter: 보안 코드를 입력하세요
+    recovery_code_enter_new_password: 새 비밀번호를 입력하세요
+    recovery_code_setup_message: 백업 비밀번호가 설정되었습니다. 지금 이 보안 코드를 저장하세요. 비밀번호를 잊어버린 경우 이 코드로만 비밀번호를 재설정할 수 있습니다.
+    recovery_code_reset_message: 백업 비밀번호가 재설정되었습니다. 새 보안 코드를 저장하세요. 이전 코드는 더 이상 유효하지 않습니다.
+    recovery_code_copied: 보안 코드가 복사되었습니다.
+    recovery_reset_success: 백업 비밀번호 재설정
+    recovery_code_invalid: 잘못된 보안 코드입니다. 확인하신 후 다시 시도해 주세요.
+    recovery_not_configured: 이 백업에는 아직 보안 코드 복구가 활성화되지 않았습니다.
+  import_count_memos: $count
+  import_count_attachments: $count
+  msg_version_probe_complete: 버전 조사 완료
+  msg_currently_using_api: 현재 API $version를 사용하고 있습니다.
+  msg_version_probe_failed: 버전 조사 실패
+  msg_copy_diagnostics: 진단 복사
+  msg_diagnostics_copied: 진단이 복사되었습니다.
+  msg_probe_failed: '프로브 실패: $error'
+  msg_no_active_session_after_sign_in: 로그인 후 활성 세션이 없습니다.
+  msg_request_headers: 요청 헤더
+  msg_request_body: 요청 본문
+  msg_response_headers: 응답 헤더
+  msg_response_body: 응답 본문
+  msg_error: 오류
+  msg_system_logs: 시스템 로그
+  msg_copy_last_lines: 마지막 $lines 줄 복사
+  msg_export_logs_bundle: 로그 번들 내보내기
+  msg_showing_last_lines: 마지막 $lines 라인 표시
+  msg_no_system_logs_yet: 아직 시스템 로그가 없습니다.
+  msg_system_logs_copied: 시스템 로그 복사됨($lines 행)
+  msg_log_bundle_created: '생성된 로그 번들: $path(ExportId: $exportId)'
+  msg_failed_export_logs: '로그 내보내기 실패: $error'
+  msg_api_route: API 노선
+  msg_screenshot_mode: 스크린샷 모드
+  msg_screenshot_mode_detail: 깔끔한 캡처를 위해 상태/탐색 표시줄 숨기기
+  msg_template: 주형
+  msg_no_templates_yet: 아직 템플릿이 없습니다.
+  msg_quick_search: 빠른 검색...
+  msg_minimize: 최소화
+  msg_maximize: 최대화
+  msg_restore_window: 복원하다
+  msg_windows_enable_location_access: $message. Windows 설정에서 위치 액세스를 활성화합니다.
+  msg_camera_file_missing: 카메라 파일이 없습니다.
+  msg_no_camera_detected: 카메라가 감지되지 않았습니다.
+  msg_camera_failed: '카메라 실패: $error'
+  msg_camera_permission_denied_windows: 카메라 권한이 거부되었습니다. Windows 설정에서 카메라 액세스를 활성화하세요.
+  msg_file_selection_failed: '파일 선택 실패: $error'
+  msg_files_unavailable_from_picker: 선택기에서 파일을 사용할 수 없습니다.
+  msg_no_files_selected: 선택한 파일이 없습니다.
+  msg_original_image: 원래의
+  msg_gallery_system_picker_original_desc: 선택한 이미지를 업로드하기 전에 압축을 건너뛸지 여부를 선택하세요.
+  msg_gallery_system_picker_original_switch: 선택한 이미지를 원본 품질로 업로드
+  msg_gallery_original_selection_summary: 선택된 $selectedCount · 원본 $originalCount
+  msg_added_files: $count 파일을 추가했습니다.
+  msg_unavailable_file_count: $count를 사용할 수 없습니다
+  msg_added_files_with_skipped: $count 파일을 추가했습니다. $details를 건너뛰었습니다.
+  msg_added_photo_attachment: 사진 첨부를 추가했습니다.
+  msg_enter_content_before_creating_link: 링크를 만들기 전에 내용을 입력해주세요.
+  msg_checkbox: 체크박스
+  msg_code_block: 코드 블록
+  msg_no_recording_input_device_found: 녹음 입력 장치를 찾을 수 없습니다.
+  msg_write_current_thought: 당신이 생각하는 것을 적어보세요 ...
+  msg_tag: 꼬리표
+  msg_attachment: 부착
+  msg_todo: 토도
+  msg_link: 링크
+  msg_capture_photo: 사진 캡처
+  msg_open_camera_settings: 카메라 설정 열기
+  msg_unable_open_windows_camera_settings: Windows 카메라 설정을 열 수 없습니다.
+  msg_qr_scan_not_supported_use_manual_pairing: '이 플랫폼에서는 QR 스캔이 지원되지 않습니다.
+
+    대신 수동 페어링을 사용하세요.'
+  msg_qr_scan_not_supported_pair_manually: 이 플랫폼에서는 QR 스캔이 지원되지 않습니다. 호스트, 포트, 페어링 코드를 수동으로 페어링하세요.
+  msg_loading_memos: 메모 로드 중...
+  msg_encryption_feature_placeholder: 암호화는 현재 자리 표시자이며 아직 시행되지 않습니다.
+  msg_password_feature_placeholder: 비밀번호 지원은 현재 자리 표시자이며 아직 시행되지 않습니다.
+  msg_template_feature_manage_desc: 템플릿 이름, 콘텐츠, 변수를 관리하려면 템플릿을 활성화하세요.
+  msg_shortcuts_overview: 바로가기 개요
+  msg_restore_defaults: 기본값 복원
+  msg_default_shortcuts_restored: 기본 단축키가 복원되었습니다.
+  msg_file_save_location: 파일 저장 위치
+  msg_select_location: 위치 선택
+  msg_repository_name: 저장소 이름
+  msg_enter_repository_name_hint: 저장소 이름을 입력하세요
+  msg_not_selected: 선택되지 않음
+  msg_select_file_save_location: 파일 저장 위치를 ​​선택해주세요.
+  msg_enter_repository_name_prompt: 저장소 이름을 입력하세요.
+  msg_enter_and_confirm_password: 비밀번호를 입력하고 확인해 주세요.
+  msg_encrypt_save_placeholder: 암호화된 저장(자리 표시자)
+  msg_desktop_settings: 데스크톱 설정
+  msg_only_windows_desktop_supports_this_setting: Windows 데스크톱만 이 설정을 지원합니다.
+  msg_shortcut_settings: 바로가기 설정
+  msg_configure_desktop_shortcuts: 데스크톱 바로 가기 구성
+  msg_close_window_minimize_to_tray: 창을 닫을 때 트레이로 최소화
+  msg_close_window_minimize_to_tray_desc: 활성화되면 오른쪽 상단 닫기 버튼을 클릭해도 앱이 종료되지 않습니다. 시스템 트레이에서 창을 복원할 수 있습니다.
+  msg_local_storage_unavailable: 로컬 저장소를 사용할 수 없습니다
+  msg_check_system_permissions_or_retry_later: 시스템 권한을 확인하거나 나중에 다시 시도하세요.
+  msg_source_value: '출처: $source'
+  msg_enable_sync_bridge_first: 먼저 동기화 브리지를 활성화하세요.
+  msg_sync_to_obsidian: 흑요석과 동기화
+  msg_sync_to_obsidian_confirm: 첨부 파일을 포함하여 현재 로컬 라이브러리에 있는 모든 메모를 페어링된 Obsidian에 한 번에 동기화하세요. 계속하다?
+  msg_sync_completed_summary: '동기화 완료: $succeeded/$total 성공, $failed 실패.'
+  msg_sync_failed_with_error: '동기화 실패: $error'
+  msg_sync_to_obsidian_in_progress: Obsidian과 동기화하는 중...
+  msg_action_shortcut: 작업 - 바로가기
+  msg_global: 글로벌
+  msg_editor: 편집자
+  msg_paste: 반죽
+  msg_cut: 자르다
+  msg_previous_page: 이전 페이지
+  msg_next_page: 다음 페이지
+  msg_shift_enter_supported: $binding도 지원합니다.
+  msg_shortcuts_supported_windows_macos: Windows 및 macOS만 바로가기 설정을 지원합니다.
+  msg_shortcut_binding_in_use: $binding는 이미 "$action"에서 사용되고 있습니다.
+  msg_windows_paging_note: 'Windows 페이징: PageUp 이전 페이지, PageDown 다음 페이지.'
+  msg_system_edit_shortcuts_note: 복사/붙여넣기/잘라내기는 시스템 기본 단축키를 사용합니다.
+  msg_shortcut_requires_modifier: 최소한 하나의 수정자 키($modifiers)를 포함하세요.
+  msg_current_shortcut: '현재: $binding'
+  msg_press_new_shortcut: 새 단축키를 누르세요...
+  msg_quick_record: 빠른 기록
+  msg_focus_input_area: 초점 입력 영역
+  msg_toggle_sidebar: 사이드바 전환
+  msg_open_settings: 설정 열기
+  msg_show_hide_memoflow: MemoFlow 표시 / 숨기기
+  msg_publish_memo: 메모 게시
+  msg_bold: 용감한
+  msg_underline: 밑줄
+  msg_highlight: 가장 밝은 부분
+  msg_unordered_list: 순서가 없는 목록
+  msg_ordered_list: 주문목록
+  msg_undo: 끄르다
+  msg_redo: 다시 하다
+  msg_no_templates_click_add: 아직 템플릿이 없습니다. 템플릿을 만들려면 '템플릿 추가'를 클릭하세요.
+  msg_weather_variables_enabled_city_not_set: 날씨 변수 활성화됨(도시가 설정되지 않음)
+  msg_weather_variables_city: '날씨 변수: $city'
+  msg_weather_variables_disabled: 날씨 변수가 비활성화되었습니다.
+  msg_template_feature_title: 템플릿 활성화
+  msg_template_feature_desc: 활성화한 후 편집기 도구 모음에서 템플릿을 선택할 수 있습니다. 하나를 선택하면 편집기 콘텐츠가 대체됩니다.
+  msg_template_list: 템플릿 목록
+  msg_many_templates_support_scroll: 템플릿이 많은 경우 이 영역에서는 세로 스크롤을 지원합니다.
+  msg_variable_settings: 변수 설정
+  msg_template_variables: 템플릿 변수
+  msg_available_variable_docs: 사용 가능한 변수 문서
+  msg_available_variable_docs_desc: 탭하면 중앙 대화 상자에 변수 테이블과 의미 메모가 표시됩니다.
+  msg_date_time_weather_variable_desc: 날짜/시간 변수는 변수 설정의 형식을 따릅니다. 날씨 변수는 AMap 날씨 구성에 따라 달라집니다.
+  msg_variable: 변하기 쉬운
+  msg_meaning: 의미
+  msg_example: 예
+  msg_got_it: 알았어요
+  msg_scene_micro_guide_list_gestures: 메모를 복사하려면 길게 누르고, 빠르게 편집하려면 두 번 탭하세요.
+  msg_scene_micro_guide_list_search_shortcuts: 제목, 콘텐츠, 태그 검색을 탭하세요. 바로가기 필터 제목을 탭하세요
+  msg_scene_micro_guide_editor_tag_autocomplete_desktop: '태그 제안에 #을 입력하고 ??를 사용하세요. 선택하고 Enter를 눌러 삽입하세요.'
+  msg_scene_micro_guide_editor_tag_autocomplete_mobile: '#을 입력하거나 태그 버튼을 탭하여 추천 태그를 선택하세요.'
+  msg_scene_micro_guide_gallery_controls_desktop: ?/? 스위치? Esc가 닫히나요? 두 번 탭하여 재설정
+  msg_scene_micro_guide_gallery_controls_mobile: 재설정하려면 두 번 탭하세요.
+  msg_scene_micro_guide_desktop_global_shortcuts: $search 검색 ? $quickRecord 빠른 기록 ? $overview 바로가기 보기
+  msg_new_template: 템플릿 추가
+  msg_edit_template: 템플릿 편집
+  msg_template_name: 템플릿 이름
+  msg_template_name_example: '예: 아침 복습'
+  msg_template_content: 템플릿 내용
+  msg_template_content_example: 예를 들어 다음과 같은 변수를 사용할 수 있습니다. {{date}} {{weather}}
+  msg_template_variable_settings: 템플릿 변수 설정
+  msg_date_format_variable: 날짜 형식({{date}})
+  msg_time_format_variable: 시간 형식({{time}})
+  msg_datetime_format_variable: 날짜/시간 형식({{datetime}})
+  msg_enable_weather_variables: 날씨 변수 활성화
+  msg_weather_variable_tokens: '변수: {{weather}} / {{weather.*}}'
+  msg_weather_city_adcode_or_name: 날씨 도시(애드코드 또는 도시 이름)
+  msg_weather_city_example: '예: 110000'
+  msg_weather_fallback_text: 날씨 대체 텍스트
+  msg_keep_unknown_variables_raw: 알 수 없는 변수를 그대로 유지
+  msg_keep_unknown_variables_raw_desc: 비활성화되면 알 수 없는 변수가 빈 문자열로 대체됩니다.
+  msg_delete_template: 템플릿 삭제
+  msg_delete_template_confirm_with_name: '''$name''를 삭제하시겠습니까?'
+  msg_current_date: 현재 날짜
+  msg_current_time: 현재 시간
+  msg_current_datetime: 현재 날짜 및 시간
+  msg_weekday_name: 요일 이름
+  msg_weather_plus_temperature_without_city: 날씨 + 기온(도시 제외)
+  msg_city_plus_weather_plus_temperature: 도시 + 날씨 + 기온
+  msg_weather_city_label: 날씨 도시
+  msg_weather_province: 날씨 지방
+  msg_weather_condition: 기상 조건
+  msg_temperature_without_unit: 온도(장치 없음)
+  msg_humidity_without_percent: 습도(% 기호 없음)
+  msg_wind_direction: 풍향
+  msg_wind_power: 풍력
+  msg_weather_report_time: 일기 예보 시간
+  msg_adcode: 행정구역번호
+  msg_example_saturday: 토요일
+  msg_example_sunny_25c: 맑음 25°C
+  msg_example_beijing_sunny_25c: 베이징 맑음 25°C
+  msg_example_beijing: 베이징
+  msg_example_beijing_city: 베이징시
+  msg_example_sunny: 화창한
+  msg_example_northeast: 북동
+  msg_total_count_times: 총 $count회
+  msg_current_streak_days: 현재 연속 기록(일)
+  msg_total_days: 총 일수
+  msg_average_daily_characters: 일일 평균 문자
+  msg_longest_streak_days: 최장 연속 기록(일)
+  msg_total_memos_metric: 총 메모
+  msg_total_characters_metric: 총 문자수
+  msg_common_writing_time: 일반적인 작성 시간
+  msg_most_active_day: 가장 활동적인 날
+  msg_memo_count: 메모 개수
+  msg_total_characters_short: 총 문자수
+  msg_max_characters_single_day: 하루 최대 문자 수
+  msg_image: 영상
+  msg_video: 동영상
+  msg_audio: 오디오
+  msg_document: 문서
+  msg_other: 다른
+  msg_attachment_name_contains: 첨부파일 이름에 다음이 포함되어 있습니다.
+  msg_attachment_type: 첨부파일 유형
+  msg_linked_memos: 연결된 메모
+  msg_clear_all_filters: 모든 필터 지우기
+  msg_file: 파일
+  msg_vs_last_month_same_memo_count: 지난달과 동일한 메모 개수
+  msg_vs_last_month_increase_memo_count: 지난달보다 메모가 많아졌다
+  msg_vs_last_month_decrease_memo_count: 지난달보다 메모가 적어요
+  msg_weekday_monday: 월
+  msg_weekday_tuesday: 화요일
+  msg_weekday_wednesday: 수요일
+  msg_weekday_thursday: 목
+  msg_weekday_friday: 금
+  msg_weekday_saturday: 앉았다
+  msg_weekday_sunday: 해
+  msg_current_window_pin_not_supported: 현재 창에서는 고정이 지원되지 않습니다.
+  msg_no_valid_files_selected: 유효한 파일을 선택하지 않았습니다.
+  msg_added_attachment_count: $count 첨부 파일을 추가했습니다.
+  msg_save_failed_check_content_retry: 저장에 실패했습니다. 내용을 확인하신 후 다시 시도해 주세요.
+  msg_quick_input_channel_not_ready_retry: 빠른 입력 채널이 준비되지 않았습니다. 기본 창을 다시 열고 다시 시도해 주세요.
+  msg_visibility_value: '가시성 : $value'
+  msg_saved_to_memoflow: MemoFlow에 저장되었습니다.
+  msg_quick_input_failed_with_error: '빠른 입력 실패: $error'
+  msg_feature: 특징
+  msg_feature_not_implemented_placeholder_with_label: '"$label"는 아직 구현되지 않았습니다(자리 표시자).'
+  msg_quick_input_save_failed_with_error: '빠른 입력 저장 실패: $error'
+  msg_toggle_memoflow_failed_with_error: 'MemoFlow 표시/숨기기 실패: $error'
+  msg_shortcuts_overview_opened: 바로가기 개요를 열었습니다.
+  msg_unsupported_version_value: '지원되지 않는 버전: $version'
+  msg_version_probe_passed_with_version: v$version 프로브 통과
+  msg_startup_slogan: 기록이 자연스럽게 흐르도록 하세요
+  msg_storage_read_failed_some_features_limited: 저장소 읽기에 실패했습니다. 일부 기능이 제한됩니다.
+  msg_monthly_overview: $month 월간 개요
+  msg_daily_memo_trend: 일일 메모 트렌드
+  msg_date_memo_count_tooltip: '$date
+
+    $count 메모'
+  msg_average_value: 평균 $value
+  msg_need_at_least_five_tags: 태그가 5개 미만입니다. 태그를 더 추가하고 다시 시도해 주세요.
+  msg_tag_cloud_tooltip: '$count 메모
+
+    $percent%
+
+    최신: $latest'
+  msg_unnamed_tag: 이름 없는 태그
+  msg_yearly_character_trend: 연간 캐릭터 동향
+  msg_no_data: 데이터 없음
+  msg_month_characters_tooltip: '$month
+
+    $chars 문자'
+  msg_on_this_day: 이날
+  msg_links_label: 모래밭
+  app_drawer:
+    tooltip_single: $date ($weekday) · $count 메모
+    tooltip_multi: $date ($weekday) · $count 메모
+  ai_summary:
+    error_api_key_empty: API 키가 비어 있습니다.
+    system:
+      require_json: JSON를 엄격하게 출력하십시오. 코드 블록이나 추가 텍스트를 사용하지 마세요.
+      json_format: 'JSON 형식: {"insights":["..."],"moodTrend":"...","keywords":["#..."]}'
+      insights_rule: '인사이트는 2~5개 항목이어야 합니다. 키워드는 #이 포함된 4~8개 항목이어야 합니다.'
+    user:
+      range: '시간 범위: $rangeLabel'
+      counts: 'Memos: $memoCount(요약을 위해 포함됨: $includedCount)'
+      profile: '사용자 프로필: $profile'
+      custom_prompt: '추가 지침: $customPrompt'
+      memo_content: '메모 내용:'
+    error_invalid_response: AI 응답의 형식이 잘못되었습니다.
+    error_empty_response: AI 응답이 비어 있습니다.
+    error_missing_content: AI 응답 콘텐츠가 누락되었습니다.
+    default_prompt: 당신은 미니멀리스트 노트 도우미입니다. 핵심 포인트를 추출하여 깔끔한 형식으로 제시합니다. 전문적이고 따뜻하며 간결한 톤을 유지하세요. 목록과 짧은 단락을 선호합니다.
+shareClip:
+  videoDetected: 동영상 콘텐츠로 감지됨
+  linkOnlyLabel: 링크만 저장
+  originalLinkLabel: 원본 링크
+  videoCandidatesTitle: 비디오 후보
+  downloadAndAttach: 다운로드 및 첨부
+  notSupportedLabel: 지원되지 않음
+  directLinkLabel: 직접링크
+  xiaohongshuLabel: 샤오홍슈
+  unsupportedDash: 별도의 DASH 스트림은 지원되지 않습니다.
+  unsupportedStream: 스트리밍 전용 리소스는 지원되지 않습니다.
+  fileTooLargeTitle: 비디오가 $limit보다 큽니다.
+  fileTooLargeBody: 본 영상은 $size로, 서버 첨부 제한 $limit을 초과하였습니다.
+  compressAndSave: 압축 및 저장
+  fallbackParseFailed: 동영상 파싱에 실패하여 앱이 링크만 저장했습니다.
+  fallbackDownloadFailed: 동영상 다운로드에 실패하여 앱에 링크만 저장되었습니다.
+  fallbackCompressionFailed: 동영상 압축에 실패하여 앱에 링크만 저장되었습니다.
+  fallbackCompressionStillTooLarge: 압축된 비디오는 여전히 $limit보다 크기 때문에 앱은 링크만 저장했습니다.
+  failureUnsupportedUrl: 지원되지 않는 URL 체계입니다.
+  failureLoadTimeout: 페이지를 로드하는 동안 시간이 초과되었습니다.
+  failureWebView: WebView가 페이지를 로드하지 못했습니다.
+  failureDom: 페이지 콘텐츠를 읽을 수 없습니다.
+  failureParserEmpty: 읽을 수 있는 콘텐츠를 추출할 수 없습니다.
+  failureUnknown: 공유 미리보기를 준비하는 중에 문제가 발생했습니다.
+  stageLoadingPage: 페이지 로드 중
+  stageWaitingContent: 동적 콘텐츠를 기다리는 중
+  stageDetectingMedia: 비디오 리소스 감지
+  stageParsingArticle: 기사 분석 중
+  stageBuildingPreview: 건물 미리보기
+  stageDownloadingVideo: 비디오 다운로드 중
+  stageCompressingVideo: 비디오 압축 중
+  localSavedPendingSync: 로컬에 저장되었습니다. 가능한 경우 동기화가 계속됩니다.
+memoTimeAdjustment:
+  action: 생성 시간 변경
+  saved: 생성 시간이 업데이트되었습니다.
+  description: 저장 후 이 메모는 새로 생성된 시간을 기준으로 표시 및 정렬됩니다.
+  dateField: 날짜
+  timeField: 시간
+  selectedCreationTime: '생성 시간: $value'
+  failed: '생성 시간 변경 실패: $error'
+collections:
+  drawerLabel: 컬렉션
+  title: 컬렉션
+  collection: 수집
+  pinned: 고정됨
+  archived: 보관됨
+  addToCollection: 컬렉션에 추가
+  newManual: 새로운 매뉴얼
+  create: 만들다
+  createCollection: 컬렉션 만들기
+  editCollection: 컬렉션 수정
+  reader:
+    comingSoon: 곧 출시 예정
+    manageCollectionItems: 컬렉션 아이템 관리
+    currentMemoActions: 현재 메모 작업
+    currentItemActions: 현재 항목 작업
+    pageAnimationTooltip: 페이지 애니메이션
+    pageAnimationNone: 애니메이션 없음
+    pageAnimationSlide: 슬라이드
+    pageAnimationSimulation: 시뮬레이션
+    progressPage: 페이지 $current/$total
+    progressMemo: 메모 $current/$total
+    settingsTitle: 리더 설정
+    themePreset: 테마 사전 설정
+    themePaper: 종이
+    themeEyeCare: 눈 관리
+    themeDark: 어두운
+    themeGray: 회색
+    brightnessMode: 밝기 모드
+    brightnessSystem: 체계
+    brightnessManual: 수동
+    readerBrightness: 리더 밝기
+    textScale: 텍스트 규모
+    lineSpacing: 줄 간격
+    pagePadding: 페이지 패딩
+    contentWidth: 콘텐츠 너비
+    contentWidthNarrow: 좁게
+    contentWidthStandard: 표준
+    contentWidthWide: 넓게
+    contentWidthFull: 창에 맞춤
+    autoPageTitle: 자동 페이지
+    autoPageStart: 시작
+    autoPageStop: 멈추다
+    autoPageSecondsPerPage: 초/페이지
+    styleTitle: 독자 스타일
+    backgroundStyle: 배경 스타일
+    backgroundTypePreset: 프리셋
+    backgroundTypeSolid: 단단한
+    backgroundTypeImage: 영상
+    backgroundAlpha: 배경 알파
+    typography: 타이포그래피
+    readerFont: 리더 글꼴
+    fontSystemDefault: 시스템 기본값
+    fontWeightNormal: 정상
+    fontWeightMedium: 중간
+    fontWeightBold: 용감한
+    letterSpacing: 문자 간격
+    paragraphSpacing: 단락 간격
+    firstLineIndent: 첫 줄 들여쓰기
+    tipSettingsTitle: 팁바 설정
+    tipSettingsSubtitle: 제목, 머리글, 바닥글, 팁 색상
+    paddingSettingsTitle: 패딩 설정
+    paddingSettingsSubtitle: 본문/머리글/바닥글 패딩
+    brightness: 명도
+    customSolidColor: 맞춤형 단색
+    backgroundColor: 배경색
+    backgroundImage: 배경 이미지
+    backgroundImageUnavailableWeb: 웹에서는 이미지 파일 배경을 사용할 수 없습니다.
+    backgroundImagePickHint: 리더 배경으로 사용할 이미지 파일을 선택하세요.
+    clearImageBackground: 이미지 배경 지우기
+    titleSection: 제목
+    titleModeLeft: 왼쪽
+    titleModeCenter: 센터
+    titleModeHidden: 숨겨진
+    titleScale: 타이틀 스케일
+    titleTopSpacing: 제목 상단 간격
+    titleBottomSpacing: 제목 하단 간격
+    headerFooterSection: 머리글/바닥글
+    headerMode: 헤더 모드
+    footerMode: 바닥글 모드
+    headerLeft: 헤더 왼쪽
+    headerCenter: 헤더 센터
+    headerRight: 헤더 오른쪽
+    footerLeft: 바닥글 왼쪽
+    footerCenter: 바닥글 중심
+    footerRight: 바닥글 오른쪽
+    tipTextColor: 팁 텍스트 색상
+    dividerColor: 구분선 색상
+    useDefaultLongPressReset: 기본값 사용(재설정하려면 길게 누르세요)
+    tipSlotNone: 없음
+    tipSlotCollectionTitle: 컬렉션 제목
+    tipSlotChapterTitle: 장 제목
+    tipSlotTime: 시간
+    tipSlotBattery: 배터리
+    tipSlotBatteryPercentage: 배터리 %
+    tipSlotPage: 페이지
+    tipSlotTotalProgress: 진전
+    tipSlotPageAndTotal: 페이지/전체
+    tipSlotTimeBattery: 시간 + 배터리
+    tipSlotTimeBatteryPercentage: 시간 + 배터리 %
+    tipDisplayHidden: 숨겨진
+    tipDisplayInline: 인라인
+    tipDisplayReserved: 예약된
+    paddingTitle: 페이지 패딩
+    paddingBody: 몸
+    paddingHeader: 헤더
+    paddingFooter: 보행인
+    paddingTop: 맨 위
+    paddingBottom: 맨 아래
+    paddingLeft: 왼쪽
+    paddingRight: 오른쪽
+    showHeaderDivider: 헤더 구분선 표시
+    showFooterDivider: 바닥글 구분선 표시
+    moreSettingsTitle: 추가 설정
+    moreDisplay: 표시하다
+    moreInput: 입력
+    moreContent: 콘텐츠
+    hideStatusBar: 상태 표시줄 숨기기
+    hideNavigationBar: 탐색 모음 숨기기
+    padDisplayCutouts: 패드 디스플레이 컷아웃
+    keepScreenAwake: 화면을 활성 상태로 유지
+    barsFollowPageStyle: 막대는 페이지 스타일을 따릅니다.
+    showReadTitleAddition: 읽은 제목 추가 표시
+    showBrightnessOverlay: 밝기 오버레이 표시
+    mouseWheelPageTurn: 마우스 휠 페이지 넘기기
+    volumeKeyPageTurn: 볼륨 키 페이지 넘기기
+    longPressKeyPageTurn: 길게 누르기 키 페이지 넘기기
+    touchSlop: 터치슬롭
+    clickActionsTitle: 클릭 동작
+    clickActionsSubtitle: 3×3 터치 영역 구성
+    platformUnavailable: 이 플랫폼에서는 사용할 수 없습니다.
+    allowTextSelection: 텍스트 선택 허용
+    previewImageOnTap: 탭 시 이미지 미리보기
+    tapRegionTopLeft: 왼쪽 위
+    tapRegionTopCenter: 상단 중앙
+    tapRegionTopRight: 오른쪽 상단
+    tapRegionMiddleLeft: 가운데 왼쪽
+    tapRegionMiddleCenter: 중간 센터
+    tapRegionMiddleRight: 가운데 오른쪽
+    tapRegionBottomLeft: 왼쪽 하단
+    tapRegionBottomCenter: 하단 중앙
+    tapRegionBottomRight: 오른쪽 하단
+    tapActionNone: 없음
+    tapActionMenu: 메뉴
+    tapActionNextPage: 다음 페이지
+    tapActionPrevPage: 이전 페이지
+    tapActionNextChapter: 다음 장
+    tapActionPrevChapter: 이전 장
+    tapActionToc: 목차
+    tapActionSearch: 찾다
+    cancel: 취소
+    apply: 적용하다
+    styleCardsTitle: 스타일 카드
+    styleCardNew: 새로운
+    styleCardEditCurrent: 현재 편집
+    styleCardCreateTitle: 스타일 카드 만들기
+    styleCardEditTitle: 스타일 카드 수정
+    styleCardSave: 구하다
+    styleCardDelete: 삭제
+    styleCardNameLabel: 스타일 이름
+    styleCardBuiltIn: 프리셋
+    styleCardCustom: 관습
+  rss:
+    collectionType: RSS
+    collectionSummary: RSS 컬렉션
+    createDescription: RSS 피드
+    draftHelp: 저장하기 전에 RSS 또는 Atom 피드를 하나 이상 추가하세요.
+    addFeed: RSS 피드 추가
+    addFeedToDraft: 피드 추가
+    addAnotherFeed: 다른 피드 추가
+    feedRequired: 저장하기 전에 RSS 또는 Atom 피드를 하나 이상 추가하세요.
+    feedAlreadyAdded: 이 피드는 이미 컬렉션에 있습니다.
+    addedFeeds: $count개 피드
+    articlesCount: $count개 글
+    manageFeeds: 피드 관리
+    removeFeed: 피드 제거
+    refreshFeeds: RSS 피드 새로고침
+    inputLabel: 피드 또는 사이트 URL
+    inputEmpty: 피드 또는 사이트 URL을 입력하세요.
+    invalidInput: 유효한 피드 또는 사이트 URL을 입력하세요.
+    noFeedDiscovered: 지원되는 RSS 또는 Atom 피드를 찾을 수 없습니다.
+    previewFailed: 이 피드를 미리 볼 수 없습니다.
+    subscribeFailed: 이 피드를 구독할 수 없습니다.
+    preview: 미리보기
+    subscribe: 구독
+    subscribedTo: "$title 구독됨"
+    articleActions: RSS 글 작업
+    markUnread: 읽지 않음으로 표시
+    markRead: 읽음으로 표시
+    openOriginal: 원문 열기
+    saveAsMemo: 메모로 저장
+    savedAsMemo: 메모로 저장됨
+    fetchFullContent: 전체 글 가져오기
+    retryFullContent: 전체 글 다시 가져오기
+    fetchingFullContent: 전체 글을 가져오는 중...
+    fullContentFetched: 전체 글을 가져왔습니다
+    fullContentFailed: 전체 글 가져오기에 실패했습니다
+    fullContentSkipped: 전체 글을 사용할 수 없습니다
+    fullContentEnabled: 전체 글 가져오기
+    fullContentEnabledDescription: 피드를 새로고침할 때 읽기 쉬운 글 페이지를 가져옵니다.
+    autoRefreshOnOpen: 열 때 새로고침
+    autoRefreshOnOpenDescription: 이 RSS 컬렉션을 연 뒤 읽기를 방해하지 않고 오래된 피드를 새로고침합니다.
+    autoRefreshInterval: 새로고침 간격
+    autoRefreshIntervalMinutes: $minutes분마다
+    autoRefreshIntervalHours: $hours시간마다
+    autoRefreshIntervalDays: $days일마다
+    refreshing: RSS 피드를 새로고침하는 중...
+    noFeeds: 이 컬렉션에 RSS 피드가 없습니다
+    noArticles: 아직 RSS 글이 없습니다
+    noArticlesDescription: 피드를 새로고침하거나 소스를 관리해 글을 불러오세요.
+    refreshComplete: "RSS 새로고침 완료: $success개 업데이트, $failure개 실패"
+  articleFlow:
+    title: 글 흐름
+    listActions: 목록 작업
+    filterAll: 전체
+    filterUnread: 읽지 않음
+    filterRead: 읽음
+    filterSaved: 저장됨
+    feedAll: 모든 피드
+    dateAll: 모든 날짜
+    noItems: 현재 필터와 일치하는 글이 없습니다.
+    noSelected: 글 선택
+    share: 공유
+    nextArticle: 다음 글
+    markAboveRead: 위 항목을 읽음으로 표시
+    markBelowRead: 아래 항목을 읽음으로 표시
+    readingExperience: 읽기 방식
+    switchExperience: 읽기 방식 전환
+    articleFlowExperience: 글 흐름
+    continuousReaderExperience: 연속 리더
+    displaySettings: 글 흐름 표시
+    showExcerpt: 요약 표시
+    showThumbnail: 썸네일 표시
+    showFeedIcon: 피드 아이콘 표시
+    density: 목록 밀도
+    densityCompact: 촘촘하게
+    densityComfortable: 여유 있게
+    autoHideToolbar: 글 도구 모음 자동 숨김
+    fullContentFallback: 피드 내용을 표시하고 있습니다. 전체 글을 다시 가져오거나 원문 페이지를 여세요.
+  createCollectionTooltip: 컬렉션 만들기
+  reorderShelf: 선반 재정렬
+  reorderShelfDescription: 선반에 표시된 순서를 드래그하여 조정하세요. 고정된 컬렉션은 여전히 ​​나머지 컬렉션보다 위에 있습니다.
+  manageItems: 항목 관리
+  searchCollections: 컬렉션 검색
+  searchInsideCollection: 이 컬렉션 내에서 검색
+  searchMemos: 메모 검색
+  clearSearch: 검색 지우기
+  collectionActions: 수집 작업
+  openCollection: 오픈 컬렉션
+  dragToReorder: 드래그하여 재정렬하세요.
+  smart: 똑똑한
+  smartCollectionSummary: 스마트 컬렉션
+  manual: 수동
+  manualCollectionSummary: 수동 수집
+  shelf: 선반
+  timeline: 타임라인
+  list: 목록
+  noGroups: 그룹 없음
+  month: 월
+  quarter: 4분의 1
+  year: 년도
+  autoCover: 자동커버
+  coverReady: 커버 준비 완료
+  pinToTop: 상단에 고정
+  privateOnly: 비공개 전용
+  publicOnly: 공개 전용
+  hasAttachments: 첨부파일 있음
+  noAttachments: 첨부파일 없음
+  imagesOnly: 이미지만
+  pinnedOnlySummary: 고정된 것만
+  lastDays: 지난 $days일
+  customRangeSummary: 맞춤 범위
+  headerHeadline: 메모로 테마 선반을 만들어보세요
+  headerDescription: 컬렉션은 로컬 우선으로 유지되고 태그에서 자동으로 업데이트되며 반복되는 주제에 자체 홈을 제공합니다.
+  countAll: $count 컬렉션
+  countFiltered: $visible / $total 컬렉션 표시 중
+  noCollectionsTitle: 아직 컬렉션이 없습니다.
+  noCollectionsDescription: 반복되는 태그를 엄선된 선반으로 바꾸는 스마트 컬렉션을 만드세요.
+  noMatchingTitle: 일치하는 컬렉션이 없습니다.
+  noMatchingDescription: 필요한 컬렉션을 찾으려면 다른 검색이나 필터를 사용해 보세요.
+  resetFilters: 필터 재설정
+  loadingCollections: 컬렉션 로드 중
+  loadingCollection: 컬렉션 로드 중
+  loadingMemos: 메모 로드 중
+  unableToLoadCollections: 컬렉션을 로드할 수 없습니다.
+  unableToLoadCollection: 컬렉션을 로드할 수 없습니다.
+  unableToLoadCollectionItems: 컬렉션 항목을 로드할 수 없습니다.
+  unableToLoadCurrentItems: 현재 항목을 로드할 수 없습니다.
+  unableToLoadMemos: 메모를 로드할 수 없습니다.
+  deleteTitle: 컬렉션을 삭제하시겠습니까?
+  deleteMessage: '''$title''을 삭제하시겠습니까?'
+  memosCount: $count 메모
+  imagesCount: 이미지가 있는 $count
+  showingMemos: $visible / $total 메모 표시 중
+  noMemoMatchedYet: 아직 일치하는 메모가 없습니다.
+  updatedAt: $date를 업데이트했습니다.
+  addMemos: 메모 추가
+  addMemo: 메모 추가
+  addSelected: ($count) 추가
+  remove: 제거하다
+  noManualCollectionsTitle: 아직 수동 컬렉션이 없습니다.
+  noManualCollectionsDescription: 이 메모를 저장하고 선반에 보관하려면 메모를 만드세요.
+  manualCollectionNotFoundTitle: 수동 컬렉션을 찾을 수 없습니다.
+  manualCollectionNotFoundDescription: 이 컬렉션이 누락되었거나 로컬 저장소에서 더 이상 사용할 수 없습니다.
+  manualCollectionEmptyTitle: 이 컬렉션에는 아직 항목이 없습니다.
+  manualCollectionEmptyDescription: 메모를 추가하여 이 수동 컬렉션을 계속해서 다시 방문할 수 있는 책장으로 바꾸세요.
+  noMemosAvailableTitle: 추가할 수 있는 메모가 없습니다.
+  noMemosAvailableDescription: 여기에 추가하기 전에 다른 키워드를 시도하거나 더 많은 메모를 작성하세요.
+  collectionNotFound: 컬렉션을 찾을 수 없습니다
+  searchNoResultsTitle: '"$query"에 대한 검색결과가 없습니다.'
+  searchNoResultsDescription: 이 컬렉션 내에서 다른 키워드를 사용해 보세요.
+  emptySmartDetail: 아직 현재 규칙과 일치하는 메모가 없습니다.
+  emptyManualDetail: 이 컬렉션에는 아직 항목이 없습니다.
+  basics: 기초
+  titleRequired: 제목은 필수 항목입니다.
+  ruleRequired: 저장하기 전에 규칙을 하나 이상 추가하세요.
+  description: 설명
+  type: 유형
+  accentColor: 악센트 색상
+  rules: 규칙
+  tags: 태그
+  selectTags: 태그 선택
+  noTagsSelected: 선택한 태그가 없습니다.
+  tagMatch: 태그 매치
+  anyTag: 모든 태그
+  allTags: 모든 태그
+  includeDescendants: 하위 항목 포함
+  includeDescendantsDescription: 프로젝트/알파와 같은 하위 태그를 일치시킵니다.
+  attachments: 첨부파일
+  attachmentAny: 어느
+  attachmentRequired: 필수의
+  attachmentNone: 없음
+  attachmentImagesOnly: 이미지만
+  dateRange: 기간
+  allTime: 모든 시간
+  last7Days: 지난 7일
+  last30Days: 지난 30일
+  customRange: 맞춤 범위
+  chooseRange: 범위 선택
+  pinnedOnly: 고정된 메모만
+  manualItems: 수동 항목
+  manualItemsDescription: 수동 컬렉션은 메모 카드, 메모 세부 사항 또는 세부 사항 페이지 항목 관리 모드에서 선별됩니다.
+  display: 표시하다
+  cover: 씌우다
+  coverAttachment: 부착
+  coverImage: 표지 이미지
+  noCoverImageAvailable: 현재 미리보기에서는 아직 이미지 첨부를 사용할 수 없습니다.
+  defaultLayout: 기본 레이아웃
+  groupBy: 그룹화 기준
+  manualOrder: 수동 주문
+  displayTimeDesc: 표시시간 ↓
+  displayTimeAsc: 표시 시간 ↑
+  updatedTimeDesc: 업데이트 시간 ↓
+  updatedTimeAsc: 업데이트 시간 ↑
+  showDetailStats: 세부 통계 표시
+  showDetailStatsDescription: 세부 헤더에 메모 개수, 이미지 개수, 최근 활동을 표시합니다.
+  hideWhenEmpty: 비어 있으면 선반에 숨기세요
+  hideWhenEmptyDescription: 메모와 다시 일치할 때까지 이 컬렉션을 기본 선반에 보관합니다.
+  previewMemos: Memos
+  previewImages: 이미지
+  noPreviewSmart: 아직 일치하는 메모가 없습니다.
+  noPreviewManual: 이 수동 컬렉션에는 아직 항목이 없습니다.

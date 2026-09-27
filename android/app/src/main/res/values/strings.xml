@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">memo+</string>
+    <string name="widget_daily_review_label">Random Review</string>
+    <string name="widget_quick_input_label">Quick Input</string>
+    <string name="widget_stats_label">Activity Heatmap</string>
+    <string name="widget_daily_review_placeholder_title">Random Review</string>
+    <string name="widget_daily_review_placeholder_countdown">Refreshing soon</string>
+    <string name="widget_daily_review_placeholder_body">Remember the moment, feel the warmth of life.\nTake a quick review every day.</string>
+    <string name="widget_quick_input_hint">What\'s new?</string>
+    <string name="widget_calendar_placeholder_title">Activity Heatmap</string>
+    <string name="widget_send">Send</string>
+</resources>

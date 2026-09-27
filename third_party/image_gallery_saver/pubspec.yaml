@@ -1,0 +1,29 @@
+name: image_gallery_saver
+description: A flutter plugin for saving images to the gallery.
+version: 2.0.3
+homepage: https://github.com/hui-z/image_gallery_saver
+
+environment:
+  sdk: '>=2.12.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://www.dartlang.org/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.imagegallerysaver
+        pluginClass: ImageGallerySaverPlugin
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+

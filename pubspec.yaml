@@ -1,0 +1,210 @@
+name: memos_flutter_app
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.49+50
+
+environment:
+  sdk: ^3.10.4
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0
+  connectivity_plus: ^6.1.0
+  device_info_plus: ^10.1.2
+  file_picker: ^8.1.2
+  image_picker: ^1.1.2
+  image_picker_android: ^0.8.13+10
+  image_picker_platform_interface: ^2.11.1
+  camera: ^0.11.2+1
+  camera_windows: ^0.2.6+4
+  # On-device text recognition for the document scanner. Pinned to 0.16.x
+  # because 0.17+ requires Dart 3.12 / Flutter 3.44.
+  google_mlkit_text_recognition: ^0.16.0
+  package_info_plus: ^8.1.0
+  flutter_riverpod: ^2.6.1
+  flutter_secure_storage: ^9.2.4
+  window_manager: ^0.5.1
+  tray_manager: ^0.5.1
+  hotkey_manager: ^0.2.3
+  desktop_multi_window: ^0.2.1
+  crypto: ^3.0.3
+  ffi: ^2.1.3
+  cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
+  flutter_markdown: ^0.7.7+1
+  flutter_svg: ^2.0.10
+  html: ^0.15.0
+  xml: ^6.6.1
+  markdown: ^7.3.0
+  flutter_math_fork: ^0.7.2
+  flutter_colorpicker: ^1.1.0
+  appinio_swiper: ^2.1.0
+  intl: ^0.20.2
+  slang: ^3.31.0
+  slang_flutter: ^3.31.0
+  image: ^4.5.4
+  image_editor_plus: ^1.0.8
+  just_audio: ^0.10.5
+  video_player: ^2.9.2
+  video_thumbnail: ^0.5.3
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  native_video_compress: ^0.0.4
+  permission_handler: ^12.0.1
+  geolocator: ^10.1.0
+  record: ^6.1.1
+  share_plus: ^12.0.1
+  socks5_proxy: ^2.1.1
+  wakelock_plus: ^1.3.3
+  screen_brightness: ^2.1.7
+  fl_chart: ^1.1.1
+  sqflite: ^2.4.2
+  sqflite_common_ffi: ^2.3.6
+  archive: ^4.0.4
+  flutter_animate: ^4.5.2
+  url_launcher: ^6.3.0
+  flutter_inappwebview: ^6.1.5
+  webview_flutter: ^4.10.0
+  webview_windows: ^0.4.0
+  flutter_widget_from_html: ^0.17.1
+  confetti: ^0.7.0
+  image_gallery_saver: ^2.0.3
+  flutter_local_notifications: ^17.1.2
+  timezone: ^0.9.3
+  flutter_timezone: ^5.0.1
+  highlight: ^0.7.0
+  saf_util: ^0.11.0
+  saf_stream: ^0.12.3
+  cryptography: ^2.9.0
+  cryptography_flutter: ^2.3.4
+  mobile_scanner: ^6.0.2
+  multicast_dns: ^0.3.3
+  local_notifier: ^0.1.6
+  media_kit: ^1.2.6
+  media_kit_video: ^2.0.1
+  just_audio_media_kit: ^2.1.0
+  video_player_media_kit: ^2.0.0
+  media_kit_libs_windows_video: ^1.0.11
+  word_cloud: ^1.0.3
+  # Tracked in-tree at third_party/phosphor_flutter, Regular weight only —
+  # the full package ships five more fonts (2.5MB) that nothing here uses.
+  phosphor_flutter:
+    path: third_party/phosphor_flutter
+  wechat_assets_picker: 10.1.1
+  bonsoir: ^6.0.2
+  pretty_qr_code: ^3.6.0
+  charset: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  fake_async: ^1.3.1
+  path_provider_platform_interface: ^2.1.2
+  build_runner: ^2.4.11
+  slang_build_runner: ^3.31.0
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+  flutter_native_splash: ^2.4.4
+
+dependency_overrides:
+  image_gallery_saver:
+    path: third_party/image_gallery_saver
+
+hooks:
+  user_defines:
+    sqlite3:
+      source: system
+      name: sqlite3
+      name_windows: winsqlite3
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  default-flavor: play
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/splash/splash_screen_light.png
+    - assets/splash/splash_logo.png
+    - assets/splash/splash_logo_native.png
+    - assets/splash/splash_logo_macos.png
+    - assets/ai_providers/
+    - assets/location_picker/
+    - assets/share/
+    - third_party/readability/
+    - assets/images/streamline--wind-flow-1-remix.png
+    - assets/images/coolapk_logo.png
+    - assets/images/flomo_import_logo.svg
+    - assets/images/swashbuckler_diary_import_logo.png
+    - assets/images/migration/
+    - assets/images/donation_qr.png
+    - assets/images/default_avatar.webp
+    - assets/images/tray_icon_macos.png
+    - windows/runner/resources/app_icon.ico
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package

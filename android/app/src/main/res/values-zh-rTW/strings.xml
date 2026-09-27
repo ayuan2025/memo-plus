@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_daily_review_label">&#x968F;&#x673A;&#x6F2B;&#x6B65;</string>
+    <string name="widget_quick_input_label">&#x5FEB;&#x901F;&#x8F93;&#x5165;</string>
+    <string name="widget_stats_label">&#x8BB0;&#x5F55;&#x70ED;&#x529B;&#x56FE;</string>
+    <string name="widget_daily_review_placeholder_title">&#x968F;&#x673A;&#x6F2B;&#x6B65;</string>
+    <string name="widget_daily_review_placeholder_countdown">&#x5373;&#x5C06;&#x5237;&#x65B0;</string>
+    <string name="widget_daily_review_placeholder_body">&#x8BB0;&#x4F4F;&#x8FD9;&#x4E00;&#x523B;&#xFF0C;&#x611F;&#x53D7;&#x751F;&#x6D3B;&#x7684;&#x6E29;&#x5EA6;&#x3002;\n&#x6BCF;&#x5929;&#x6765;&#x4E00;&#x6B21;&#x968F;&#x673A;&#x6F2B;&#x6B65;&#x3002;</string>
+    <string name="widget_quick_input_hint">&#x5199;&#x70B9;&#x4EC0;&#x4E48;&#x2026;</string>
+    <string name="widget_calendar_placeholder_title">&#x8BB0;&#x5F55;&#x70ED;&#x529B;&#x56FE;</string>
+    <string name="widget_send">&#x53D1;&#x9001;</string>
+</resources>

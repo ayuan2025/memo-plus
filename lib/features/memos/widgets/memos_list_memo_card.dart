@@ -1,0 +1,1858 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderAbstractViewport;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/app_motion.dart';
+import '../../../core/app_localization.dart';
+import '../../../core/attachment_toast.dart';
+import '../../../core/location_launcher.dart';
+import '../../../core/memo_content_diagnostics.dart';
+import '../../../core/memoflow_palette.dart';
+import '../../../core/platform_layout.dart';
+import '../../../data/models/app_preferences.dart';
+import '../../../data/models/location_settings.dart';
+import '../../../data/models/local_memo.dart';
+import '../../../data/logs/log_manager.dart';
+import '../../../state/memos/memos_providers.dart';
+import '../../../state/memos/memos_list_providers.dart';
+import '../../../state/tags/tag_color_lookup.dart';
+import '../../image_preview/image_preview_launcher.dart';
+import '../memos_list_floating_collapse_controller.dart';
+import '../memo_detail_screen.dart';
+import '../memo_card_preview.dart';
+import '../memo_hero_flight.dart';
+import '../memo_image_grid.dart';
+import '../memo_inline_image_sources.dart';
+import '../memo_inline_image_syntax.dart';
+import '../memo_location_line.dart';
+import '../memo_markdown.dart';
+import '../memo_media_grid.dart';
+import '../memo_card_action.dart';
+import 'audio_row.dart';
+import 'memo_card_action_menu.dart';
+import 'memo_engagement_surface.dart';
+import '../../../i18n/strings.g.dart';
+
+export '../memo_card_action.dart';
+export 'memo_card_action_menu.dart'
+    show
+        MemoCardActionDescriptor,
+        MemoCardActionMenuSection,
+        buildMemoCardActionDescriptors,
+        buildMemoCardActionMenuItems,
+        buildMemoCardActionOrder,
+        memoCardActionDangerSectionKey,
+        memoCardActionItemKey,
+        memoCardActionPopoverKey,
+        memoCardActionPrimarySectionKey,
+        memoCardActionSecondarySectionKey,
+        showMemoCardActionPopover,
+        showMemoCardContextMenu;
+
+@visibleForTesting
+const Key memoListCardPressOffsetKey = ValueKey<String>(
+  'memo-list-card-press-offset',
+);
+
+const double _memoCardPressedOffsetY = 1;
+
+class _LruCache<K, V> {
+  _LruCache({required int capacity}) : _capacity = capacity;
+
+  final int _capacity;
+  final _map = <K, V>{};
+
+  V? get(K key) {
+    final value = _map.remove(key);
+    if (value == null) return null;
+    _map[key] = value;
+    return value;
+  }
+
+  void set(K key, V value) {
+    if (_capacity <= 0) return;
+    _map.remove(key);
+    _map[key] = value;
+    if (_map.length > _capacity) {
+      _map.remove(_map.keys.first);
+    }
+  }
+
+  void removeWhere(bool Function(K key) test) {
+    final keys = _map.keys.where(test).toList(growable: false);
+    for (final key in keys) {
+      _map.remove(key);
+    }
+  }
+}
+
+class _MemoRenderCacheEntry {
+  const _MemoRenderCacheEntry({
+    required this.previewPlan,
+    required this.taskStats,
+  });
+
+  final MemoCardPreviewPlan previewPlan;
+  final TaskStats taskStats;
+}
+
+final _memoRenderCache = _LruCache<String, _MemoRenderCacheEntry>(
+  capacity: 120,
+);
+final Set<String> _memoDeleteCardLogKeys = <String>{};
+
+void _logMemoDeleteCardOnce(
+  String message,
+  LocalMemo memo, {
+  Map<String, Object?> context = const <String, Object?>{},
+}) {
+  final key = '$message|${memo.uid}';
+  if (!_memoDeleteCardLogKeys.add(key)) return;
+  LogManager.instance.info(
+    message,
+    context: <String, Object?>{
+      ...buildMemoContentDiagnostics(memo.content, memoUid: memo.uid),
+      'attachmentCount': memo.attachments.length,
+      ...context,
+    },
+  );
+}
+
+String _memoRenderCacheKey(
+  LocalMemo memo, {
+  required bool collapseLongContent,
+  required bool collapseReferences,
+  required AppLanguage language,
+}) {
+  return '${memo.uid}|'
+      '${memo.contentFingerprint}|'
+      '${collapseLongContent ? 1 : 0}|'
+      '${collapseReferences ? 1 : 0}|'
+      '${language.name}';
+}
+
+String _memoCardMarkdownCacheKey({
+  required String cacheKeyBase,
+  required String highlightKey,
+  required String source,
+  required bool renderImages,
+  MemoInlineImageSyntax? imageSyntax,
+  String localInlineImageFingerprint = '',
+}) {
+  final renderFlag = renderImages ? 1 : 0;
+  final resolvedImageSyntax = resolveMemoInlineImageSyntax(
+    renderImages: renderImages,
+    imageSyntax: imageSyntax,
+  );
+  return '$cacheKeyBase|md|source=$source|renderImages=$renderFlag|imageSyntax=${resolvedImageSyntax.cacheToken}|localInline=$localInlineImageFingerprint|searchhl=v2|hl=$highlightKey';
+}
+
+void invalidateMemoRenderCacheForUid(String memoUid) {
+  final trimmed = memoUid.trim();
+  if (trimmed.isEmpty) return;
+  _memoRenderCache.removeWhere((key) => key.startsWith('$trimmed|'));
+}
+
+class MemoListCard extends StatefulWidget {
+  const MemoListCard({
+    super.key,
+    required this.memo,
+    this.heroTag,
+    this.debugRemoving = false,
+    this.selected = false,
+    required this.dateText,
+    required this.reminderText,
+    required this.tagColors,
+    required this.initiallyExpanded,
+    required this.highlightQuery,
+    required this.collapseLongContent,
+    required this.collapseReferences,
+    this.showEngagement = false,
+    required this.isAudioPlaying,
+    required this.isAudioLoading,
+    required this.audioPositionListenable,
+    required this.audioDurationListenable,
+    required this.imageEntries,
+    required this.mediaEntries,
+    this.contentTextOverride,
+    this.contentHeader,
+    this.useExpandedArticleBody = false,
+    this.expandedInlineImageSyntax = MemoInlineImageSyntax.markdownAndHtml,
+    this.baseUrl,
+    this.authHeader,
+    this.rebaseAbsoluteFileUrlForV024 = false,
+    this.attachAuthForSameOriginAbsolute = false,
+    required this.locationProvider,
+    required this.onAudioSeek,
+    required this.onAudioTap,
+    required this.syncStatus,
+    this.onSyncStatusTap,
+    required this.onToggleTask,
+    required this.onTap,
+    this.onTapDown,
+    this.onTapUp,
+    this.onTapCancel,
+    this.onLongPress,
+    this.onDoubleTap,
+    this.onSecondaryTapDown,
+    this.onFloatingGeometryChanged,
+    required this.onAction,
+  });
+
+  final LocalMemo memo;
+  final Object? heroTag;
+  final bool debugRemoving;
+  final bool selected;
+  final String dateText;
+  final String? reminderText;
+  final TagColorLookup tagColors;
+  final bool initiallyExpanded;
+  final String? highlightQuery;
+  final bool collapseLongContent;
+  final bool collapseReferences;
+  final bool showEngagement;
+  final bool isAudioPlaying;
+  final bool isAudioLoading;
+  final ValueListenable<Duration>? audioPositionListenable;
+  final ValueListenable<Duration?>? audioDurationListenable;
+  final List<MemoImageEntry> imageEntries;
+  final List<MemoMediaEntry> mediaEntries;
+  final String? contentTextOverride;
+  final Widget? contentHeader;
+  final bool useExpandedArticleBody;
+  final MemoInlineImageSyntax expandedInlineImageSyntax;
+  final Uri? baseUrl;
+  final String? authHeader;
+  final bool rebaseAbsoluteFileUrlForV024;
+  final bool attachAuthForSameOriginAbsolute;
+  final LocationServiceProvider locationProvider;
+  final ValueChanged<Duration>? onAudioSeek;
+  final VoidCallback? onAudioTap;
+  final MemoSyncStatus syncStatus;
+  final VoidCallback? onSyncStatusTap;
+  final ValueChanged<int> onToggleTask;
+  final VoidCallback onTap;
+  final GestureTapDownCallback? onTapDown;
+  final GestureTapUpCallback? onTapUp;
+  final VoidCallback? onTapCancel;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onDoubleTap;
+  final ValueChanged<TapDownDetails>? onSecondaryTapDown;
+  final ValueChanged<MemoFloatingCollapseGeometry?>? onFloatingGeometryChanged;
+  final ValueChanged<MemoCardAction> onAction;
+
+  @override
+  State<MemoListCard> createState() => MemoListCardState();
+}
+
+class MemoListCardState extends State<MemoListCard> {
+  late bool _expanded;
+  final _cardKey = GlobalKey();
+  final _toggleButtonKey = GlobalKey();
+  bool _showToggle = false;
+  bool _floatingGeometryPublishScheduled = false;
+  bool _hasPublishedFloatingGeometry = false;
+  MemoFloatingCollapseGeometry? _lastPublishedFloatingGeometry;
+
+  @override
+  void initState() {
+    super.initState();
+    _expanded = widget.initiallyExpanded;
+    _scheduleFloatingGeometryPublish();
+    if (!kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.windows &&
+        widget.debugRemoving) {
+      _logMemoDeleteCardOnce(
+        'Memo delete card state init',
+        widget.memo,
+        context: <String, Object?>{
+          'initiallyExpanded': widget.initiallyExpanded,
+        },
+      );
+    }
+  }
+
+  void collapseFromFloating() {
+    if (!_expanded) return;
+    setState(() => _expanded = false);
+    _scheduleFloatingGeometryPublish();
+  }
+
+  double? currentCardTopScrollOffset() {
+    final cardRenderObject = _renderBoxForKey(_cardKey);
+    if (cardRenderObject == null) return null;
+    return _scrollOffsetToReveal(cardRenderObject, 0.0);
+  }
+
+  @visibleForTesting
+  void debugExpandForTest() {
+    if (_expanded) return;
+    setState(() => _expanded = true);
+    _scheduleFloatingGeometryPublish();
+  }
+
+  void _scheduleFloatingGeometryPublish() {
+    if (_floatingGeometryPublishScheduled) return;
+    _floatingGeometryPublishScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _floatingGeometryPublishScheduled = false;
+      if (!mounted) return;
+      _publishFloatingGeometryIfNeeded();
+    });
+  }
+
+  void _scheduleFloatingGeometryRemoval(
+    ValueChanged<MemoFloatingCollapseGeometry?>? callback,
+  ) {
+    if (callback == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      callback(null);
+    });
+  }
+
+  void _publishFloatingGeometryIfNeeded() {
+    final geometry = _computeFloatingGeometry();
+    if (geometry == null) {
+      if (!_hasPublishedFloatingGeometry ||
+          _lastPublishedFloatingGeometry == null) {
+        return;
+      }
+      _hasPublishedFloatingGeometry = true;
+      _lastPublishedFloatingGeometry = null;
+      widget.onFloatingGeometryChanged?.call(null);
+      return;
+    }
+    final previous = _lastPublishedFloatingGeometry;
+    if (previous != null && previous.isCloseTo(geometry)) return;
+    _hasPublishedFloatingGeometry = true;
+    _lastPublishedFloatingGeometry = geometry;
+    widget.onFloatingGeometryChanged?.call(geometry);
+  }
+
+  MemoFloatingCollapseGeometry? _computeFloatingGeometry() {
+    if (!_expanded || !_showToggle) return null;
+    final cardRenderObject = _renderBoxForKey(_cardKey);
+    final toggleRenderObject = _renderBoxForKey(_toggleButtonKey);
+    if (cardRenderObject == null || toggleRenderObject == null) return null;
+
+    final cardTopOffset = _scrollOffsetToReveal(cardRenderObject, 0.0);
+    final toggleTopOffset = _scrollOffsetToReveal(toggleRenderObject, 0.0);
+    if (cardTopOffset == null || toggleTopOffset == null) return null;
+    return MemoFloatingCollapseGeometry(
+      cardTopOffset: cardTopOffset,
+      cardBottomOffset: cardTopOffset + cardRenderObject.size.height,
+      toggleTopOffset: toggleTopOffset,
+      toggleBottomOffset: toggleTopOffset + toggleRenderObject.size.height,
+    );
+  }
+
+  RenderBox? _renderBoxForKey(GlobalKey key) {
+    final keyContext = key.currentContext;
+    if (keyContext == null) return null;
+    final renderObject = keyContext.findRenderObject();
+    if (renderObject is! RenderBox || !renderObject.hasSize) return null;
+    return renderObject;
+  }
+
+  double? _scrollOffsetToReveal(RenderBox renderObject, double alignment) {
+    final viewport = RenderAbstractViewport.maybeOf(renderObject);
+    if (viewport == null) return null;
+    return viewport.getOffsetToReveal(renderObject, alignment).offset;
+  }
+
+  @override
+  void didUpdateWidget(covariant MemoListCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.windows &&
+        (oldWidget.debugRemoving || widget.debugRemoving)) {
+      _logMemoDeleteCardOnce(
+        'Memo delete card state didUpdateWidget',
+        widget.memo,
+        context: <String, Object?>{
+          'oldMemoUidChanged': oldWidget.memo.uid != widget.memo.uid,
+          'oldInitiallyExpanded': oldWidget.initiallyExpanded,
+          'newInitiallyExpanded': widget.initiallyExpanded,
+          'oldDebugRemoving': oldWidget.debugRemoving,
+          'newDebugRemoving': widget.debugRemoving,
+        },
+      );
+    }
+    if (oldWidget.memo.uid != widget.memo.uid) {
+      if (_lastPublishedFloatingGeometry != null) {
+        _scheduleFloatingGeometryRemoval(oldWidget.onFloatingGeometryChanged);
+      }
+      _hasPublishedFloatingGeometry = false;
+      _lastPublishedFloatingGeometry = null;
+      _expanded = widget.initiallyExpanded;
+      _scheduleFloatingGeometryPublish();
+      return;
+    }
+    if (oldWidget.initiallyExpanded != widget.initiallyExpanded) {
+      _expanded = widget.initiallyExpanded;
+      _scheduleFloatingGeometryPublish();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (!kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.windows &&
+        widget.debugRemoving) {
+      _logMemoDeleteCardOnce(
+        'Memo delete card state dispose',
+        widget.memo,
+        context: <String, Object?>{
+          'expandedAtDispose': _expanded,
+          'showToggleAtDispose': _showToggle,
+        },
+      );
+    }
+    if (_lastPublishedFloatingGeometry != null) {
+      _scheduleFloatingGeometryRemoval(widget.onFloatingGeometryChanged);
+      _lastPublishedFloatingGeometry = null;
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final memo = widget.memo;
+    final dateText = widget.dateText;
+    final reminderText = widget.reminderText;
+    final collapseLongContent = widget.collapseLongContent;
+    final collapseReferences = widget.collapseReferences;
+    final onToggleTask = widget.onToggleTask;
+    final onTap = widget.onTap;
+    final onAction = widget.onAction;
+    final onAudioTap = widget.onAudioTap;
+    final audioPlaying = widget.isAudioPlaying;
+    final audioLoading = widget.isAudioLoading;
+    final audioPositionListenable = widget.audioPositionListenable;
+    final audioDurationListenable = widget.audioDurationListenable;
+    final onAudioSeek = widget.onAudioSeek;
+    final mediaEntries = widget.mediaEntries;
+    final syncStatus = widget.syncStatus;
+    final onSyncStatusTap = widget.onSyncStatusTap;
+    final onDoubleTap = widget.onDoubleTap;
+    final onLongPress = widget.onLongPress;
+    final onTapDown = widget.onTapDown;
+    final onTapUp = widget.onTapUp;
+    final onTapCancel = widget.onTapCancel;
+    final onSecondaryTapDown = widget.onSecondaryTapDown;
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isWindowsDesktop =
+        !kIsWeb && defaultTargetPlatform == TargetPlatform.windows;
+    final cardRadius = isWindowsDesktop ? 16.0 : 22.0;
+    final cardPadding = isWindowsDesktop ? 16.0 : 20.0;
+    final borderColor = isDark
+        ? MemoFlowPalette.borderDark
+        : MemoFlowPalette.borderLight;
+    final cardColor = isDark
+        ? MemoFlowPalette.cardDark
+        : MemoFlowPalette.cardLight;
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final isPinned = memo.pinned;
+    final pinColor = MemoFlowPalette.primary;
+    final pinBorderColor = pinColor.withValues(alpha: isDark ? 0.5 : 0.4);
+    final pinTint = pinColor.withValues(alpha: isDark ? 0.18 : 0.08);
+    final selectedAccent = MemoFlowPalette.primary.withValues(
+      alpha: isDark ? 0.18 : 0.1,
+    );
+    final selectedBorderColor = MemoFlowPalette.primary.withValues(
+      alpha: isDark ? 0.68 : 0.48,
+    );
+    final cardSurface = widget.selected
+        ? Color.alphaBlend(
+            selectedAccent,
+            isPinned ? Color.alphaBlend(pinTint, cardColor) : cardColor,
+          )
+        : isPinned
+        ? Color.alphaBlend(pinTint, cardColor)
+        : cardColor;
+    final cardBorderColor = widget.selected
+        ? selectedBorderColor
+        : (isPinned ? pinBorderColor : borderColor);
+    final deleteColor = isDark
+        ? const Color(0xFFFF7A7A)
+        : const Color(0xFFE05656);
+    final pendingColor = textMain.withValues(alpha: isDark ? 0.45 : 0.35);
+    final attachmentColor = textMain.withValues(alpha: isDark ? 0.55 : 0.6);
+    final showSyncStatus = syncStatus != MemoSyncStatus.none;
+    final headerMinHeight = 32.0;
+    final syncIcon = syncStatus == MemoSyncStatus.failed
+        ? Icons.error_outline
+        : Icons.cloud_upload_outlined;
+    final syncColor = syncStatus == MemoSyncStatus.failed
+        ? deleteColor
+        : pendingColor;
+    final pinnedChip = isPinned
+        ? Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: pinColor.withValues(alpha: isDark ? 0.18 : 0.12),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: pinBorderColor),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.push_pin, size: 12, color: pinColor),
+                const SizedBox(width: 4),
+                Text(
+                  context.t.strings.legacy.msg_pinned,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.3,
+                    color: pinColor,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : null;
+
+    final audio = memo.attachments
+        .where((a) => a.type.startsWith('audio'))
+        .toList(growable: false);
+    final hasAudio = audio.isNotEmpty;
+    final nonMediaAttachments = filterNonMediaAttachments(memo.attachments);
+    final attachmentLines = attachmentNameLines(nonMediaAttachments);
+    final attachmentCount = nonMediaAttachments.length;
+    final contentText = widget.contentTextOverride ?? memo.content;
+    final language = context.appLanguage;
+    final normalizedHighlightQuery = widget.highlightQuery?.trim();
+    final highlightQuery =
+        normalizedHighlightQuery == null || normalizedHighlightQuery.isEmpty
+        ? null
+        : normalizedHighlightQuery;
+    final highlightKey = highlightQuery?.toLowerCase() ?? '';
+    final cacheKeyBase = _memoRenderCacheKey(
+      memo,
+      collapseLongContent: collapseLongContent,
+      collapseReferences: collapseReferences,
+      language: language,
+    );
+    final cacheKey = widget.contentTextOverride == null
+        ? cacheKeyBase
+        : '$cacheKeyBase|clip=${contentText.hashCode}';
+    final cached = _memoRenderCache.get(cacheKey);
+    final previewPlan =
+        cached?.previewPlan ??
+        buildMemoCardPreviewPlan(
+          contentText,
+          collapseReferences: collapseReferences,
+          language: language,
+          collapseLongContent: collapseLongContent,
+        );
+    final preview = previewPlan.preview;
+    final taskStats =
+        cached?.taskStats ??
+        countTaskStats(contentText, skipQuotedLines: collapseReferences);
+    if (cached == null) {
+      _memoRenderCache.set(
+        cacheKey,
+        _MemoRenderCacheEntry(previewPlan: previewPlan, taskStats: taskStats),
+      );
+    }
+    final showToggle = preview.truncated;
+    if (_showToggle != showToggle) {
+      _showToggle = showToggle;
+      _scheduleFloatingGeometryPublish();
+    }
+    final showCollapsed = showToggle && !_expanded;
+    final showExpandedBody = _expanded;
+    final renderExpandedArticleBody =
+        widget.useExpandedArticleBody && showExpandedBody;
+    final effectiveInlineImageSyntax = renderExpandedArticleBody
+        ? widget.expandedInlineImageSyntax
+        : MemoInlineImageSyntax.none;
+    final trailingMediaEntries = renderExpandedArticleBody
+        ? memoTrailingMediaEntriesForInlineBody(mediaEntries)
+        : mediaEntries;
+    final displayText = showExpandedBody
+        ? contentText
+        : previewPlan.renderSource;
+    final markdownSource = showExpandedBody
+        ? 'body'
+        : (showCollapsed ? 'previewCollapsed' : 'previewFull');
+    final inlineImageSourcePolicy = renderExpandedArticleBody
+        ? buildMemoInlineImageSourcePolicy(
+            content: contentText,
+            attachments: memo.attachments,
+            imageSyntax: effectiveInlineImageSyntax,
+          )
+        : MemoInlineImageSourcePolicy.empty;
+    final markdownCacheKey = _memoCardMarkdownCacheKey(
+      cacheKeyBase: cacheKey,
+      highlightKey: highlightKey,
+      source: markdownSource,
+      renderImages: effectiveInlineImageSyntax.rendersImages,
+      imageSyntax: effectiveInlineImageSyntax,
+      localInlineImageFingerprint: renderExpandedArticleBody
+          ? inlineImageSourcePolicy.fingerprint
+          : '',
+    );
+    final showProgress = !hasAudio && taskStats.total > 0;
+    final progress = showProgress ? taskStats.checked / taskStats.total : 0.0;
+    final audioDurationText = _parseVoiceDuration(contentText) ?? '00:00';
+    final audioDurationFallback = _parseVoiceDurationValue(contentText);
+    if (!kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.windows &&
+        widget.debugRemoving) {
+      _logMemoDeleteCardOnce(
+        'Memo delete card build snapshot',
+        memo,
+        context: <String, Object?>{
+          'mediaEntryCount': mediaEntries.length,
+          'audioAttachmentCount': audio.length,
+          'nonMediaAttachmentCount': attachmentCount,
+          'attachmentBadgeVisible': attachmentCount > 0,
+          'hasAudioRow': hasAudio,
+          'hasMediaGrid': mediaEntries.isNotEmpty,
+          'showToggle': showToggle,
+          'expanded': _expanded,
+          'showCollapsed': showCollapsed,
+          'showSyncStatus': showSyncStatus,
+          'hasReminder': reminderText != null,
+          'hasLocation': memo.location != null,
+          'relationCount': memo.relationCount,
+          'heroEnabled': true,
+          'hasDoubleTapHandler': onDoubleTap != null,
+          'hasLongPressHandler': onLongPress != null,
+          'hasOnTapHandler': true,
+          'markdownCacheKeyFingerprint': markdownCacheKey.hashCode.toString(),
+        },
+      );
+      final removingPreview = preview.text.trim();
+      return Container(
+        key: _cardKey,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: cardSurface,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: cardBorderColor),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: isDark ? 20 : 12,
+              offset: const Offset(0, 4),
+              color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.03),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              dateText,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.0,
+                color: textMain.withValues(alpha: isDark ? 0.4 : 0.5),
+              ),
+            ),
+            if (removingPreview.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                removingPreview,
+                maxLines: kMemoCardPreviewMaxLines + 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 15,
+                  height: 1.45,
+                  color: textMain.withValues(alpha: 0.92),
+                ),
+              ),
+            ],
+          ],
+        ),
+      );
+    }
+
+    Widget buildMediaGrid() {
+      if (trailingMediaEntries.isEmpty) return const SizedBox.shrink();
+      final previewBorder = borderColor.withValues(alpha: 0.65);
+      final previewBg = isDark
+          ? MemoFlowPalette.audioSurfaceDark.withValues(alpha: 0.6)
+          : MemoFlowPalette.audioSurfaceLight;
+      final maxHeight = MediaQuery.of(context).size.height * 0.4;
+      return MemoMediaGrid(
+        entries: trailingMediaEntries,
+        columns: 3,
+        maxCount: 9,
+        maxHeight: maxHeight,
+        preserveSquareTilesWhenHeightLimited: isDesktopTargetPlatform(),
+        radius: 0,
+        spacing: 4,
+        borderColor: previewBorder,
+        backgroundColor: previewBg,
+        textColor: textMain,
+        enableDownload: true,
+      );
+    }
+
+    String formatDuration(Duration value) {
+      final totalSeconds = value.inSeconds;
+      final hh = totalSeconds ~/ 3600;
+      final mm = (totalSeconds % 3600) ~/ 60;
+      final ss = totalSeconds % 60;
+      if (hh <= 0) {
+        return '${mm.toString().padLeft(2, '0')}:${ss.toString().padLeft(2, '0')}';
+      }
+      return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}:${ss.toString().padLeft(2, '0')}';
+    }
+
+    Widget buildAudioRow(Duration position, Duration? duration) {
+      final effectiveDuration = duration ?? audioDurationFallback;
+      final clampedPosition =
+          effectiveDuration != null && position > effectiveDuration
+          ? effectiveDuration
+          : position;
+      final totalText = effectiveDuration != null
+          ? formatDuration(effectiveDuration)
+          : audioDurationText;
+      final showPosition = clampedPosition > Duration.zero || audioPlaying;
+      final displayText = effectiveDuration != null && showPosition
+          ? '${formatDuration(clampedPosition)} / $totalText'
+          : (showPosition ? formatDuration(clampedPosition) : totalText);
+
+      return AudioRow(
+        durationText: displayText,
+        isDark: isDark,
+        playing: audioPlaying,
+        loading: audioLoading,
+        position: clampedPosition,
+        duration: duration,
+        durationFallback: audioDurationFallback,
+        onSeek: onAudioSeek,
+        onTap: onAudioTap,
+      );
+    }
+
+    Widget audioRow = buildAudioRow(Duration.zero, null);
+    if (audioPositionListenable != null && audioDurationListenable != null) {
+      audioRow = ValueListenableBuilder<Duration>(
+        valueListenable: audioPositionListenable,
+        builder: (context, position, _) {
+          return ValueListenableBuilder<Duration?>(
+            valueListenable: audioDurationListenable,
+            builder: (context, duration, _) {
+              return buildAudioRow(position, duration);
+            },
+          );
+        },
+      );
+    }
+
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.contentHeader != null) ...[
+          widget.contentHeader!,
+          const SizedBox(height: 12),
+        ],
+        if (showProgress) ...[
+          TaskProgressBar(
+            progress: progress,
+            isDark: isDark,
+            total: taskStats.total,
+            checked: taskStats.checked,
+          ),
+          const SizedBox(height: 2),
+        ],
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MemoMarkdown(
+              cacheKey: markdownCacheKey,
+              data: displayText,
+              highlightQuery: highlightQuery,
+              maxLines: showCollapsed ? kMemoCardPreviewMaxLines : null,
+              textStyle: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: textMain),
+              blockSpacing: renderExpandedArticleBody ? 8 : 4,
+              normalizeHeadings: true,
+              renderImages: effectiveInlineImageSyntax.rendersImages,
+              imageSyntax: effectiveInlineImageSyntax,
+              tagColors: widget.tagColors,
+              baseUrl: widget.baseUrl,
+              authHeader: widget.authHeader,
+              rebaseAbsoluteFileUrlForV024: widget.rebaseAbsoluteFileUrlForV024,
+              attachAuthForSameOriginAbsolute:
+                  widget.attachAuthForSameOriginAbsolute,
+              imagePreviewItems: widget.imageEntries
+                  .map((entry) => entry.toImagePreviewItem())
+                  .toList(growable: false),
+              allowedLocalImageUrls:
+                  inlineImageSourcePolicy.allowedLocalImageUrls,
+              onOpenImagePreview: (request) =>
+                  ImagePreviewLauncher.open(context, request),
+              onToggleTask: (request) => onToggleTask(request.taskIndex),
+            ),
+            if (showToggle) ...[
+              const SizedBox(height: 4),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  key: _toggleButtonKey,
+                  onPressed: () {
+                    setState(() => _expanded = !_expanded);
+                    _scheduleFloatingGeometryPublish();
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Text(
+                    _expanded
+                        ? context.t.strings.legacy.msg_collapse
+                        : context.t.strings.legacy.msg_expand,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: MemoFlowPalette.primary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            if (trailingMediaEntries.isNotEmpty) ...[
+              const SizedBox(height: 2),
+              buildMediaGrid(),
+            ],
+            if (hasAudio) ...[const SizedBox(height: 2), audioRow],
+            if (attachmentCount > 0) ...[
+              const SizedBox(height: 4),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Builder(
+                  builder: (context) {
+                    return Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () =>
+                            showAttachmentNamesToast(context, attachmentLines),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 2,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.attach_file,
+                                size: 14,
+                                color: attachmentColor,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                attachmentCount.toString(),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: attachmentColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+            if (widget.showEngagement)
+              MemoEngagementSurface(
+                memoUid: memo.uid,
+                memoVisibility: memo.visibility,
+                mode: MemoEngagementSurfaceMode.compact,
+              ),
+          ],
+        ),
+        MemoRelationsSection(
+          memoUid: memo.uid,
+          initialCount: memo.relationCount,
+        ),
+      ],
+    );
+
+    if (onDoubleTap != null) {
+      content = GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onDoubleTap: onDoubleTap,
+        child: content,
+      );
+    }
+
+    Widget card = _MemoCardFixedPressFeedback(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(cardRadius),
+          mouseCursor: SystemMouseCursors.click,
+          canRequestFocus: true,
+          hoverColor: isWindowsDesktop
+              ? MemoFlowPalette.primary.withValues(alpha: isDark ? 0.05 : 0.04)
+              : null,
+          focusColor: isWindowsDesktop
+              ? MemoFlowPalette.primary.withValues(alpha: isDark ? 0.08 : 0.06)
+              : null,
+          onTap: onTap,
+          onTapDown: onTapDown,
+          onTapUp: onTapUp,
+          onTapCancel: onTapCancel,
+          onLongPress: onLongPress,
+          child: AnimatedContainer(
+            duration: AppMotion.effectiveDuration(
+              context,
+              widget.selected
+                  ? AppMotion.windowsSelection
+                  : AppMotion.windowsHover,
+            ),
+            curve: AppMotion.emphasizedEnterCurve,
+            key: _cardKey,
+            padding: EdgeInsets.all(cardPadding),
+            decoration: BoxDecoration(
+              color: cardSurface,
+              borderRadius: BorderRadius.circular(cardRadius),
+              border: Border.all(color: cardBorderColor),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: widget.selected
+                      ? (isDark ? 32 : 20)
+                      : (isDark ? 20 : 12),
+                  offset: Offset(0, widget.selected ? 8 : 4),
+                  color: widget.selected
+                      ? MemoFlowPalette.primary.withValues(
+                          alpha: isDark ? 0.22 : 0.1,
+                        )
+                      : Colors.black.withValues(alpha: isDark ? 0.4 : 0.03),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: headerMinHeight,
+                          child: Row(
+                            children: [
+                              if (pinnedChip != null) ...[
+                                pinnedChip,
+                                const SizedBox(width: 8),
+                              ],
+                              Text(
+                                dateText,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 1.0,
+                                  color: textMain.withValues(
+                                    alpha: isDark ? 0.4 : 0.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (memo.location != null) ...[
+                          const SizedBox(height: 2),
+                          MemoLocationLine(
+                            location: memo.location!,
+                            textColor: textMain.withValues(
+                              alpha: isDark ? 0.4 : 0.5,
+                            ),
+                            onTap: () => openMemoLocation(
+                              context,
+                              memo.location!,
+                              memoUid: memo.uid,
+                              provider: widget.locationProvider,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (reminderText != null)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.notifications_active_outlined,
+                                      size: 14,
+                                      color: MemoFlowPalette.primary,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      reminderText,
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: MemoFlowPalette.primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (showSyncStatus)
+                              IconButton(
+                                onPressed: onSyncStatusTap,
+                                icon: Icon(
+                                  syncIcon,
+                                  size: 16,
+                                  color: syncColor,
+                                ),
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints.tightFor(
+                                  width: 32,
+                                  height: 32,
+                                ),
+                                splashRadius: 16,
+                              ),
+                            SizedBox(
+                              width: 32,
+                              height: 32,
+                              child: Center(
+                                child: Builder(
+                                  builder: (buttonContext) {
+                                    return IconButton(
+                                      tooltip:
+                                          context.t.strings.legacy.msg_more,
+                                      padding: EdgeInsets.zero,
+                                      constraints:
+                                          const BoxConstraints.tightFor(
+                                            width: 32,
+                                            height: 32,
+                                          ),
+                                      splashRadius: 16,
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        size: 20,
+                                        color: textMain.withValues(
+                                          alpha: isDark ? 0.4 : 0.5,
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        final action =
+                                            await showMemoCardActionPopover(
+                                              context: buttonContext,
+                                              memo: memo,
+                                              anchorContext: buttonContext,
+                                            );
+                                        if (!mounted || action == null) return;
+                                        onAction(action);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 0),
+                content,
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (onSecondaryTapDown != null) {
+      card = Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: (event) {
+          if (event.kind != PointerDeviceKind.mouse ||
+              (event.buttons & kSecondaryMouseButton) == 0) {
+            return;
+          }
+          onSecondaryTapDown(
+            TapDownDetails(
+              globalPosition: event.position,
+              localPosition: event.localPosition,
+              kind: event.kind,
+            ),
+          );
+        },
+        child: card,
+      );
+    }
+    card = NotificationListener<SizeChangedLayoutNotification>(
+      onNotification: (_) {
+        _scheduleFloatingGeometryPublish();
+        return false;
+      },
+      child: SizeChangedLayoutNotifier(child: card),
+    );
+    final heroTag = widget.heroTag;
+    if (heroTag == null) {
+      return card;
+    }
+    return Hero(
+      tag: heroTag,
+      createRectTween: (begin, end) =>
+          MaterialRectArcTween(begin: begin, end: end),
+      flightShuttleBuilder: memoHeroFlightShuttleBuilder(isPinned: memo.pinned),
+      child: card,
+    );
+  }
+
+  static String? _parseVoiceDuration(String content) {
+    final value = _parseVoiceDurationValue(content);
+    if (value == null) return null;
+    final totalSeconds = value.inSeconds;
+    final hh = totalSeconds ~/ 3600;
+    final mm = (totalSeconds % 3600) ~/ 60;
+    final ss = totalSeconds % 60;
+    if (hh <= 0) {
+      return '${mm.toString().padLeft(2, '0')}:${ss.toString().padLeft(2, '0')}';
+    }
+    return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}:${ss.toString().padLeft(2, '0')}';
+  }
+
+  static Duration? _parseVoiceDurationValue(String content) {
+    final linePattern = RegExp(r'^[-*+]\s*');
+    final valuePattern = RegExp(
+      r'^(?:duration|\u65F6\u957F)\s*[:\uFF1A]\s*(?:(\d{1,2}):)?(\d{1,2}):(\d{1,2})$',
+      caseSensitive: false,
+      unicode: true,
+    );
+
+    for (final rawLine in content.split('\n')) {
+      final trimmed = rawLine.trim();
+      if (trimmed.isEmpty) continue;
+      final line = trimmed.replaceFirst(linePattern, '');
+      final m = valuePattern.firstMatch(line);
+      if (m == null) continue;
+      final hh = int.tryParse(m.group(1) ?? '') ?? 0;
+      final mm = int.tryParse(m.group(2) ?? '') ?? 0;
+      final ss = int.tryParse(m.group(3) ?? '') ?? 0;
+      if (hh == 0 && mm == 0 && ss == 0) return null;
+      return Duration(hours: hh, minutes: mm, seconds: ss);
+    }
+
+    return null;
+  }
+}
+
+class _MemoCardFixedPressFeedback extends StatefulWidget {
+  const _MemoCardFixedPressFeedback({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_MemoCardFixedPressFeedback> createState() =>
+      _MemoCardFixedPressFeedbackState();
+}
+
+class _MemoCardFixedPressFeedbackState
+    extends State<_MemoCardFixedPressFeedback> {
+  bool _pressed = false;
+  int? _activePointer;
+  Offset? _downPosition;
+
+  void _setPressed(bool value) {
+    if (_pressed == value) return;
+    setState(() => _pressed = value);
+  }
+
+  void _clearPointerTracking() {
+    _activePointer = null;
+    _downPosition = null;
+  }
+
+  void _handlePointerDown(PointerDownEvent event) {
+    _activePointer = event.pointer;
+    _downPosition = event.position;
+    _setPressed(true);
+  }
+
+  void _handlePointerMove(PointerMoveEvent event) {
+    if (!_pressed || _activePointer != event.pointer) return;
+    final downPosition = _downPosition;
+    if (downPosition == null) return;
+    if ((event.position - downPosition).distance <= kTouchSlop) return;
+    _setPressed(false);
+  }
+
+  void _handlePointerUpOrCancel(PointerEvent event) {
+    if (_activePointer != event.pointer) return;
+    _setPressed(false);
+    _clearPointerTracking();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final duration = AppMotion.effectiveDuration(
+      context,
+      _pressed ? AppMotion.desktopPressDown : AppMotion.desktopPressUp,
+    );
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: _handlePointerDown,
+      onPointerMove: _handlePointerMove,
+      onPointerUp: _handlePointerUpOrCancel,
+      onPointerCancel: _handlePointerUpOrCancel,
+      child: AnimatedContainer(
+        key: memoListCardPressOffsetKey,
+        duration: duration,
+        curve: _pressed
+            ? AppMotion.standardCurve
+            : AppMotion.emphasizedEnterCurve,
+        transform: Matrix4.translationValues(
+          0,
+          _pressed ? _memoCardPressedOffsetY : 0,
+          0,
+        ),
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+class MemoRelationsSection extends ConsumerStatefulWidget {
+  const MemoRelationsSection({
+    super.key,
+    required this.memoUid,
+    required this.initialCount,
+  });
+
+  final String memoUid;
+  final int initialCount;
+
+  @override
+  ConsumerState<MemoRelationsSection> createState() =>
+      MemoRelationsSectionState();
+}
+
+class MemoRelationsSectionState extends ConsumerState<MemoRelationsSection> {
+  bool _expanded = false;
+  int _cachedTotal = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _cachedTotal = widget.initialCount;
+  }
+
+  @override
+  void didUpdateWidget(covariant MemoRelationsSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialCount != oldWidget.initialCount) {
+      _cachedTotal = widget.initialCount;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_expanded && _cachedTotal == 0) {
+      return const SizedBox.shrink();
+    }
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark
+        ? MemoFlowPalette.borderDark
+        : MemoFlowPalette.borderLight;
+    final bg = isDark
+        ? MemoFlowPalette.audioSurfaceDark
+        : MemoFlowPalette.audioSurfaceLight;
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final textMuted = textMain.withValues(alpha: isDark ? 0.6 : 0.7);
+
+    final summaryRow = RelationSummaryRow(
+      borderColor: borderColor,
+      bg: bg,
+      textMain: textMain,
+      textMuted: textMuted,
+      expanded: _expanded,
+      countText: _cachedTotal.toString(),
+      onTap: () => setState(() => _expanded = !_expanded),
+      boxed: false,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: borderColor.withValues(alpha: 0.7)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            summaryRow,
+            if (_expanded) const SizedBox(height: 2),
+            if (_expanded) _buildExpanded(context, isDark),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildExpanded(BuildContext context, bool isDark) {
+    final relationsAsync = ref.watch(memoRelationsProvider(widget.memoUid));
+    return relationsAsync.when(
+      data: (relations) {
+        final currentName = 'memos/${widget.memoUid}';
+        final referencing = <RelationItem>[];
+        final referencedBy = <RelationItem>[];
+        final seenReferencing = <String>{};
+        final seenReferencedBy = <String>{};
+
+        for (final relation in relations) {
+          final type = relation.type.trim().toUpperCase();
+          if (type != 'REFERENCE') {
+            continue;
+          }
+          final memoName = relation.memo.name.trim();
+          final relatedName = relation.relatedMemo.name.trim();
+
+          if (memoName == currentName && relatedName.isNotEmpty) {
+            if (seenReferencing.add(relatedName)) {
+              referencing.add(
+                RelationItem(
+                  name: relatedName,
+                  snippet: relation.relatedMemo.snippet,
+                ),
+              );
+            }
+            continue;
+          }
+          if (relatedName == currentName && memoName.isNotEmpty) {
+            if (seenReferencedBy.add(memoName)) {
+              referencedBy.add(
+                RelationItem(name: memoName, snippet: relation.memo.snippet),
+              );
+            }
+          }
+        }
+
+        final total = referencing.length + referencedBy.length;
+        _maybeCacheTotal(total);
+
+        if (total == 0) {
+          return _buildEmptyState(context, isDark);
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (referencing.isNotEmpty)
+              RelationGroup(
+                title: context.t.strings.legacy.msg_references,
+                items: referencing,
+                isDark: isDark,
+                showHeader: false,
+                onTap: (item) => _openMemo(context, ref, item.name),
+                boxed: false,
+              ),
+            if (referencing.isNotEmpty && referencedBy.isNotEmpty)
+              const SizedBox(height: 2),
+            if (referencedBy.isNotEmpty)
+              RelationGroup(
+                title: context.t.strings.legacy.msg_referenced,
+                items: referencedBy,
+                isDark: isDark,
+                showHeader: false,
+                onTap: (item) => _openMemo(context, ref, item.name),
+                boxed: false,
+              ),
+          ],
+        );
+      },
+      loading: () => _buildLoading(context),
+      error: (error, stackTrace) => const SizedBox.shrink(),
+    );
+  }
+
+  void _maybeCacheTotal(int total) {
+    if (_cachedTotal == total) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() => _cachedTotal = total);
+    });
+  }
+
+  Widget _buildLoading(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final textMuted = textMain.withValues(alpha: isDark ? 0.6 : 0.7);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          Icon(Icons.link, size: 14, color: textMuted),
+          const SizedBox(width: 6),
+          Text(
+            context.t.strings.legacy.msg_loading_links,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: textMuted,
+            ),
+          ),
+          const Spacer(),
+          SizedBox.square(
+            dimension: 12,
+            child: CircularProgressIndicator(strokeWidth: 2, color: textMuted),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(BuildContext context, bool isDark) {
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final textMuted = textMain.withValues(alpha: isDark ? 0.6 : 0.7);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          Icon(Icons.link_off, size: 14, color: textMuted),
+          const SizedBox(width: 6),
+          Text(
+            context.t.strings.legacy.msg_no_links,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: textMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _openMemo(
+    BuildContext context,
+    WidgetRef ref,
+    String rawName,
+  ) async {
+    final uid = _normalizeMemoUid(rawName);
+    if (uid.isEmpty || uid == widget.memoUid) return;
+
+    final result = await ref
+        .read(memosListControllerProvider)
+        .resolveMemoForOpen(uid: uid);
+    final error = result.error;
+    if (error != null) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.t.strings.legacy.msg_failed_load_4(e: error)),
+        ),
+      );
+      return;
+    }
+
+    if (result.isNotFound) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.t.strings.legacy.msg_memo_not_found_locally),
+        ),
+      );
+      return;
+    }
+
+    final memo = result.memo!;
+    if (!context.mounted) return;
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => MemoDetailScreen(initialMemo: memo),
+      ),
+    );
+  }
+
+  String _normalizeMemoUid(String raw) {
+    final trimmed = raw.trim();
+    if (trimmed.isEmpty) return '';
+    if (trimmed.startsWith('memos/')) return trimmed.substring('memos/'.length);
+    return trimmed;
+  }
+}
+
+class RelationSummaryRow extends StatelessWidget {
+  const RelationSummaryRow({
+    super.key,
+    required this.borderColor,
+    required this.bg,
+    required this.textMain,
+    required this.textMuted,
+    required this.expanded,
+    required this.countText,
+    required this.onTap,
+    this.boxed = true,
+  });
+
+  final Color borderColor;
+  final Color bg;
+  final Color textMain;
+  final Color textMuted;
+  final bool expanded;
+  final String countText;
+  final VoidCallback onTap;
+  final bool boxed;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = context.t.strings.legacy.msg_links;
+    final decoration = boxed
+        ? BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: borderColor.withValues(alpha: 0.7)),
+          )
+        : null;
+    final padding = boxed
+        ? const EdgeInsets.symmetric(horizontal: 12)
+        : EdgeInsets.zero;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        child: Container(
+          height: 34,
+          padding: padding,
+          decoration: decoration,
+          child: Row(
+            children: [
+              Icon(Icons.link, size: 14, color: textMuted),
+              const SizedBox(width: 6),
+              Text(
+                '$label - $countText',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: textMain,
+                ),
+              ),
+              const Spacer(),
+              Icon(
+                expanded ? Icons.expand_less : Icons.expand_more,
+                size: 18,
+                color: textMuted,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RelationGroup extends StatelessWidget {
+  const RelationGroup({
+    super.key,
+    required this.title,
+    required this.items,
+    required this.isDark,
+    this.showHeader = true,
+    this.onTap,
+    this.boxed = true,
+  });
+
+  final String title;
+  final List<RelationItem> items;
+  final bool isDark;
+  final bool showHeader;
+  final ValueChanged<RelationItem>? onTap;
+  final bool boxed;
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = isDark
+        ? MemoFlowPalette.borderDark
+        : MemoFlowPalette.borderLight;
+    final bg = isDark
+        ? MemoFlowPalette.audioSurfaceDark
+        : MemoFlowPalette.audioSurfaceLight;
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final headerColor = textMain.withValues(alpha: isDark ? 0.7 : 0.8);
+    final chipBg = isDark
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.06);
+
+    final decoration = boxed
+        ? BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: borderColor.withValues(alpha: 0.7)),
+          )
+        : null;
+    final padding = boxed
+        ? const EdgeInsets.fromLTRB(12, 10, 12, 12)
+        : EdgeInsets.zero;
+    return Container(
+      padding: padding,
+      decoration: decoration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (showHeader) ...[
+            Row(
+              children: [
+                Icon(Icons.link, size: 14, color: headerColor),
+                const SizedBox(width: 6),
+                Text(
+                  '$title (${items.length})',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: headerColor,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+          ...items.map((item) {
+            final row = Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: chipBg,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      _shortMemoId(item.name),
+                      style: TextStyle(fontSize: 10, color: headerColor),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _relationSnippet(item),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12, color: textMain),
+                    ),
+                  ),
+                ],
+              ),
+            );
+            if (onTap == null) return row;
+            return Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () => onTap!(item),
+                child: row,
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  static String _relationSnippet(RelationItem item) {
+    final snippet = item.snippet.trim();
+    if (snippet.isNotEmpty) return snippet;
+    final name = item.name.trim();
+    if (name.isNotEmpty) return name;
+    return '';
+  }
+
+  static String _shortMemoId(String name) {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return '--';
+    final raw = trimmed.startsWith('memos/')
+        ? trimmed.substring('memos/'.length)
+        : trimmed;
+    return raw.length <= 6 ? raw : raw.substring(0, 6);
+  }
+}
+
+class RelationItem {
+  const RelationItem({required this.name, required this.snippet});
+
+  final String name;
+  final String snippet;
+}
+
+class TaskProgressBar extends StatefulWidget {
+  const TaskProgressBar({
+    super.key,
+    required this.progress,
+    required this.isDark,
+    required this.total,
+    required this.checked,
+  });
+
+  final double progress;
+  final bool isDark;
+  final int total;
+  final int checked;
+
+  @override
+  State<TaskProgressBar> createState() => TaskProgressBarState();
+}
+
+class TaskProgressBarState extends State<TaskProgressBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    final targetValue = widget.progress.clamp(0.0, 1.0);
+    _animation = Tween<double>(
+      begin: targetValue,
+      end: targetValue,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    _controller.value = 1.0;
+  }
+
+  @override
+  void didUpdateWidget(TaskProgressBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progress != widget.progress) {
+      final targetValue = widget.progress.clamp(0.0, 1.0);
+      final currentValue = _animation.value;
+      final difference = (targetValue - currentValue).abs();
+
+      // 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偞鐗犻、鏇㈠Χ閸モ晝鍘犻梻浣虹帛閸ㄥ爼寮搁懡銈囩闁哄诞宀€鍞甸柣鐘烘鐏忋劑宕濋悢鍏肩厸闁糕剝鍔曢埀顒佹礋濠€渚€姊洪幐搴ｇ畵闁绘绮岄…鍥箛椤戠偟鎳撻埞鍐垂椤旂懓浜鹃柡宥庡亝瀹曞弶绻涢幋娆忕仼缂佺媴缍侀弻锝堢疀閺冣偓閵囩喎霉濠婂簼閭柕鍡曠閳诲酣骞囬鍓ф闂備礁鎲″ú蹇涘礉鐏炲墽顩插Δ锝呭暞閻撶喖鏌ｉ弬鎸庡暈缂佽泛寮堕妵鍕Ψ閵壯咁啋闂佸搫鏈惄顖炲箖閳轰胶鏆﹂柛銉ｅ劗閸嬫捇骞掗弮鍌滐紲濡炪倖娲栧Λ娑㈠礆娴煎瓨鐓冮柦妯侯樈濡插憡銇勯锝囩疄妞ゃ垺锕㈤幃婊堝幢閺囩喎浜濋梻鍌氬€搁崐椋庣矆娓氣偓楠炲鏁撻悩鑼槷闂婎偄娲︾粙鎴︽偪閻愵剛绡€濠电姴鍊搁弳濠囨煛鐎ｎ偅鐓ラ柍瑙勫灴閹晛鐣烽崶鑸垫闂備胶绮幐璇裁洪悢鐓庤摕闁跨喓濮寸壕鍏肩節閸偄濮囨繛鍫幗缁绘繄鍠婂Ο宄颁壕闁惧浚鍋勬禒鎾⒑閸濆嫬顦柛鎾寸箘缁參鎮㈤悡搴ｅ姦濡炪倖甯掗崐缁樼▔瀹ュ鐓涚€规搩鍠栭懟顖氣枔閵娿儺娓婚柕鍫濇绾剧敻鏌涚€ｎ偅灏甸柍褜鍓濋～澶娒洪弽顓炍х紒瀣儥閸ゆ洟鏌熺紒銏犳灍闁稿瀚伴弻娑樷攽閸曨偄濮曢悶姘卞█濮婂宕掑顑藉亾閻戣姤鍊块柨鏃堟暜閸嬫挾绮☉妯诲櫧闁活厽鐟╅弻鐔兼倻濮楀棙鐣烽梺鎼炲€曢惌鍌炲蓟閻旂⒈鏁嶉柨婵嗘矗缁爼姊虹紒妯荤叆闁硅姤绮庡褔鍩€椤掑嫭鈷戦柛娑橈攻婢跺嫰鏌涢幘瀵告噮濠㈣娲熼、娑橆潩閿濆棙鏉搁梻浣虹帛椤洨鍒掗姘ｆ鐟滄棃寮婚妸鈺佸嵆妞ゅ繐鐗婇宥咁渻閵堝啫濡介柣鐔村劦閸╃偤骞嬮敂钘変汗濡炪倖妫侀崑鎰婵傚憡鈷戠紓浣诡焽婢э箓鏌涢妸銉хШ妞ゃ垺蓱缁虹晫绮欑捄銊モ偓鐐烘⒑閸愬弶鎯堥柨鏇樺劚閺嗏晠姊婚崒姘偓鎼佸磹妞嬪海鐭嗗〒姘ｅ亾妤犵偛顦甸弫鎾绘偐閼艰埖鎲伴梻浣瑰缁诲倿藝椤栨粎鐭嗗鑸靛姇缁犺绻涢敐搴″濠碘€炽偢閺岋紕鈧絺鏅濋ˇ锕傛懚閺嶎厽鐓ユ繝闈涙閸ｅ綊鏌￠崱妯兼噮缂佽鲸甯￠、鏇㈠閳跺灕鍥ㄧ厸閻忕偛澧藉ú瀛樸亜閵忊剝绀嬮柡浣瑰姍瀹曞崬鈻庡Ο鎭嶇偤姊婚崒娆戝妽閻庣瑳鍛煓闁规崘顕х粣妤呮煛瀹ュ骸骞栫紒鐘崇墬缁绘稑顔忛鑽ょ泿缂備胶濮垫繛濠囧蓟閻旂厧绠规い鎾跺仧娴犳挳姊洪崨濠傚毈闁稿锕ら～?
+      final animationDuration = Duration(
+        milliseconds: (400 + difference * 500).round(),
+      );
+
+      _controller.duration = animationDuration;
+
+      _animation = Tween<double>(begin: currentValue, end: targetValue).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+      );
+
+      _controller.forward(from: 0.0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = widget.isDark
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.06);
+    final textColor = widget.isDark ? Colors.white70 : Colors.black54;
+
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        final percentage = (_animation.value * 100).round();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${context.t.strings.legacy.msg_progress} (${widget.checked}/${widget.total})',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: textColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                AnimatedSwitcher(
+                  duration: AppMotion.effectiveDuration(
+                    context,
+                    AppMotion.fast,
+                  ),
+                  switchInCurve: AppMotion.standardCurve,
+                  switchOutCurve: AppMotion.exitCurve,
+                  child: Text(
+                    '$percentage%',
+                    key: ValueKey(percentage),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: LinearProgressIndicator(
+                value: _animation.value,
+                minHeight: 8,
+                backgroundColor: bg,
+                valueColor: AlwaysStoppedAnimation(MemoFlowPalette.primary),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

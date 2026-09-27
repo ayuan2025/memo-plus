@@ -1,0 +1,2221 @@
+common:
+  back: Voltar
+  cancel: Cancelar
+  confirm: Confirmar
+  save: Salvar
+  saveSettings: Salvar configurações
+  auto: Automático
+  manual: Manual
+  copiedToClipboard: Copiado para a área de transferência
+  serverVersion: Versão do servidor
+  selectValidServerVersion: Selecione uma versão válida do servidor
+  serverVersionValue: 'Versão do servidor: $version'
+  serverVersionProbeHint: Antes de entrar, apenas as APIs principais da versão selecionada do servidor são verificadas.
+  selectServerVersionRange021To026: Selecione manualmente uma versão do servidor entre 0.21 e 0.26
+languages:
+  system: Seguir sistema
+  zhHans: Chinês (simplificado)
+  zhHantTw: Chinês (tradicional, Taiwan)
+  en: Inglês
+  ja: Japonês
+  de: Alemão
+  ptBr: Português (Brasil)
+  ko: Coreano
+languagesNative:
+  system: Sistema
+  zhHans: 简体中文
+  zhHantTw: 繁體中文（中國台灣）
+  en: English
+  ja: 日本語
+  de: Deutsch
+  ptBr: Português (Brasil)
+  ko: 한국어
+onboarding:
+  tagline: Fluxo de notas minimalista e poderoso
+  selectLanguage: Selecione o idioma
+  selectMode: Escolha um modo
+  modeHint: Você pode alterar isso depois em Configurações.
+  modeLocalTitle: Modo local
+  modeLocalLabel: MODO LOCAL
+  modeLocalDesc: Os dados permanecem no dispositivo. Não é necessária configuração de servidor, ideal para privacidade e uso offline.
+  modeServerTitle: Modo servidor
+  modeServerLabel: MODO SERVIDOR
+  modeServerDesc: Conecte-se ao seu back-end Memos para sincronização de vários dispositivos em tempo real.
+  localLibraryNameTitle: Nome da biblioteca local
+  localLibraryNameHint: Insira um nome
+  localLibraryDefaultName: Biblioteca local
+  getStarted: Comece
+legalConsent:
+  title: Revise os acordos
+  description: Antes de usar MemoFlow, leia e concorde com o Contrato do Usuário e a Política de Privacidade.
+  linksHint: Abra os documentos abaixo para revisar o texto completo.
+  acknowledge: Li e concordo com o Contrato do Usuário e a Política de Privacidade
+  continueAction: Concordar e continuar
+  exitAction: Sair do aplicativo
+login:
+  title: Conecte-se ao Memos
+  mode:
+    password: Nome de usuário e senha
+    token: Ficha
+    descPassword: Faça login com nome de usuário e senha
+    descToken: Faça login com token de acesso pessoal
+    signInMethod: Método de login
+  field:
+    serverUrlLabel: Servidor URL
+    serverUrlHint: localhost:5230
+    protocolLabel: Protocolo
+    usernameLabel: Nome de usuário
+    usernameHint: Digite o nome de usuário
+    passwordLabel: Senha
+    passwordHint: Digite a senha
+    tokenLabel: Token (PAT)
+    tokenHint: Token (PAT)
+  validation:
+    serverUrlRequired: Por favor insira o servidor URL
+    serverUrlInvalid: Insira um endereço de servidor válido, como localhost:5230 ou memos.example.com
+    usernameRequired: Por favor, insira o nome de usuário
+    passwordRequired: Por favor insira a senha
+    tokenRequired: Insira o token
+  dialogs:
+    insecureHttpTitle: Usar HTTP?
+    insecureHttpMessage: HTTP não é seguro e pode expor sua conta, senha ou token. Continuar mesmo assim?
+    httpsHandshakeFailedTitle: Falha na conexão HTTPS
+    httpsHandshakeFailedMessage: Você está usando atualmente HTTPS. Se o seu servidor suportar apenas HTTP, você poderá usar HTTP e tentar novamente. Se o servidor suportar HTTPS, verifique seu certificado ou configuração de proxy reverso.
+    switchToHttp: Use HTTP e tente novamente
+  protocol:
+    selectorTitle: Escolher protocolo de conexão
+    httpsTitle: HTTPS
+    httpsDescription: Conexão criptografada, recomendada
+    httpTitle: HTTP
+    httpDescription: Sem criptografia. Use apenas para local, LAN ou testes temporários.
+    useSelected: Usar protocolo selecionado
+    encrypted: Criptografado
+    unencrypted: Sem criptografia
+  compatibility:
+    title: Modo de compatibilidade
+    description: Use endpoints legados (para servidores Memos mais antigos)
+  connect:
+    connecting: Conectando…
+    action: Conectar
+  errors:
+    authFailedToken: Falha na autenticação. Verifique se o token é válido e não expirou.
+    authFailedPat: Falha na autenticação. Para o novo Memos use um PAT começando com memos_pat_ (não cole o prefixo Bearer).
+    connectionFailedWithMessage: 'Falha na conexão: $message'
+    connectionFailed: 'Falha na conexão: $error'
+    signInFailed: Falha no login. Verifique nome de usuário e senha.
+    signInFailedWithMessage: 'Falha no login: $message'
+    invalidServerUrl: Servidor URL inválido
+    serverUrlNormalized: Servidor URL normalizado (segmentos de caminho extras removidos)
+settings:
+  preferences:
+    title: Preferências
+    language: Idioma
+    fontSize: Tamanho da fonte
+    lineHeight: Altura da linha
+    font: Fonte
+    systemDefault: Padrão do sistema
+    noSystemFonts: Nenhuma fonte do sistema encontrada
+    loadFontsFailed: 'Falha ao carregar fontes: $error'
+    collapseLongContent: Recolher conteúdo longo
+    collapseReferences: Recolher referências
+    showMemoEngagement: Mostrar curtidas e comentários
+    launchAction: Ação de lançamento
+    quickInputKeyboard: Teclado de abertura automática para entrada rápida
+    confirmExitOnBack: Confirmar na saída
+    editorToolbar:
+      title: Personalizar barra de ferramentas do editor
+      description: Pressione e segure as ferramentas para reordená-las ou mova as ferramentas entre a caixa de ferramentas e a barra de ferramentas.
+      dragToSort: Visualização ao vivo
+      toolbox: Caixa de ferramentas
+      toolboxDescription: As ferramentas removidas ficam aqui. Toque em + para adicioná-los novamente ou arraste-os para a barra de ferramentas.
+      createCustomButton: Personalizado
+      toolbarPreview: Barra de ferramentas
+      toolbarDescription: A barra de ferramentas abaixo corresponde ao editor. Toque em - para remover uma ferramenta ou mantenha pressionado para arrastá-la e classificá-la.
+      toolboxEmpty: Nenhuma ferramenta na caixa de ferramentas no momento
+      topRow: Linha superior
+      bottomRow: Linha Inferior
+      currentRow: Linha
+      visible: Visível
+      hidden: Oculto
+      emptyRow: Arraste os botões aqui
+      createCustomDialogTitle: Adicionar botão personalizado da barra de ferramentas
+      createCustomDialogDescription: Crie um botão de inserção reutilizável para trechos de redução e texto usado com frequência.
+      customButtonIconLabel: Ícone
+      customButtonNameLabel: Nome
+      customButtonNameHint: H1
+      customButtonNameRequired: Por favor insira um nome.
+      customButtonContentLabel: Inserir conteúdo
+      customButtonContentHint: 'Por exemplo: Markdown reutilizável ou texto'
+      customButtonContentHelp: Quando você toca neste botão da barra de ferramentas, este conteúdo é inserido na posição atual do cursor.
+      customButtonContentRequired: Insira o conteúdo a ser inserido.
+      customButtonPreview: Visualização
+      customIcons:
+        heading1: Título 1
+        heading2: Título 2
+        heading3: Título 3
+        quote: Citação
+        inlineCode: Código embutido
+        codeBlock: Bloco de código
+        task: Tarefa
+        divider: Divisor
+        table: Tabela
+        note: Nota
+      actions:
+        italic: Itálico
+        strikethrough: Tachado
+        inlineCode: Código embutido
+        bulletedList: Lista com marcadores
+        taskList: Lista de Tarefas
+        quote: Citação
+        heading1: Título 1
+        heading2: Título 2
+        heading3: Título 3
+        divider: Divisor
+        inlineMath: Matemática Inline
+        blockMath: Bloco de matemática
+        table: Tabela
+        cutParagraph: Parágrafo cortado
+        gallery: Galeria
+    appearance: Aparência
+    themeColor: Cor do tema
+    haptics: Tátil
+    customTheme: Tema personalizado
+    history: História
+    lightMode: Modo Luz
+    darkMode: Modo escuro
+    surfaces: Superfícies
+    background: Plano de fundo
+    backgroundColor: Cor de fundo
+    card: Cartão
+    cardColor: Cor do cartão
+    border: Borda
+    borderColor: Cor da borda
+locationPicker:
+  searchNearbyPlaces: Pesquise lugares próximos
+  latitudeValue: Latitude $value
+  longitudeValue: Longitude $value
+  noPlacesFound: Nenhum lugar encontrado
+  mapInitializeFailed: Falha ao inicializar o mapa.
+  providerNotReady: O provedor de localização não está pronto.
+  providerMissingAmapKeys: Amap A chave Web API e a chave de segurança são necessárias antes de selecionar um local.
+  providerMissingBaiduKey: Baidu AK é necessário antes de selecionar um local.
+  providerMissingGoogleKey: Mapas Google A chave API é necessária antes de selecionar um local.
+  providerUnsupportedPlatform: O seletor de mapa incorporado está disponível apenas em Android e Windows.
+aiInsight:
+  title: AI Insight Studio
+  subtitle: Deixe o AI ajudá-lo a entender suas anotações de diferentes ângulos.
+  settingsTitle: Configurações de análise AI
+  startAnalysis: Iniciar análise
+  common:
+    enabled: Ativado
+    disabled: Desativado
+  timeRange:
+    title: Intervalo de tempo
+    last3Days: Últimos 3 dias
+    last7Days: Últimos 7 dias
+    last30Days: Últimos 30 dias
+    customRange: Intervalo personalizado
+  privacyScope:
+    title: Escopo de privacidade
+    includePrivateNotes: Incluir notas privadas
+    description: Se habilitado, notas privadas também serão enviadas ao modelo AI para análise.
+  promptSettings:
+    title: Configurações de prompt
+    editPromptTemplate: Editar modelo de prompt
+    description: Permite que usuários avançados personalizem o prompt AI usado para este insight.
+    emptyTemplateHint: Este insight ainda não possui um modelo de prompt. Adicione um antes de iniciar a análise.
+    editorDescription: Este modelo será usado ao executar $insight.
+    editorPlaceholder: Descreva o que o AI deve focar, comparar, resumir ou destacar.
+    clearTemplate: Limpar
+  contentPreview:
+    title: Visualização do conteúdo
+    sectionTitle: Visualização do conteúdo
+    notesToSend: Notas para enviar
+    estimatedTokens: Tokens estimados
+    previewContent: Visualizar conteúdo
+    timeRange: Intervalo de tempo
+    loading: Preparando visualização…
+    previewLoadFailed: Falha ao preparar a visualização do conteúdo.
+    truncatedNotice: O conteúdo foi truncado para permanecer dentro do limite de análise atual.
+    emptyState: Nenhuma nota corresponde às configurações atuais. Tente alterar o intervalo de tempo ou o escopo de privacidade.
+    noteCount: Notas $count
+    tokenCount: Tokens $count
+  templates:
+    defaultTitle: Modelos padrão
+    defaultSubtitle: Comece com as visualizações de análise integradas.
+    showDefault: Mostrar modelos padrão
+    hideDefault: Ocultar modelos padrão
+    hiddenHint: Os modelos padrão estão ocultos.
+    customTitle: Modelos personalizados
+    customSubtitle: Crie até 10 modelos para diferentes objetivos de análise.
+    newTemplate: Novo modelo
+    emptyTitle: Ainda não há modelos personalizados
+    emptyDescription: Crie até 10 modelos para diferentes ângulos de visão.
+    maxTemplatesReached: Você pode adicionar até modelos $max.
+    deleteDialogTitle: Excluir modelo personalizado
+    deleteDialogDescription: Excluir este modelo não removerá o histórico existente.
+    moreActions: Mais ações
+    editAction: Editar
+    deleteAction: Excluir
+  cards:
+    todayClues:
+      title: Dicas de hoje
+      description: AI destaca os eventos recentes, tensões e ciclos abertos que merecem sua atenção primeiro.
+    emotionMap:
+      title: Mapa Emocional
+      description: Analise o fluxo emocional em suas anotações e veja o que tem moldado seu estado ultimamente.
+    themeResonance:
+      title: Ressonância do Tema
+      description: Encontre temas repetidos em notas recentes e revele o que você sempre retorna.
+    thoughtTrace:
+      title: Rastreamento de Pensamento
+      description: Revele suposições ocultas, questões não resolvidas e linhas de pensamento que valem a pena explorar mais.
+    blindSpotDiscovery:
+      title: Descoberta de ponto cego
+      description: Identifique sinais esquecidos ou padrões sutis que são fáceis de perder durante a escrita.
+    relationshipView:
+      title: Visualização de Relacionamento
+      description: Reformule suas anotações sob as lentes das pessoas, das interações e das mudanças na dinâmica do relacionamento.
+    actionExtraction:
+      title: Extração de ação
+      description: Transforme as reflexões em próximas ações concretas que você pode tentar, testar ou acompanhar.
+    longTermTrajectory:
+      title: Trajetória de longo prazo
+      description: Analise o tempo e identifique mudanças significativas, ciclos recorrentes e mudanças de longo prazo.
+aiProxy:
+  title: Configurações de proxy
+  notConfigured: Não configurado
+  statusHttp: HTTP · $host:$port
+  statusSocks5: MEIAS5 · $host:$port
+  protocol: Protocolo
+  host: Anfitrião
+  port: Porta
+  username: Nome de usuário
+  password: Senha
+  bypassLocalAddresses: Ignorar automaticamente endereços locais/privados
+  description: Afeta apenas serviços AI que habilitam o proxy compartilhado. Modelos locais como Ollama e 127.0.0.1 permanecem diretos por padrão.
+  useSharedProxy: Usar proxy compartilhado
+  useSharedProxyDescription: Este serviço utilizará o proxy configurado nas configurações do AI.
+  incompleteWarning: Este serviço tem proxy habilitado, mas as configurações de proxy compartilhado estão incompletas.
+  openSettings: Abra as configurações de proxy
+  saveSuccess: Configurações de proxy salvas.
+  clearSuccess: Configurações de proxy apagadas.
+  invalidHost: Insira um host proxy.
+  invalidPort: Insira uma porta proxy válida entre 1 e 65535.
+  incompleteError: 该服务已启用代理,但 AI 代理设置尚未配置完整
+  testSectionTitle: Teste de proxy
+  testSectionDescription: Use os valores atuais do formulário para testar se o proxy pode alcançar um site de destino.
+  testUrl: Teste URL
+  testAction: Testar conexão
+  testing: Testando...
+  invalidTestUrl: Insira um HTTP ou HTTPS URL válido.
+  testSuccess: Conexão bem-sucedida · HTTP $statusCode · $elapsedMs ms
+  testFailure: 'Falha na conexão: $message'
+legacy:
+  msg_memos_backend_docs: Documentos de back-end Memos
+  msg_remember_moment_feel_warmth_life_take: Lembre-se do momento, sinta o calor da vida.\\nFaça uma revisão rápida todos os dias.
+  msg_sure_want_delete_shortcut: Tem certeza de que deseja excluir este atalho?
+  msg_scan_completed: Verificação concluída
+  msg_confirm: Confirmar
+  msg_unable_open_browser_install_browser_app: Não é possível abrir o navegador. Instale um aplicativo de navegador.
+  msg_contributors: Contribuintes
+  msg_feature_in_progress: Recurso em andamento. Em breve.
+  msg_version_description_unknown: 'Versão: Desconhecida'
+  msg_version_description_v: 'Versão: v$version'
+  msg_version_description_v_build: 'Versão: v$version ($build)'
+  msg_about_website_link: Site Oficial
+  msg_about_website_link_subtitle: Visite o site oficial do MemoFlow
+  msg_about_privacy_policy: Política de Privacidade
+  msg_about_privacy_policy_subtitle: Ver detalhes de privacidade e uso de dados
+  msg_about_user_agreement: Contrato do usuário
+  msg_about_user_agreement_subtitle: Ver termos de serviço e regras de uso
+  msg_about_help_center: Central de Ajuda
+  msg_about_help_center_subtitle: Perguntas frequentes e guias de uso
+  msg_about_release_notes_subtitle: Ver atualizações de versão e alterar detalhes
+  msg_about_submit_feedback: Enviar comentários
+  msg_about_submit_feedback_subtitle: Enviar problemas e sugestões de melhorias
+  msg_about_contributors_subtitle: Ver contribuidores e lista de doadores
+  msg_status_available: Ao vivo
+  msg_status_placeholder: Em breve
+  msg_debug_tap_logo_enter_debug_tools: 'Depuração: Toque no logotipo 5 vezes para abrir as ferramentas de depuração'
+  msg_donors_intro_thanks: Obrigado a todos os usuários que apoiam o MemoFlow.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.
+  msg_enter_keywords_search_box_query_local: Insira palavras-chave na caixa de pesquisa para consultar conteúdo e tags locais. Funciona off-line; para o primeiro uso, aguarde até que a indexação local termine.
+  msg_memo_not_found_locally: Memorando não encontrado localmente
+  msg_token: Ficha
+  msg_last_7_days: Últimos 7 dias
+  msg_search_memo_content: Pesquisar conteúdo do memorando
+  msg_retry_started: Nova tentativa iniciada
+  msg_last_year_memos: 'Ano passado: memorandos $lastYearMemos'
+  msg_no_content_yet: Nenhum conteúdo ainda
+  msg_no_summary_yet: Ainda não há resumo
+  msg_sooner: mais cedo!
+  msg_token_copied: Token copiado
+  msg_share: Compartilhar
+  msg_gallery_permission_required: Permissão da galeria necessária
+  msg_basic_settings: Configurações básicas
+  msg_bad_ssl_certificate: Certificado SSL inválido.
+  msg_no_notifications: Nenhuma notificação
+  msg_import_markdown: Importar de Markdown
+  msg_upload_zip_package_md_files: Faça upload de um pacote.zip com arquivos.md
+  msg_request_send_timeout_try: Tempo limite de envio da solicitação. Tente novamente.
+  msg_select_date_range: Selecione o intervalo de datas
+  msg_delete_shortcut: Excluir atalho
+  msg_auto_lock_time: Tempo de bloqueio automático
+  msg_replacing_delete_original_attachment_continue: A substituição excluirá o anexo original. Continuar?
+  msg_add_least_one_condition: Adicione pelo menos uma condição.
+  msg_upload_images_image_bed_append_links: Faça upload de imagens para a base de imagens e anexe links ao memorando.
+  msg_request_cancelled: Solicitação cancelada.
+  msg_generating: Gerando?
+  msg_permissions_denied_reminders_disabled: Permissões negadas. Lembretes desativados.
+  msg_memoflow_local_reminders: Lembretes locais MemoFlow
+  msg_use_legacy_endpoints_older_memos_servers: Use endpoints legados (para servidores Memos mais antigos).
+  msg_no_comments_yet: Ainda não há comentários
+  msg_open: Aberto
+  msg_microphone_permission_required: É necessária permissão para microfone
+  msg_failed_react: 'Falha ao reagir: $e'
+  msg_restore_backup: Restaurar backup?
+  msg_qr_saved_gallery: QR salvo na galeria
+  msg_no_attachments: Sem anexos
+  msg_enable_reminder_permissions: Habilitar permissões de lembrete
+  msg_created_time: Hora de criação ↑
+  msg_prompt_saved_quick_prompts: Seu prompt será salvo em Prompts rápidos
+  msg_remember_password: Lembrar senha
+  msg_enter_valid_url: Insira um URL válido
+  msg_may_take_few_seconds: Isso pode levar alguns segundos
+  msg_local_sync_failed: 'Falha na sincronização local ($type): $memoError'
+  msg_webdav_sync: Backup WebDAV
+  msg_clear: Limpar
+  msg_clear_recycle_bin_confirm: Limpar lixeira? Todos os itens serão excluídos permanentemente.
+  msg_save_failed: Falha ao salvar
+  msg_endpoint_not_found_version_mismatch: Endpoint não encontrado (incompatibilidade de versão?)
+  msg_enable_webdav_sync: Habilitar backup WebDAV
+  msg_local_libraries: Bibliotecas locais
+  msg_apply: Aplicar
+  msg_restore_only_available_local_libraries: A restauração está disponível apenas para bibliotecas locais.
+  msg_sign: Sair?
+  msg_reminders_disabled: Os lembretes estão desativados
+  msg_downloading: Baixando...
+  msg_path: Caminho
+  msg_match_any: Corresponde a qualquer
+  msg_local_db_pending_queue: BD local + fila pendente
+  msg_scan_failed: 'Falha na verificação: $e'
+  msg_user: Usuário
+  msg_pick_future_time: Escolha um horário futuro
+  msg_include_pending_queue: Incluir fila pendente
+  msg_enter_days: Insira os dias
+  msg_times: Vezes
+  msg_token_returned_only_once_cannot_fetched: O token é retornado apenas uma vez e não pode ser obtido novamente
+  msg_quoted_lines: Linhas $quoteLines cotadas
+  msg_use_remote: Usar controle remoto
+  msg_enable_memo_location: Habilitar localização do memorando
+  msg_failed_get_location: Falha ao obter localização
+  msg_after_import_memos_sync_list_automatically: Após a importação, seus memorandos são sincronizados com a lista automaticamente. Para importações ZIP, certifique-se de que a estrutura do arquivo esteja intacta.
+  msg_legacy_mode: Modo Legado
+  msg_signed: Conectado
+  msg_shortcut_includes_advanced_conditions_saving_overwrite: Este atalho inclui condições avançadas. Salvar irá sobrescrevê-los.
+  msg_no_results_found: Nenhum resultado encontrado
+  msg_reply: Responder $replyName...
+  msg_copy: Copiar
+  msg_enable_reminders_memos: Ative lembretes para seus memorandos.
+  msg_comment: Comentário
+  msg_added_voice_attachment: Adicionado anexo de voz.
+  msg_customize_sidebar: Personalizar barra lateral
+  msg_customize_quick_entries: Personalizar entradas rápidas
+  msg_navigation_mode: Modo de navegação
+  msg_navigation_mode_classic: Modo clássico (sem navegação inferior)
+  msg_navigation_mode_bottom_bar: Modo de navegação inferior
+  msg_navigation_preview: Visualização
+  msg_navigation_slot_left_1: Slot Esquerdo 1
+  msg_navigation_slot_left_2: Slot Esquerdo 2
+  msg_navigation_slot_center: Ação Central
+  msg_navigation_slot_right_1: Slot direito 1
+  msg_navigation_slot_right_2: Slot direito 2
+  msg_quick_entry_slot_1: Entrada Rápida 1
+  msg_quick_entry_slot_2: Entrada Rápida 2
+  msg_quick_entry_slot_3: Entrada Rápida 3
+  msg_coffee_add_drumstick: ☕ Café é / adicione uma coxinha
+  msg_pin: Alfinete
+  msg_enter_password_continue: Digite a senha para continuar
+  msg_remove_local_library: Remover biblioteca local?
+  msg_comment_2: Novo comentário
+  msg_sync_all: Sincronizar tudo
+  msg_backup_schedule: Programação de backup
+  msg_server_error: Erro no servidor
+  msg_analyzing_memos: Analisando seus memorandos...
+  msg_notification: Notificação
+  msg_policy: Política
+  msg_failed_load: 'Falha ao carregar: $error'
+  msg_default_visibility: Visibilidade padrão
+  msg_filter: Filtro
+  msg_advanced_search: Pesquisa avançada
+  msg_imported_memos: Memorandos importados
+  msg_token_created: Token criado
+  msg_server_response_timeout_try: Tempo limite de resposta do servidor. Tente novamente.
+  msg_expiring: Expirando
+  msg_delete_task: Excluir tarefa
+  msg_body_must_json: O corpo deve ser JSON
+  msg_enable: Ativar
+  msg_referenced: Referenciado por
+  msg_replace_image: Substituir imagem?
+  msg_debug_logs: Registros de depuração
+  msg_active_tasks: Tarefas ativas
+  msg_attachments: Anexos
+  msg_range: Faixa
+  msg_no_backups_found: Nenhum backup encontrado
+  msg_create_memo: Criar memorando
+  msg_street: Rua
+  msg_display_name: Nome de exibição
+  msg_full_text_search: Pesquisa de texto completo
+  msg_create_edit_delete_actions_offline_stored: As ações de criação/edição/exclusão off-line são armazenadas localmente e colocadas na fila para sincronização. Eles são enviados em ordem quando estão online. Para evitar erros, as edições não enviadas podem ser mantidas como rascunhos.
+  msg_sign_2: Sair
+  msg_end_time: Horário de término
+  msg_sync_recent_content: Sincronizar conteúdo recente
+  msg_resetting_local_data: Redefinindo dados locais...
+  msg_incorrect_password: Senha incorreta
+  msg_content_cannot_empty: O conteúdo não pode ficar vazio
+  msg_preparing: Preparando
+  msg_ai_summary_failed: 'Falha no resumo AI: $formatSummaryError_e'
+  msg_manage: Gerenciar
+  msg_keep_data_consistent_across_devices: Faça backup dos dados em WebDAV para recuperação.
+  msg_playback_failed: 'Falha na reprodução: $e'
+  msg_path_copied: Caminho copiado
+  msg_auth_settings: Configurações de autenticação
+  msg_randomly_draw_memo_cards: Compre aleatoriamente seus cartões de memorando
+  msg_copy_log_text: Copiar texto do registro
+  msg_yes: Sim
+  msg_save_open_alipay_scan: Salve e abra Alipay para digitalizar
+  msg_signed_but_no_token_returned: Conectado, mas nenhum token retornado
+  msg_create_failed: 'Falha na criação: $formatError_e_context'
+  msg_expand: Expandir
+  msg_local_library_only: Somente biblioteca local
+  msg_reminder_channel: Canal de lembrete
+  msg_grant: Concessão
+  msg_import_canceled: Importação cancelada.
+  msg_never: Nunca
+  msg_release_notes: Notas de versão
+  msg_failed_load_references: Falha ao carregar referências
+  msg_select_tags: Selecionar tags
+  msg_failed_load_try: Falha ao carregar. Por favor, tente novamente.
+  msg_logs_copied: Registros copiados
+  msg_shortcuts_not_supported_server: Atalhos não são suportados neste servidor.
+  msg_reply_2: Responder $name...
+  msg_anonymous: Anônimo
+  msg_username: Nome de usuário
+  msg_update_memo: Atualizar memorando
+  msg_saved: 'Salvo em: $targetPath'
+  msg_chinese_simplified: Chinês (simplificado)
+  msg_memo_copied: Memorando copiado
+  msg_collapse: Recolher
+  msg_retry_count_controls_how_many_extra: A contagem de novas tentativas controla quantas tentativas extras são feitas em caso de falha. Valores mais altos podem melhorar o sucesso, mas demoram mais.
+  msg_recording_info_missing: Faltam informações de gravação
+  msg_sync_task: Tarefa de sincronização
+  msg_clear_all_debug_logs: Limpar todos os logs de depuração?
+  msg_clear_all_logs: Limpar todos os dados de registro neste dispositivo? Os arquivos exportados não serão excluídos.
+  msg_export_finished: Exportação concluída
+  msg_failed_stop_recording: 'Falha ao parar a gravação: $e'
+  msg_my_profile: Meu perfil
+  msg_image_bed: Cama de imagem
+  msg_failed_open_notification: 'Falha ao abrir notificação: $e'
+  msg_manual: Manual
+  msg_no_html_file_found_zip: Nenhum arquivo HTML encontrado em ZIP.
+  msg_also_clear_local_cache_account_offline: Isso também limpará o cache local desta conta (dados off-line/rascunhos/fila de sincronização pendente). Esta ação não pode ser desfeita.
+  msg_restore: Restaurar
+  msg_auto_backup: Backup automático
+  msg_generate_summary: Gerar resumo
+  msg_days: $stats_activeDays dias
+  msg_count: '- Contagem'
+  msg_weekly: Semanalmente
+  msg_notifications: Notificações
+  msg_backup_failed: Falha no backup
+  msg_private: Privado
+  msg_filter_tags: Filtrar por tags
+  msg_clear_logs: Limpar registros
+  msg_logs_cleared: Registros apagados
+  msg_unable_open_browser: Não é possível abrir o navegador
+  msg_attachment_too_large: Anexo muito grande
+  msg_query: Consulta
+  msg_match_all: Corresponde a todos
+  msg_record_request_response_logs: Registrar registros de solicitação/resposta
+  msg_import_file: Importar arquivo
+  msg_content_tags: Conteúdo + tags
+  msg_feature_not_available_local_library_mode: Este recurso não está disponível no modo de biblioteca local.
+  msg_import_failed: 'Falha na importação: $e'
+  msg_save_memo: Salvar como memorando
+  msg_scan_disk_directory_merge_local_database: Verifica o diretório do disco e mescla no banco de dados local? Arquivos ausentes serão tratados como exclusões.
+  msg_passwords_not_match: As senhas não coincidem
+  msg_signed_2: 'Conectado como: $lastLoginUser'
+  msg_made_love_note_taking: Feito com amor para fazer anotações
+  msg_password_updated_local: Senha atualizada (local)
+  msg_retry: Tentar novamente
+  msg_memo_stats: Estatísticas do memorando
+  msg_shown_only_once_copy_keep_safe: Exibido apenas uma vez, copie e mantenha-o seguro.
+  msg_describe_issue_time_repro_steps_etc: Descreva o problema, horário, etapas de reprodução, etc.
+  msg_how_many_days_back: Há quantos dias
+  msg_local_cache_cleared: Cache local limpo
+  msg_none: Nenhum
+  msg_body_json: Corpo (JSON)
+  msg_download_failed: 'Falha no download: $e'
+  msg_recycle_bin: Lixeira
+  msg_unpin: Desafixar
+  msg_advanced_security: Avançado e segurança
+  msg_run_issues_memoflow_e_g_sync: Se você tiver problemas no MemoFlow (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n
+  msg_remove_all_reminder_times_memo: Remova todos os horários de lembrete deste memorando.
+  msg_no_summary_save: Nenhum resumo para salvar
+  msg_reset_language_selection: Redefinir seleção de idioma
+  msg_v_30_days: 30 dias
+  msg_e_g_mood_check: por exemplo Verificação de humor
+  msg_note_some_tokens_returned_only_once: 'Dica: Alguns tokens são mostrados apenas uma vez. Salve-os com segurança quando forem exibidos pela primeira vez.'
+  msg_probe_memo_can_delete: Este memorando foi criado pelo probe MemoFlow API e pode ser excluído com segurança.
+  msg_syncing: Sincronizando...
+  msg_retention: Retenção
+  msg_open_login_screen: Abrir tela de login
+  msg_apply_all: Aplicar a todos
+  msg_write_something_supports_tag_tasks_x: 'Escreva algo... Suporta #tag e tarefas [ ] / [x]'
+  msg_http: '$base (HTTP $status): $msg'
+  msg_single: Solteiro
+  msg_delete_memo: Excluir memorando?
+  msg_ai_provider: Provedor AI
+  msg_release_notes_v: Notas de versão v$version
+  msg_info_only_used_background_ai_summaries: Esta informação é usada apenas como plano de fundo para resumos/relatórios AI e não é sincronizada com o backend.
+  msg_not_disturb: Não perturbe
+  msg_local_library_import_failed: 'Falha na importação da biblioteca local: $e'
+  msg_key_insights: Principais insights
+  msg_additional_notes_optional: Notas adicionais (opcional)
+  msg_server_response_error: Erro de resposta do servidor.
+  msg_sort: Classificar
+  msg_newest_first: Mais novo primeiro
+  msg_oldest_first: Mais antigo primeiro
+  msg_open_memo: Abrir memorando
+  msg_api_call: Chamada API
+  msg_webhooks: Webhooks
+  msg_local_library: Biblioteca local
+  msg_log_copied: Registro copiado
+  msg_last_success: Último sucesso
+  msg_restore_cloud: Restaurar da nuvem
+  msg_search_public_memos: Pesquisar memorandos públicos
+  msg_cancel: Cancelar
+  msg_processing: Processando $processed / $total
+  msg_failed_items: Itens com falha
+  msg_recording_file_not_found: Arquivo de gravação não encontrado
+  msg_local_db_outbox_queue: Banco de dados local + fila de saída
+  msg_remove: Remover
+  msg_export_format: Formato de exportação
+  msg_idle: Inativo
+  msg_ago: $months atrás
+  msg_no_tags_yet: Ainda não há tags
+  msg_version_v: Versão v$version
+  msg_sync: Sincronizar
+  msg_done: Concluído
+  msg_gallery_permission_required_2: Permissão da galeria necessária
+  msg_insufficient_permissions: Permissões insuficientes
+  msg_no_download_url_available: Nenhum download URL disponível
+  msg_record_create_memos: Registro para criar memorandos
+  msg_signing: Fazendo login...
+  msg_memoflow_uses_system_location_permission_get: MemoFlow usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.
+  msg_continue: Continuar
+  msg_notification_content_unavailable: Conteúdo da notificação indisponível
+  msg_unable_read_file_path: Não foi possível ler o caminho do arquivo.
+  msg_all_memos: Todos Memos
+  msg_keywords: Palavras-chave
+  msg_ai_search_loading_title: A pesquisa AI está procurando memorandos relacionados
+  msg_ai_search_loading_message: Indexação, incorporação e classificação de notas locais para esta consulta.
+  msg_ai_search_needs_embedding_model: A pesquisa AI precisa de um modelo de incorporação
+  msg_ai_search_failed: Falha na pesquisa AI
+  msg_ai_search_configure_embedding_model: Configure um modelo de incorporação nas configurações do AI e tente novamente.
+  msg_ai_search_back_to_keyword_search: Voltar à pesquisa por palavra-chave
+  msg_ai_search_no_matches: Nenhuma correspondência AI encontrada
+  msg_ai_search_keyword_available: A pesquisa por palavra-chave ainda está disponível para correspondências exatas de texto.
+  msg_ai_search_try_related_memos: Experimente a pesquisa AI para encontrar memorandos semanticamente relacionados.
+  msg_ai_search_use_ai_search: Usar pesquisa AI
+  msg_ai_search_results_label: Resultados semânticos AI
+  msg_ai_search_keyword: Palavra-chave
+  msg_ai_search_use_for_related_memos: Use a pesquisa AI para memorandos relacionados
+  msg_ai_search_index_confirm_title: Construir índice de pesquisa AI?
+  msg_ai_search_index_confirm_remote_message: A pesquisa AI precisa indexar primeiro os blocos de memorando elegíveis. Isso enviará esses pedaços para o modelo de incorporação configurado e poderá consumir a cota ou o custo do provedor.
+  msg_ai_search_index_confirm_local_message: A pesquisa AI precisa indexar primeiro os blocos de memorando elegíveis. Isso irá processá-los com seu modelo de incorporação local e poderá usar recursos locais.
+  msg_ai_search_index_confirm_token_estimate: 'Tokens de indexação estimados: $count'
+  msg_ai_search_index_confirm_continue: Continue com a pesquisa AI
+  msg_import_result: Resultado de importação
+  msg_offline_sync: Sincronização off-line
+  msg_imported_memos_local_library: Memorandos importados da biblioteca local
+  msg_request_failed: Falha na solicitação
+  msg_log_file: Arquivo exportado
+  msg_after_confirming_support_unlock_limited_gold: Após confirmar o suporte, você desbloqueará um emblema dourado limitado ou uma promessa eterna de ausência de anúncios (embora nunca tenha havido anúncios).
+  msg_failed_open_system_settings: Falha ao abrir as configurações do sistema
+  msg_no_mood_trend: Sem tendência de humor
+  msg_memoflow_export: '#Exportação MemoFlow'
+  msg_sync_queue: Fila de sincronização
+  msg_only_delete_sync_task_memo_kept: Exclua apenas a tarefa de sincronização; o memorando será mantido.
+  msg_add_home_screen: Adicionar à tela inicial
+  msg_past_days: Últimos dias
+  msg_poster_generation_failed: Falha na geração do pôster
+  msg_failed_load_stats: 'Falha ao carregar estatísticas: $e'
+  msg_customize_notification: Personalizar notificação
+  msg_updated_time: Hora atualizada ↓
+  msg_network_connection_failed_check_network: Falha na conexão de rede. Por favor, verifique sua rede.
+  msg_special_thanks: 'Agradecimentos especiais:'
+  msg_failed_comment: 'Falha ao comentar: $e'
+  msg_security_key_sig: Chave de segurança (sig)
+  msg_save_gallery: Salvar na galeria
+  msg_request_sent_confirm_system_prompt: Solicitação enviada. Confirme no prompt do sistema
+  msg_server_url: Servidor URL
+  msg_period_review: Revisão do Período
+  msg_settings_updated: Configurações atualizadas
+  msg_backend_0_21_not_supported_import: Backend 0.21 não é suportado para importação. Atualize e tente novamente.
+  msg_failed_load_tags: 'Falha ao carregar tags: $e'
+  msg_enter_email: Insira o e-mail
+  msg_add_webhook: Adicionar webhook
+  msg_read: Ler
+  msg_widgets: Widgets
+  msg_default: Padrão
+  msg_memo_reminders: Lembretes de memorando
+  msg_import_flomo: Importar do Flomo
+  msg_import_swashbuckler_diary: Importar do Diário Swashbuckler
+  msg_supported_json_markdown_txt_zip: JSON / Markdown / TXT ZIP
+  msg_format_fixed_markdown_zip: O formato foi corrigido para Markdown + ZIP
+  msg_enter_username_password: Digite nome de usuário e senha
+  msg_loading: Carregando...
+  msg_test_scheduled: Teste agendado em $timeLabel$suffix$pendingLabel
+  msg_edit_memo: Editar memorando
+  msg_save: Salvar
+  msg_laboratory: Laboratório
+  msg_use_local: Usar local
+  msg_retry_sync: Tentar sincronizar novamente
+  msg_e_g_my_role_topics_interest: por exemplo, minha função/tópicos de interesse/preferências de estilo de redação?
+  msg_confirm_password: Confirmar senha
+  msg_not_set: Não definido
+  msg_no_memos_day: Nenhum memorando neste dia
+  msg_shortcut_name: Nome do atalho
+  msg_edit_shortcut: Editar atalho
+  msg_days_memos: Dias com memorandos
+  msg_delete: Excluir
+  msg_test_reminder: Lembrete de teste
+  msg_enable_reminders: Ativar lembretes
+  msg_links: Links
+  msg_location: Localização
+  msg_import_file_2: Importar do arquivo
+  msg_reply_3: Responder $creatorDisplayName_commentCreator_commentMemo_creator...
+  msg_created: $widget_createdAtLabel criado
+  msg_notifications_coming_soon: 'Notificações: em breve'
+  msg_view_full_contributors: Ver colaboradores completos
+  msg_no_times_set: Sem horários definidos
+  msg_ignore_tls_errors: Ignorar erros de TLS
+  msg_no_content: Sem conteúdo
+  msg_about_15_seconds_left: Faltam cerca de 15 segundos
+  msg_view_imported_memos: Ver memorandos importados
+  msg_load_failed: Falha no carregamento
+  msg_disk_content_conflicts_local_pending_changes: O conteúdo do disco entra em conflito com alterações locais pendentes. Use o disco para substituir o conteúdo local.
+  msg_all_history_so_far_memoflow_since: Essa é toda a história até agora\\nMEMOFLOW DESDE 2023
+  msg_cancelling: Cancelando
+  msg_reading_file: Lendo arquivo...
+  msg_switch_workspace: Alternar espaço de trabalho
+  msg_optional_leave_empty_default: Opcional. Deixe em branco por padrão.
+  msg_memo_reminders_2: Lembretes de memorando
+  msg_save_failed_2: 'Falha ao salvar: $e'
+  msg_record_create_memos_sync_later: Grave e crie memorandos (sincronize mais tarde)
+  msg_use_https_avoid_ignoring_tls_errors: Use HTTPS e evite ignorar erros de TLS para proteger credenciais.
+  msg_failed_load_announcement_config: Falha ao carregar a configuração do anúncio
+  msg_shortcuts: Atalhos
+  msg_memo: Memorando
+  msg_maybe_later: Não me lembre desta versão
+  msg_server_connection: Conexão do servidor
+  msg_days_2: Dias
+  msg_include_archived: Incluir Arquivado
+  msg_during_quiet_hours_reminders_silenced: Durante horários de silêncio, os lembretes serão silenciados.
+  msg_preview_not_supported_type: Visualização não suportada para este tipo
+  msg_failed_load_2: Falha ao carregar
+  msg_create_token: Criar novo token
+  msg_enter_name: Por favor insira um nome.
+  msg_api_url_incorrect: API URL está incorreto.
+  msg_user_general_settings: Configurações gerais do usuário
+  msg_saved_memo: Salvo como memorando
+  msg_restore_failed: 'Falha na restauração: $e'
+  msg_token_tail: Ficha de cauda $tail
+  msg_manual_token: Token manual
+  msg_ago_2: $years atrás
+  msg_recent_searches: Pesquisas recentes
+  msg_restored: Restaurado
+  msg_no_contributors_yet: Ainda não há contribuidores
+  msg_no_record_yet: Nenhum registro ainda
+  msg_reminder: Lembrete
+  msg_enter_api_key_ai_settings: Insira a chave API nas configurações AI
+  msg_reminder_settings: Configurações de lembrete
+  msg_http_2: $base (HTTP $status)
+  msg_edit_webhook: Editar webhook
+  msg_generate_share_poster: Gerar pôster de compartilhamento
+  msg_archive_failed: 'Falha no arquivamento: $e'
+  msg_comments: Comentários $widget_commentCount
+  msg_remove_account: Remover conta?
+  msg_chinese_traditional: Chinês (Tradicional)
+  msg_private_2: Privado
+  msg_current_streak: Sequência atual
+  msg_generated_ai_memoflow: Gerado por AI · MemoFlow
+  msg_edit_completed: Edição concluída
+  msg_local: Locais
+  msg_edit: Editar
+  msg_text: De $shortUserName_item_sender
+  msg_got: Entendi
+  msg_web_api_key: Chave Web API
+  msg_preview: Visualização
+  msg_enter_password: Por favor insira a senha
+  msg_api: API
+  msg_ok: OK
+  msg_failed_load_shortcuts: Falha ao carregar atalhos.
+  msg_after_recording_audio_added_current_draft: Após a gravação, o áudio é adicionado ao rascunho atual como um anexo para que você possa editar antes de enviar. A duração máxima é de 60 minutos; a transcrição pode ser adicionada posteriormente por meio de serviços de terceiros.
+  msg_pull_refresh: Puxe para atualizar
+  msg_unable_open_photo: Não foi possível abrir a foto
+  msg_existing_tokens: Tokens Existentes
+  msg_ai_settings: Configurações AI
+  msg_app_lock: Bloqueio de aplicativo
+  msg_total_notes: Total de notas
+  msg_stats_loading: As estatísticas estão carregando
+  msg_enter_token_description: Insira uma descrição do token
+  msg_enter_token: Insira um token
+  msg_api_plugins: API e plug-ins
+  msg_parsing_file: Analisando arquivo...
+  msg_english: Inglês
+  msg_activity_heatmap: Mapa de calor da atividade
+  msg_mark_read: Marcar como lido
+  msg_request: Solicitação
+  msg_sync_failed: 'Falha na sincronização ($type): $memoError'
+  msg_error_copied: Erro copiado
+  msg_only_local_index_removed_disk_files: Apenas o índice local será removido; arquivos de disco são mantidos. Isto não pode ser desfeito.
+  msg_switch_account: Trocar de conta
+  msg_invalid_download_link: Link de download inválido
+  msg_about: Sobre
+  msg_icon: Ícone
+  msg_reset_done_syncing: Redefinição concluída. Sincronizando...
+  msg_enter_amap_web_api_key: Insira sua chave Amap Web API
+  msg_recycle_bin_coming_soon: 'Lixeira: em breve'
+  msg_empty_content: (conteúdo vazio)
+  msg_note_most_features_offline_stats_ai: 'Observação: a maioria dos recursos (offline/estatísticas/relatórios AI/exportação) funcionam sem alterações de back-end, mas os tokens são retornados apenas uma vez? Mantenha-os seguros.'
+  msg_fixed: 'Corrigido:'
+  msg_allow_sharing_links_images_other_apps: Permitir o compartilhamento de links ou imagens de outros aplicativos no MemoFlow.
+  msg_invalid_request_parameters: Parâmetros de solicitação inválidos
+  msg_enter_api_url: Insira API URL
+  msg_pending: (pendente $result_pendingCount)
+  msg_days_3: $currentStreak dias
+  msg_poster_not_ready_yet: O pôster ainda não está pronto
+  msg_generated_memoflow: Gerado por MemoFlow
+  msg_enter_name_2: Insira um nome
+  msg_version: Versão
+  msg_memo_missing_disk_but_has_local: O memorando está faltando no disco, mas possui alterações locais pendentes. Use o disco para excluir localmente.
+  msg_legacy_api_compatibility: Compatibilidade API herdada
+  msg_sync_parameters: Parâmetros de sincronização
+  msg_quick_prompts: Avisos rápidos
+  msg_share_failed: 'Falha no compartilhamento: $e'
+  msg_no_memos_summarize_range: Não há memorandos para resumir neste intervalo
+  msg_characters: Caracteres
+  msg_capture_every_moment_record: Capture cada momento gravado
+  msg_vibration: Vibração
+  msg_days_4: dias
+  msg_prompt_title: Título do prompt
+  msg_show_all: Mostrar tudo
+  msg_no_memos_available: Nenhum memorando disponível
+  msg_comment_unavailable: Comentário indisponível
+  msg_refresh: Atualizar
+  msg_syncing_2: Sincronizando
+  msg_body: Corpo
+  msg_clear_2: Limpar
+  msg_third_party_share: Compartilhamento de terceiros
+  msg_charging_station: Estação de carregamento
+  msg_attachments_2: Anexos
+  msg_when_enabled_must_verify_each_app: Quando ativado, você deve verificar cada inicialização do aplicativo. O tempo de bloqueio automático controla quando a verificação é necessária depois que o aplicativo entra em segundo plano.
+  msg_add_prompt: Adicionar prompt
+  msg_include: Incluir
+  msg_created_time_2: Hora de criação ↓
+  msg_choose_data_source_start_importing_memos: Escolha uma fonte de dados para começar a importar seus memorandos
+  msg_describe_how_want_summary: Descreva como deseja o resumo…
+  msg_keep_token_safe_not_share_api: Mantenha seu token seguro e não o compartilhe.\\nO limite de taxa da API é de 60 solicitações por minuto.
+  msg_open_2: Aberto
+  msg_e_g_claude_3_5_sonnet: por exemplo claude-3-5-soneto-20241022
+  msg_failed_request_whitelist: Falha ao solicitar lista de permissões
+  msg_notification_deleted: Notificação excluída
+  msg_accounts: Contas
+  msg_add_local_library: Adicionar biblioteca local
+  msg_sign_first: Faça login primeiro
+  msg_failed_parse_query: Falha ao analisar a consulta
+  msg_note_logs_sanitized_automatically_sensitive_data: 'Nota: os logs são higienizados automaticamente. Se os dados confidenciais permanecerem, edite antes de enviar.'
+  msg_add: Adicionar
+  msg_failed_load_3: 'Falha ao carregar: $memosError'
+  msg_max_chars_day: Máximo de caracteres/dia
+  msg_choose_what_edited_image: Escolha o que fazer com a imagem editada.
+  msg_select: Selecione
+  msg_unnamed_token: (token sem nome)
+  msg_name: Nome
+  msg_sure_want_delete_webhook: Tem certeza de que deseja excluir este webhook?
+  msg_back: Voltar
+  msg_no: Não
+  msg_untitled: Sem título
+  msg_open_language_onboarding: Integração de idioma aberto
+  msg_voice_memos: Voz Memos
+  msg_unable_open_browser_try: Não foi possível abrir o navegador. Por favor, tente novamente.
+  msg_date_range: Período
+  msg_not_authenticated: Não autenticado
+  msg_back_2: Voltar
+  msg_local_library_removed: Biblioteca local removida
+  msg_exact_alarm_permission_required: É necessária permissão exata de alarme
+  msg_visibility: Visibilidade
+  msg_failed_start_recording: 'Falha ao iniciar a gravação: $e'
+  msg_mood_trend: Tendência de humor
+  msg_local_library_name: Nome da biblioteca local
+  msg_no_tokens_yet: Nenhum token ainda
+  msg_loading_2: Carregando?
+  msg_location_permission_denied_permanently: Permissão de localização negada permanentemente
+  msg_download: Baixar
+  msg_export_time: '- Tempo de exportação'
+  msg_enter_password_2: Digite a senha
+  msg_no_image_available: Nenhuma imagem disponível
+  msg_daily: Diariamente
+  msg_no_likes_yet: Ainda não há curtidas
+  msg_basics: Noções básicas
+  msg_shortcut: Novo atalho
+  msg_debug_tools: Ferramentas de depuração
+  msg_save_settings: Salvar configurações
+  msg_date_range_2: Período
+  msg_feedback: Comentários
+  msg_help_diagnostics: Ajuda e diagnostico
+  msg_storage_space: Espaço de armazenamento
+  msg_storage_space_subtitle: Revise o uso conhecido do MemoFlow e limpe o cache.
+  msg_image_bed_2: Cama de imagem
+  msg_image_compression: Compressão de imagem
+  msg_enable_image_compression: Habilitar compactação de imagem
+  msg_image_compression_desc: Compacte anexos de imagem recém-adicionados antes do upload.
+  msg_image_compression_scope: Aplica-se apenas a anexos recém-adicionados.
+  msg_max_side: Lado máximo
+  msg_quality: Qualidade
+  msg_output_format: Formato de saída
+  msg_compression_mode: Modo de compressão
+  msg_mode_quality: Qualidade
+  msg_mode_size: Tamanho
+  msg_lossless: Sem perdas
+  msg_keep_metadata: Manter metadados
+  msg_skip_if_bigger: Pular se for maior
+  msg_resize: Redimensionar
+  msg_enable_resize: Habilitar redimensionamento
+  msg_resize_mode: Modo de redimensionamento
+  msg_resize_width: Largura
+  msg_resize_height: Altura
+  msg_resize_edge: Borda
+  msg_do_not_enlarge: Não ampliar
+  msg_resize_mode_no_resize: Sem redimensionamento
+  msg_resize_mode_dimensions: Dimensões
+  msg_resize_mode_percentage: Porcentagem
+  msg_resize_mode_short_edge: Borda curta
+  msg_resize_mode_long_edge: Borda longa
+  msg_resize_mode_fixed_width: Largura fixa
+  msg_resize_mode_fixed_height: Altura fixa
+  msg_jpeg: JPEG
+  msg_png: PNG
+  msg_webp: WebP
+  msg_tiff: TIFF
+  msg_chroma_subsampling: Subamostragem de croma
+  msg_chroma_auto: Automático
+  msg_chroma_444: '4:4:4'
+  msg_chroma_422: '4:2:2'
+  msg_chroma_420: '4:2:0'
+  msg_chroma_411: '4:1:1'
+  msg_progressive: Progressivo
+  msg_optimization_level: Nível de otimização
+  msg_method: Método
+  msg_uncompressed: Descompactado
+  msg_lzw: LZW
+  msg_deflate: Esvaziar
+  msg_packbits: PacoteBits
+  msg_deflate_preset: Predefinição de esvaziamento
+  msg_fast: Rápido
+  msg_balanced: Equilibrado
+  msg_best: Melhor
+  msg_size_target: Tamanho desejado
+  msg_output_size_unit: Unidade de tamanho
+  msg_format_auto: Automático
+  msg_output_format_same_as_input: Igual à entrada
+  msg_format_jpeg: JPEG
+  msg_format_png: PNG
+  msg_format_webp: WebP
+  msg_format_tiff: TIFF
+  msg_bytes: B
+  msg_kb: KB
+  msg_mb: MB
+  msg_gb: GB
+  msg_percentage: Porcentagem
+  msg_lossless_warning: A conversão para um novo formato ou redimensionamento pode degradar a qualidade mesmo quando o modo sem perdas está ativado.
+  msg_restoring: Restaurando…
+  msg_export: Exportar
+  msg_enter_token_name: Insira o nome do token
+  msg_start_time: Hora de início
+  msg_preparing_file_structure: Preparando estrutura de arquivo
+  msg_sign_3: Entrar
+  msg_scan_local_library: Digitalizar biblioteca local
+  msg_lsky_pro: Lsky Pro
+  msg_exact_alarm_permission_off_reminders_may: A permissão exata do alarme está desativada. Os lembretes podem não disparar na hora certa. Abrir configurações agora?
+  msg_last_30_days: Últimos 30 dias
+  msg_match: Correspondência
+  msg_auth_mode: Modo de autenticação
+  msg_unsupported_file_type: Tipo de arquivo não suportado.
+  msg_only_delete_sync_task: Exclua apenas a tarefa de sincronização.
+  msg_change_password: Alterar senha
+  msg_saved_2: Salvo
+  msg_import_export: Importação/Exportação
+  msg_created_2: Criado
+  msg_ai_summary: Resumo AI
+  msg_progress: Progresso
+  msg_replace_memo_image: Substituir imagem do memorando
+  msg_app_settings: Configurações do aplicativo
+  msg_copy_path: Copiar caminho
+  msg_components: Componentes
+  msg_no_shortcuts: Sem atalhos
+  msg_location_timed_try: O local expirou. Por favor, tente novamente.
+  msg_attach_location_info_memos_show_subtle: Anexe informações de localização a memorandos e mostre nomes de lugares sutis.
+  msg_send_failed: 'Falha no envio: $e'
+  msg_repeat: Repetir
+  msg_not_signed: Não conectado
+  msg_no_webhooks_configured: Nenhum webhooks configurado
+  msg_apply_token: Aplicar token
+  msg_enable_reminder_permissions_2: Habilitar permissões de lembrete
+  msg_enter_backup_password: Digite a senha de backup
+  msg_start_backup: Iniciar backup
+  msg_last_sync: Última sincronização
+  msg_note_export_includes_content_already_synced: 'Nota: A exportação inclui conteúdo já sincronizado com o banco de dados local (dados offline incluídos).'
+  msg_enter_username: Digite o nome de usuário
+  msg_settings_saved: Configurações salvas
+  msg_no_keywords: Sem palavras-chave
+  msg_these_settings_apply_newly_created_memos: Essas configurações se aplicam a memorandos recém-criados.
+  msg_back_home: Voltar para casa
+  msg_quiet_hours: Horário de silêncio
+  msg_add_account: Adicionar conta
+  msg_reset_complete: Redefinição concluída
+  msg_no_shortcuts_configured: Nenhum atalho configurado
+  msg_password: Senha
+  msg_importing: Importando
+  msg_visibility_2: 'Visibilidade: $visibilityLabel'
+  msg_no_logs_yet: Nenhum registro ainda
+  msg_v_9_times_allowed: Até 9 vezes permitidas
+  msg_last_14_days: Últimos 14 dias
+  msg_location_disabled_enable_settings_first: A localização está desativada. Ative-o primeiro nas configurações.
+  msg_add_2: Adicionar
+  msg_logs: Registros
+  msg_references: Referências
+  msg_importing_memos: Importando memorandos...
+  msg_account_security: Conta e Segurança
+  msg_reminder_2: Lembrete
+  msg_enable_scheduled_reminder_notifications: Ative notificações de lembretes agendados.
+  msg_no_links: Sem links
+  msg_delete_memo_2: Excluir memorando
+  msg_one_tap_add_not_supported_add: A adição com um toque não é suportada. Adicione-o no seletor de widget
+  msg_password_2: Nova Senha
+  msg_processing_content: Processando conteúdo...
+  msg_status: Estado
+  msg_local_library_added: Biblioteca local adicionada
+  msg_failed_open_try: Falha ao abrir. Por favor, tente novamente.
+  msg_removed_locally_now_deleted_server_when: Ele será removido localmente agora e excluído do servidor quando estiver online.
+  msg_server_url_unavailable: Servidor URL indisponível
+  msg_no_release_notes_yet: Ainda não há notas de lançamento
+  msg_cancelling_2: Cancelando...
+  msg_summaries_selected_range: Resumos no intervalo selecionado
+  msg_expand_2: Expandir
+  msg_close: Fechar
+  msg_more_comments: $remainingComments mais comentários
+  msg_view_all_comments: "Ver todos os comentários"
+  msg_backing: Fazendo backup…
+  msg_view_debug_logs: Ver registros de depuração
+  msg_location_permission_denied: Permissão de localização negada
+  msg_self_repair_reset_heatmap: 'Auto-reparo: redefinir mapa de calor'
+  msg_self_repair: Auto-reparo
+  msg_self_repair_subtitle: Reparar tags, busca e estatisticas locais
+  msg_repair_abnormal_tags: Reparar tags anormais
+  msg_repair_abnormal_tags_subtitle: "Reconstruir tags das notas a partir do texto #tag atual."
+  msg_rebuild_search_index: Reconstruir indice de busca
+  msg_rebuild_search_index_subtitle: Reconstruir a busca local sem apagar notas.
+  msg_rebuild_stats_cache: Reconstruir cache de estatisticas
+  msg_rebuild_stats_cache_subtitle: Reconstruir mapa de calor, estatisticas de tags e contadores.
+  msg_clear_media_cache: Limpar cache de midia
+  msg_clear_media_cache_subtitle: Limpar cache de imagens baixadas, cache de imagens em memoria, miniaturas de video e arquivos temporarios de compactacao de imagem.
+  msg_media_cache_total: Total do cache de midia
+  msg_media_cache_network_images: Cache de imagens da rede
+  msg_media_cache_memory_images: Cache de imagens em memoria
+  msg_media_cache_video_thumbnails: Cache de miniaturas de video
+  msg_media_cache_image_compression_temp: Cache temporario de compactacao de imagem
+  msg_media_cache_calculating: Calculando...
+  msg_media_cache_size_unavailable: Indisponivel
+  msg_self_repair_local_only_note: Estas acoes reparam apenas dados locais derivados. Elas nao apagam notas, contas, anexos, preferencias, backups WebDAV ou dados do servidor.
+  msg_confirm_repair_abnormal_tags: Reparar tags anormais?
+  msg_repair_abnormal_tags_confirm_message: "As tags das notas serao reconstruidas a partir do texto #tag atual no corpo da nota. Tags salvas que nao aparecem no corpo da nota podem ser removidas. O conteudo das notas nao sera apagado."
+  msg_confirm_rebuild_search_index: Reconstruir indice de busca?
+  msg_rebuild_search_index_confirm_message: Os dados locais de busca serao reconstruidos. Conteudo das notas, contas, anexos, preferencias e dados do servidor nao serao apagados.
+  msg_confirm_rebuild_stats_cache: Reconstruir cache de estatisticas?
+  msg_rebuild_stats_cache_confirm_message: Mapa de calor, estatisticas de tags e contadores serao reconstruidos a partir das notas locais. O conteudo das notas nao sera apagado.
+  msg_confirm_clear_media_cache: Limpar cache de midia?
+  msg_clear_media_cache_confirm_message: Imagens baixadas, cache de imagens em memoria, miniaturas de video e arquivos temporarios de compactacao de imagem serao limpos. Notas, contas, arquivos de origem da LocalLibrary, arquivos de origem de anexos, preferencias, backups WebDAV, filas de sincronizacao pendentes e dados do servidor nao serao apagados. A midia em cache pode ser baixada ou gerada novamente depois.
+  msg_repair_abnormal_tags_success: Tags anormais reparadas
+  msg_rebuild_search_index_success: Indice de busca reconstruido
+  msg_rebuild_stats_cache_success: Cache de estatisticas reconstruido
+  msg_clear_media_cache_success: Cache de midia limpo
+  msg_clear_media_cache_failed: Falha ao limpar cache de midia
+  msg_clear_media_cache_partial_failure: Limpeza do cache de midia parcialmente concluida
+  msg_self_repair_failed: "Auto-reparo falhou: $e"
+  msg_memoflow_known_usage: Uso conhecido do MemoFlow
+  msg_storage_device_capacity_unavailable: A capacidade do dispositivo nao esta disponivel. O uso conhecido do MemoFlow e as categorias ainda sao mostrados.
+  msg_storage_memoflow_device_usage_less_than_one_percent: MemoFlow usa menos de 1% da capacidade do dispositivo
+  msg_storage_memoflow_device_usage_percent: MemoFlow usa $percent% da capacidade do dispositivo
+  msg_storage_cache: Cache
+  msg_storage_note_content: Conteudo das notas
+  msg_storage_note_images: Imagens das notas
+  msg_storage_note_videos: Videos das notas
+  msg_storage_note_audio: Audio das notas
+  msg_storage_note_files: Arquivos das notas
+  msg_storage_cache_description: Dados temporarios derivados de midia. Limpar nao apaga notas nem arquivos de origem dos anexos.
+  msg_storage_note_content_description: Estimativa do texto local armazenado nas notas.
+  msg_storage_attachment_read_only_description: Somente exibicao. Exclua as notas relacionadas ou os anexos de origem para remover este conteudo.
+  msg_these_settings_changed_locally_remotely_choose: Essas configurações foram alteradas local e remotamente. Escolha qual versão manter.
+  msg_not_authenticated_2: Não autenticado.
+  msg_action_failed: 'Ação falhou: $e'
+  msg_shortcut_2: Novo atalho
+  msg_url: URL
+  msg_no_memos_found_html: Nenhum memorando encontrado em HTML.
+  msg_enter_what_want_summarize: Digite o que deseja resumir...
+  msg_unable_load_audio_source: Não foi possível carregar a fonte de áudio.
+  msg_strategy_id: Estratégia ID
+  msg_copy_failed: 'Falha na cópia: $e'
+  msg_enable_image_bed: Ativar base de imagens
+  msg_active: Ativo
+  msg_account: Conta
+  msg_invalid_webdav_server_url: Servidor WebDAV URL inválido
+  msg_keep_local: Manter local
+  msg_within_range: Dentro do alcance
+  msg_generate_log_file: Exportar pacote de logs
+  msg_ai_reports: Relatórios AI
+  msg_battery_optimization: Otimização da bateria
+  msg_sync_overview: Visão geral da sincronização
+  msg_legacy_servers_not_support_search_filters: Servidores legados não suportam filtros de pesquisa; os resultados podem estar incompletos.
+  msg_conflicts_detected_run_manual_sync: Conflitos detectados. Execute a sincronização manual.
+  msg_authentication_failed_check_token: Falha na autenticação. Verifique o token.
+  msg_date_range_3: Período
+  msg_help_ai_understand_better: Ajude AI a entender você melhor
+  msg_no_search_history: Sem histórico de pesquisa
+  msg_enter_api_path: Insira o caminho API
+  msg_stats: Estatísticas
+  msg_text_2: 'Novo:'
+  msg_removing_signing_clear_local_cache_account: Remover/sair limpará o cache local desta conta (dados off-line/rascunhos/fila de sincronização pendente).
+  msg_updated_time_2: Hora atualizada ↑
+  msg_province: Província
+  msg_submitting_sync_queue: Enviando fila de sincronização
+  msg_failed: Falha
+  msg_set_time: Definir hora
+  msg_enable_local_library_backup: Habilitar backup da biblioteca local
+  msg_cancel_2: Cancelar
+  msg_week: Esta semana
+  msg_like: Curtir
+  msg_location_services_disabled: Os serviços de localização estão desativados
+  msg_clears_local_cache_offline_memos_pending: Isso limpa o cache local (memorandos offline/fila pendente) e aciona uma ressincronização completa. O conteúdo não sincronizado será perdido e pode demorar um pouco. Continuar?
+  msg_load_more: Carregar mais
+  msg_pull_up_to_load_more: Suba para carregar mais
+  msg_release_to_load_more: Solte para carregar mais
+  msg_scroll_down_to_load_more: Role para baixo para carregar mais
+  msg_loaded_all_content: Todo o conteúdo carregado
+  msg_pull_memo_list_refresh_sync_sync: Puxe para baixo na lista de notas para atualizar e sincronizar. A sincronização busca primeiro os itens mais recentes; execute uma sincronização completa periodicamente para manter as estatísticas/mapa de calor completos.
+  msg_server_returned_error: Servidor retornou erro ($code).
+  msg_sound_feedback: Som e feedback
+  msg_memos_skipped_attachments_skipped: Memorandos $exportedMemoCount ($skippedMemoCount ignorados), anexos $exportedAttachmentCount ($skippedAttachmentCount ignorados).
+  msg_import_complete: Importação concluída
+  msg_text_3: Novo
+  msg_max_per_day: Máximo por dia
+  msg_permissions_denied: Permissões negadas
+  msg_memo_2: Novo memorando
+  msg_delete_reminder: Excluir lembrete
+  msg_select_month: Selecione o mês
+  msg_select_backup: Selecione backup
+  msg_no_keywords_2: '#Sem palavras-chave'
+  msg_preparing_memo_content: Preparando conteúdo do memorando
+  msg_prompt_content: Conteúdo do prompt
+  msg_default_prompt_ai_summaries_reports: Prompt padrão para resumos/relatórios AI
+  msg_intro: Introdução
+  msg_monthly_stats: Estatísticas mensais
+  msg_times_2: vezes
+  msg_file_has_already_been_imported_skipped: Este arquivo já foi importado. Ignorado.
+  msg_token_tail_unknown: Cauda do token desconhecida
+  msg_press_back_exit: Pressione voltar novamente para sair
+  msg_enter_password_3: Digite a senha
+  msg_sync_conflicts: Conflitos de sincronização
+  msg_locale: Local
+  msg_any: Qualquer
+  msg_provider: Provedor
+  msg_preview_2: Visualização
+  msg_automatically_upload_images_append_links_memo: Carregue imagens automaticamente e anexe links ao memorando.
+  msg_import_file_not_found: Arquivo de importação não encontrado.
+  msg_today: Hoje
+  msg_link_card: Cartão de link
+  msg_expiration: Expiração
+  msg_summary_prompt_optional: Prompt de resumo (opcional)
+  msg_memos: Memos
+  msg_recording_file_not_found_2: Arquivo de gravação não encontrado.
+  msg_backup_settings: Configurações de backup
+  msg_mode: Modo
+  msg_no_markdown_memos_found_zip: Nenhum memorando Markdown encontrado no ZIP.
+  msg_archived: Arquivado
+  msg_update_failed: 'Falha na atualização: $e'
+  msg_enable_app_lock: Ativar bloqueio de aplicativo
+  msg_html_zip: HTML/ZIP
+  msg_all: Todos
+  msg_model: Modelo
+  msg_title: Título
+  msg_amap_web_api: Amap Web API
+  msg_saved_gallery: Salvo na galeria
+  msg_gallery_mobile_only: A galeria está disponível apenas em dispositivos móveis.
+  msg_unread: Não lido
+  msg_exporting: Exportando...
+  msg_network_timeout_try: Tempo limite da rede. Por favor, tente novamente.
+  msg_unlock: Desbloquear
+  msg_ago_3: $diff_inDays atrás
+  msg_random_walk_days_ago_exact: $days dias atrás
+  msg_random_walk_day_period_dawn: Amanhecer
+  msg_random_walk_day_period_morning: Manhã
+  msg_random_walk_day_period_noon: Meio-dia
+  msg_random_walk_day_period_afternoon: Tarde
+  msg_random_walk_day_period_dusk: Crepúsculo
+  msg_random_walk_day_period_night: Noite
+  msg_deserve_coffee_i_m_pulling_all: Para merecer esse café, estou passando a noite inteira escrevendo 100 linhas de código!
+  msg_token_name: Nome do Token
+  msg_restore_completed: Restauração concluída
+  msg_restore_completed_to_path: Restauração concluída. Arquivos salvos em $path
+  msg_restore_missing_attachments: 'Falha no download de alguns anexos: $count'
+  msg_restore_to_directory: Restaurar para diretório
+  msg_restore_export_only_notice: A restauração no modo servidor apenas baixa arquivos para o diretório selecionado e não grava de volta no servidor.
+  msg_restore_config_confirm_title: Restaurar configurações confidenciais?
+  msg_restore_config_confirm_hint: Selecione quais configurações confidenciais serão aplicadas. Outras configurações serão restauradas automaticamente.
+  msg_restore_config_item_webdav: Configurações WebDAV
+  msg_restore_config_item_image_bed: Configurações da cama de imagem
+  msg_restore_config_item_image_compression: Configurações de compactação de imagem
+  msg_restore_config_item_app_lock: Configurações de bloqueio de aplicativo
+  msg_restore_config_item_ai: Configurações AI
+  msg_backup_plain_risk_title: Backup de texto simples
+  msg_backup_plain_risk_body: Os backups de texto simples não são criptografados e podem expor dados confidenciais. Continuar?
+  msg_backup_config_scope: Configuração de backup
+  msg_backup_config_none: Não faça backup da configuração
+  msg_backup_config_none_desc: Faça backup apenas de memorandos e anexos.
+  msg_backup_config_safe: Somente configuração segura
+  msg_backup_config_safe_desc: Faça backup de preferências globais, lembretes, modelos e localização.
+  msg_backup_config_full: Todas as configurações (sensíveis)
+  msg_backup_config_full_desc: Inclui WebDAV, AI, bloqueio de aplicativo, base de imagem e rascunho.
+  msg_backup_config_full_requires_encryption: Todas as configurações requerem backup criptografado.
+  msg_skip: Pular
+  msg_copied_clipboard: Copiado para a área de transferência
+  msg_failed_2: Falha $attempts
+  msg_too_many_requests_try_later: Muitos pedidos. Tente novamente mais tarde.
+  msg_more: Mais
+  msg_already_whitelisted: Já na lista de permissões
+  msg_local_library_backup: Backup da biblioteca local
+  msg_awesome: Incrível! ❤️
+  msg_now: Agora
+  msg_select_reminder_time: Selecione o horário do lembrete
+  msg_protected: Protegido
+  msg_failed_load_4: 'Falha ao carregar: $e'
+  msg_operation_failed: 'Falha na operação: $e'
+  msg_no_tags: Sem tags
+  msg_create_tag: Criar etiqueta
+  msg_edit_tag: Editar etiqueta
+  msg_tag_name: Nome da etiqueta
+  msg_tag_name_required: O nome da tag é obrigatório
+  msg_tag_name_invalid: O nome da tag não pode conter /
+  msg_parent_tag: Tag pai
+  msg_no_parent: Nenhum pai
+  msg_tag_color: Cor da etiqueta
+  msg_inherit: Herdar
+  msg_inherit_color: Herdar cor pai
+  msg_tag_pinned: Etiqueta de alfinete
+  msg_delete_tag: Excluir etiqueta
+  msg_delete_tag_confirm: Excluir esta tag?
+  msg_delete_tag_warning: As tags filhas serão movidas para a tag pai e esta tag será removida dos memorandos.
+  msg_server: Servidor
+  msg_improved: Melhorado
+  msg_request_2: Solicitação
+  msg_export_failed: 'Falha na exportação: $e'
+  msg_notification_settings: Configurações de notificação
+  msg_related_memo_was_deleted: O memorando relacionado foi excluído
+  msg_email: E-mail
+  msg_enter_password_4: Por favor insira uma senha
+  msg_retry_count: Contagem de novas tentativas
+  msg_import_exported_html_zip_package: Importar pacote HTML ou ZIP exportado
+  msg_archive: Arquivo
+  msg_reset_heatmap: Redefinir mapa de calor?
+  msg_token_applied: Token aplicado
+  msg_log_file_created: Pacote de registros exportado
+  msg_delete_sync_task: Excluir tarefa de sincronização
+  msg_include_archived_2: '- Incluir arquivado'
+  msg_memoflow_side_project_i_build_my: MemoFlow é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos
+  msg_failed_generate: 'Falha ao gerar: $e'
+  msg_search_logs: Registros de pesquisa
+  msg_active_days: Dias ativos
+  msg_back_top: Voltar ao início
+  msg_month: Este mês
+  msg_loading_references: Carregando referências
+  msg_silent: Silencioso
+  msg_settings: Configurações
+  msg_locating: Localizando...
+  msg_scan: Digitalizar
+  msg_recording_path_missing: Caminho de gravação ausente.
+  msg_date_range_4: '- Período'
+  msg_suggested_tags: Tags sugeridas
+  msg_energy_restored: ⚡ ENERGIA RESTAURADA
+  msg_username_2: Nome de usuário
+  msg_ai_summary_report: Relatório resumido AI
+  msg_all_tags: Todas as tags
+  msg_preferences: Preferências
+  msg_image_bed_3: Cama de imagem
+  msg_quick_input: Entrada Rápida
+  msg_tags: Etiquetas
+  msg_energy_critically_low: Energia criticamente baixa!
+  msg_delete_failed: 'Falha na exclusão: $e'
+  msg_server_login: Login do servidor
+  msg_like_2: Curtir
+  msg_save_2: Salvar
+  msg_unknown: Desconhecido
+  msg_release_notes_2: Notas de versão
+  msg_include_error_details: Incluir detalhes do erro
+  msg_write_comment: Escreva um comentário...
+  msg_write_thoughts: Escreva seus pensamentos...
+  msg_draft_box_title: Caixa de rascunho
+  msg_draft_box_empty_desc: Ainda não há rascunhos salvos.
+  msg_draft_box_pending_hint: Draft Box possui rascunhos inacabados ($count). Toque em Caixa de rascunho para visualizar.
+  msg_empty_draft: Rascunho vazio
+  msg_editing: Edição
+  msg_delete_draft: Excluir rascunho
+  msg_delete_draft_confirm: Excluir este rascunho?
+  msg_draft_deleted: Rascunho excluído
+  msg_local_2: Locais
+  msg_expired: Expirado
+  msg_fixed_2: Corrigido
+  msg_upload_attachment: Enviar anexo
+  msg_battery_whitelist: Lista de permissões de bateria
+  msg_district: Distrito
+  msg_voice_memo: 🎙️ Mensagem de voz\\n
+  msg_system_default: Padrão do sistema
+  msg_all_memos_2: Todos os memorandos
+  msg_network_request_failed: Falha na solicitação de rede
+  msg_memo_not_found: Memorando não encontrado
+  msg_playback_failed_2: 'Falha na reprodução: $e'
+  msg_sync_settings_webdav_across_devices: Faça backup das configurações em WebDAV para recuperação.
+  msg_offline_first_client_memos_backend: Um primeiro cliente off-line para o back-end Memos.
+  msg_user_guide: Guia do usuário
+  msg_notice: Aviso
+  msg_exact_alarms: Alarmes exatos
+  msg_restoring_overwrite_local_library_files_rebuild: A restauração substituirá os arquivos da biblioteca local e reconstruirá o banco de dados. Isto não pode ser desfeito.
+  msg_enter_api_url_ai_settings: Insira API URL nas configurações de AI
+  msg_create_failed_2: 'Falha na criação: $e'
+  msg_close_search: Fechar pesquisa
+  msg_imported_memos_2: Memorandos importados
+  msg_explore: Explorar
+  msg_network_connection_failed: Falha na conexão de rede.
+  msg_save_failed_3: 'Falha ao salvar: $e'
+  msg_no_summary_share: Nenhum resumo para compartilhar
+  msg_custom_model: Modelo personalizado
+  msg_sign_failed: 'Falha no login: $message'
+  msg_notification_exact_alarm_permissions_required_send: Notificação e permissões exatas de alarme são necessárias para enviar lembretes na hora certa.
+  msg_random_review: Revisão Aleatória
+  msg_random_review_source_scope: Fonte da nota
+  msg_random_review_source_all_notes: Todas as notas
+  msg_random_review_source_explore_notes: Explorar notas
+  msg_random_review_source_ai_history: Histórico AI
+  msg_random_review_ai_history_date_range: Tempo de resumo AI
+  msg_public: Público
+  msg_all_2: Todos
+  msg_add_custom_model: Adicionar modelo personalizado
+  msg_backup_password: Senha de backup
+  msg_optional_used_sign_requests: Opcional. Usado para assinar solicitações.
+  msg_search: Pesquisa
+  msg_set_password: Definir senha
+  msg_submit_logs: Exportar registros
+  msg_logs_export_local_only: A exportação salva apenas os logs localmente. O aplicativo não irá carregá-los nem criar um memorando automaticamente.
+  msg_enable_network_logging_before_exporting: Para problemas de login/sincronização/backup, habilite o registro de rede antes de exportar.
+  msg_activity_heatmap_2: MAPA DE CALOR DE ATIVIDADE
+  msg_invalid_api_key_insufficient_permissions: Chave API inválida ou permissões insuficientes.
+  msg_data_has_been_migrated_app_successfully: Seus dados foram migrados para este aplicativo com sucesso.
+  msg_get_version: Obtenha a nova versão
+  msg_token_source: Fonte do token
+  msg_send: Enviar
+  msg_no_pending_sync_tasks: Nenhuma tarefa de sincronização pendente
+  msg_locating_memo_content: Localizando conteúdo do memorando
+  msg_offline_ready: Pronto off-line
+  msg_use_relative_path: Use um caminho relativo
+  msg_total: Total
+  msg_location_2: Localização
+  msg_location_contains: O local contém
+  msg_show_location_metadata_memos_not_configured: Mostrar metadados de localização em memorandos. Se não estiver configurado, as coordenadas serão mostradas.
+  msg_api_url: API URL
+  msg_parsing_progress: Progresso da análise
+  msg_parsing: Análise
+  msg_custom: Personalizado
+  msg_tags_created: Novas tags criadas
+  msg_third_party_share_disabled: O compartilhamento de terceiros está desativado
+  msg_loading_links: Carregando links...
+  msg_how_report: Como denunciar?
+  msg_confirm_password_2: Confirmar senha
+  msg_search_title_content_tags: Pesquise por título, conteúdo ou tags
+  msg_reset_failed: 'Falha na reinicialização: $e'
+  msg_debug_preview_update_dialog: 'Depuração: caixa de diálogo de atualização de visualização'
+  msg_what_s: O que há de novo?
+  msg_ringtone: Toque
+  msg_unable_detect_backend_version_check_server: Não foi possível detectar a versão de back-end. Verifique o servidor URL ou rede.
+  msg_pending_2: Pendente
+  msg_parsing_html: Analisando HTML...
+  msg_actions: Ações
+  msg_import_complete_2: Importação concluída
+  msg_use_disk: Usar disco
+  msg_root_path: Caminho raiz
+  msg_disabled: Desativado
+  msg_improved_2: 'Melhorado:'
+  msg_city: Cidade
+  msg_decoding_zip: Decodificação ZIP...
+  msg_notification_content: Conteúdo da notificação
+  msg_resolve_conflict: Resolver conflito
+  msg_webhooks_not_supported_server: Webhooks não são suportados neste servidor.
+  msg_may_delayed: (pode atrasar)
+  msg_permissions_system_settings: Permissões e configurações do sistema
+  msg_waiting_tasks_stop: Aguardando a interrupção das tarefas
+  msg_done_2: Concluído
+  msg_parsing_memoflow_export: Analisando exportação MemoFlow...
+  msg_location_updated: 'Localização atualizada: $next_displayText_fractionDigits_6'
+  msg_checking_server_version: Verificando a versão do servidor...
+  msg_next_time_back_fixing_bugs: 👀 Da próxima vez, voltando à correção de bugs
+  msg_ago_4: $weeks atrás
+  msg_import: Importar
+  msg_create_token_2: Criar token
+  msg_marked_read: Marcado como lido
+  msg_pinned: Fixado
+  msg_version_update: Atualização de versão
+  msg_allow_private_memos: Permitir memorandos privados
+  msg_token_copied_clipboard: Token copiado para a área de transferência
+  msg_keeping_more_versions_uses_more_storage: Manter mais versões consome mais armazenamento. Considere limpar versões antigas.
+  msg_delete_webhook: Excluir webhook
+  msg_prompt: Alerta
+  msg_location_precision: Precisão de localização
+  msg_password_required: Senha necessária
+  msg_exit_app: Sair do aplicativo
+  msg_thanks_energy_fully_restored: Obrigado! Energia totalmente restaurada ⚡
+  msg_connection_timeout_check_network_api_url: Tempo limite de conexão. Verifique a rede ou API URL.
+  msg_local_network_migration: Migração de rede local
+  msg_local_network_migration_desc: Use a migração de rede local para conectar dispositivos MemoFlow e ferramentas de anotações de terceiros em seu LAN. A migração MemoFlow e Obsidian são suportadas hoje.
+  msg_connect_obsidian: Conectar Obsidiana
+  msg_connect_obsidian_desc: Emparelhe e sincronize o conteúdo das notas com Obsidian em sua rede local.
+  msg_local_network_migration_more_targets: Mais alvos, incluindo SiYuan e outras ferramentas de terceiros, serão adicionados aqui posteriormente.
+  msg_memoflow_migration: Migração MemoFlow
+  msg_memoflow_migration_target_desc: Migre notas e configurações do espaço de trabalho local para outro dispositivo MemoFlow pela sua rede local.
+  msg_memoflow_migration_targets_summary: MemoFlow / Obsidiana
+  msg_memoflow_migration_role_desc: Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o MemoFlow em primeiro plano durante a transferência.
+  msg_memoflow_migration_sender: Eu sou o remetente
+  msg_memoflow_migration_sender_desc: Escolha notas e configurações do espaço de trabalho local atual e conecte-se a um receptor próximo.
+  msg_memoflow_migration_sender_only_local_mode: A função de remetente está disponível somente quando este dispositivo está usando um espaço de trabalho local.
+  msg_memoflow_migration_receiver: Eu sou o receptor
+  msg_memoflow_migration_receiver_desc: Crie uma sessão de recebimento, mostre um código QR e importe as notas ou configurações recebidas.
+  msg_memoflow_migration_select_content: Selecionar conteúdo
+  msg_memoflow_migration_notes: Conteúdo das notas
+  msg_memoflow_migration_notes_desc: Envie todas as notas e anexos do espaço de trabalho local atual.
+  msg_memoflow_migration_settings: Conteúdo de configurações
+  msg_memoflow_migration_settings_desc: Envie preferências portáteis e configurações sensíveis opcionais.
+  msg_memoflow_migration_safe_config: Configurações seguras
+  msg_memoflow_migration_sensitive_config: Configurações confidenciais
+  msg_memoflow_migration_prepare_package: Preparar pacote de migração
+  msg_memoflow_migration_prepare_send: Prepare-se para enviar
+  msg_memoflow_migration_send_method: Método de envio
+  msg_memoflow_migration_send_method_desc: Escolha como se conectar ao receptor depois que o pacote estiver pronto.
+  msg_memoflow_migration_prepare_send_first: Prepare o pacote na tela anterior antes de escolher o método de envio.
+  msg_memoflow_migration_package_ready: Pacote pronto
+  msg_memoflow_migration_package_summary: Memorandos $memoCount · Anexos $attachmentCount · $size
+  msg_memoflow_migration_scan_receiver: Digitalizar receptor
+  msg_memoflow_migration_search_receiver: Pesquise receptores próximos
+  msg_memoflow_migration_discovered_receivers: Receptores próximos
+  msg_memoflow_migration_waiting_receiver: Aguardando conexão do remetente…
+  msg_memoflow_migration_review_proposal: Analisar proposta de migração
+  msg_memoflow_migration_receive_mode: Modo de recepção
+  msg_memoflow_migration_receive_as_new_workspace: Importar como um novo espaço de trabalho local
+  msg_memoflow_migration_overwrite_current_workspace: Substituir o espaço de trabalho local atual
+  msg_memoflow_migration_sensitive_config_confirm: Configurações confidenciais exigem sua confirmação
+  msg_memoflow_migration_accept: Aceitar e receber
+  msg_memoflow_migration_reject: Rejeitar
+  msg_memoflow_migration_start_receive: Comece a receber
+  msg_memoflow_migration_completed: Migração concluída
+  msg_memoflow_migration_view_result: Ver resultado
+  msg_memoflow_migration_result: Resultado da migração
+  msg_memoflow_migration_sender_device: Dispositivo remetente
+  msg_memoflow_migration_size: Tamanho estimado
+  msg_memoflow_migration_received_bytes: 'Recebido: $size'
+  msg_memoflow_migration_applied_configs: Configurações aplicadas
+  msg_memoflow_migration_skipped_configs: Configurações ignoradas
+  msg_memoflow_migration_workspace_name: Espaço de trabalho
+  msg_memoflow_migration_scan_title: Receptor de digitalização QR
+  msg_memoflow_migration_scan_hint: Digitalize o código QR mostrado no dispositivo receptor.
+  msg_memoflow_migration_foreground_notice: Mantenha o MemoFlow em primeiro plano em ambos os dispositivos durante a migração.
+  msg_bridge_component_title: Ponte MemoFlow
+  msg_bridge_component_desc: Emparelhe com o plugin Obsidian para sincronização local.
+  msg_bridge_title: Conectar Obsidiana
+  msg_bridge_local_mode_only: Emparelhe com Obsidian em sua rede local. Outros alvos poderão surgir mais tarde.
+  msg_bridge_paired_target: 'Emparelhado: $target'
+  msg_bridge_unpaired: Não emparelhado
+  msg_bridge_server: 'Servidor: $server'
+  msg_bridge_device: 'Dispositivo: $device'
+  msg_bridge_processing: Processando...
+  msg_bridge_action_scan_pair: Digitalizar para emparelhar
+  msg_bridge_action_mdns_discover: descoberta mDNS
+  msg_bridge_action_searching: Pesquisando...
+  msg_bridge_pair_code_label: Código de par
+  msg_bridge_pair_code_hint: Digite o código de 6 dígitos mostrado em Obsidian
+  msg_bridge_action_pairing: Emparelhamento...
+  msg_bridge_action_confirm_pair: Confirmar par
+  msg_bridge_action_checking: Verificando...
+  msg_bridge_action_health_check: Verificação de integridade
+  msg_bridge_enable: Habilitar ponte
+  msg_bridge_pair_cleared: Emparelhamento desmarcado
+  msg_bridge_clear_pair: Par claro
+  msg_bridge_discovery_results: Resultados da descoberta
+  msg_bridge_scan_title: Digitalizar QR
+  msg_bridge_scan_hint: Digitalize o código QR mostrado pelo plugin Obsidian
+  msg_bridge_qr_invalid: Código QR de emparelhamento inválido
+  msg_bridge_pair_response_missing_token: Token ausente da resposta do par
+  msg_bridge_pair_success: Emparelhamento bem-sucedido
+  msg_bridge_pair_failed: 'Falha no emparelhamento: $e'
+  msg_bridge_mdns_searching: Pesquisando serviços mDNS...
+  msg_bridge_mdns_failed: 'Falha na pesquisa mDNS: $e'
+  msg_bridge_mdns_not_found: Nenhum serviço de ponte encontrado
+  msg_bridge_mdns_found_count: Serviços $count encontrados
+  msg_bridge_input_host_required: Host é obrigatório
+  msg_bridge_input_port_invalid: A porta é inválida
+  msg_bridge_input_pair_code_required: O código do par é obrigatório
+  msg_bridge_status_pairing: Emparelhamento...
+  msg_bridge_need_pair_first: Por favor, emparelhe primeiro
+  msg_bridge_status_health_checking: Verificando a integridade da ponte...
+  msg_bridge_status_health_ok: A ponte está íntegra
+  msg_bridge_status_health_failed: 'Falha na verificação de integridade: $e'
+  app_language:
+    system: Seguir sistema
+    zh_hans: Chinês (simplificado)
+    zh_hant_tw: Chinês (tradicional, Taiwan)
+    en: Inglês
+    ja: Japonês
+    de: Alemão
+    pt_br: Português (Brasil)
+    ko: Coreano
+  app_theme:
+    system: Sistema
+    light: Luz
+    dark: Escuro
+  app_font_size:
+    standard: Padrão
+    large: Grande
+    small: Pequeno
+  app_line_height:
+    classic: Clássico
+    compact: Compacto
+    relaxed: Relaxado
+  launch_action:
+    none: Nenhum
+    sync: Sincronizar
+    quick_input: Entrada Rápida
+    daily_review: Revisão Aleatória
+  auto_lock_time:
+    immediately: Imediatamente
+    after_1_min: 1 minuto
+    after_5_min: 5 minutos
+    after_15_min: 15 minutos
+  reminder:
+    default_title: Ei, lembra dessa ideia?
+    default_body: Toque para ver detalhes
+  location:
+    current: Localização atual
+  webdav:
+    not_configured: WebDAV não está configurado
+    backup_disabled: O backup está desativado
+    backup_account_missing: Conta faltando para backup
+    backup_local_only: O backup está disponível apenas para bibliotecas locais
+    backup_password_missing: Falta senha de backup
+    backup_no_memo_files: Nenhum arquivo de memorando encontrado na biblioteca local; backup cancelado
+    restore_account_missing: Conta faltando para restauração
+    restore_local_only: A restauração está disponível apenas para bibliotecas locais
+    backup_empty: O backup está vazio
+    backup_no_memos: Nenhum memorando encontrado no backup
+    snapshot_missing: Instantâneo de backup ausente
+    snapshot_corrupted: Instantâneo de backup corrompido
+    object_missing: Objeto de backup ausente
+    config_corrupted: Configuração de backup corrompida
+    config_invalid: Configuração de backup inválida
+    password_invalid: Senha de backup inválida
+    data_corrupted: Dados de backup corrompidos
+    server_url_invalid: Servidor WebDAV URL inválido
+    recover_password_title: Recuperar senha de backup
+    recover_password_button: Recuperar
+    recover_password_hint: Redefinir senha de backup com código de segurança
+    recovery_code_title: Código de segurança
+    recovery_code_enter: Insira o código de segurança
+    recovery_code_enter_new_password: Digite a nova senha
+    recovery_code_setup_message: A senha de backup está definida. Salve este código de segurança agora. Se a senha for esquecida, somente este código poderá redefini-la.
+    recovery_code_reset_message: A senha de backup foi redefinida. Salve o novo código de segurança, o código anterior não é mais válido.
+    recovery_code_copied: Código de segurança copiado
+    recovery_reset_success: Redefinição de senha de backup
+    recovery_code_invalid: Código de segurança inválido. Verifique e tente novamente.
+    recovery_not_configured: A recuperação do código de segurança ainda não está habilitada para este backup.
+  import_count_memos: $count
+  import_count_attachments: $count
+  msg_version_probe_complete: Análise de versão concluída
+  msg_currently_using_api: Atualmente usando API $version.
+  msg_version_probe_failed: Falha na análise de versão
+  msg_copy_diagnostics: Copiar diagnóstico
+  msg_diagnostics_copied: Diagnóstico copiado
+  msg_probe_failed: 'Falha na análise: $error'
+  msg_no_active_session_after_sign_in: Nenhuma sessão ativa após login
+  msg_request_headers: Cabeçalhos de solicitação
+  msg_request_body: Corpo da solicitação
+  msg_response_headers: Cabeçalhos de resposta
+  msg_response_body: Corpo de Resposta
+  msg_error: Erro
+  msg_system_logs: Registros do sistema
+  msg_copy_last_lines: Copiar as últimas linhas $lines
+  msg_export_logs_bundle: Pacote de registros de exportação
+  msg_showing_last_lines: Mostrando as últimas linhas $lines
+  msg_no_system_logs_yet: Nenhum registro do sistema ainda
+  msg_system_logs_copied: Logs do sistema copiados (linhas $lines)
+  msg_log_bundle_created: 'Pacote de log criado: $path (ExportId: $exportId)'
+  msg_failed_export_logs: 'Falha ao exportar logs: $error'
+  msg_api_route: Rota API
+  msg_screenshot_mode: Modo de captura de tela
+  msg_screenshot_mode_detail: Ocultar barras de status/navegação para capturas limpas
+  msg_template: Modelo
+  msg_no_templates_yet: Ainda não há modelos
+  msg_quick_search: Pesquisa rápida...
+  msg_minimize: Minimizar
+  msg_maximize: Maximizar
+  msg_restore_window: Restaurar
+  msg_windows_enable_location_access: $message. Habilite o acesso à localização nas configurações do Windows.
+  msg_camera_file_missing: Arquivo da câmera ausente.
+  msg_no_camera_detected: Nenhuma câmera detectada.
+  msg_camera_failed: 'Falha na câmera: $error'
+  msg_camera_permission_denied_windows: Permissão de câmera negada. Habilite o acesso à câmera nas configurações do Windows.
+  msg_file_selection_failed: 'Falha na seleção do arquivo: $error'
+  msg_files_unavailable_from_picker: Arquivos indisponíveis no seletor.
+  msg_no_files_selected: Nenhum arquivo selecionado.
+  msg_original_image: Originais
+  msg_gallery_system_picker_original_desc: Escolha se as imagens selecionadas devem pular a compactação antes do upload.
+  msg_gallery_system_picker_original_switch: Faça upload das imagens selecionadas com qualidade original
+  msg_gallery_original_selection_summary: $selectedCount selecionado · $originalCount original
+  msg_added_files: Adicionados arquivos $count.
+  msg_unavailable_file_count: $count indisponível
+  msg_added_files_with_skipped: Adicionados arquivos $count. Ignorado $details.
+  msg_added_photo_attachment: Adicionado anexo de foto.
+  msg_enter_content_before_creating_link: Insira o conteúdo antes de criar um link.
+  msg_checkbox: Caixa de seleção
+  msg_code_block: Bloco de código
+  msg_no_recording_input_device_found: Nenhum dispositivo de entrada de gravação encontrado.
+  msg_write_current_thought: Escreva o que você está pensando...
+  msg_tag: Etiqueta
+  msg_attachment: Anexo
+  msg_todo: Tudo
+  msg_link: Link
+  msg_capture_photo: Capturar foto
+  msg_open_camera_settings: Abra as configurações da câmera
+  msg_unable_open_windows_camera_settings: Não foi possível abrir as configurações da câmera Windows.
+  msg_qr_scan_not_supported_use_manual_pairing: "A varredura QR não é suportada nesta plataforma. \n Use o emparelhamento manual."
+  msg_qr_scan_not_supported_pair_manually: A varredura QR não é suportada nesta plataforma. Emparelhe manualmente com Host, Porta e Código de Emparelhamento.
+  msg_loading_memos: Carregando memorandos...
+  msg_encryption_feature_placeholder: A criptografia é atualmente um espaço reservado e ainda não é aplicada.
+  msg_password_feature_placeholder: O suporte à senha é atualmente um espaço reservado e ainda não é aplicado.
+  msg_template_feature_manage_desc: Habilite modelos para gerenciar nomes, conteúdo e variáveis ​​de modelos.
+  msg_shortcuts_overview: Visão geral dos atalhos
+  msg_restore_defaults: Restaurar padrões
+  msg_default_shortcuts_restored: Atalhos padrão restaurados.
+  msg_file_save_location: Local de salvamento do arquivo
+  msg_select_location: Selecione o local
+  msg_repository_name: Nome do repositório
+  msg_enter_repository_name_hint: Insira o nome do repositório
+  msg_not_selected: Não selecionado
+  msg_select_file_save_location: Selecione um local para salvar o arquivo.
+  msg_enter_repository_name_prompt: Insira um nome de repositório.
+  msg_enter_and_confirm_password: Por favor insira e confirme a senha.
+  msg_encrypt_save_placeholder: Salvamento criptografado (espaço reservado)
+  msg_desktop_settings: Configurações da área de trabalho
+  msg_only_windows_desktop_supports_this_setting: Somente o desktop Windows suporta esta configuração.
+  msg_shortcut_settings: Configurações de atalho
+  msg_configure_desktop_shortcuts: Configurar atalhos da área de trabalho
+  msg_close_window_minimize_to_tray: Minimizar para a bandeja ao fechar a janela
+  msg_close_window_minimize_to_tray_desc: Quando ativado, clicar no botão Fechar no canto superior direito não sairá do aplicativo. Você pode restaurar a janela da bandeja do sistema.
+  msg_local_storage_unavailable: O armazenamento local não está disponível
+  msg_check_system_permissions_or_retry_later: Verifique as permissões do sistema ou tente novamente mais tarde.
+  msg_source_value: 'Fonte: $source'
+  msg_enable_sync_bridge_first: Ative a ponte de sincronização primeiro.
+  msg_sync_to_obsidian: Sincronizar com Obsidiana
+  msg_sync_to_obsidian_confirm: Sincronize todos os memorandos da biblioteca local atual, incluindo anexos, com o Obsidian emparelhado de uma só vez. Continuar?
+  msg_sync_completed_summary: 'Sincronização concluída: $succeeded/$total bem-sucedido, $failed com falha.'
+  msg_sync_failed_with_error: 'Falha na sincronização: $error'
+  msg_sync_to_obsidian_in_progress: Sincronizando com Obsidiana...
+  msg_action_shortcut: Ação - Atalho
+  msg_global: Global
+  msg_editor: Editor
+  msg_paste: Colar
+  msg_cut: Corte
+  msg_previous_page: Página anterior
+  msg_next_page: Próxima página
+  msg_shift_enter_supported: Também suporta $binding
+  msg_shortcuts_supported_windows_macos: Somente Windows e macOS suportam configurações de atalho.
+  msg_shortcut_binding_in_use: $binding já é usado por “$action”.
+  msg_windows_paging_note: 'Paginação Windows: página anterior PageUp, página seguinte PageDown.'
+  msg_system_edit_shortcuts_note: Copiar/colar/cortar use os atalhos padrão do sistema.
+  msg_shortcut_requires_modifier: Inclui pelo menos uma tecla modificadora ($modifiers).
+  msg_current_shortcut: 'Atual: $binding'
+  msg_press_new_shortcut: Pressione o novo atalho...
+  msg_quick_record: Registro rápido
+  msg_focus_input_area: Área de entrada de foco
+  msg_toggle_sidebar: Alternar barra lateral
+  msg_open_settings: Abrir configurações
+  msg_show_hide_memoflow: Mostrar/ocultar MemoFlow
+  msg_publish_memo: Publicar memorando
+  msg_bold: Negrito
+  msg_underline: Sublinhado
+  msg_highlight: Destaque
+  msg_unordered_list: Lista não ordenada
+  msg_ordered_list: Lista ordenada
+  msg_undo: Desfazer
+  msg_redo: Refazer
+  msg_no_templates_click_add: Ainda não há modelos. Clique em “Adicionar modelo” para criar um.
+  msg_weather_variables_enabled_city_not_set: Variáveis climáticas habilitadas (cidade não definida)
+  msg_weather_variables_city: 'Variáveis climáticas: $city'
+  msg_weather_variables_disabled: Variáveis climáticas desativadas
+  msg_template_feature_title: Habilitar modelos
+  msg_template_feature_desc: Após habilitar, você pode escolher modelos na barra de ferramentas do editor. A escolha de um substituirá o conteúdo do editor.
+  msg_template_list: Lista de modelos
+  msg_many_templates_support_scroll: Quando há muitos modelos, esta área suporta rolagem vertical.
+  msg_variable_settings: Configurações de variáveis
+  msg_template_variables: Variáveis de modelo
+  msg_available_variable_docs: Documentos de variáveis disponíveis
+  msg_available_variable_docs_desc: Toque para mostrar a tabela de variáveis e notas de significado na caixa de diálogo central.
+  msg_date_time_weather_variable_desc: Variáveis ​​de data/hora seguem os formatos em Configurações de variáveis; variáveis ​​meteorológicas dependem da configuração climática do AMap.
+  msg_variable: Variável
+  msg_meaning: Significado
+  msg_example: Exemplo
+  msg_got_it: Entendi
+  msg_scene_micro_guide_list_gestures: Pressione e segure para copiar um memorando, toque duas vezes para editar rapidamente
+  msg_scene_micro_guide_list_search_shortcuts: Toque em pesquisar títulos, conteúdo e tags; toque no título para filtros de atalho
+  msg_scene_micro_guide_editor_tag_autocomplete_desktop: 'Digite # para sugestões de tags, use?? para escolher e pressione Enter para inserir'
+  msg_scene_micro_guide_editor_tag_autocomplete_mobile: 'Digite # ou toque no botão de tag para escolher uma tag sugerida'
+  msg_scene_micro_guide_gallery_controls_desktop: ?/? trocar? Esc fecha? redefinições de toque duplo
+  msg_scene_micro_guide_gallery_controls_mobile: Toque duas vezes para redefinir
+  msg_scene_micro_guide_desktop_global_shortcuts: Pesquisa $search? $quickRecord Gravação rápida? $overview Ver atalhos
+  msg_new_template: Adicionar modelo
+  msg_edit_template: Editar modelo
+  msg_template_name: Nome do modelo
+  msg_template_name_example: 'Exemplo: Revisão matinal'
+  msg_template_content: Conteúdo do modelo
+  msg_template_content_example: 'Você pode usar variáveis, por exemplo: {{data}} {{clima}}'
+  msg_template_variable_settings: Configurações de variáveis de modelo
+  msg_date_format_variable: Formato de data ({{data}})
+  msg_time_format_variable: Formato de hora ({{hora}})
+  msg_datetime_format_variable: Formato de data e hora ({{datetime}})
+  msg_enable_weather_variables: Habilitar variáveis climáticas
+  msg_weather_variable_tokens: 'Variáveis: {{clima}} / {{clima.*}}'
+  msg_weather_city_adcode_or_name: Cidade meteorológica (adcode ou nome da cidade)
+  msg_weather_city_example: 'Exemplo: 110000'
+  msg_weather_fallback_text: Texto alternativo do clima
+  msg_keep_unknown_variables_raw: Mantenha variáveis desconhecidas como estão
+  msg_keep_unknown_variables_raw_desc: Quando desativado, variáveis desconhecidas serão substituídas por uma string vazia.
+  msg_delete_template: Excluir modelo
+  msg_delete_template_confirm_with_name: Excluir “$name”?
+  msg_current_date: Data atual
+  msg_current_time: Hora atual
+  msg_current_datetime: Data e hora atuais
+  msg_weekday_name: Nome do dia da semana
+  msg_weather_plus_temperature_without_city: Tempo + temperatura (sem cidade)
+  msg_city_plus_weather_plus_temperature: Cidade + clima + temperatura
+  msg_weather_city_label: Cidade meteorológica
+  msg_weather_province: Província meteorológica
+  msg_weather_condition: Condições climáticas
+  msg_temperature_without_unit: Temperatura (sem unidade)
+  msg_humidity_without_percent: Umidade (sem símbolo %)
+  msg_wind_direction: Direção do vento
+  msg_wind_power: Força do vento
+  msg_weather_report_time: Hora do boletim meteorológico
+  msg_adcode: Código de área administrativa
+  msg_example_saturday: Sábado
+  msg_example_sunny_25c: Ensolarado 25°C
+  msg_example_beijing_sunny_25c: Pequim Ensolarado 25°C
+  msg_example_beijing: Pequim
+  msg_example_beijing_city: Município de Pequim
+  msg_example_sunny: Ensolarado
+  msg_example_northeast: Nordeste
+  msg_total_count_times: $count vezes no total
+  msg_current_streak_days: Sequência atual (dias)
+  msg_total_days: Total de dias
+  msg_average_daily_characters: Média diária de caracteres
+  msg_longest_streak_days: Maior sequência (dias)
+  msg_total_memos_metric: Total de memorandos
+  msg_total_characters_metric: Total de caracteres
+  msg_common_writing_time: Tempo de escrita comum
+  msg_most_active_day: Dia mais ativo
+  msg_memo_count: Contagem de memorandos
+  msg_total_characters_short: Total de caracteres
+  msg_max_characters_single_day: Máximo de caracteres por dia
+  msg_image: Imagem
+  msg_video: Vídeo
+  msg_audio: Áudio
+  msg_document: Documento
+  msg_other: Outro
+  msg_attachment_name_contains: O nome do anexo contém
+  msg_attachment_type: Tipo de anexo
+  msg_linked_memos: Memorandos vinculados
+  msg_clear_all_filters: Limpar todos os filtros
+  msg_file: Arquivo
+  msg_vs_last_month_same_memo_count: Mesma contagem de memorandos do mês passado
+  msg_vs_last_month_increase_memo_count: Mais memorandos do que no mês passado
+  msg_vs_last_month_decrease_memo_count: Menos memorandos que no mês passado
+  msg_weekday_monday: Seg
+  msg_weekday_tuesday: Terça
+  msg_weekday_wednesday: Quarta
+  msg_weekday_thursday: Qui
+  msg_weekday_friday: Sexta-feira
+  msg_weekday_saturday: Sábado
+  msg_weekday_sunday: Sol
+  msg_current_window_pin_not_supported: A fixação não é suportada na janela atual.
+  msg_no_valid_files_selected: Nenhum arquivo válido selecionado.
+  msg_added_attachment_count: Adicionados anexo(s) $count.
+  msg_save_failed_check_content_retry: Falha ao salvar. Verifique o conteúdo e tente novamente.
+  msg_quick_input_channel_not_ready_retry: O canal de entrada rápida não está pronto. Por favor, reabra a janela principal e tente novamente.
+  msg_visibility_value: 'Visibilidade: $value'
+  msg_saved_to_memoflow: Salvo em MemoFlow
+  msg_quick_input_failed_with_error: 'Falha na entrada rápida: $error'
+  msg_feature: Recurso
+  msg_feature_not_implemented_placeholder_with_label: “$label” ainda não foi implementado (espaço reservado).
+  msg_quick_input_save_failed_with_error: 'Falha ao salvar entrada rápida: $error'
+  msg_toggle_memoflow_failed_with_error: 'Falha ao mostrar/ocultar MemoFlow: $error'
+  msg_shortcuts_overview_opened: Visão geral dos atalhos abertos.
+  msg_unsupported_version_value: 'Versão não suportada: $version'
+  msg_version_probe_passed_with_version: Sondagem v$version aprovada
+  msg_startup_slogan: Deixe os registros fluírem naturalmente
+  msg_storage_read_failed_some_features_limited: Falha na leitura do armazenamento. Alguns recursos são limitados.
+  msg_monthly_overview: Visão geral mensal do $month
+  msg_daily_memo_trend: Tendência de memorando diário
+  msg_date_memo_count_tooltip: "$date \n $count memorandos"
+  msg_average_value: Média $value
+  msg_need_at_least_five_tags: Existem menos de 5 tags. Adicione mais tags e tente novamente.
+  msg_tag_cloud_tooltip: "Memorandos $count \n $percent% \n Mais recente: $latest"
+  msg_unnamed_tag: Marca sem nome
+  msg_yearly_character_trend: Tendência anual de caracteres
+  msg_no_data: Sem dados
+  msg_month_characters_tooltip: "$month \n $chars caracteres"
+  msg_on_this_day: Neste dia
+  msg_links_label: Links
+  app_drawer:
+    tooltip_single: $date ($weekday) · Memorando $count
+    tooltip_multi: $date ($weekday) · Memorandos $count
+  ai_summary:
+    error_api_key_empty: A chave API está vazia
+    system:
+      require_json: Por favor, imprima JSON estritamente. Não use blocos de código ou texto extra.
+      json_format: 'Formato JSON: {"insights":["..."],"moodTrend":"...","palavras-chave":["#..."]}'
+      insights_rule: 'os insights devem ter de 2 a 5 itens; as palavras-chave devem ter de 4 a 8 itens com #.'
+    user:
+      range: 'Intervalo de tempo: $rangeLabel'
+      counts: 'Memos: $memoCount (incluído para resumo: $includedCount)'
+      profile: 'Perfil de usuário: $profile'
+      custom_prompt: 'Instruções adicionais: $customPrompt'
+      memo_content: 'Conteúdo do memorando:'
+    error_invalid_response: A resposta AI tem um formato inválido
+    error_empty_response: A resposta AI está vazia
+    error_missing_content: O conteúdo da resposta AI está faltando
+    default_prompt: Você é um assistente de notas minimalista. Extraia os pontos principais e apresente-os em um formato limpo. Mantenha o tom profissional, caloroso e conciso. Prefira listas e parágrafos curtos.
+shareClip:
+  videoDetected: Detectado como conteúdo de vídeo
+  linkOnlyLabel: Salvar apenas link
+  originalLinkLabel: Link original
+  videoCandidatesTitle: Candidatos de vídeo
+  downloadAndAttach: Baixar e anexar
+  notSupportedLabel: Não suportado
+  directLinkLabel: Link direto
+  xiaohongshuLabel: Xiaohongshu
+  unsupportedDash: Fluxo DASH separado não é suportado
+  unsupportedStream: O recurso somente streaming não é compatível
+  fileTooLargeTitle: O vídeo tem mais de $limit
+  fileTooLargeBody: Este vídeo é $size, que excede o limite de anexos do servidor de $limit.
+  compressAndSave: Compactar e salvar
+  fallbackParseFailed: A análise do vídeo falhou, então o aplicativo salvou apenas o link.
+  fallbackDownloadFailed: O download do vídeo falhou, então o aplicativo salvou apenas o link.
+  fallbackCompressionFailed: Falha na compactação do vídeo, então o aplicativo salvou apenas o link.
+  fallbackCompressionStillTooLarge: O vídeo compactado ainda tem mais de $limit, então o aplicativo salvou apenas o link.
+  failureUnsupportedUrl: Esquema URL não suportado.
+  failureLoadTimeout: Tempo limite esgotado ao carregar a página.
+  failureWebView: WebView não conseguiu carregar a página.
+  failureDom: Não foi possível ler o conteúdo da página.
+  failureParserEmpty: Não foi possível extrair conteúdo legível.
+  failureUnknown: Algo deu errado ao preparar esta visualização de compartilhamento.
+  stageLoadingPage: Carregando página
+  stageWaitingContent: Aguardando conteúdo dinâmico
+  stageDetectingMedia: Detectando recursos de vídeo
+  stageParsingArticle: Artigo de análise
+  stageBuildingPreview: Visualização do edifício
+  stageDownloadingVideo: Baixando vídeo
+  stageCompressingVideo: Compactando vídeo
+  localSavedPendingSync: Salvo localmente. A sincronização continuará quando disponível.
+memoTimeAdjustment:
+  action: "Alterar data de criação"
+  saved: "Data de criação atualizada"
+  description: "Depois de salvar, este memo será exibido e ordenado pela nova data de criação."
+  dateField: "Data"
+  timeField: "Hora"
+  selectedCreationTime: "Data de criação: $value"
+  failed: "Falha ao alterar a data de criação: $error"
+collections:
+  drawerLabel: Coleções
+  title: Coleções
+  collection: Coleção
+  pinned: Fixado
+  archived: Arquivado
+  addToCollection: Adicionar à coleção
+  newManual: Novo manual
+  create: Criar
+  createCollection: Criar coleção
+  editCollection: Editar coleção
+  reader:
+    comingSoon: Em breve
+    manageCollectionItems: Gerenciar itens de coleção
+    currentMemoActions: Ações atuais do memorando
+    currentItemActions: Ações do item atual
+    pageAnimationTooltip: Animação de página
+    pageAnimationNone: Sem animação
+    pageAnimationSlide: Slide
+    pageAnimationSimulation: Simulação
+    progressPage: Página $current/$total
+    progressMemo: Memorando $current/$total
+    settingsTitle: Configurações do leitor
+    themePreset: Predefinição de tema
+    themePaper: Papel
+    themeEyeCare: Cuidados com os olhos
+    themeDark: Escuro
+    themeGray: Cinza
+    brightnessMode: Modo de brilho
+    brightnessSystem: Sistema
+    brightnessManual: Manual
+    readerBrightness: Brilho do leitor
+    textScale: Escala de texto
+    lineSpacing: Espaçamento entre linhas
+    pagePadding: Preenchimento de página
+    contentWidth: Largura do conteúdo
+    contentWidthNarrow: Estreita
+    contentWidthStandard: Padrão
+    contentWidthWide: Ampla
+    contentWidthFull: Seguir janela
+    autoPageTitle: Página automática
+    autoPageStart: Iniciar
+    autoPageStop: Parar
+    autoPageSecondsPerPage: Segundos/página
+    styleTitle: Estilo do leitor
+    backgroundStyle: Estilo de fundo
+    backgroundTypePreset: Predefinição
+    backgroundTypeSolid: Sólido
+    backgroundTypeImage: Imagem
+    backgroundAlpha: Fundo alfa
+    typography: Tipografia
+    readerFont: Fonte do leitor
+    fontSystemDefault: Padrão do sistema
+    fontWeightNormal: Normal
+    fontWeightMedium: Médio
+    fontWeightBold: Negrito
+    letterSpacing: Espaçamento entre letras
+    paragraphSpacing: Espaçamento entre parágrafos
+    firstLineIndent: Recuo da primeira linha
+    tipSettingsTitle: Configurações da barra de dicas
+    tipSettingsSubtitle: Título, cabeçalho, rodapé, cores das pontas
+    paddingSettingsTitle: Configurações de preenchimento
+    paddingSettingsSubtitle: Preenchimento do corpo/cabeçalho/rodapé
+    brightness: Brilho
+    customSolidColor: Cor sólida personalizada
+    backgroundColor: Cor de fundo
+    backgroundImage: Imagem de fundo
+    backgroundImageUnavailableWeb: O plano de fundo do arquivo de imagem não está disponível na Web.
+    backgroundImagePickHint: Escolha um arquivo de imagem para o fundo do leitor.
+    clearImageBackground: Limpar fundo da imagem
+    titleSection: Título
+    titleModeLeft: Esquerda
+    titleModeCenter: Centro
+    titleModeHidden: Oculto
+    titleScale: Escala de título
+    titleTopSpacing: Espaçamento superior do título
+    titleBottomSpacing: Espaçamento inferior do título
+    headerFooterSection: Cabeçalho/rodapé
+    headerMode: Modo de cabeçalho
+    footerMode: Modo rodapé
+    headerLeft: Cabeçalho esquerdo
+    headerCenter: Centro do cabeçalho
+    headerRight: Cabeçalho à direita
+    footerLeft: Rodapé esquerdo
+    footerCenter: Rodapé central
+    footerRight: Rodapé à direita
+    tipTextColor: Cor do texto da dica
+    dividerColor: Cor do divisor
+    useDefaultLongPressReset: Usar padrão (pressione e segure para redefinir)
+    tipSlotNone: Nenhum
+    tipSlotCollectionTitle: Título da coleção
+    tipSlotChapterTitle: Título do capítulo
+    tipSlotTime: Hora
+    tipSlotBattery: Bateria
+    tipSlotBatteryPercentage: Bateria %
+    tipSlotPage: Página
+    tipSlotTotalProgress: Progresso
+    tipSlotPageAndTotal: Página/total
+    tipSlotTimeBattery: Tempo + bateria
+    tipSlotTimeBatteryPercentage: Tempo + % de bateria
+    tipDisplayHidden: Oculto
+    tipDisplayInline: Embutido
+    tipDisplayReserved: Reservado
+    paddingTitle: Preenchimento de página
+    paddingBody: Corpo
+    paddingHeader: Cabeçalho
+    paddingFooter: Rodapé
+    paddingTop: Superior
+    paddingBottom: Parte inferior
+    paddingLeft: Esquerda
+    paddingRight: Certo
+    showHeaderDivider: Mostrar divisor de cabeçalho
+    showFooterDivider: Mostrar divisor de rodapé
+    moreSettingsTitle: Mais configurações
+    moreDisplay: Exibição
+    moreInput: Entrada
+    moreContent: Conteúdo
+    hideStatusBar: Ocultar barra de status
+    hideNavigationBar: Ocultar barra de navegação
+    padDisplayCutouts: Recortes de exibição do painel
+    keepScreenAwake: Manter a tela ativa
+    barsFollowPageStyle: Barras seguem o estilo da página
+    showReadTitleAddition: Mostrar adição de título lido
+    showBrightnessOverlay: Mostrar sobreposição de brilho
+    mouseWheelPageTurn: Viragem de página da roda do mouse
+    volumeKeyPageTurn: Viragem de página com tecla de volume
+    longPressKeyPageTurn: Pressione longamente a tecla para virar a página
+    touchSlop: Toque desleixado
+    clickActionsTitle: Ações de clique
+    clickActionsSubtitle: Configurar regiões de toque 3×3
+    platformUnavailable: Indisponível nesta plataforma
+    allowTextSelection: Permitir seleção de texto
+    previewImageOnTap: Pré-visualização da imagem ao tocar
+    tapRegionTopLeft: Canto superior esquerdo
+    tapRegionTopCenter: Centro superior
+    tapRegionTopRight: Canto superior direito
+    tapRegionMiddleLeft: Meio à esquerda
+    tapRegionMiddleCenter: Centro central
+    tapRegionMiddleRight: Meio à direita
+    tapRegionBottomLeft: Canto inferior esquerdo
+    tapRegionBottomCenter: Centro inferior
+    tapRegionBottomRight: Canto inferior direito
+    tapActionNone: Nenhum
+    tapActionMenu: Cardápio
+    tapActionNextPage: Próxima página
+    tapActionPrevPage: Página anterior
+    tapActionNextChapter: Próximo capítulo
+    tapActionPrevChapter: Capítulo anterior
+    tapActionToc: sumário
+    tapActionSearch: Pesquisa
+    cancel: Cancelar
+    apply: Aplicar
+    styleCardsTitle: Cartões de estilo
+    styleCardNew: Novo
+    styleCardEditCurrent: Editar atual
+    styleCardCreateTitle: Criar cartão de estilo
+    styleCardEditTitle: Editar cartão de estilo
+    styleCardSave: Salvar
+    styleCardDelete: Excluir
+    styleCardNameLabel: Nome do estilo
+    styleCardBuiltIn: Predefinição
+    styleCardCustom: Personalizado
+  rss:
+    collectionType: RSS
+    collectionSummary: Coleção RSS
+    createDescription: Feeds RSS
+    draftHelp: Adicione um ou mais feeds RSS ou Atom antes de salvar.
+    addFeed: Adicionar feed RSS
+    addFeedToDraft: Adicionar feed
+    addAnotherFeed: Adicionar outro feed
+    feedRequired: Adicione pelo menos um feed RSS ou Atom antes de salvar.
+    feedAlreadyAdded: Este feed já está na coleção.
+    addedFeeds: $count feeds
+    articlesCount: $count artigos
+    manageFeeds: Gerenciar feeds
+    removeFeed: Remover feed
+    refreshFeeds: Atualizar feeds RSS
+    inputLabel: URL do feed ou site
+    inputEmpty: Informe a URL do feed ou site.
+    invalidInput: Informe uma URL válida de feed ou site.
+    noFeedDiscovered: Nenhum feed RSS ou Atom compatível foi encontrado.
+    previewFailed: Não foi possível visualizar este feed.
+    subscribeFailed: Não foi possível assinar este feed.
+    preview: Prévia
+    subscribe: Assinar
+    subscribedTo: "Assinado: $title"
+    articleActions: Ações do artigo RSS
+    markUnread: Marcar como não lido
+    markRead: Marcar como lido
+    openOriginal: Abrir original
+    saveAsMemo: Salvar como memo
+    savedAsMemo: Salvo como memo
+    fetchFullContent: Buscar artigo completo
+    retryFullContent: Tentar buscar artigo completo novamente
+    fetchingFullContent: Buscando artigo completo...
+    fullContentFetched: Artigo completo buscado
+    fullContentFailed: Falha ao buscar artigo completo
+    fullContentSkipped: Artigo completo indisponível
+    fullContentEnabled: Buscar artigos completos
+    fullContentEnabledDescription: Tenta buscar páginas legíveis dos artigos durante a atualização do feed.
+    autoRefreshOnOpen: Atualizar ao abrir
+    autoRefreshOnOpenDescription: Após abrir esta coleção RSS, atualize feeds desatualizados sem bloquear a leitura.
+    autoRefreshInterval: Intervalo de atualização
+    autoRefreshIntervalMinutes: A cada $minutes min
+    autoRefreshIntervalHours: A cada $hours h
+    autoRefreshIntervalDays: A cada $days d
+    refreshing: Atualizando feeds RSS...
+    noFeeds: Nenhum feed RSS nesta coleção
+    noArticles: Nenhum artigo RSS ainda
+    noArticlesDescription: Atualize os feeds ou gerencie fontes para carregar artigos.
+    refreshComplete: "Atualização RSS concluída: $success atualizados, $failure falharam"
+  articleFlow:
+    title: Fluxo de artigos
+    listActions: Ações da lista
+    filterAll: Todos
+    filterUnread: Não lidos
+    filterRead: Lidos
+    filterSaved: Salvos
+    feedAll: Todos os feeds
+    dateAll: Todas as datas
+    noItems: Nenhum artigo corresponde aos filtros atuais.
+    noSelected: Selecione um artigo
+    share: Compartilhar
+    nextArticle: Próximo artigo
+    markAboveRead: Marcar acima como lidos
+    markBelowRead: Marcar abaixo como lidos
+    readingExperience: Experiência de leitura
+    switchExperience: Alternar experiência de leitura
+    articleFlowExperience: Fluxo de artigos
+    continuousReaderExperience: Leitor contínuo
+    displaySettings: Exibição do fluxo de artigos
+    showExcerpt: Mostrar resumos
+    showThumbnail: Mostrar miniaturas
+    showFeedIcon: Mostrar ícones dos feeds
+    density: Densidade da lista
+    densityCompact: Compacta
+    densityComfortable: Confortável
+    autoHideToolbar: Ocultar barra do artigo automaticamente
+    fullContentFallback: Exibindo conteúdo do feed. Tente buscar o artigo completo novamente ou abra a página original.
+  createCollectionTooltip: Criar coleção
+  reorderShelf: Reordenar estante
+  reorderShelfDescription: Arraste para ajustar a ordem mostrada em sua estante. As coleções fixadas ainda ficam acima das demais.
+  manageItems: Gerenciar itens
+  searchCollections: Pesquisar coleções
+  searchInsideCollection: Pesquise dentro desta coleção
+  searchMemos: Pesquisar memorandos
+  clearSearch: Limpar pesquisa
+  collectionActions: Ações de coleta
+  openCollection: Coleção aberta
+  dragToReorder: Arraste para reordenar
+  smart: Inteligente
+  smartCollectionSummary: Coleção inteligente
+  manual: Manual
+  manualCollectionSummary: Coleta manual
+  shelf: Prateleira
+  timeline: Cronograma
+  list: Lista
+  noGroups: Nenhum grupo
+  month: Mês
+  quarter: Trimestre
+  year: Ano
+  autoCover: Cobertura automática
+  coverReady: Capa pronta
+  pinToTop: Fixar no topo
+  privateOnly: Apenas privado
+  publicOnly: Somente público
+  hasAttachments: Possui anexos
+  noAttachments: Sem anexos
+  imagesOnly: Somente imagens
+  pinnedOnlySummary: Somente fixado
+  lastDays: Últimos dias $days
+  customRangeSummary: Intervalo personalizado
+  headerHeadline: Crie estantes temáticas a partir de seus memorandos
+  headerDescription: As coleções permanecem locais primeiro, são atualizadas a partir de tags automaticamente e dão aos tópicos recorrentes seu próprio lar.
+  countAll: Coleções $count
+  countFiltered: Mostrando $visible de coleções $total
+  noCollectionsTitle: Nenhuma coleção ainda
+  noCollectionsDescription: Crie uma coleção inteligente para transformar tags recorrentes em uma estante selecionada.
+  noMatchingTitle: Nenhuma coleção correspondente
+  noMatchingDescription: Experimente uma pesquisa ou filtro diferente para encontrar a coleção que você precisa.
+  resetFilters: Redefinir filtros
+  loadingCollections: Carregando coleções
+  loadingCollection: Carregando coleção
+  loadingMemos: Carregando memorandos
+  unableToLoadCollections: Não é possível carregar coleções
+  unableToLoadCollection: Não foi possível carregar a coleção
+  unableToLoadCollectionItems: Não foi possível carregar itens da coleção
+  unableToLoadCurrentItems: Não foi possível carregar os itens atuais
+  unableToLoadMemos: Não foi possível carregar memorandos
+  deleteTitle: Excluir coleção?
+  deleteMessage: Excluir "$title"?
+  memosCount: Memorandos $count
+  imagesCount: $count com imagens
+  showingMemos: Mostrando $visible de memorandos $total
+  noMemoMatchedYet: Nenhum memorando correspondido ainda
+  updatedAt: $date atualizado
+  addMemos: Adicionar memorandos
+  addMemo: Adicionar memorando
+  addSelected: Adicionar ($count)
+  remove: Remover
+  noManualCollectionsTitle: Ainda não há coletas manuais
+  noManualCollectionsDescription: Crie um para salvar este memorando e guarde-o em uma prateleira.
+  manualCollectionNotFoundTitle: Coleta manual não encontrada
+  manualCollectionNotFoundDescription: Esta coleção está faltando ou não está mais disponível no armazenamento local.
+  manualCollectionEmptyTitle: Esta coleção ainda não possui itens.
+  manualCollectionEmptyDescription: Adicione memorandos para transformar esta coleção manual em uma estante que você pode revisitar continuamente.
+  noMemosAvailableTitle: Nenhum memorando disponível para adicionar
+  noMemosAvailableDescription: Experimente uma palavra-chave diferente ou crie mais memorandos antes de adicioná-los aqui.
+  collectionNotFound: Coleção não encontrada
+  searchNoResultsTitle: Nenhum resultado para "$query"
+  searchNoResultsDescription: Experimente uma palavra-chave diferente dentro desta coleção.
+  emptySmartDetail: Nenhum memorando corresponde às regras atuais ainda.
+  emptyManualDetail: Esta coleção ainda não possui itens.
+  basics: Noções básicas
+  titleRequired: O título é obrigatório
+  ruleRequired: Adicione pelo menos uma regra antes de salvar
+  description: Descrição
+  type: Tipo
+  accentColor: Cor de destaque
+  rules: Regras
+  tags: Etiquetas
+  selectTags: Selecionar tags
+  noTagsSelected: Nenhuma tag selecionada
+  tagMatch: Correspondência de etiqueta
+  anyTag: Qualquer etiqueta
+  allTags: Todas as tags
+  includeDescendants: Incluir descendentes
+  includeDescendantsDescription: Combine tags filhas como projeto/alfa.
+  attachments: Anexos
+  attachmentAny: Qualquer
+  attachmentRequired: Obrigatório
+  attachmentNone: Nenhum
+  attachmentImagesOnly: Somente imagens
+  dateRange: Período
+  allTime: Todo o tempo
+  last7Days: Últimos 7 dias
+  last30Days: Últimos 30 dias
+  customRange: Intervalo personalizado
+  chooseRange: Escolha o intervalo
+  pinnedOnly: Somente memorandos fixados
+  manualItems: Itens manuais
+  manualItemsDescription: As coleções manuais são selecionadas a partir de cartões de memorando, detalhes de memorando ou modo de gerenciamento de itens da página de detalhes.
+  display: Exibição
+  cover: Capa
+  coverAttachment: Anexo
+  coverImage: Imagem da capa
+  noCoverImageAvailable: Nenhum anexo de imagem está disponível na visualização atual ainda.
+  defaultLayout: Layout padrão
+  groupBy: Agrupar por
+  manualOrder: Pedido manual
+  displayTimeDesc: Tempo de exibição ↓
+  displayTimeAsc: Tempo de exibição ↑
+  updatedTimeDesc: Hora atualizada ↓
+  updatedTimeAsc: Hora atualizada ↑
+  showDetailStats: Mostrar estatísticas detalhadas
+  showDetailStatsDescription: Exibe contagem de memorandos, contagem de imagens e atividades recentes no cabeçalho de detalhes.
+  hideWhenEmpty: Esconder na prateleira quando vazio
+  hideWhenEmptyDescription: Mantém esta coleção fora da prateleira principal até que ela corresponda aos memorandos novamente.
+  previewMemos: Memos
+  previewImages: Imagens
+  noPreviewSmart: Nenhuma correspondência de memorando ainda.
+  noPreviewManual: Esta coleção manual ainda não possui itens.

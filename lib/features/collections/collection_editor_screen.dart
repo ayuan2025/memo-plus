@@ -1,0 +1,3410 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+
+import '../../core/app_motion.dart';
+import '../../core/app_localization.dart';
+import '../../core/desktop/desktop_titlebar_navigation_policy.dart';
+import '../../core/measure_size.dart';
+import '../../core/memoflow_palette.dart';
+import '../../core/uid.dart';
+import '../../data/models/attachment.dart';
+import '../../data/models/local_memo.dart';
+import '../../data/models/memo_collection.dart';
+import '../../data/models/rss_feed.dart';
+import '../../data/models/rss_feed_preview.dart';
+import '../../data/repositories/collections_repository.dart';
+import '../../data/repositories/rss_repository.dart';
+import '../../i18n/strings.g.dart';
+import '../../platform/platform_route.dart';
+import '../../platform/widgets/platform_secondary_task_surface.dart';
+import '../../state/collections/collection_rss_providers.dart';
+import '../../state/collections/collection_resolver.dart';
+import '../../state/collections/collections_provider.dart';
+import '../../state/memos/memos_providers.dart';
+import '../../state/tags/tag_color_lookup.dart';
+import 'collection_rss_subscription_sheet.dart';
+import 'collection_ui.dart';
+
+Future<MemoCollection?> openCollectionEditor(
+  BuildContext context, {
+  MemoCollection? initialCollection,
+  MemoCollectionType? initialType,
+  List<String> initialSelectedTags = const <String>[],
+  List<String> initialManualMemoUids = const <String>[],
+}) {
+  final editor = CollectionEditorScreen(
+    initialCollection: initialCollection,
+    initialType: initialType,
+    initialSelectedTags: initialSelectedTags,
+    initialManualMemoUids: initialManualMemoUids,
+    embeddedTaskSurface: shouldUsePlatformSecondaryTaskSurface(context),
+  );
+  if (shouldUsePlatformSecondaryTaskSurface(context)) {
+    return showPlatformSecondaryTaskSurface<MemoCollection>(
+      context: context,
+      size: PlatformSecondaryTaskSurfaceSize.large,
+      builder: (_) => editor,
+    );
+  }
+  return Navigator.of(context).push<MemoCollection>(
+    buildPlatformPageRoute<MemoCollection>(
+      context: context,
+      builder: (_) => editor,
+    ),
+  );
+}
+
+class CollectionEditorScreen extends ConsumerStatefulWidget {
+  const CollectionEditorScreen({
+    super.key,
+    this.initialCollection,
+    this.initialType,
+    this.initialSelectedTags = const <String>[],
+    this.initialManualMemoUids = const <String>[],
+    this.embeddedTaskSurface = false,
+  });
+
+  final MemoCollection? initialCollection;
+  final MemoCollectionType? initialType;
+  final List<String> initialSelectedTags;
+  final List<String> initialManualMemoUids;
+  final bool embeddedTaskSurface;
+
+  @override
+  ConsumerState<CollectionEditorScreen> createState() =>
+      _CollectionEditorScreenState();
+}
+
+class _CollectionEditorScreenState
+    extends ConsumerState<CollectionEditorScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _rssUrlController = TextEditingController();
+  final Set<String> _selectedTags = <String>{};
+  final List<String> _manualMemoUids = <String>[];
+  final List<RssFeedPreview> _draftRssPreviews = <RssFeedPreview>[];
+  late MemoCollectionType _type;
+  late CollectionTagMatchMode _tagMatchMode;
+  late bool _includeDescendants;
+  late CollectionVisibilityScope _visibility;
+  late CollectionDateRule _dateRule;
+  late CollectionAttachmentRule _attachmentRule;
+  late bool _pinnedOnly;
+  late String _iconKey;
+  String? _accentColorHex;
+  late CollectionCoverMode _coverMode;
+  String? _coverMemoUid;
+  String? _coverAttachmentUid;
+  late CollectionLayoutMode _layoutMode;
+  late CollectionSectionMode _sectionMode;
+  late CollectionSortMode _sortMode;
+  late bool _showStats;
+  CollectionReadingExperience? _readingExperienceOverride;
+  late CollectionArticleFlowDisplaySettings _articleFlowDisplay;
+  late CollectionRssRefreshPreferences _rssRefresh;
+  late bool _hideWhenEmpty;
+  bool _hasExplicitManualMemoSelection = false;
+  bool _rssBusy = false;
+  String? _rssError;
+  RssFeedPreview? _rssPreview;
+  double _bottomBarHeight = 120;
+  late final MemoCollection _initialSnapshotCollection;
+  List<String>? _initialManualMemoUids;
+  ProviderSubscription<AsyncValue<List<String>>>? _manualBaselineSubscription;
+
+  bool get _isEditing => widget.initialCollection != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final collection = widget.initialCollection;
+    final initialSelectedTags = widget.initialSelectedTags
+        .map((item) => item.trim())
+        .where((item) => item.isNotEmpty)
+        .toSet();
+    _type = collection?.type ?? widget.initialType ?? MemoCollectionType.smart;
+    _manualMemoUids.addAll(
+      widget.initialManualMemoUids
+          .map((item) => item.trim())
+          .where((item) => item.isNotEmpty),
+    );
+    _titleController.text = collection?.title ?? '';
+    _descriptionController.text = collection?.description ?? '';
+    _selectedTags.addAll(
+      collection?.rules.normalizedTagPaths ?? initialSelectedTags,
+    );
+    if (collection == null &&
+        _type == MemoCollectionType.smart &&
+        _titleController.text.trim().isEmpty &&
+        initialSelectedTags.length == 1) {
+      _titleController.text = initialSelectedTags.first;
+    }
+    _tagMatchMode =
+        collection?.rules.tagMatchMode ?? CollectionTagMatchMode.any;
+    _includeDescendants = collection?.rules.includeDescendants ?? true;
+    _visibility = collection?.rules.visibility ?? CollectionVisibilityScope.all;
+    _dateRule = collection?.rules.dateRule ?? CollectionDateRule.defaults;
+    _attachmentRule =
+        collection?.rules.attachmentRule ?? CollectionAttachmentRule.any;
+    _pinnedOnly = collection?.rules.pinnedOnly ?? false;
+    _iconKey =
+        collection?.iconKey ??
+        (_type == MemoCollectionType.rss
+            ? MemoCollection.rssIconKey
+            : MemoCollection.defaultIconKey);
+    _accentColorHex = collection?.accentColorHex;
+    if (collection == null &&
+        _accentColorHex == null &&
+        initialSelectedTags.isNotEmpty) {
+      _accentColorHex = ref
+          .read(tagColorLookupProvider)
+          .resolveEffectiveHexByPath(initialSelectedTags.first);
+    }
+    _coverMode =
+        collection?.cover.mode ??
+        (_type == MemoCollectionType.rss
+            ? CollectionCoverMode.icon
+            : CollectionCoverMode.auto);
+    _coverMemoUid = collection?.cover.memoUid;
+    _coverAttachmentUid = collection?.cover.attachmentUid;
+    _layoutMode = collection?.view.defaultLayout ?? CollectionLayoutMode.shelf;
+    _sectionMode = collection?.view.sectionMode ?? CollectionSectionMode.none;
+    _sortMode =
+        collection?.view.sortMode ??
+        (_type == MemoCollectionType.manual
+            ? CollectionSortMode.manualOrder
+            : CollectionSortMode.displayTimeDesc);
+    _showStats = collection?.view.showStats ?? true;
+    _readingExperienceOverride = collection?.view.readingExperience;
+    _articleFlowDisplay =
+        collection?.view.articleFlowDisplay ??
+        CollectionArticleFlowDisplaySettings.defaults;
+    _rssRefresh =
+        collection?.view.rssRefresh ?? CollectionRssRefreshPreferences.defaults;
+    _hideWhenEmpty = collection?.hideWhenEmpty ?? false;
+    if (!_isEditing && _type == MemoCollectionType.manual) {
+      _initialManualMemoUids = _normalizeMemoUids(widget.initialManualMemoUids);
+    } else if (!_isEditing || collection?.type != MemoCollectionType.manual) {
+      _initialManualMemoUids = const <String>[];
+    }
+    _initialSnapshotCollection = _draftCollection;
+    if (collection?.type == MemoCollectionType.manual) {
+      _manualBaselineSubscription = ref.listenManual<AsyncValue<List<String>>>(
+        collectionManualItemUidsProvider(collection!.id),
+        (previous, next) {
+          final manualMemoUids = next.valueOrNull;
+          if (_initialManualMemoUids != null || manualMemoUids == null) return;
+          final normalized = _normalizeMemoUids(manualMemoUids);
+          if (!mounted) {
+            _initialManualMemoUids = normalized;
+            return;
+          }
+          setState(() => _initialManualMemoUids = normalized);
+        },
+        fireImmediately: true,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _manualBaselineSubscription?.close();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _rssUrlController.dispose();
+    super.dispose();
+  }
+
+  CollectionRuleSet get _draftRules => CollectionRuleSet(
+    tagPaths: _selectedTags.toList(growable: false)..sort(),
+    tagMatchMode: _tagMatchMode,
+    includeDescendants: _includeDescendants,
+    visibility: _visibility,
+    dateRule: _dateRule,
+    attachmentRule: _attachmentRule,
+    pinnedOnly: _pinnedOnly,
+  );
+
+  MemoCollection get _draftCollection {
+    final initial = widget.initialCollection;
+    final now = DateTime.now();
+    final view = CollectionViewPreferences(
+      defaultLayout: _layoutMode,
+      sectionMode: _sectionMode,
+      sortMode: _sortMode,
+      showStats: _showStats,
+      readingExperience: _readingExperienceOverride,
+      articleFlowDisplay: _articleFlowDisplay,
+      rssRefresh: _rssRefresh,
+    );
+    return MemoCollection(
+      id: initial?.id ?? generateUid(length: 16),
+      title: _titleController.text.trim(),
+      description: _descriptionController.text.trim(),
+      type: _type,
+      iconKey: _iconKey,
+      accentColorHex: _accentColorHex,
+      rules: _type == MemoCollectionType.smart
+          ? _draftRules
+          : CollectionRuleSet.defaults,
+      cover: CollectionCoverSpec(
+        mode: _coverMode,
+        memoUid: _coverMode == CollectionCoverMode.attachment
+            ? _coverMemoUid
+            : null,
+        attachmentUid: _coverMode == CollectionCoverMode.attachment
+            ? _coverAttachmentUid
+            : null,
+        iconKey: _coverMode == CollectionCoverMode.icon ? _iconKey : null,
+      ),
+      view: view,
+      pinned: initial?.pinned ?? false,
+      archived: initial?.archived ?? false,
+      hideWhenEmpty: _hideWhenEmpty,
+      sortOrder: initial?.sortOrder ?? 0,
+      createdTime: initial?.createdTime ?? now,
+      updatedTime: now,
+    );
+  }
+
+  Future<void> _save({
+    required List<LocalMemo> existingManualItems,
+    required List<String> persistedManualMemoUids,
+    required List<CollectionRssSourceWithFeed> persistedRssSources,
+  }) async {
+    final title = _titleController.text.trim();
+    if (title.isEmpty) {
+      _showMessage(context.t.strings.collections.titleRequired);
+      return;
+    }
+    if (_type == MemoCollectionType.smart && !_draftRules.hasAnyConstraint) {
+      _showMessage(context.t.strings.collections.ruleRequired);
+      return;
+    }
+    final manualMemoUids = _effectiveManualMemoUidsFromPersisted(
+      persistedManualMemoUids,
+    );
+    if (_type == MemoCollectionType.manual && manualMemoUids.isEmpty) {
+      final shouldContinue = await _confirmEmptyManualSave();
+      if (!shouldContinue) return;
+    }
+    if (!mounted) return;
+    if (_type == MemoCollectionType.rss &&
+        persistedRssSources.isEmpty &&
+        _draftRssPreviews.isEmpty) {
+      _showMessage(context.t.strings.collections.rss.feedRequired);
+      return;
+    }
+    final repository = ref.read(collectionsRepositoryProvider);
+    final draft = _draftCollection;
+    await repository.upsert(draft);
+    if (draft.type == MemoCollectionType.manual) {
+      await _persistManualItems(
+        repository: repository,
+        collectionId: draft.id,
+        existingManualItems: existingManualItems,
+        desiredMemoUids: manualMemoUids,
+      );
+    } else if (_isEditing &&
+        widget.initialCollection?.type == MemoCollectionType.manual) {
+      final removedMemoUids = existingManualItems
+          .map((item) => item.uid)
+          .where((item) => item.trim().isNotEmpty)
+          .toList(growable: false);
+      if (removedMemoUids.isNotEmpty) {
+        await repository.removeManualItem(draft.id, removedMemoUids);
+      }
+    }
+    if (draft.type == MemoCollectionType.rss && _draftRssPreviews.isNotEmpty) {
+      final rssRepository = ref.read(rssRepositoryProvider);
+      for (final preview in _draftRssPreviews) {
+        await rssRepository.subscribeCollectionToPreview(
+          collectionId: draft.id,
+          preview: preview,
+        );
+      }
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop(draft);
+  }
+
+  void _setType(MemoCollectionType value) {
+    _updateState(() {
+      _type = value;
+      if (value == MemoCollectionType.manual &&
+          _sortMode != CollectionSortMode.manualOrder) {
+        _sortMode = CollectionSortMode.manualOrder;
+      } else if (value == MemoCollectionType.rss) {
+        if (_sortMode == CollectionSortMode.manualOrder) {
+          _sortMode = CollectionSortMode.displayTimeDesc;
+        }
+        _iconKey = MemoCollection.rssIconKey;
+        if (_coverMode == CollectionCoverMode.auto) {
+          _coverMode = CollectionCoverMode.icon;
+        }
+      } else if (value == MemoCollectionType.smart &&
+          _sortMode == CollectionSortMode.manualOrder) {
+        _sortMode = CollectionSortMode.displayTimeDesc;
+      }
+    });
+  }
+
+  void _markChanged() {
+    setState(() {});
+  }
+
+  void _updateState(VoidCallback update) {
+    setState(update);
+  }
+
+  void _setRssRefreshEnabled(bool enabled) {
+    _updateState(() {
+      _rssRefresh = _rssRefresh.copyWith(enabled: enabled);
+    });
+  }
+
+  void _setRssRefreshInterval(int intervalMinutes) {
+    _updateState(() {
+      _rssRefresh = _rssRefresh.copyWith(intervalMinutes: intervalMinutes);
+    });
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _loadRssPreview() async {
+    final url = _rssUrlController.text.trim();
+    if (url.isEmpty) {
+      setState(() => _rssError = context.t.strings.collections.rss.inputEmpty);
+      return;
+    }
+    setState(() {
+      _rssBusy = true;
+      _rssError = null;
+      _rssPreview = null;
+    });
+    try {
+      final preview = await ref
+          .read(rssFeedFetchServiceProvider)
+          .previewUrl(url);
+      if (!mounted) return;
+      setState(() => _rssPreview = preview);
+    } catch (error) {
+      if (!mounted) return;
+      setState(
+        () => _rssError = localizedRssError(context, error, previewing: true),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _rssBusy = false);
+      }
+    }
+  }
+
+  Future<void> _addRssPreviewToDraft(
+    List<CollectionRssSourceWithFeed> persistedRssSources,
+  ) async {
+    var preview = _rssPreview;
+    if (preview == null) {
+      await _loadRssPreview();
+      preview = _rssPreview;
+      if (preview == null) return;
+    }
+    if (_containsRssFeedPreview(preview, persistedRssSources)) {
+      setState(
+        () => _rssError = context.t.strings.collections.rss.feedAlreadyAdded,
+      );
+      return;
+    }
+    _updateState(() {
+      _draftRssPreviews.add(preview!);
+      _rssPreview = null;
+      _rssError = null;
+      _rssUrlController.clear();
+      if (_titleController.text.trim().isEmpty) {
+        _titleController.text = preview.displayTitle;
+      }
+      _iconKey = MemoCollection.rssIconKey;
+      if (_coverMode == CollectionCoverMode.auto) {
+        _coverMode = CollectionCoverMode.icon;
+      }
+    });
+  }
+
+  bool _containsRssFeedPreview(
+    RssFeedPreview preview,
+    List<CollectionRssSourceWithFeed> persistedRssSources,
+  ) {
+    final feedUrl = preview.feedUrl.trim();
+    if (feedUrl.isEmpty) return false;
+    final draftFeedUrls = _draftRssPreviews.map((item) => item.feedUrl.trim());
+    final persistedFeedUrls = persistedRssSources.map(
+      (item) => item.feed.feedUrl.trim(),
+    );
+    return draftFeedUrls.contains(feedUrl) ||
+        persistedFeedUrls.contains(feedUrl);
+  }
+
+  void _removeDraftRssPreview(RssFeedPreview preview) {
+    _updateState(() {
+      _draftRssPreviews.removeWhere(
+        (item) => item.feedUrl.trim() == preview.feedUrl.trim(),
+      );
+    });
+  }
+
+  Future<void> _removePersistedRssSource(
+    CollectionRssSourceWithFeed source,
+  ) async {
+    setState(() {
+      _rssBusy = true;
+      _rssError = null;
+    });
+    try {
+      await ref
+          .read(rssRepositoryProvider)
+          .detachFeedFromCollection(
+            collectionId: source.source.collectionId,
+            feedId: source.feed.id,
+          );
+    } catch (error) {
+      if (!mounted) return;
+      setState(() => _rssError = '$error');
+    } finally {
+      if (mounted) {
+        setState(() => _rssBusy = false);
+      }
+    }
+  }
+
+  Future<void> _setPersistedRssFullContentEnabled(
+    CollectionRssSourceWithFeed source,
+    bool enabled,
+  ) async {
+    setState(() {
+      _rssBusy = true;
+      _rssError = null;
+    });
+    try {
+      await ref
+          .read(rssRepositoryProvider)
+          .setFeedFullContentEnabled(feedId: source.feed.id, enabled: enabled);
+    } catch (error) {
+      if (!mounted) return;
+      setState(() => _rssError = '$error');
+    } finally {
+      if (mounted) {
+        setState(() => _rssBusy = false);
+      }
+    }
+  }
+
+  Future<void> _pickTags(List<TagStat> tags) async {
+    final mediaQuery = MediaQuery.of(context);
+    final selected = await showModalBottomSheet<Set<String>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      constraints: BoxConstraints(maxHeight: mediaQuery.size.height * 0.78),
+      builder: (_) =>
+          _CollectionTagPickerSheet(tags: tags, initial: _selectedTags),
+    );
+    if (selected == null) return;
+    _updateState(() {
+      _selectedTags
+        ..clear()
+        ..addAll(selected);
+    });
+  }
+
+  Future<void> _pickCustomDateRange() async {
+    final initialRange =
+        _dateRule.type == CollectionDateRuleType.customRange &&
+            _dateRule.startTimeSec != null &&
+            _dateRule.endTimeSecExclusive != null
+        ? DateTimeRange(
+            start: DateTime.fromMillisecondsSinceEpoch(
+              _dateRule.startTimeSec! * 1000,
+              isUtc: true,
+            ).toLocal(),
+            end: DateTime.fromMillisecondsSinceEpoch(
+              (_dateRule.endTimeSecExclusive! - 1) * 1000,
+              isUtc: true,
+            ).toLocal(),
+          )
+        : null;
+    final picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      initialDateRange: initialRange,
+    );
+    if (picked == null) return;
+    _updateState(() {
+      final start = DateTime(
+        picked.start.year,
+        picked.start.month,
+        picked.start.day,
+      );
+      final endExclusive = DateTime(
+        picked.end.year,
+        picked.end.month,
+        picked.end.day,
+      ).add(const Duration(days: 1));
+      _dateRule = CollectionDateRule(
+        type: CollectionDateRuleType.customRange,
+        startTimeSec: start.toUtc().millisecondsSinceEpoch ~/ 1000,
+        endTimeSecExclusive:
+            endExclusive.toUtc().millisecondsSinceEpoch ~/ 1000,
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final collections = context.t.strings.collections;
+    final tagsAsync = ref.watch(tagStatsProvider);
+    final memosAsync = ref.watch(collectionCandidateMemosProvider);
+    final tagLookup = ref.watch(tagColorLookupProvider);
+    final existingManualItemUidsAsync =
+        widget.initialCollection?.type == MemoCollectionType.manual
+        ? ref.watch(
+            collectionManualItemUidsProvider(widget.initialCollection!.id),
+          )
+        : const AsyncValue.data(<String>[]);
+    final persistedManualMemoUids =
+        widget.initialCollection?.type == MemoCollectionType.manual
+        ? _normalizeMemoUids(
+            existingManualItemUidsAsync.valueOrNull ?? const <String>[],
+          )
+        : const <String>[];
+    final existingManualItems =
+        widget.initialCollection?.type == MemoCollectionType.manual
+        ? resolveManualCollectionItemsInStoredOrder(
+            memosAsync.valueOrNull ?? const <LocalMemo>[],
+            persistedManualMemoUids,
+          )
+        : const <LocalMemo>[];
+    final persistedRssSourcesAsync =
+        widget.initialCollection?.type == MemoCollectionType.rss
+        ? ref.watch(collectionRssSourcesProvider(widget.initialCollection!.id))
+        : const AsyncValue.data(<CollectionRssSourceWithFeed>[]);
+    final persistedRssSources =
+        persistedRssSourcesAsync.valueOrNull ??
+        const <CollectionRssSourceWithFeed>[];
+    final previewItems = _buildPreviewItems(
+      memos: memosAsync.valueOrNull ?? const <LocalMemo>[],
+      tagLookup: tagLookup,
+      persistedManualMemoUids: persistedManualMemoUids,
+    );
+    final coverAttachmentOptions = _buildCoverAttachmentOptions(previewItems);
+    final selectedCoverOptionKey = _selectedCoverOptionKey(
+      coverAttachmentOptions,
+    );
+    final preview = buildCollectionPreview(
+      _draftCollection,
+      previewItems,
+      resolveTagColorHexByPath: tagLookup.resolveEffectiveHexByPath,
+    );
+    final colors = _CollectionEditorColors.fromTheme(context);
+    final sectionMotionDuration = AppMotion.effectiveDuration(
+      context,
+      AppMotion.medium,
+    );
+    final hasUnsavedChanges = _hasUnsavedChanges(
+      persistedManualMemoUids: persistedManualMemoUids,
+    );
+
+    final titleText = _isEditing
+        ? collections.editCollection
+        : collections.createCollection;
+    final bottomBar = _buildBottomBar(
+      context: context,
+      colors: colors,
+      preview: preview,
+      existingManualItems: existingManualItems,
+      persistedManualMemoUids: persistedManualMemoUids,
+      persistedRssSources: persistedRssSources,
+    );
+    final body = ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      padding: EdgeInsets.fromLTRB(20, 8, 20, _bottomBarHeight + 96),
+      children: [
+        _buildBasicsSection(context, colors: colors),
+        _buildSectionDivider(colors),
+        AnimatedSize(
+          duration: sectionMotionDuration,
+          curve: AppMotion.standardCurve,
+          alignment: Alignment.topCenter,
+          child: AnimatedSwitcher(
+            duration: sectionMotionDuration,
+            switchInCurve: AppMotion.standardCurve,
+            switchOutCurve: AppMotion.exitCurve,
+            transitionBuilder: (child, animation) {
+              if (sectionMotionDuration == Duration.zero) {
+                return child;
+              }
+              final curved = CurvedAnimation(
+                parent: animation,
+                curve: AppMotion.standardCurve,
+                reverseCurve: AppMotion.exitCurve,
+              );
+              return FadeTransition(
+                opacity: curved,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: AppMotion.verticalEntryOffset,
+                    end: Offset.zero,
+                  ).animate(curved),
+                  child: child,
+                ),
+              );
+            },
+            child: KeyedSubtree(
+              key: ValueKey<String>('source-${_type.name}'),
+              child: _type == MemoCollectionType.smart
+                  ? _buildSmartSourceSection(
+                      context,
+                      colors: colors,
+                      tagsAsync: tagsAsync,
+                    )
+                  : _type == MemoCollectionType.manual
+                  ? _buildManualSourceSection(
+                      context,
+                      colors: colors,
+                      persistedManualMemoUids: persistedManualMemoUids,
+                      previewItems: previewItems,
+                    )
+                  : _buildRssSourceSection(
+                      context,
+                      colors: colors,
+                      persistedRssSourcesAsync: persistedRssSourcesAsync,
+                    ),
+            ),
+          ),
+        ),
+        if (_isEditing) ...[
+          _buildSectionDivider(colors),
+          _buildPreviewSection(context, colors: colors, preview: preview),
+        ],
+        _buildSectionDivider(colors),
+        _buildAdvancedSection(
+          context,
+          colors: colors,
+          coverAttachmentOptions: coverAttachmentOptions,
+          selectedCoverOptionKey: selectedCoverOptionKey,
+        ),
+      ],
+    );
+
+    return PopScope(
+      canPop: !hasUnsavedChanges,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop || !hasUnsavedChanges) return;
+        await _requestClose(persistedManualMemoUids: persistedManualMemoUids);
+      },
+      child: widget.embeddedTaskSurface
+          ? PlatformSecondaryTaskFrame(
+              title: Text(titleText),
+              closeTooltip: context.t.strings.legacy.msg_close,
+              onClose: () => _requestClose(
+                persistedManualMemoUids: persistedManualMemoUids,
+              ),
+              backgroundColor: colors.background,
+              bottomBar: bottomBar,
+              body: ColoredBox(color: colors.background, child: body),
+            )
+          : Scaffold(
+              backgroundColor: colors.background,
+              appBar: AppBar(
+                backgroundColor: colors.background,
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                surfaceTintColor: Colors.transparent,
+                automaticallyImplyLeading:
+                    resolveDesktopRouteAutomaticallyImplyLeading(
+                      context: context,
+                      automaticallyImplyLeading: true,
+                    ),
+                leading: resolveDesktopRouteDismissalLeading(
+                  context: context,
+                  leading: IconButton(
+                    tooltip: context.t.strings.legacy.msg_back,
+                    icon: const Icon(Icons.arrow_back_rounded),
+                    onPressed: () => _requestClose(
+                      persistedManualMemoUids: persistedManualMemoUids,
+                    ),
+                  ),
+                ),
+                title: Text(titleText),
+              ),
+              bottomNavigationBar: bottomBar,
+              body: body,
+            ),
+    );
+  }
+
+  Widget _buildBottomBar({
+    required BuildContext context,
+    required _CollectionEditorColors colors,
+    required MemoCollectionPreview preview,
+    required List<LocalMemo> existingManualItems,
+    required List<String> persistedManualMemoUids,
+    required List<CollectionRssSourceWithFeed> persistedRssSources,
+  }) {
+    final canSave = _canSave(existingManualItems, persistedRssSources);
+    return SafeArea(
+      top: false,
+      child: MeasureSize(
+        onChange: (size) {
+          if (!mounted || size.height == _bottomBarHeight) {
+            return;
+          }
+          setState(() {
+            _bottomBarHeight = size.height;
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: colors.background,
+            border: Border(top: BorderSide(color: colors.divider)),
+          ),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _footerSummary(
+                        context,
+                        preview,
+                        persistedManualMemoUids,
+                        persistedRssSources,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _type == MemoCollectionType.smart
+                          ? _smartRuleSummary(context)
+                          : _type == MemoCollectionType.rss
+                          ? context.t.strings.collections.rss.draftHelp
+                          : context.tr(
+                              zh: '从这里直接添加 memo，创建后不用再跳去别处维护。',
+                              en: 'Add memos here first, then finish creating in one go.',
+                            ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: colors.textMuted),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              FilledButton(
+                onPressed: canSave
+                    ? () => _save(
+                        existingManualItems: existingManualItems,
+                        persistedManualMemoUids: persistedManualMemoUids,
+                        persistedRssSources: persistedRssSources,
+                      )
+                    : null,
+                style: FilledButton.styleFrom(
+                  backgroundColor: MemoFlowPalette.primary,
+                  foregroundColor:
+                      ThemeData.estimateBrightnessForColor(
+                            MemoFlowPalette.primary,
+                          ) ==
+                          Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 14,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                ),
+                child: Text(
+                  _submitLabel(
+                    context,
+                    persistedManualMemoUids,
+                    persistedRssSources,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionDivider(_CollectionEditorColors colors) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      child: Divider(height: 1, color: colors.divider),
+    );
+  }
+
+  Widget _buildBasicsSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+  }) {
+    final collections = context.t.strings.collections;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(title: collections.basics, mutedColor: colors.textMuted),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _CollectionTypeCard(
+                label: collectionTypeLabel(context, MemoCollectionType.smart),
+                description: context.tr(zh: '自动收录', en: 'Auto match'),
+                icon: Icons.auto_awesome_rounded,
+                selected: _type == MemoCollectionType.smart,
+                colors: colors,
+                onTap: () => _setType(MemoCollectionType.smart),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _CollectionTypeCard(
+                label: collectionTypeLabel(context, MemoCollectionType.manual),
+                description: context.tr(zh: '手动挑选', en: 'Pick manually'),
+                icon: Icons.playlist_add_check_rounded,
+                selected: _type == MemoCollectionType.manual,
+                colors: colors,
+                onTap: () => _setType(MemoCollectionType.manual),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _CollectionTypeCard(
+                label: collectionTypeLabel(context, MemoCollectionType.rss),
+                description:
+                    context.t.strings.collections.rss.createDescription,
+                icon: Icons.rss_feed_rounded,
+                selected: _type == MemoCollectionType.rss,
+                colors: colors,
+                onTap: () => _setType(MemoCollectionType.rss),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        _EditorFieldShell(
+          label: context.t.strings.legacy.msg_title,
+          colors: colors,
+          child: TextField(
+            controller: _titleController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              isCollapsed: true,
+              hintText: context.tr(zh: '给它起个名字', en: 'Give it a name'),
+            ),
+            onChanged: (_) => _markChanged(),
+          ),
+        ),
+        const SizedBox(height: 10),
+        _EditorFieldShell(
+          label: collections.description,
+          colors: colors,
+          child: TextField(
+            controller: _descriptionController,
+            minLines: 2,
+            maxLines: 3,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              isCollapsed: true,
+              hintText: context.tr(
+                zh: '可选：写一句这个合集要收什么',
+                en: 'Optional: add a short note',
+              ),
+            ),
+            onChanged: (_) => _markChanged(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmartSourceSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+    required AsyncValue<List<TagStat>> tagsAsync,
+  }) {
+    final collections = context.t.strings.collections;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(
+          title: context.tr(zh: '内容来源', en: 'Content source'),
+          mutedColor: colors.textMuted,
+          trailing: _draftRules.hasAnyConstraint
+              ? Text(
+                  _smartRuleSummary(context),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: colors.textMuted),
+                )
+              : null,
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _PresetChip(
+              label: collections.last7Days,
+              colors: colors,
+              onTap: () => _updateState(() {
+                _dateRule = const CollectionDateRule(
+                  type: CollectionDateRuleType.lastDays,
+                  lastDays: 7,
+                );
+              }),
+            ),
+            _PresetChip(
+              label: collections.last30Days,
+              colors: colors,
+              tint: colors.secondaryTint,
+              onTap: () => _updateState(() {
+                _dateRule = const CollectionDateRule(
+                  type: CollectionDateRuleType.lastDays,
+                  lastDays: 30,
+                );
+              }),
+            ),
+            _PresetChip(
+              label: collections.attachmentImagesOnly,
+              colors: colors,
+              tint: colors.tertiaryTint,
+              onTap: () => _updateState(
+                () => _attachmentRule = CollectionAttachmentRule.imagesOnly,
+              ),
+            ),
+            _PresetChip(
+              label: collections.pinnedOnly,
+              colors: colors,
+              onTap: () => _updateState(() => _pinnedOnly = true),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: tagsAsync.hasValue
+                    ? () => _pickTags(tagsAsync.valueOrNull ?? const [])
+                    : null,
+                icon: const Icon(Icons.sell_rounded),
+                label: Text(collections.selectTags),
+              ),
+            ),
+          ],
+        ),
+        if (tagsAsync.hasError) ...[
+          const SizedBox(height: 8),
+          Text(
+            '${tagsAsync.error}',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.redAccent),
+          ),
+        ],
+        if (_selectedTags.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final tag in _selectedTags.toList()..sort())
+                InputChip(
+                  label: Text('#$tag'),
+                  onDeleted: () =>
+                      _updateState(() => _selectedTags.remove(tag)),
+                ),
+            ],
+          ),
+        ],
+        const SizedBox(height: 12),
+        _ChipGroupField(
+          label: collections.dateRange,
+          colors: colors,
+          children: [
+            _buildChoiceChip(
+              label: collections.allTime,
+              selected: _dateRule.type == CollectionDateRuleType.all,
+              colors: colors,
+              onSelected: () =>
+                  _updateState(() => _dateRule = CollectionDateRule.defaults),
+            ),
+            _buildChoiceChip(
+              label: collections.last7Days,
+              selected:
+                  _dateRule.type == CollectionDateRuleType.lastDays &&
+                  _dateRule.lastDays == 7,
+              colors: colors,
+              onSelected: () => _updateState(() {
+                _dateRule = const CollectionDateRule(
+                  type: CollectionDateRuleType.lastDays,
+                  lastDays: 7,
+                );
+              }),
+            ),
+            _buildChoiceChip(
+              label: collections.last30Days,
+              selected:
+                  _dateRule.type == CollectionDateRuleType.lastDays &&
+                  _dateRule.lastDays == 30,
+              colors: colors,
+              onSelected: () => _updateState(() {
+                _dateRule = const CollectionDateRule(
+                  type: CollectionDateRuleType.lastDays,
+                  lastDays: 30,
+                );
+              }),
+            ),
+            _buildChoiceChip(
+              label: _dateRule.type == CollectionDateRuleType.customRange
+                  ? _customDateRangeLabel(context)
+                  : collections.customRange,
+              selected: _dateRule.type == CollectionDateRuleType.customRange,
+              colors: colors,
+              onSelected: _pickCustomDateRange,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        _ChipGroupField(
+          label: context.tr(zh: '内容类型', en: 'Content type'),
+          colors: colors,
+          children: [
+            _buildChoiceChip(
+              label: collections.attachmentAny,
+              selected: _attachmentRule == CollectionAttachmentRule.any,
+              colors: colors,
+              onSelected: () => _updateState(
+                () => _attachmentRule = CollectionAttachmentRule.any,
+              ),
+            ),
+            _buildChoiceChip(
+              label: collections.attachmentRequired,
+              selected: _attachmentRule == CollectionAttachmentRule.required,
+              colors: colors,
+              onSelected: () => _updateState(
+                () => _attachmentRule = CollectionAttachmentRule.required,
+              ),
+            ),
+            _buildChoiceChip(
+              label: collections.attachmentImagesOnly,
+              selected: _attachmentRule == CollectionAttachmentRule.imagesOnly,
+              colors: colors,
+              onSelected: () => _updateState(
+                () => _attachmentRule = CollectionAttachmentRule.imagesOnly,
+              ),
+            ),
+            _buildChoiceChip(
+              label: collections.attachmentNone,
+              selected: _attachmentRule == CollectionAttachmentRule.excluded,
+              colors: colors,
+              onSelected: () => _updateState(
+                () => _attachmentRule = CollectionAttachmentRule.excluded,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        AnimatedSize(
+          duration: AppMotion.effectiveDuration(context, AppMotion.medium),
+          curve: AppMotion.standardCurve,
+          alignment: Alignment.topCenter,
+          child: Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: EdgeInsets.zero,
+              title: Text(
+                context.tr(zh: '更多条件', en: 'More filters'),
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: colors.textPrimary,
+                ),
+              ),
+              subtitle: Text(
+                context.tr(
+                  zh: '匹配方式、公开范围、子标签、置顶',
+                  en: 'Match mode, visibility, descendants, pinned',
+                ),
+                style: TextStyle(color: colors.textMuted),
+              ),
+              children: [
+                const SizedBox(height: 8),
+                _EnumSegment<CollectionTagMatchMode>(
+                  title: collections.tagMatch,
+                  values: const [
+                    CollectionTagMatchMode.any,
+                    CollectionTagMatchMode.all,
+                  ],
+                  current: _tagMatchMode,
+                  labelBuilder: (value) => switch (value) {
+                    CollectionTagMatchMode.any => collections.anyTag,
+                    CollectionTagMatchMode.all => collections.allTags,
+                  },
+                  onChanged: (value) =>
+                      _updateState(() => _tagMatchMode = value),
+                ),
+                const SizedBox(height: 12),
+                _EnumSegment<CollectionVisibilityScope>(
+                  title: context.t.strings.legacy.msg_visibility,
+                  values: const [
+                    CollectionVisibilityScope.all,
+                    CollectionVisibilityScope.privateOnly,
+                    CollectionVisibilityScope.publicOnly,
+                  ],
+                  current: _visibility,
+                  labelBuilder: (value) => switch (value) {
+                    CollectionVisibilityScope.all =>
+                      context.t.strings.legacy.msg_all,
+                    CollectionVisibilityScope.privateOnly =>
+                      context.t.strings.legacy.msg_private,
+                    CollectionVisibilityScope.publicOnly =>
+                      context.t.strings.legacy.msg_public,
+                  },
+                  onChanged: (value) => _updateState(() => _visibility = value),
+                ),
+                SwitchListTile.adaptive(
+                  value: _includeDescendants,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(collections.includeDescendants),
+                  subtitle: Text(collections.includeDescendantsDescription),
+                  onChanged: (value) =>
+                      _updateState(() => _includeDescendants = value),
+                ),
+                SwitchListTile.adaptive(
+                  value: _pinnedOnly,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(collections.pinnedOnly),
+                  onChanged: (value) => _updateState(() => _pinnedOnly = value),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (!_draftRules.hasAnyConstraint) ...[
+          const SizedBox(height: 8),
+          Text(
+            collections.ruleRequired,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Colors.redAccent,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildManualSourceSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+    required List<String> persistedManualMemoUids,
+    required List<LocalMemo> previewItems,
+  }) {
+    final collections = context.t.strings.collections;
+    final selectedMemoUids = _effectiveManualMemoUidsFromPersisted(
+      persistedManualMemoUids,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(
+          title: context.tr(zh: '内容来源', en: 'Content source'),
+          mutedColor: colors.textMuted,
+          trailing: Text(
+            context.tr(
+              zh: '已选 ${selectedMemoUids.length} 条',
+              en: '${selectedMemoUids.length} selected',
+            ),
+            style: TextStyle(fontSize: 12, color: colors.textMuted),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: FilledButton.tonalIcon(
+                onPressed: () => _openManualMemoPicker(persistedManualMemoUids),
+                icon: const Icon(Icons.playlist_add_rounded),
+                label: Text(collections.addMemos),
+              ),
+            ),
+            if (previewItems.isNotEmpty) ...[
+              const SizedBox(width: 10),
+              TextButton(
+                onPressed: () => _showSelectedMemoSheet(previewItems),
+                child: Text(context.t.strings.legacy.msg_preview),
+              ),
+            ],
+          ],
+        ),
+        const SizedBox(height: 12),
+        if (previewItems.isEmpty)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              color: colors.fieldBackground,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              context.tr(
+                zh: '还没有添加 memo，先挑几条内容吧。',
+                en: 'No memos yet. Pick a few to start this collection.',
+              ),
+              style: TextStyle(color: colors.textMuted),
+            ),
+          )
+        else
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colors.selectedBackground,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                for (
+                  var index = 0;
+                  index < previewItems.take(2).length;
+                  index++
+                ) ...[
+                  _PreviewMemoRow(memo: previewItems[index]),
+                  if (index < previewItems.take(2).length - 1)
+                    Divider(height: 18, color: colors.divider),
+                ],
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildRssSourceSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+    required AsyncValue<List<CollectionRssSourceWithFeed>>
+    persistedRssSourcesAsync,
+  }) {
+    final rssStrings = context.t.strings.collections.rss;
+    final persistedRssSources =
+        persistedRssSourcesAsync.valueOrNull ??
+        const <CollectionRssSourceWithFeed>[];
+    final feedCount = persistedRssSources.length + _draftRssPreviews.length;
+    final currentPreview = _rssPreview;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(
+          title: rssStrings.manageFeeds,
+          mutedColor: colors.textMuted,
+          trailing: Text(
+            rssStrings.addedFeeds(count: feedCount),
+            style: TextStyle(fontSize: 12, color: colors.textMuted),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          rssStrings.draftHelp,
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: colors.textMuted),
+        ),
+        const SizedBox(height: 12),
+        _RssRefreshSettingsPanel(
+          enabled: _rssRefresh.enabled,
+          intervalMinutes: _rssRefresh.intervalMinutes,
+          colors: colors,
+          onEnabledChanged: _setRssRefreshEnabled,
+          onIntervalChanged: _rssRefresh.enabled
+              ? _setRssRefreshInterval
+              : null,
+        ),
+        const SizedBox(height: 12),
+        _EditorFieldShell(
+          label: rssStrings.inputLabel,
+          colors: colors,
+          child: TextField(
+            controller: _rssUrlController,
+            enabled: !_rssBusy,
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.done,
+            onChanged: (_) => _markChanged(),
+            onSubmitted: (_) => _loadRssPreview(),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              isCollapsed: true,
+              prefixIcon: const Icon(Icons.rss_feed_rounded),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 32,
+                minHeight: 24,
+              ),
+              hintText: rssStrings.inputLabel,
+            ),
+          ),
+        ),
+        if (_rssError?.trim().isNotEmpty == true) ...[
+          const SizedBox(height: 8),
+          Text(
+            _rssError!,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.error,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: _rssBusy ? null : _loadRssPreview,
+                icon: const Icon(Icons.search_rounded),
+                label: Text(rssStrings.preview),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: FilledButton.tonalIcon(
+                onPressed: _rssBusy
+                    ? null
+                    : () => _addRssPreviewToDraft(persistedRssSources),
+                icon: const Icon(Icons.add_rounded),
+                label: Text(
+                  feedCount == 0
+                      ? rssStrings.addFeedToDraft
+                      : rssStrings.addAnotherFeed,
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (_rssBusy) ...[
+          const SizedBox(height: 12),
+          const LinearProgressIndicator(),
+        ],
+        if (currentPreview != null) ...[
+          const SizedBox(height: 12),
+          RssFeedPreviewCard(preview: currentPreview),
+        ],
+        const SizedBox(height: 12),
+        if (persistedRssSourcesAsync.isLoading &&
+            !persistedRssSourcesAsync.hasValue)
+          CollectionLoadingView(
+            label: context.t.strings.collections.loadingCollections,
+            centered: false,
+            compact: true,
+          )
+        else if (persistedRssSourcesAsync.hasError)
+          CollectionErrorView(
+            title: rssStrings.manageFeeds,
+            message: '${persistedRssSourcesAsync.error}',
+            centered: false,
+            compact: true,
+          )
+        else if (feedCount == 0)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              color: colors.fieldBackground,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              rssStrings.feedRequired,
+              style: TextStyle(color: colors.textMuted),
+            ),
+          )
+        else
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colors.selectedBackground,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                for (final source in persistedRssSources) ...[
+                  _RssSourceRow(
+                    title: source.feed.displayTitle,
+                    subtitle: source.feed.feedUrl,
+                    articleCount: null,
+                    pending: false,
+                    fullContentEnabled: source.feed.fullContentEnabled,
+                    onFullContentEnabledChanged: _rssBusy
+                        ? null
+                        : (enabled) => _setPersistedRssFullContentEnabled(
+                            source,
+                            enabled,
+                          ),
+                    onRemove: _rssBusy
+                        ? null
+                        : () => _removePersistedRssSource(source),
+                  ),
+                  if (source != persistedRssSources.last ||
+                      _draftRssPreviews.isNotEmpty)
+                    Divider(height: 18, color: colors.divider),
+                ],
+                for (final preview in _draftRssPreviews) ...[
+                  _RssSourceRow(
+                    title: preview.displayTitle,
+                    subtitle: preview.feedUrl,
+                    articleCount: preview.articles.length,
+                    pending: true,
+                    fullContentEnabled: null,
+                    onFullContentEnabledChanged: null,
+                    onRemove: () => _removeDraftRssPreview(preview),
+                  ),
+                  if (preview != _draftRssPreviews.last)
+                    Divider(height: 18, color: colors.divider),
+                ],
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildPreviewSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+    required MemoCollectionPreview preview,
+  }) {
+    final collections = context.t.strings.collections;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(
+          title: context.tr(zh: '实时预览', en: 'Live preview'),
+          mutedColor: colors.textMuted,
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: colors.fieldBackground,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  _PreviewStat(
+                    label: collections.previewMemos,
+                    value: '${preview.itemCount}',
+                  ),
+                  const SizedBox(width: 10),
+                  _PreviewStat(
+                    label: collections.previewImages,
+                    value: '${preview.imageItemCount}',
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                preview.ruleSummary,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: colors.textMuted),
+              ),
+              const SizedBox(height: 12),
+              if (preview.sampleItems.isEmpty)
+                Text(
+                  _type == MemoCollectionType.smart
+                      ? collections.noPreviewSmart
+                      : collections.noPreviewManual,
+                  style: TextStyle(color: colors.textMuted),
+                )
+              else
+                _PreviewMemoRow(memo: preview.sampleItems.first),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAdvancedSection(
+    BuildContext context, {
+    required _CollectionEditorColors colors,
+    required List<_CoverAttachmentOption> coverAttachmentOptions,
+    required String? selectedCoverOptionKey,
+  }) {
+    final collections = context.t.strings.collections;
+    return AnimatedSize(
+      duration: AppMotion.effectiveDuration(context, AppMotion.medium),
+      curve: AppMotion.standardCurve,
+      alignment: Alignment.topCenter,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: EdgeInsets.zero,
+          title: Text(
+            context.tr(zh: '个性化与展示设置', en: 'Personalize & display'),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: colors.textPrimary,
+            ),
+          ),
+          subtitle: Text(
+            _displaySummary(context),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: colors.textMuted),
+          ),
+          children: [
+            const SizedBox(height: 12),
+            Text(
+              context.t.strings.legacy.msg_icon,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: colors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (final iconKey in kCollectionIconKeys)
+                  _IconChoice(
+                    selected: _iconKey == iconKey,
+                    icon: resolveCollectionIcon(iconKey),
+                    onTap: () => _updateState(() => _iconKey = iconKey),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              collections.accentColor,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: colors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (final colorHex in kCollectionAccentPalette)
+                  _AccentChoice(
+                    selected: _accentColorHex == colorHex,
+                    colorHex: colorHex,
+                    onTap: () => _updateState(() => _accentColorHex = colorHex),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _EnumSegment<CollectionCoverMode>(
+              title: collections.cover,
+              values: const [
+                CollectionCoverMode.auto,
+                CollectionCoverMode.attachment,
+                CollectionCoverMode.icon,
+              ],
+              current: _coverMode,
+              labelBuilder: (value) => collectionCoverModeLabel(context, value),
+              onChanged: (value) {
+                _updateState(() {
+                  _coverMode = value;
+                  if (value == CollectionCoverMode.attachment &&
+                      selectedCoverOptionKey == null &&
+                      coverAttachmentOptions.isNotEmpty) {
+                    final first = coverAttachmentOptions.first;
+                    _coverMemoUid = first.memoUid;
+                    _coverAttachmentUid = first.attachment.uid;
+                  }
+                });
+              },
+            ),
+            AnimatedSwitcher(
+              duration: AppMotion.effectiveDuration(context, AppMotion.medium),
+              switchInCurve: AppMotion.standardCurve,
+              switchOutCurve: AppMotion.exitCurve,
+              transitionBuilder: (child, animation) {
+                final duration = AppMotion.effectiveDuration(
+                  context,
+                  AppMotion.medium,
+                );
+                if (duration == Duration.zero) {
+                  return child;
+                }
+                final curved = CurvedAnimation(
+                  parent: animation,
+                  curve: AppMotion.standardCurve,
+                  reverseCurve: AppMotion.exitCurve,
+                );
+                return FadeTransition(
+                  opacity: curved,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: AppMotion.verticalEntryOffset,
+                      end: Offset.zero,
+                    ).animate(curved),
+                    child: child,
+                  ),
+                );
+              },
+              child: _coverMode == CollectionCoverMode.attachment
+                  ? Padding(
+                      key: ValueKey<String>(
+                        'cover-attachment-${selectedCoverOptionKey ?? 'none'}',
+                      ),
+                      padding: const EdgeInsets.only(top: 12),
+                      child: coverAttachmentOptions.isEmpty
+                          ? Text(
+                              collections.noCoverImageAvailable,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(color: colors.textMuted),
+                            )
+                          : DropdownButtonFormField<String>(
+                              initialValue: selectedCoverOptionKey,
+                              decoration: InputDecoration(
+                                labelText: collections.coverImage,
+                              ),
+                              items: [
+                                for (final option in coverAttachmentOptions)
+                                  DropdownMenuItem(
+                                    value: option.key,
+                                    child: Text(option.label),
+                                  ),
+                              ],
+                              onChanged: (value) {
+                                if (value == null) return;
+                                final option = coverAttachmentOptions
+                                    .firstWhere((item) => item.key == value);
+                                _updateState(() {
+                                  _coverMemoUid = option.memoUid;
+                                  _coverAttachmentUid = option.attachment.uid;
+                                });
+                              },
+                            ),
+                    )
+                  : const SizedBox.shrink(key: ValueKey<String>('cover-none')),
+            ),
+            const SizedBox(height: 16),
+            _EnumSegment<CollectionLayoutMode>(
+              title: collections.defaultLayout,
+              values: const [
+                CollectionLayoutMode.shelf,
+                CollectionLayoutMode.timeline,
+                CollectionLayoutMode.list,
+              ],
+              current: _layoutMode,
+              labelBuilder: (value) => collectionLayoutLabel(context, value),
+              onChanged: (value) => _updateState(() => _layoutMode = value),
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<CollectionSectionMode>(
+              key: ValueKey<String>('section-${_sectionMode.name}'),
+              initialValue: _sectionMode,
+              decoration: InputDecoration(labelText: collections.groupBy),
+              items: [
+                DropdownMenuItem(
+                  value: CollectionSectionMode.none,
+                  child: Text(collections.noGroups),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSectionMode.month,
+                  child: Text(collections.month),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSectionMode.quarter,
+                  child: Text(collections.quarter),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSectionMode.year,
+                  child: Text(collections.year),
+                ),
+              ],
+              onChanged: (value) {
+                if (value == null) return;
+                _updateState(() => _sectionMode = value);
+              },
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<CollectionSortMode>(
+              key: ValueKey<String>('sort-${_sortMode.name}'),
+              initialValue: _sortMode,
+              decoration: InputDecoration(
+                labelText: context.t.strings.legacy.msg_sort,
+              ),
+              items: [
+                if (_type == MemoCollectionType.manual)
+                  DropdownMenuItem(
+                    value: CollectionSortMode.manualOrder,
+                    child: Text(collections.manualOrder),
+                  ),
+                DropdownMenuItem(
+                  value: CollectionSortMode.displayTimeDesc,
+                  child: Text(collections.displayTimeDesc),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSortMode.displayTimeAsc,
+                  child: Text(collections.displayTimeAsc),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSortMode.updateTimeDesc,
+                  child: Text(collections.updatedTimeDesc),
+                ),
+                DropdownMenuItem(
+                  value: CollectionSortMode.updateTimeAsc,
+                  child: Text(collections.updatedTimeAsc),
+                ),
+              ],
+              onChanged: (value) {
+                if (value == null) return;
+                _updateState(() => _sortMode = value);
+              },
+            ),
+            const SizedBox(height: 4),
+            _EnumSegment<CollectionReadingExperience>(
+              title: collections.articleFlow.readingExperience,
+              values: const [
+                CollectionReadingExperience.articleFlow,
+                CollectionReadingExperience.continuousReader,
+              ],
+              current:
+                  _readingExperienceOverride ??
+                  resolveDefaultCollectionReadingExperience(_type),
+              labelBuilder: (value) => switch (value) {
+                CollectionReadingExperience.articleFlow =>
+                  collections.articleFlow.articleFlowExperience,
+                CollectionReadingExperience.continuousReader =>
+                  collections.articleFlow.continuousReaderExperience,
+              },
+              onChanged: (value) =>
+                  _updateState(() => _readingExperienceOverride = value),
+            ),
+            const SizedBox(height: 12),
+            _EnumSegment<CollectionArticleFlowDensity>(
+              title: collections.articleFlow.density,
+              values: const [
+                CollectionArticleFlowDensity.compact,
+                CollectionArticleFlowDensity.comfortable,
+              ],
+              current: _articleFlowDisplay.density,
+              labelBuilder: (value) => switch (value) {
+                CollectionArticleFlowDensity.compact =>
+                  collections.articleFlow.densityCompact,
+                CollectionArticleFlowDensity.comfortable =>
+                  collections.articleFlow.densityComfortable,
+              },
+              onChanged: (value) => _updateState(
+                () => _articleFlowDisplay = _articleFlowDisplay.copyWith(
+                  density: value,
+                ),
+              ),
+            ),
+            SwitchListTile.adaptive(
+              value: _articleFlowDisplay.showExcerpt,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.articleFlow.showExcerpt),
+              onChanged: (value) => _updateState(
+                () => _articleFlowDisplay = _articleFlowDisplay.copyWith(
+                  showExcerpt: value,
+                ),
+              ),
+            ),
+            SwitchListTile.adaptive(
+              value: _articleFlowDisplay.showThumbnail,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.articleFlow.showThumbnail),
+              onChanged: (value) => _updateState(
+                () => _articleFlowDisplay = _articleFlowDisplay.copyWith(
+                  showThumbnail: value,
+                ),
+              ),
+            ),
+            SwitchListTile.adaptive(
+              value: _articleFlowDisplay.showFeedIcon,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.articleFlow.showFeedIcon),
+              onChanged: (value) => _updateState(
+                () => _articleFlowDisplay = _articleFlowDisplay.copyWith(
+                  showFeedIcon: value,
+                ),
+              ),
+            ),
+            SwitchListTile.adaptive(
+              value: _articleFlowDisplay.autoHideToolbar,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.articleFlow.autoHideToolbar),
+              onChanged: (value) => _updateState(
+                () => _articleFlowDisplay = _articleFlowDisplay.copyWith(
+                  autoHideToolbar: value,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            SwitchListTile.adaptive(
+              value: _showStats,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.showDetailStats),
+              subtitle: Text(collections.showDetailStatsDescription),
+              onChanged: (value) => _updateState(() => _showStats = value),
+            ),
+            SwitchListTile.adaptive(
+              value: _hideWhenEmpty,
+              contentPadding: EdgeInsets.zero,
+              title: Text(collections.hideWhenEmpty),
+              subtitle: Text(collections.hideWhenEmptyDescription),
+              onChanged: (value) => _updateState(() => _hideWhenEmpty = value),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChoiceChip({
+    required String label,
+    required bool selected,
+    required _CollectionEditorColors colors,
+    required VoidCallback onSelected,
+  }) {
+    return ChoiceChip(
+      selected: selected,
+      label: Text(label),
+      onSelected: (_) => onSelected(),
+      visualDensity: VisualDensity.compact,
+      selectedColor: colors.selectedBackground,
+      backgroundColor: colors.fieldBackground,
+      labelStyle: TextStyle(
+        color: selected ? colors.textPrimary : colors.textMuted,
+        fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+      ),
+      side: BorderSide.none,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+    );
+  }
+
+  String _smartRuleSummary(BuildContext context) {
+    final segments = <String>[];
+    if (_selectedTags.isNotEmpty) {
+      segments.add(_selectedTags.take(2).map((tag) => '#$tag').join(' · '));
+    }
+    switch (_dateRule.type) {
+      case CollectionDateRuleType.all:
+        break;
+      case CollectionDateRuleType.lastDays:
+        final days = _dateRule.lastDays;
+        if (days != null && days > 0) {
+          segments.add(context.t.strings.collections.lastDays(days: days));
+        }
+      case CollectionDateRuleType.customRange:
+        segments.add(_customDateRangeLabel(context));
+    }
+    if (_attachmentRule != CollectionAttachmentRule.any) {
+      segments.add(collectionAttachmentRuleLabel(context, _attachmentRule));
+    }
+    if (_pinnedOnly) {
+      segments.add(context.t.strings.collections.pinnedOnly);
+    }
+    if (segments.isEmpty) {
+      return context.tr(zh: '尚未设置条件', en: 'No rules yet');
+    }
+    return segments.join(' · ');
+  }
+
+  String _displaySummary(BuildContext context) {
+    var count = 0;
+    if (_iconKey != MemoCollection.defaultIconKey) count += 1;
+    if (_accentColorHex != null) count += 1;
+    if (_coverMode != CollectionCoverMode.auto) count += 1;
+    if (_layoutMode != CollectionLayoutMode.shelf) count += 1;
+    if (_sectionMode != CollectionSectionMode.none) count += 1;
+    final defaultSort = _type == MemoCollectionType.manual
+        ? CollectionSortMode.manualOrder
+        : CollectionSortMode.displayTimeDesc;
+    if (_sortMode != defaultSort) count += 1;
+    if (!_showStats) count += 1;
+    if (_hideWhenEmpty) count += 1;
+    if (count == 0) {
+      return context.tr(zh: '可选，不影响创建', en: 'Optional');
+    }
+    return context.tr(zh: '已设置 $count 项', en: '$count set');
+  }
+
+  List<String> _normalizeMemoUids(Iterable<String> memoUids) {
+    final seen = <String>{};
+    return memoUids
+        .map((item) => item.trim())
+        .where((item) => item.isNotEmpty && seen.add(item))
+        .toList(growable: false);
+  }
+
+  List<String> _effectiveManualMemoUidsFromPersisted(
+    List<String> persistedManualMemoUids,
+  ) {
+    final source =
+        !_isEditing ||
+            _hasExplicitManualMemoSelection ||
+            _manualMemoUids.isNotEmpty
+        ? _manualMemoUids
+        : persistedManualMemoUids;
+    return _normalizeMemoUids(source);
+  }
+
+  bool _canSave(
+    List<LocalMemo> existingManualItems,
+    List<CollectionRssSourceWithFeed> persistedRssSources,
+  ) {
+    final hasTitle = _titleController.text.trim().isNotEmpty;
+    if (!hasTitle) return false;
+    if (_type == MemoCollectionType.smart) {
+      return _draftRules.hasAnyConstraint;
+    }
+    if (_type == MemoCollectionType.rss) {
+      return persistedRssSources.isNotEmpty || _draftRssPreviews.isNotEmpty;
+    }
+    return true;
+  }
+
+  String _submitLabel(
+    BuildContext context,
+    List<String> persistedManualMemoUids,
+    List<CollectionRssSourceWithFeed> persistedRssSources,
+  ) {
+    if (_isEditing) {
+      return context.tr(zh: '保存修改', en: 'Save changes');
+    }
+    final manualCount = _effectiveManualMemoUidsFromPersisted(
+      persistedManualMemoUids,
+    ).length;
+    if (_type == MemoCollectionType.manual && manualCount > 0) {
+      return context.tr(
+        zh: '创建并加入 $manualCount 条 memo',
+        en: manualCount == 1
+            ? 'Create and add 1 memo'
+            : 'Create and add $manualCount memos',
+      );
+    }
+    if (_type == MemoCollectionType.rss) {
+      final feedCount = persistedRssSources.length + _draftRssPreviews.length;
+      if (feedCount > 0) {
+        return context.t.strings.collections.rss.addedFeeds(count: feedCount);
+      }
+    }
+    return context.t.strings.collections.createCollection;
+  }
+
+  String _footerSummary(
+    BuildContext context,
+    MemoCollectionPreview preview,
+    List<String> persistedManualMemoUids,
+    List<CollectionRssSourceWithFeed> persistedRssSources,
+  ) {
+    if (_type == MemoCollectionType.manual) {
+      final count = _effectiveManualMemoUidsFromPersisted(
+        persistedManualMemoUids,
+      ).length;
+      return context.tr(zh: '已选 $count 条', en: '$count selected');
+    }
+    if (_type == MemoCollectionType.rss) {
+      return context.t.strings.collections.rss.addedFeeds(
+        count: persistedRssSources.length + _draftRssPreviews.length,
+      );
+    }
+    return context.tr(
+      zh: '已命中 ${preview.itemCount} 条',
+      en: '${preview.itemCount} matched',
+    );
+  }
+
+  Future<void> _openManualMemoPicker(
+    List<String> persistedManualMemoUids,
+  ) async {
+    final useTaskSurface = shouldUsePlatformSecondaryTaskSurface(context);
+    final picker = _ManualMemoPickerScreen(
+      initialSelectedMemoUids: _effectiveManualMemoUidsFromPersisted(
+        persistedManualMemoUids,
+      ),
+      embeddedTaskSurface: useTaskSurface,
+    );
+    final List<String>? selected;
+    if (useTaskSurface) {
+      selected = await showPlatformSecondaryTaskSurface<List<String>>(
+        context: context,
+        size: PlatformSecondaryTaskSurfaceSize.large,
+        maxWidth: 760,
+        builder: (_) => picker,
+      );
+    } else {
+      selected = await Navigator.of(context).push<List<String>>(
+        MaterialPageRoute<List<String>>(
+          fullscreenDialog: true,
+          builder: (_) => picker,
+        ),
+      );
+    }
+    if (selected == null) return;
+    if (!mounted) return;
+    final selectedMemoUids = selected;
+    _updateState(() {
+      _hasExplicitManualMemoSelection = true;
+      _manualMemoUids
+        ..clear()
+        ..addAll(selectedMemoUids);
+    });
+  }
+
+  Future<void> _showSelectedMemoSheet(List<LocalMemo> previewItems) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        final colors = _CollectionEditorColors.fromTheme(context);
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr(zh: '已选内容', en: 'Selected memos'),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 12),
+                Flexible(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: previewItems.length,
+                    separatorBuilder: (_, _) =>
+                        Divider(height: 1, color: colors.divider),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: _PreviewMemoRow(memo: previewItems[index]),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<bool> _confirmEmptyManualSave() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.tr(zh: '空手动合集', en: 'Empty manual collection')),
+        content: Text(
+          context.tr(
+            zh: '当前还没有添加 memo，仍然保存这个合集吗？',
+            en: 'This manual collection has no memos yet. Save it anyway?',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(context.t.strings.common.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(context.t.strings.legacy.msg_save),
+          ),
+        ],
+      ),
+    );
+    return confirmed ?? false;
+  }
+
+  Future<bool> _confirmDiscardChanges() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(
+          context.tr(zh: '放弃未保存的修改？', en: 'Discard unsaved changes?'),
+        ),
+        content: Text(
+          context.tr(
+            zh: '返回后，本页刚才的修改不会保留。',
+            en: 'If you leave now, the changes on this screen will be lost.',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(context.t.strings.common.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(context.tr(zh: '放弃', en: 'Discard')),
+          ),
+        ],
+      ),
+    );
+    return confirmed ?? false;
+  }
+
+  List<String> _initialManualMemoUidsForComparison({
+    required List<String> persistedManualMemoUids,
+  }) {
+    return _initialManualMemoUids ??
+        _normalizeMemoUids(persistedManualMemoUids);
+  }
+
+  bool _hasUnsavedChanges({required List<String> persistedManualMemoUids}) {
+    if (_draftRssPreviews.isNotEmpty ||
+        _rssPreview != null ||
+        _rssUrlController.text.trim().isNotEmpty) {
+      return true;
+    }
+    final currentSnapshot = _CollectionEditorPersistedSnapshot.fromCollection(
+      collection: _draftCollection,
+      manualMemoUids: _effectiveManualMemoUidsFromPersisted(
+        persistedManualMemoUids,
+      ),
+    );
+    final initialSnapshot = _CollectionEditorPersistedSnapshot.fromCollection(
+      collection: _initialSnapshotCollection,
+      manualMemoUids: _initialManualMemoUidsForComparison(
+        persistedManualMemoUids: persistedManualMemoUids,
+      ),
+    );
+    return currentSnapshot != initialSnapshot;
+  }
+
+  Future<void> _requestClose({
+    required List<String> persistedManualMemoUids,
+  }) async {
+    if (!_hasUnsavedChanges(persistedManualMemoUids: persistedManualMemoUids)) {
+      if (!mounted) return;
+      context.safePop();
+      return;
+    }
+    final shouldDiscard = await _confirmDiscardChanges();
+    if (!mounted || !shouldDiscard) return;
+    context.safePop();
+  }
+
+  Future<void> _persistManualItems({
+    required CollectionsRepository repository,
+    required String collectionId,
+    required List<LocalMemo> existingManualItems,
+    required List<String> desiredMemoUids,
+  }) async {
+    final existingMemoUids = existingManualItems
+        .map((item) => item.uid.trim())
+        .where((item) => item.isNotEmpty)
+        .toList(growable: false);
+    final desiredSet = desiredMemoUids.toSet();
+    final existingSet = existingMemoUids.toSet();
+    final toRemove = existingMemoUids
+        .where((item) => !desiredSet.contains(item))
+        .toList(growable: false);
+    final toAdd = desiredMemoUids
+        .where((item) => !existingSet.contains(item))
+        .toList(growable: false);
+    if (toRemove.isNotEmpty) {
+      await repository.removeManualItem(collectionId, toRemove);
+    }
+    if (toAdd.isNotEmpty) {
+      await repository.addManualItems(collectionId, toAdd);
+    }
+    if (desiredMemoUids.isNotEmpty) {
+      await repository.reorderManualItems(collectionId, desiredMemoUids);
+    }
+  }
+
+  List<LocalMemo> _buildPreviewItems({
+    required List<LocalMemo> memos,
+    required TagColorLookup tagLookup,
+    required List<String> persistedManualMemoUids,
+  }) {
+    if (_type == MemoCollectionType.manual) {
+      return resolveCollectionItems(
+        _draftCollection,
+        memos,
+        manualMemoUids: _effectiveManualMemoUidsFromPersisted(
+          persistedManualMemoUids,
+        ),
+        resolveCanonicalTagPath: tagLookup.resolveCanonicalPath,
+      );
+    }
+    return resolveCollectionItems(
+      _draftCollection,
+      memos,
+      resolveCanonicalTagPath: tagLookup.resolveCanonicalPath,
+    );
+  }
+
+  List<_CoverAttachmentOption> _buildCoverAttachmentOptions(
+    List<LocalMemo> items,
+  ) {
+    final options = <_CoverAttachmentOption>[];
+    for (final memo in items) {
+      for (final attachment in memo.attachments) {
+        if (!attachment.isImage) continue;
+        options.add(
+          _CoverAttachmentOption(
+            memoUid: memo.uid,
+            attachment: attachment,
+            label:
+                '${DateFormat.yMMMd().format(memo.effectiveDisplayTime)} • ${attachment.displayName}',
+          ),
+        );
+      }
+      if (options.length >= 24) {
+        break;
+      }
+    }
+    return options;
+  }
+
+  String? _selectedCoverOptionKey(List<_CoverAttachmentOption> options) {
+    final memoUid = _coverMemoUid;
+    final attachmentUid = _coverAttachmentUid;
+    if (memoUid == null || attachmentUid == null) return null;
+    for (final option in options) {
+      if (option.memoUid == memoUid && option.attachment.uid == attachmentUid) {
+        return option.key;
+      }
+    }
+    return null;
+  }
+
+  String _customDateRangeLabel(BuildContext context) {
+    final start = _dateRule.startTimeSec;
+    final end = _dateRule.endTimeSecExclusive;
+    if (start == null || end == null) {
+      return context.t.strings.collections.chooseRange;
+    }
+    final formatter = DateFormat.yMMMd();
+    final startDate = DateTime.fromMillisecondsSinceEpoch(
+      start * 1000,
+      isUtc: true,
+    ).toLocal();
+    final endDate = DateTime.fromMillisecondsSinceEpoch(
+      (end - 1) * 1000,
+      isUtc: true,
+    ).toLocal();
+    return '${formatter.format(startDate)} – ${formatter.format(endDate)}';
+  }
+}
+
+class _CollectionEditorPersistedSnapshot {
+  const _CollectionEditorPersistedSnapshot({
+    required this.type,
+    required this.title,
+    required this.description,
+    required this.iconKey,
+    required this.accentColorHex,
+    required this.rulesSignature,
+    required this.coverSignature,
+    required this.viewSignature,
+    required this.hideWhenEmpty,
+    required this.manualMemoUids,
+  });
+
+  factory _CollectionEditorPersistedSnapshot.fromCollection({
+    required MemoCollection collection,
+    required List<String> manualMemoUids,
+  }) {
+    final normalizedManualMemoUids =
+        collection.type == MemoCollectionType.manual
+        ? _normalizeSnapshotManualMemoUids(manualMemoUids)
+        : const <String>[];
+    return _CollectionEditorPersistedSnapshot(
+      type: collection.type,
+      title: collection.title.trim(),
+      description: collection.description.trim(),
+      iconKey: collection.iconKey,
+      accentColorHex: _normalizeSnapshotAccentColor(collection.accentColorHex),
+      rulesSignature: jsonEncode(collection.rules.toJson()),
+      coverSignature: jsonEncode(collection.cover.toJson()),
+      viewSignature: jsonEncode(collection.view.toJson()),
+      hideWhenEmpty: collection.hideWhenEmpty,
+      manualMemoUids: normalizedManualMemoUids,
+    );
+  }
+
+  final MemoCollectionType type;
+  final String title;
+  final String description;
+  final String iconKey;
+  final String? accentColorHex;
+  final String rulesSignature;
+  final String coverSignature;
+  final String viewSignature;
+  final bool hideWhenEmpty;
+  final List<String> manualMemoUids;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is _CollectionEditorPersistedSnapshot &&
+        other.type == type &&
+        other.title == title &&
+        other.description == description &&
+        other.iconKey == iconKey &&
+        other.accentColorHex == accentColorHex &&
+        other.rulesSignature == rulesSignature &&
+        other.coverSignature == coverSignature &&
+        other.viewSignature == viewSignature &&
+        other.hideWhenEmpty == hideWhenEmpty &&
+        _sameSnapshotManualMemoUids(other.manualMemoUids, manualMemoUids);
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    type,
+    title,
+    description,
+    iconKey,
+    accentColorHex,
+    rulesSignature,
+    coverSignature,
+    viewSignature,
+    hideWhenEmpty,
+    Object.hashAll(manualMemoUids),
+  );
+}
+
+String? _normalizeSnapshotAccentColor(String? accentColorHex) {
+  if (accentColorHex == null) return null;
+  final trimmed = accentColorHex.trim();
+  return trimmed.isEmpty ? null : trimmed;
+}
+
+List<String> _normalizeSnapshotManualMemoUids(Iterable<String> memoUids) {
+  final seen = <String>{};
+  return memoUids
+      .map((item) => item.trim())
+      .where((item) => item.isNotEmpty && seen.add(item))
+      .toList(growable: false);
+}
+
+bool _sameSnapshotManualMemoUids(List<String> left, List<String> right) {
+  if (left.length != right.length) return false;
+  for (var index = 0; index < left.length; index++) {
+    if (left[index] != right[index]) return false;
+  }
+  return true;
+}
+
+class _CoverAttachmentOption {
+  const _CoverAttachmentOption({
+    required this.memoUid,
+    required this.attachment,
+    required this.label,
+  });
+
+  final String memoUid;
+  final Attachment attachment;
+  final String label;
+
+  String get key => '$memoUid::${attachment.uid}';
+}
+
+class _IconChoice extends StatelessWidget {
+  const _IconChoice({
+    required this.selected,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final bool selected;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Ink(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: selected
+              ? MemoFlowPalette.primary.withValues(alpha: 0.16)
+              : Colors.transparent,
+          border: Border.all(
+            color: selected
+                ? MemoFlowPalette.primary
+                : Theme.of(context).dividerColor.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Icon(icon),
+      ),
+    );
+  }
+}
+
+class _AccentChoice extends StatelessWidget {
+  const _AccentChoice({
+    required this.selected,
+    required this.colorHex,
+    required this.onTap,
+  });
+
+  final bool selected;
+  final String colorHex;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = resolveCollectionAccentColor(colorHex, isDark: false);
+    return InkWell(
+      borderRadius: BorderRadius.circular(999),
+      onTap: onTap,
+      child: Container(
+        width: 34,
+        height: 34,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          border: Border.all(
+            width: selected ? 3 : 1,
+            color: selected
+                ? Colors.white
+                : Colors.black.withValues(alpha: 0.15),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EnumSegment<T> extends StatelessWidget {
+  const _EnumSegment({
+    required this.title,
+    required this.values,
+    required this.current,
+    required this.labelBuilder,
+    required this.onChanged,
+  });
+
+  final String title;
+  final List<T> values;
+  final T current;
+  final String Function(T value) labelBuilder;
+  final ValueChanged<T> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final value in values)
+              ChoiceChip(
+                selected: current == value,
+                label: Text(labelBuilder(value)),
+                onSelected: (_) => onChanged(value),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _PreviewStat extends StatelessWidget {
+  const _PreviewStat({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.black.withValues(alpha: 0.04),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+          ),
+          Text(label, style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+class _PreviewMemoRow extends StatelessWidget {
+  const _PreviewMemoRow({required this.memo});
+
+  final LocalMemo memo;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = memo.content.replaceAll(RegExp(r'\s+'), ' ').trim();
+    final preview = content.isEmpty
+        ? context.t.strings.legacy.msg_empty_content
+        : (content.length > 88 ? '${content.substring(0, 88)}...' : content);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: MemoFlowPalette.primary.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            memo.attachments.any((item) => item.isImage)
+                ? Icons.photo_rounded
+                : Icons.notes_rounded,
+            color: MemoFlowPalette.primary,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                preview,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                DateFormat.yMMMd().add_Hm().format(memo.effectiveDisplayTime),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RssRefreshSettingsPanel extends StatelessWidget {
+  const _RssRefreshSettingsPanel({
+    required this.enabled,
+    required this.intervalMinutes,
+    required this.colors,
+    required this.onEnabledChanged,
+    required this.onIntervalChanged,
+  });
+
+  static const List<int> _intervalOptions = <int>[
+    5,
+    15,
+    30,
+    60,
+    180,
+    360,
+    720,
+    1440,
+  ];
+
+  final bool enabled;
+  final int intervalMinutes;
+  final _CollectionEditorColors colors;
+  final ValueChanged<bool> onEnabledChanged;
+  final ValueChanged<int>? onIntervalChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final rssStrings = context.t.strings.collections.rss;
+    final effectiveInterval = _intervalOptions.contains(intervalMinutes)
+        ? intervalMinutes
+        : CollectionRssRefreshPreferences.defaults.intervalMinutes;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+      decoration: BoxDecoration(
+        color: colors.fieldBackground,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            dense: true,
+            title: Text(rssStrings.autoRefreshOnOpen),
+            subtitle: Text(rssStrings.autoRefreshOnOpenDescription),
+            value: enabled,
+            onChanged: onEnabledChanged,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  rssStrings.autoRefreshInterval,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              DropdownButton<int>(
+                value: effectiveInterval,
+                onChanged: onIntervalChanged == null
+                    ? null
+                    : (value) {
+                        if (value != null) onIntervalChanged!(value);
+                      },
+                items: [
+                  for (final minutes in _intervalOptions)
+                    DropdownMenuItem<int>(
+                      value: minutes,
+                      child: Text(_intervalLabel(rssStrings, minutes)),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _intervalLabel(dynamic rssStrings, int minutes) {
+    if (minutes >= 1440 && minutes % 1440 == 0) {
+      return rssStrings.autoRefreshIntervalDays(days: minutes ~/ 1440);
+    }
+    if (minutes >= 60 && minutes % 60 == 0) {
+      return rssStrings.autoRefreshIntervalHours(hours: minutes ~/ 60);
+    }
+    return rssStrings.autoRefreshIntervalMinutes(minutes: minutes);
+  }
+}
+
+class _RssSourceRow extends StatelessWidget {
+  const _RssSourceRow({
+    required this.title,
+    required this.subtitle,
+    required this.articleCount,
+    required this.pending,
+    required this.fullContentEnabled,
+    required this.onFullContentEnabledChanged,
+    required this.onRemove,
+  });
+
+  final String title;
+  final String subtitle;
+  final int? articleCount;
+  final bool pending;
+  final bool? fullContentEnabled;
+  final ValueChanged<bool>? onFullContentEnabledChanged;
+  final VoidCallback? onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    final rssStrings = context.t.strings.collections.rss;
+    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
+    final count = articleCount;
+    final effectiveTitle = title.trim().isEmpty ? subtitle : title;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(Icons.rss_feed_rounded, size: 20),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                effectiveTitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                [
+                  subtitle,
+                  if (count != null) rssStrings.articlesCount(count: count),
+                  if (pending) rssStrings.addFeedToDraft,
+                ].where((item) => item.trim().isNotEmpty).join(' · '),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 12, color: muted),
+              ),
+              if (fullContentEnabled != null) ...[
+                const SizedBox(height: 6),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  title: Text(rssStrings.fullContentEnabled),
+                  subtitle: Text(rssStrings.fullContentEnabledDescription),
+                  value: fullContentEnabled!,
+                  onChanged: onFullContentEnabledChanged,
+                ),
+              ],
+            ],
+          ),
+        ),
+        IconButton(
+          tooltip: rssStrings.removeFeed,
+          onPressed: onRemove,
+          icon: const Icon(Icons.close_rounded),
+        ),
+      ],
+    );
+  }
+}
+
+class _CollectionEditorColors {
+  const _CollectionEditorColors({
+    required this.background,
+    required this.fieldBackground,
+    required this.selectedBackground,
+    required this.divider,
+    required this.textPrimary,
+    required this.textMuted,
+    required this.secondaryTint,
+    required this.tertiaryTint,
+  });
+
+  final Color background;
+  final Color fieldBackground;
+  final Color selectedBackground;
+  final Color divider;
+  final Color textPrimary;
+  final Color textMuted;
+  final Color secondaryTint;
+  final Color tertiaryTint;
+
+  factory _CollectionEditorColors.fromTheme(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textPrimary = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final textMuted = textPrimary.withValues(alpha: isDark ? 0.72 : 0.64);
+    return _CollectionEditorColors(
+      background: isDark
+          ? MemoFlowPalette.backgroundDark
+          : MemoFlowPalette.backgroundLight,
+      fieldBackground: isDark
+          ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.45)
+          : Colors.white.withValues(alpha: 0.88),
+      selectedBackground: MemoFlowPalette.primary.withValues(
+        alpha: isDark ? 0.24 : 0.10,
+      ),
+      divider: isDark
+          ? MemoFlowPalette.borderDark
+          : MemoFlowPalette.borderLight,
+      textPrimary: textPrimary,
+      textMuted: textMuted,
+      secondaryTint: const Color(0xFFF2E9DC),
+      tertiaryTint: const Color(0xFFF8ECE6),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({
+    required this.title,
+    required this.mutedColor,
+    this.trailing,
+  });
+
+  final String title;
+  final Color mutedColor;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+          ),
+        ),
+        if (trailing != null) trailing!,
+      ],
+    );
+  }
+}
+
+class _CollectionTypeCard extends StatelessWidget {
+  const _CollectionTypeCard({
+    required this.label,
+    required this.description,
+    required this.icon,
+    required this.selected,
+    required this.colors,
+    required this.onTap,
+  });
+
+  final String label;
+  final String description;
+  final IconData icon;
+  final bool selected;
+  final _CollectionEditorColors colors;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: AppMotion.effectiveDuration(context, AppMotion.fast),
+        curve: AppMotion.standardCurve,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: selected ? colors.selectedBackground : colors.fieldBackground,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 18,
+              color: selected ? MemoFlowPalette.primary : colors.textMuted,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: colors.textPrimary,
+                    ),
+                  ),
+                  Text(
+                    description,
+                    style: TextStyle(fontSize: 12, color: colors.textMuted),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EditorFieldShell extends StatelessWidget {
+  const _EditorFieldShell({
+    required this.label,
+    required this.colors,
+    required this.child,
+  });
+
+  final String label;
+  final _CollectionEditorColors colors;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+        color: colors.fieldBackground,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: colors.textMuted,
+            ),
+          ),
+          const SizedBox(height: 6),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+class _ChipGroupField extends StatelessWidget {
+  const _ChipGroupField({
+    required this.label,
+    required this.colors,
+    required this.children,
+  });
+
+  final String label;
+  final _CollectionEditorColors colors;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: colors.textMuted,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(spacing: 8, runSpacing: 8, children: children),
+      ],
+    );
+  }
+}
+
+class _PresetChip extends StatelessWidget {
+  const _PresetChip({
+    required this.label,
+    required this.colors,
+    required this.onTap,
+    this.tint,
+  });
+
+  final String label;
+  final _CollectionEditorColors colors;
+  final VoidCallback onTap;
+  final Color? tint;
+
+  @override
+  Widget build(BuildContext context) {
+    final background = tint ?? colors.selectedBackground;
+    return ActionChip(
+      onPressed: onTap,
+      backgroundColor: background,
+      labelStyle: TextStyle(
+        color: colors.textPrimary,
+        fontWeight: FontWeight.w700,
+      ),
+      label: Text(label),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+      side: BorderSide.none,
+    );
+  }
+}
+
+class _ManualMemoPickerScreen extends ConsumerStatefulWidget {
+  const _ManualMemoPickerScreen({
+    required this.initialSelectedMemoUids,
+    this.embeddedTaskSurface = false,
+  });
+
+  final List<String> initialSelectedMemoUids;
+  final bool embeddedTaskSurface;
+
+  @override
+  ConsumerState<_ManualMemoPickerScreen> createState() =>
+      _ManualMemoPickerScreenState();
+}
+
+class _ManualMemoPickerScreenState
+    extends ConsumerState<_ManualMemoPickerScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  late final List<String> _selectedMemoUids = [
+    ...widget.initialSelectedMemoUids,
+  ];
+  bool _onlyImages = false;
+  bool _recentOnly = false;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _toggleMemo(LocalMemo memo) {
+    setState(() {
+      if (_selectedMemoUids.contains(memo.uid)) {
+        _selectedMemoUids.remove(memo.uid);
+      } else {
+        _selectedMemoUids.add(memo.uid);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final collections = context.t.strings.collections;
+    final colors = _CollectionEditorColors.fromTheme(context);
+    final candidatesAsync = ref.watch(collectionCandidateMemosProvider);
+    final query = _searchController.text.trim().toLowerCase();
+    final title = Text(context.tr(zh: '选择 memo', en: 'Select memos'));
+    final bottomBar = SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                context.tr(
+                  zh: '已选 ${_selectedMemoUids.length} 条',
+                  en: '${_selectedMemoUids.length} selected',
+                ),
+                style: TextStyle(color: colors.textMuted),
+              ),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(
+                context,
+              ).pop(List<String>.from(_selectedMemoUids)),
+              style: FilledButton.styleFrom(
+                backgroundColor: MemoFlowPalette.primary,
+              ),
+              child: Text(
+                collections.addSelected(count: _selectedMemoUids.length),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    final body = Padding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _buildSelectedSummary(candidatesAsync.valueOrNull ?? const []),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: colors.textMuted),
+          ),
+          const SizedBox(height: 10),
+          _EditorFieldShell(
+            label: collections.searchMemos,
+            colors: colors,
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                isCollapsed: true,
+                hintText: collections.searchMemos,
+              ),
+              onChanged: (_) => setState(() {}),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              ChoiceChip(
+                selected: _onlyImages,
+                label: Text(collections.attachmentImagesOnly),
+                onSelected: (_) => setState(() => _onlyImages = !_onlyImages),
+              ),
+              ChoiceChip(
+                selected: _recentOnly,
+                label: Text(collections.last30Days),
+                onSelected: (_) => setState(() => _recentOnly = !_recentOnly),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: candidatesAsync.when(
+              data: (candidates) {
+                final cutoff = DateTime.now().subtract(
+                  const Duration(days: 30),
+                );
+                final filtered = candidates
+                    .where((memo) {
+                      if (_onlyImages &&
+                          !memo.attachments.any((item) => item.isImage)) {
+                        return false;
+                      }
+                      if (_recentOnly &&
+                          memo.effectiveDisplayTime.isBefore(cutoff)) {
+                        return false;
+                      }
+                      if (query.isEmpty) return true;
+                      if (memo.content.toLowerCase().contains(query)) {
+                        return true;
+                      }
+                      for (final tag in memo.tags) {
+                        if (tag.toLowerCase().contains(query)) return true;
+                      }
+                      return false;
+                    })
+                    .toList(growable: false);
+
+                if (filtered.isEmpty) {
+                  return CollectionStatusView(
+                    icon: Icons.search_off_rounded,
+                    title: context.tr(zh: '没有可添加的 memo', en: 'No memos found'),
+                    description: context.tr(
+                      zh: '试试换个关键词或放宽筛选条件。',
+                      en: 'Try another keyword or relax the filters.',
+                    ),
+                    centered: false,
+                    compact: true,
+                  );
+                }
+
+                return ListView.separated(
+                  itemCount: filtered.length,
+                  separatorBuilder: (_, _) =>
+                      Divider(height: 1, color: colors.divider),
+                  itemBuilder: (context, index) {
+                    final memo = filtered[index];
+                    final selected = _selectedMemoUids.contains(memo.uid);
+                    final content = memo.content
+                        .replaceAll(RegExp(r'\s+'), ' ')
+                        .trim();
+                    final preview = content.isEmpty
+                        ? context.t.strings.legacy.msg_empty_content
+                        : content;
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(
+                        selected
+                            ? Icons.check_circle_rounded
+                            : Icons.radio_button_unchecked_rounded,
+                        color: selected
+                            ? MemoFlowPalette.primary
+                            : colors.textMuted,
+                      ),
+                      title: Text(
+                        preview,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        memo.tags.take(3).map((tag) => '#$tag').join('  '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () => _toggleMemo(memo),
+                    );
+                  },
+                );
+              },
+              error: (error, _) => CollectionErrorView(
+                title: collections.unableToLoadMemos,
+                message: '$error',
+                centered: false,
+                compact: true,
+              ),
+              loading: () => CollectionLoadingView(
+                label: collections.loadingMemos,
+                centered: false,
+                compact: true,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (widget.embeddedTaskSurface) {
+      return PlatformSecondaryTaskFrame(
+        title: title,
+        closeTooltip: context.t.strings.legacy.msg_close,
+        backgroundColor: colors.background,
+        bottomBar: bottomBar,
+        body: ColoredBox(color: colors.background, child: body),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: AppBar(
+        backgroundColor: colors.background,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        automaticallyImplyLeading: resolveDesktopRouteAutomaticallyImplyLeading(
+          context: context,
+          automaticallyImplyLeading: true,
+        ),
+        title: title,
+      ),
+      bottomNavigationBar: bottomBar,
+      body: body,
+    );
+  }
+
+  String _buildSelectedSummary(List<LocalMemo> candidates) {
+    if (_selectedMemoUids.isEmpty) {
+      return context.tr(zh: '还没有选择内容', en: 'No memos selected yet');
+    }
+    final selectedSet = _selectedMemoUids.toSet();
+    final previews = candidates
+        .where((memo) => selectedSet.contains(memo.uid))
+        .take(2)
+        .map((memo) {
+          final content = memo.content.replaceAll(RegExp(r'\s+'), ' ').trim();
+          return content.isEmpty
+              ? context.t.strings.legacy.msg_empty_content
+              : content;
+        })
+        .toList(growable: false);
+    final suffix = _selectedMemoUids.length > previews.length ? '…' : '';
+    return context.tr(
+      zh: '已选：${previews.join('、')}$suffix',
+      en: 'Selected: ${previews.join(', ')}$suffix',
+    );
+  }
+}
+
+class _CollectionTagPickerSheet extends StatefulWidget {
+  const _CollectionTagPickerSheet({required this.tags, required this.initial});
+
+  final List<TagStat> tags;
+  final Set<String> initial;
+
+  @override
+  State<_CollectionTagPickerSheet> createState() =>
+      _CollectionTagPickerSheetState();
+}
+
+class _CollectionTagPickerSheetState extends State<_CollectionTagPickerSheet> {
+  late final Set<String> _selected = {...widget.initial};
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textMain = isDark
+        ? MemoFlowPalette.textDark
+        : MemoFlowPalette.textLight;
+    final textMuted = textMain.withValues(alpha: 0.55);
+
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Row(
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    context.t.strings.legacy.msg_cancel_2,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  context.t.strings.legacy.msg_select_tags,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: textMain,
+                  ),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(_selected),
+                  child: Text(
+                    context.t.strings.legacy.msg_done,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: widget.tags.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      context.t.strings.legacy.msg_no_tags,
+                      style: TextStyle(color: textMuted),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.tags.length,
+                    itemBuilder: (context, index) {
+                      final tag = widget.tags[index];
+                      final selected = _selected.contains(tag.tag);
+                      return CheckboxListTile(
+                        value: selected,
+                        onChanged: (value) {
+                          setState(() {
+                            if (value == true) {
+                              _selected.add(tag.tag);
+                            } else {
+                              _selected.remove(tag.tag);
+                            }
+                          });
+                        },
+                        title: Text(
+                          '#${tag.tag}',
+                          style: TextStyle(
+                            color: textMain,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${tag.count}',
+                          style: TextStyle(fontSize: 12, color: textMuted),
+                        ),
+                        activeColor: MemoFlowPalette.primary,
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
