@@ -11,8 +11,11 @@ import 'memo_card_theme.dart';
 
 /// 笔记分享卡片：把一条 memo 渲染成「纸面卡片」，可经 [captureWidgetPng] 导出 PNG。
 ///
-/// 结构：纸面圆角容器（带暖色投影）+ 标题 + 时间 + Markdown 正文（[MemoMarkdown]，
+/// 结构：纸面圆角容器（带暖色投影）+ 日期时间 + Markdown 正文（[MemoMarkdown]，
 /// 外层套 [Theme] 应用卡片主题配色）+ 底部分隔线 + 品牌页脚。
+///
+/// 卡片**不设标题**：正文首行不再被抽出来当标题重复展示（那会让同一段话在卡片上
+/// 出现两次），顶部只留日期时间。
 class MemoShareCard extends StatelessWidget {
   const MemoShareCard({
     super.key,
@@ -32,7 +35,6 @@ class MemoShareCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MemoCardPaper(
-      title: deriveCardTitle(memo.content),
       timeText: formatCardTime(memo.effectiveDisplayTime),
       body: memo.content,
       theme: theme,
@@ -43,7 +45,7 @@ class MemoShareCard extends StatelessWidget {
   }
 }
 
-/// 纸面卡片本体：标题 + 时间 + Markdown 正文 + 品牌页脚。
+/// 纸面卡片本体：日期时间 + Markdown 正文 + 品牌页脚。
 ///
 /// [MemoShareCard]（导出图片）与 `MemoThemedPreview`（编辑器/阅读页内嵌预览）
 /// 共用这一个排版实现，改样式只需改这里。
@@ -53,7 +55,6 @@ class MemoCardPaper extends StatelessWidget {
     required this.body,
     required this.theme,
     required this.timeText,
-    this.title,
     this.footerBrand = 'memo+',
     this.footerVia = '由 memo+ 生成',
     this.width = 360,
@@ -66,11 +67,8 @@ class MemoCardPaper extends StatelessWidget {
   /// 卡片主题（[kMemoCardThemes] 之一）。
   final MemoCardTheme theme;
 
-  /// 已格式化的时间文本。
+  /// 已格式化的时间文本（卡片顶部唯一的一行标识）。
   final String timeText;
-
-  /// 卡片标题；为空则不渲染标题行。
-  final String? title;
 
   final String footerBrand;
   final String footerVia;
@@ -102,20 +100,6 @@ class MemoCardPaper extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (title != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  title!,
-                  style: TextStyle(
-                    fontFamily: theme.headingFontFamily,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: theme.heading,
-                    height: 1.25,
-                  ),
-                ),
-              ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Text(
@@ -172,15 +156,6 @@ class MemoCardPaper extends StatelessWidget {
       ),
     );
   }
-}
-
-/// 取正文第一行非空内容作为卡片标题（去掉 Markdown 的 `#` 前缀）。
-String? deriveCardTitle(String content) {
-  for (final raw in content.split('\n')) {
-    final line = raw.replaceAll(RegExp(r'^#+\s*'), '').trim();
-    if (line.isNotEmpty) return line;
-  }
-  return null;
 }
 
 /// 把时间格式化成卡片上显示的 `YYYY-MM-DD HH:mm`。

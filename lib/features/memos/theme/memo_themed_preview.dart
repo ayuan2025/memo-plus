@@ -8,6 +8,8 @@ import 'memo_share_card.dart';
 /// 与导出图片用的 [MemoShareCard] 共用同一套排版/配色（[MemoCardPaper]），
 /// 但这里只需要**内容 + 时间**，不要求先有落库的笔记——编辑器里的草稿也能直接预览。
 /// 导出仍走 `MemoShareCard` + `captureWidgetPng`。
+///
+/// 卡片顶部只显示日期时间，**不显示标题**（正文首行不再被抽出来重复展示）。
 class MemoThemedPreview extends StatelessWidget {
   const MemoThemedPreview({
     super.key,
@@ -36,7 +38,6 @@ class MemoThemedPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MemoCardPaper(
-      title: deriveCardTitle(content),
       timeText: formatCardTime(time),
       body: content,
       theme: theme,
