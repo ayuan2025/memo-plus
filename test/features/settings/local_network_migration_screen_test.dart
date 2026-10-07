@@ -16,10 +16,10 @@ void main() {
     expect(find.byType(SettingsSection), findsNWidgets(3));
     expect(find.byType(SettingsNavigationRow), findsNWidgets(2));
     expect(find.text('Local Network Migration'), findsOneWidget);
-    expect(find.text('MemoFlow Migration'), findsOneWidget);
+    expect(find.text('memo+ Migration'), findsOneWidget);
     expect(find.text('Connect Obsidian'), findsOneWidget);
     expect(
-      find.textContaining('MemoFlow migration and Obsidian'),
+      find.textContaining('memo+ migration and Obsidian'),
       findsOneWidget,
     );
   });
@@ -32,7 +32,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('MemoFlow Migration'));
+    await tester.tap(find.text('memo+ Migration'));
     await tester.pumpAndSettle();
 
     expect(find.byType(SettingsPage), findsOneWidget);

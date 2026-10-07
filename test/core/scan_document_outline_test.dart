@@ -59,9 +59,11 @@ void main() {
   });
 
   group('outlineScannedText', () {
-    test('uses the line naming the document, not the letterhead above it', () {
+    test('names a recognised slip after its type, not its letterhead', () {
+      // The issuer's name above the slip is not what this note is: the type
+      // word is, and it is filed under the same word as a tag.
       final draft = outline('江南贸易有限公司\n增值税专用发票\n发票代码 12345');
-      expect(draft?.title, '增值税专用发票');
+      expect(draft?.title, '发票 09-18');
       expect(draft?.tags, <String>['发票', '2026']);
     });
 
@@ -85,9 +87,11 @@ void main() {
       expect(draft?.tags, <String>['invoice', '2026']);
     });
 
-    test('does not title a page with the label alone', () {
+    test('titles a recognised slip by its type and date', () {
+      // Recognised as a receipt, so the body line is no longer the title: the
+      // type word is, and the date is what keeps it distinct from the next one.
       final draft = outline('收 据\n今收到住宿费人民币叁佰元整');
-      expect(draft?.title, '今收到住宿费人民币叁佰元整');
+      expect(draft?.title, '收据 09-18');
       expect(draft?.tags, <String>['收据', '2026']);
     });
 

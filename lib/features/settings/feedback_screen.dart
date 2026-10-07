@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/app_links.dart';
 import '../../platform/platform_route.dart';
 import '../../state/settings/device_preferences_provider.dart';
 import 'export_logs_screen.dart';
@@ -98,13 +99,11 @@ class FeedbackScreen extends ConsumerWidget {
                 color: tokens.textMuted,
               ),
               label: context.t.strings.legacy.msg_how_report,
-              description: 'github.com/hzc073/memoflow/issues/new',
+              description: MemoPlusLinks.feedbackUrl.replaceFirst('https://', ''),
               trailingIcon: Icons.open_in_new,
               onTap: () async {
                 haptic();
-                final uri = Uri.parse(
-                  'https://github.com/hzc073/memoflow/issues/new',
-                );
+                final uri = Uri.parse(MemoPlusLinks.feedbackUrl);
                 try {
                   final launched = await launchUrl(
                     uri,

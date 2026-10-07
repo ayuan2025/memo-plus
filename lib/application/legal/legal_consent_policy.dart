@@ -1,10 +1,10 @@
+import '../../core/app_links.dart';
 import '../../data/models/device_preferences.dart';
 
 abstract final class MemoFlowLegalConsentPolicy {
-  static const String privacyPolicyUrl =
-      'https://memoflow.hzc073.com/help/privacy-policy';
-  static const String termsOfServiceUrl =
-      'https://memoflow.hzc073.com/help/terms-of-service';
+  // 文档托管在 GitHub 仓库 docs/ 目录（见 core/app_links.dart）。
+  static const String privacyPolicyUrl = MemoPlusLinks.privacyPolicyUrl;
+  static const String termsOfServiceUrl = MemoPlusLinks.termsOfServiceUrl;
   static const String requiredSinceAppVersion = '1.0.27';
   static const String currentDocumentsHash = 'memoflow-legal-2026-04-09';
 

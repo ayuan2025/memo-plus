@@ -43,7 +43,7 @@ class DesktopShareTaskWindowApp extends ConsumerWidget {
     return TranslationProvider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'MemoFlow Share',
+        title: 'memo+ Share',
         theme: applyPreferencesToTheme(
           buildAppTheme(Brightness.light),
           legacyThemePrefs,

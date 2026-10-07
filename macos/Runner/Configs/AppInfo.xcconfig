@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = MemoFlow
+PRODUCT_NAME = memo+
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.memoflow.memosFlutterApp
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.memoflow. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright 2026 memo+ contributors. Based on MemoFlow (GPL-3.0).

@@ -18,6 +18,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../core/app_localization.dart';
 import '../../../core/desktop/desktop_titlebar_navigation_policy.dart';
 import '../../../core/image_error_logger.dart';
 import '../../../core/image_formats.dart';
@@ -31,6 +32,7 @@ import '../image_preview_edit_result.dart';
 import '../image_preview_item.dart';
 import '../image_preview_metadata_resolver.dart';
 import '../image_preview_open_request.dart';
+import '../image_quarter_turn.dart';
 import '_image_preview_desktop_frame.dart';
 import '_image_preview_progressive_raster.dart';
 import '_image_preview_zoomable_viewport.dart';
@@ -77,6 +79,28 @@ class ImagePreviewGalleryBodyState
   final Map<String, String> _loggedRenderPlanSignatures = <String, String>{};
   final Map<String, String> _loggedRenderModeSignatures = <String, String>{};
 
+  /// The items on screen, once a replace has changed one of them.
+  ///
+  /// [ImagePreviewOpenRequest.items] is a snapshot the screen cannot write
+  /// back to: a turn or an edit produces a *new* file, and the list that came
+  /// in still points at the old one — so the picture on screen kept showing
+  /// the old orientation while the stored file was already turned. Holding the
+  /// list here lets a replace swap the item in place, the same way the scanner
+  /// swaps the page it is editing.
+  List<ImagePreviewItem>? _replacedItems;
+
+  /// Bumped after every replace, and mixed into the image widget's key.
+  ///
+  /// The picture is rebuilt from [FileImage], whose cache key is the file's
+  /// path *and modification time*; a file written within the same second by a
+  /// rotation can land on the same key and be served from memory still showing
+  /// the old orientation. A new key drops the old entry rather than asking the
+  /// cache to notice anything.
+  int _replaceTick = 0;
+
+  List<ImagePreviewItem> get _items =>
+      _replacedItems ?? widget.request.items;
+
   bool get _isDesktopGallery =>
       widget.isDesktopOverride ??
       (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
@@ -87,16 +111,16 @@ class ImagePreviewGalleryBodyState
       _isPendingPreviewItem(_currentImage!);
 
   bool get _hasPreviousPage => _index > 0;
-  bool get _hasNextPage => _index < widget.request.items.length - 1;
+  bool get _hasNextPage => _index < _items.length - 1;
   bool get _isCurrentImageZoomed => _zoomedImageIndexes.contains(_index);
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'image_preview_gallery');
-    final safeIndex = widget.request.items.isEmpty
+    final safeIndex = _items.isEmpty
         ? 0
-        : widget.request.initialIndex.clamp(0, widget.request.items.length - 1);
+        : widget.request.initialIndex.clamp(0, _items.length - 1);
     _index = safeIndex;
     _controller = PageController(initialPage: safeIndex);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -115,10 +139,10 @@ class ImagePreviewGalleryBodyState
   }
 
   void _goToPage(int targetIndex) {
-    if (widget.request.items.isEmpty) {
+    if (_items.isEmpty) {
       return;
     }
-    final nextIndex = targetIndex.clamp(0, widget.request.items.length - 1);
+    final nextIndex = targetIndex.clamp(0, _items.length - 1);
     if (nextIndex == _index) {
       return;
     }
@@ -136,9 +160,9 @@ class ImagePreviewGalleryBodyState
 
   void _handleImageZoomChanged(int index, bool isZoomed) {
     if (!mounted ||
-        widget.request.items.isEmpty ||
+        _items.isEmpty ||
         index < 0 ||
-        index >= widget.request.items.length) {
+        index >= _items.length) {
       return;
     }
     final hasChanged = isZoomed
@@ -422,10 +446,10 @@ class ImagePreviewGalleryBodyState
   }
 
   ImagePreviewItem? get _currentImage {
-    if (widget.request.items.isEmpty) {
+    if (_items.isEmpty) {
       return null;
     }
-    return widget.request.items[_index];
+    return _items[_index];
   }
 
   bool _isPendingPreviewItem(ImagePreviewItem item) {
@@ -483,11 +507,11 @@ class ImagePreviewGalleryBodyState
   String _safeBaseName(String raw) {
     final trimmed = raw.trim();
     if (trimmed.isEmpty) {
-      return 'MemoFlow';
+      return 'memo+';
     }
     final base = p.basenameWithoutExtension(trimmed);
     if (base.trim().isEmpty) {
-      return 'MemoFlow';
+      return 'memo+';
     }
     return base.replaceAll(RegExp(r'[<>:\"/\\\\|?*]'), '_');
   }
@@ -929,6 +953,96 @@ class ImagePreviewGalleryBodyState
 
   Future<void> triggerEditForTesting() => _editCurrent();
 
+  /// Turns the page a quarter turn clockwise, in place.
+  ///
+  /// Goes through the same replace pipeline the editor does — the turned bytes
+  /// become a new file and the attachment is swapped for it, so the result is
+  /// stored and synced like any other edit. The item on screen is swapped to
+  /// match (see [_replacedItems]): the incoming list is a snapshot that cannot
+  /// be written back to, so without this the screen keeps showing the old
+  /// orientation while the stored file is already turned — which is exactly
+  /// what it looked like. Turning the wrong way is undone by turning it three
+  /// more times, at the cost of one more lossy encode, which is a better trade
+  /// than making every turn wait on a confirmation dialog.
+  Future<void> _rotateCurrent() async {
+    final item = _currentImage;
+    if (item == null || _busy || widget.request.onReplace == null) {
+      return;
+    }
+    if (isSvgImagePreviewItem(item)) {
+      return;
+    }
+    // Taken before the first await so that nothing has to reach back through
+    // an async gap for a piece of text.
+    final turnedMessage = context.tr(
+      zh: '已顺时针旋转 90°',
+      en: 'Turned 90° clockwise',
+    );
+    final failedMessage = context.tr(
+      zh: '旋转失败，请稍后再试',
+      en: 'Could not turn this image',
+    );
+    setState(() => _busy = true);
+    ImagePreviewEditResult? turned;
+    try {
+      final bytes = await _loadBytes(item);
+      if (bytes != null) {
+        final rotated = await compute(rotateImageQuarterTurn, (bytes, 90));
+        if (rotated != null) {
+          turned = await _persistEditedImage(item, rotated);
+        }
+      }
+    } catch (error) {
+      turned = null;
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() => _busy = false);
+    if (turned == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(failedMessage)),
+      );
+      return;
+    }
+    await widget.request.onReplace?.call(turned);
+    if (!mounted) {
+      return;
+    }
+    _showReplacedItem(item, turned);
+    showTopToast(context, turnedMessage);
+  }
+
+  /// Puts [replacement] where [original] is on screen and invalidates what was
+  /// decoded for the old one.
+  ///
+  /// The new id is deliberately *not* the source id: [ImagePreviewItem.id] is
+  /// what the rest of the screen (size lookups, render-mode logs, saved zoom)
+  /// uses to recognise an image, and handing it a fresh one would drop the
+  /// resolved size and make the picture reload from scratch. The tick in the
+  /// widget key is what forces the reload.
+  void _showReplacedItem(
+    ImagePreviewItem original,
+    ImagePreviewEditResult replacement,
+  ) {
+    final turned = ImagePreviewItem(
+      id: original.id,
+      title: replacement.filename,
+      mimeType: replacement.mimeType,
+      localFile: File(replacement.filePath),
+      width: original.width,
+      height: original.height,
+    );
+    setState(() {
+      _replacedItems = <ImagePreviewItem>[
+        for (final entry in _items)
+          if (identical(entry, original) || entry.id == original.id) turned
+          else entry,
+      ];
+      _replaceTick++;
+    });
+  }
+
   Widget _buildLoadingIndicator(BuildContext context) {
     return const Center(child: CircularProgressIndicator());
   }
@@ -977,6 +1091,10 @@ class ImagePreviewGalleryBodyState
       }
       if (preferDirectRender) {
         return Image(
+          // A turned or edited picture is a new file; without a fresh key this
+          // widget is the same one as before and the frame already decoded
+          // stays on screen. The key is what makes the reload happen.
+          key: Key('image_preview_local_${item.id}#$_replaceTick'),
           image: FileImage(file),
           fit: BoxFit.contain,
           filterQuality: FilterQuality.medium,
@@ -1006,6 +1124,9 @@ class ImagePreviewGalleryBodyState
         );
       }
       return ImagePreviewProgressiveRaster(
+        // See the note on the direct-render branch above: a replaced picture
+        // has to become a different widget for the new bytes to be decoded.
+        key: Key('image_preview_raster_${item.id}#$_replaceTick'),
         debugTag: item.id,
         lowResImage: ResizeImage.resizeIfNeeded(
           previewCacheWidth,
@@ -1107,6 +1228,9 @@ class ImagePreviewGalleryBodyState
         );
       }
       return ImagePreviewProgressiveRaster(
+        // See the note on the direct-render branch above: a replaced picture
+        // has to become a different widget for the new bytes to be decoded.
+        key: Key('image_preview_raster_${item.id}#$_replaceTick'),
         debugTag: item.id,
         lowResImage: CachedNetworkImageProvider(
           url,
@@ -1261,7 +1385,14 @@ class ImagePreviewGalleryBodyState
                             preferDirectRender: preferDirectRender,
                           )
                   : SizedBox(
-                      key: Key('image_preview_display_box_${item.id}'),
+                      // The tick makes a replaced picture a different widget:
+                      // the old one kept its place in the tree and the frame
+                      // already on screen — pixels included — survived the
+                      // swap, which is why a turn could be stored correctly
+                      // and still look untouched.
+                      key: Key(
+                        'image_preview_display_box_${item.id}#$_replaceTick',
+                      ),
                       width: displaySize.width,
                       height: displaySize.height,
                       child: shouldWaitForIntrinsicSize
@@ -1320,7 +1451,7 @@ class ImagePreviewGalleryBodyState
   }
 
   Widget _buildPendingPreviewTopBar(BuildContext context) {
-    final pageLabel = '${_index + 1}/${widget.request.items.length}';
+    final pageLabel = '${_index + 1}/${_items.length}';
     return DecoratedBox(
       decoration: const BoxDecoration(color: Colors.black),
       child: SafeArea(
@@ -1370,7 +1501,16 @@ class ImagePreviewGalleryBodyState
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (canEdit)
+        if (canEdit) ...[
+          _actionButton(
+            onTap: _rotateCurrent,
+            child: const Icon(
+              Icons.rotate_90_degrees_cw_rounded,
+              color: Colors.white,
+              size: 22,
+            ),
+          ),
+          const SizedBox(width: 12),
           _actionButton(
             onTap: _editCurrent,
             child: const Icon(
@@ -1379,6 +1519,7 @@ class ImagePreviewGalleryBodyState
               size: 22,
             ),
           ),
+        ],
         if (canEdit && canDownload) const SizedBox(width: 12),
         if (canDownload)
           _actionButton(
@@ -1482,10 +1623,10 @@ class ImagePreviewGalleryBodyState
           physics: _isDesktopGallery || _isCurrentImageZoomed
               ? const NeverScrollableScrollPhysics()
               : null,
-          itemCount: widget.request.items.length,
+          itemCount: _items.length,
           onPageChanged: (value) => setState(() => _index = value),
           itemBuilder: (context, index) =>
-              _buildImagePage(widget.request.items[index], pageIndex: index),
+              _buildImagePage(_items[index], pageIndex: index),
         ),
         if (hasFloatingActions)
           if (usePendingPreviewChrome)
@@ -1537,7 +1678,7 @@ class ImagePreviewGalleryBodyState
               .legacy
               .msg_scene_micro_guide_gallery_controls_mobile;
     final usePendingPreviewChrome = _isPendingPreviewContext;
-    final scaffold = widget.request.items.isEmpty
+    final scaffold = _items.isEmpty
         ? Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
@@ -1587,7 +1728,7 @@ class ImagePreviewGalleryBodyState
                     automaticallyImplyLeading: true,
                   ),
               title: Text(
-                '${_index + 1}/${widget.request.items.length}',
+                '${_index + 1}/${_items.length}',
                 style: const TextStyle(color: Colors.white),
               ),
             ),

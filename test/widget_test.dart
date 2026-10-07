@@ -16,7 +16,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 void main() {
   setUp(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'com.example.memoflow',
       version: '1.0.27',
       buildNumber: '27',

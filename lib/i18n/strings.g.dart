@@ -6,7 +6,7 @@
 /// Locales: 7
 /// Strings: 14918 (2131 per locale)
 ///
-/// Built on 2026-09-27 at 03:25 UTC
+/// Built on 2026-10-07 at 01:45 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -266,7 +266,7 @@ class _StringsStringsLegalConsentEn {
 
 	// Translations
 	String get title => 'Review agreements';
-	String get description => 'Before using MemoFlow, please read and agree to the User Agreement and Privacy Policy.';
+	String get description => 'Before using memo+, please read and agree to the User Agreement and Privacy Policy.';
 	String get linksHint => 'Open the documents below to review the full text.';
 	String get acknowledge => 'I have read and agree to the User Agreement and Privacy Policy';
 	String get continueAction => 'Agree and continue';
@@ -396,7 +396,7 @@ class _StringsStringsLegacyEn {
 	String msg_version_description_v({required Object version}) => 'Version: v${version}';
 	String msg_version_description_v_build({required Object version, required Object build}) => 'Version: v${version} (${build})';
 	String get msg_about_website_link => 'Official Website';
-	String get msg_about_website_link_subtitle => 'Visit the MemoFlow official website';
+	String get msg_about_website_link_subtitle => 'Visit the memo+ official website';
 	String get msg_about_privacy_policy => 'Privacy Policy';
 	String get msg_about_privacy_policy_subtitle => 'View privacy and data usage details';
 	String get msg_about_user_agreement => 'User Agreement';
@@ -410,7 +410,7 @@ class _StringsStringsLegacyEn {
 	String get msg_status_available => 'Live';
 	String get msg_status_placeholder => 'Soon';
 	String get msg_debug_tap_logo_enter_debug_tools => 'Debug: Tap the logo 5 times to open debug tools';
-	String get msg_donors_intro_thanks => 'Thanks to all users who support MemoFlow.\nYour donations help us maintain and improve the project.\n\nAcknowledged below.';
+	String get msg_donors_intro_thanks => 'Thanks to all users who support memo+.\nYour donations help us maintain and improve the project.\n\nAcknowledged below.';
 	String get msg_enter_keywords_search_box_query_local => 'Enter keywords in the search box to query local content and tags. Works offline; for first use, wait until local indexing finishes.';
 	String get msg_memo_not_found_locally => 'Memo not found locally';
 	String get msg_token => 'Token';
@@ -439,7 +439,7 @@ class _StringsStringsLegacyEn {
 	String get msg_request_cancelled => 'Request cancelled.';
 	String get msg_generating => 'Generating?';
 	String get msg_permissions_denied_reminders_disabled => 'Permissions denied. Reminders disabled.';
-	String get msg_memoflow_local_reminders => 'MemoFlow local reminders';
+	String get msg_memoflow_local_reminders => 'memo+ local reminders';
 	String get msg_use_legacy_endpoints_older_memos_servers => 'Use legacy endpoints (for older Memos servers).';
 	String get msg_no_comments_yet => 'No comments yet';
 	String get msg_open => 'Open';
@@ -630,14 +630,14 @@ class _StringsStringsLegacyEn {
 	String get msg_recycle_bin => 'Recycle Bin';
 	String get msg_unpin => 'Unpin';
 	String get msg_advanced_security => 'Advanced & security';
-	String get msg_run_issues_memoflow_e_g_sync => 'If you run into issues in MemoFlow (e.g. sync failures, crashes), please follow the steps below to help us diagnose and fix the problem faster.\\n\\n';
+	String get msg_run_issues_memoflow_e_g_sync => 'If you run into issues in memo+ (e.g. sync failures, crashes), please follow the steps below to help us diagnose and fix the problem faster.\\n\\n';
 	String get msg_remove_all_reminder_times_memo => 'Remove all reminder times for this memo.';
 	String get msg_no_summary_save => 'No summary to save';
 	String get msg_reset_language_selection => 'Reset language selection';
 	String get msg_v_30_days => '30 days';
 	String get msg_e_g_mood_check => 'e.g. Mood check';
 	String get msg_note_some_tokens_returned_only_once => 'Tip: Some tokens are shown only once. Save them securely when they are first displayed.';
-	String get msg_probe_memo_can_delete => 'This memo is created by MemoFlow API probe and can be safely deleted.';
+	String get msg_probe_memo_can_delete => 'This memo is created by memo+ API probe and can be safely deleted.';
 	String get msg_syncing => 'Syncing...';
 	String get msg_retention => 'Retention';
 	String get msg_open_login_screen => 'Open login screen';
@@ -683,7 +683,7 @@ class _StringsStringsLegacyEn {
 	String get msg_no_download_url_available => 'No download URL available';
 	String get msg_record_create_memos => 'Record to create memos';
 	String get msg_signing => 'Signing in...';
-	String get msg_memoflow_uses_system_location_permission_get => 'MemoFlow uses system location permission to get coordinates, then reverse geocodes via the selected provider service (such as Amap, Baidu, or Google). You can choose the display precision above.';
+	String get msg_memoflow_uses_system_location_permission_get => 'memo+ uses system location permission to get coordinates, then reverse geocodes via the selected provider service (such as Amap, Baidu, or Google). You can choose the display precision above.';
 	String get msg_continue => 'Continue';
 	String get msg_notification_content_unavailable => 'Notification content unavailable';
 	String get msg_unable_read_file_path => 'Unable to read file path.';
@@ -715,7 +715,7 @@ class _StringsStringsLegacyEn {
 	String get msg_after_confirming_support_unlock_limited_gold => 'After confirming support, you will unlock a limited gold badge or a forever ad-free promise (though there were never ads).';
 	String get msg_failed_open_system_settings => 'Failed to open system settings';
 	String get msg_no_mood_trend => 'No mood trend';
-	String get msg_memoflow_export => '# MemoFlow Export';
+	String get msg_memoflow_export => '# memo+ Export';
 	String get msg_sync_queue => 'Sync queue';
 	String get msg_only_delete_sync_task_memo_kept => 'Only delete the sync task; the memo will be kept.';
 	String get msg_add_home_screen => 'Add to Home Screen';
@@ -777,7 +777,7 @@ class _StringsStringsLegacyEn {
 	String get msg_view_imported_memos => 'View imported memos';
 	String get msg_load_failed => 'Load failed';
 	String get msg_disk_content_conflicts_local_pending_changes => 'Disk content conflicts with local pending changes. Use disk to overwrite local content.';
-	String get msg_all_history_so_far_memoflow_since => 'That is all the history so far\\nMEMOFLOW SINCE 2023';
+	String get msg_all_history_so_far_memoflow_since => 'That is all the history so far\\nMEMO+ SINCE 2026';
 	String get msg_cancelling => 'Cancelling';
 	String get msg_reading_file => 'Reading file...';
 	String get msg_switch_workspace => 'Switch workspace';
@@ -821,7 +821,7 @@ class _StringsStringsLegacyEn {
 	String get msg_chinese_traditional => 'Chinese (Traditional)';
 	String get msg_private_2 => 'Private';
 	String get msg_current_streak => 'Current streak';
-	String get msg_generated_ai_memoflow => 'Generated by AI · MemoFlow';
+	String get msg_generated_ai_memoflow => 'Generated by AI · memo+';
 	String get msg_edit_completed => 'Edit completed';
 	String get msg_local => 'Local';
 	String get msg_edit => 'Edit';
@@ -862,13 +862,13 @@ class _StringsStringsLegacyEn {
 	String get msg_empty_content => '(Empty content)';
 	String get msg_note_most_features_offline_stats_ai => 'Note: Most features (offline/stats/AI reports/export) work without backend changes, but tokens are returned only once?please keep them safe.';
 	String get msg_fixed => 'Fixed: ';
-	String get msg_allow_sharing_links_images_other_apps => 'Allow sharing links or images from other apps into MemoFlow.';
+	String get msg_allow_sharing_links_images_other_apps => 'Allow sharing links or images from other apps into memo+.';
 	String get msg_invalid_request_parameters => 'Invalid request parameters';
 	String get msg_enter_api_url => 'Please enter API URL';
 	String msg_pending({required Object result_pendingCount}) => ' (pending ${result_pendingCount})';
 	String msg_days_3({required Object currentStreak}) => '${currentStreak} days';
 	String get msg_poster_not_ready_yet => 'Poster is not ready yet';
-	String get msg_generated_memoflow => 'Generated by MemoFlow';
+	String get msg_generated_memoflow => 'Generated by memo+';
 	String get msg_enter_name_2 => 'Enter a name';
 	String get msg_version => 'Version';
 	String get msg_memo_missing_disk_but_has_local => 'The memo is missing on disk but has local pending changes. Use disk to delete locally.';
@@ -948,7 +948,7 @@ class _StringsStringsLegacyEn {
 	String get msg_feedback => 'Feedback';
 	String get msg_help_diagnostics => 'Help & Diagnostics';
 	String get msg_storage_space => 'Storage Space';
-	String get msg_storage_space_subtitle => 'Review MemoFlow known usage and clear cache.';
+	String get msg_storage_space_subtitle => 'Review memo+ known usage and clear cache.';
 	String get msg_image_bed_2 => 'Image Bed';
 	String get msg_image_compression => 'Image Compression';
 	String get msg_enable_image_compression => 'Enable image compression';
@@ -1137,10 +1137,10 @@ class _StringsStringsLegacyEn {
 	String get msg_clear_media_cache_failed => 'Media cache cleanup failed';
 	String get msg_clear_media_cache_partial_failure => 'Media cache cleanup partially completed';
 	String msg_self_repair_failed({required Object e}) => 'Self repair failed: ${e}';
-	String get msg_memoflow_known_usage => 'MemoFlow known usage';
-	String get msg_storage_device_capacity_unavailable => 'Device capacity is unavailable. MemoFlow known usage and categories are still shown.';
-	String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow uses less than 1% of device capacity';
-	String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow uses ${percent}% of device capacity';
+	String get msg_memoflow_known_usage => 'memo+ known usage';
+	String get msg_storage_device_capacity_unavailable => 'Device capacity is unavailable. memo+ known usage and categories are still shown.';
+	String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ uses less than 1% of device capacity';
+	String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ uses ${percent}% of device capacity';
 	String get msg_storage_cache => 'Cache';
 	String get msg_storage_note_content => 'Note content';
 	String get msg_storage_note_images => 'Note images';
@@ -1325,7 +1325,7 @@ class _StringsStringsLegacyEn {
 	String get msg_log_file_created => 'Log bundle exported';
 	String get msg_delete_sync_task => 'Delete sync task';
 	String get msg_include_archived_2 => '- Include archived';
-	String get msg_memoflow_side_project_i_build_my => 'MemoFlow is a side project I build in my spare time. I have been up late fixing bugs and could really use an iced Americano. Your support refuels my battery and helps new features ship ';
+	String get msg_memoflow_side_project_i_build_my => 'memo+ is a side project I build in my spare time. I have been up late fixing bugs and could really use an iced Americano. Your support refuels my battery and helps new features ship ';
 	String msg_failed_generate({required Object e}) => 'Failed to generate: ${e}';
 	String get msg_search_logs => 'Search logs';
 	String get msg_active_days => 'Active days';
@@ -1456,7 +1456,7 @@ class _StringsStringsLegacyEn {
 	String get msg_permissions_system_settings => 'Permissions & system settings';
 	String get msg_waiting_tasks_stop => 'Waiting for tasks to stop';
 	String get msg_done_2 => 'Done';
-	String get msg_parsing_memoflow_export => 'Parsing MemoFlow export...';
+	String get msg_parsing_memoflow_export => 'Parsing memo+ export...';
 	String msg_location_updated({required Object next_displayText_fractionDigits_6}) => 'Location updated: ${next_displayText_fractionDigits_6}';
 	String get msg_checking_server_version => 'Checking server version...';
 	String get msg_next_time_back_fixing_bugs => '👀 Next time, back to fixing bugs';
@@ -1477,14 +1477,14 @@ class _StringsStringsLegacyEn {
 	String get msg_thanks_energy_fully_restored => 'Thanks! Energy fully restored ⚡';
 	String get msg_connection_timeout_check_network_api_url => 'Connection timeout. Check network or API URL.';
 	String get msg_local_network_migration => 'Local Network Migration';
-	String get msg_local_network_migration_desc => 'Use local network migration to connect MemoFlow devices and third-party note tools over your LAN. MemoFlow migration and Obsidian are supported today.';
+	String get msg_local_network_migration_desc => 'Use local network migration to connect memo+ devices and third-party note tools over your LAN. memo+ migration and Obsidian are supported today.';
 	String get msg_connect_obsidian => 'Connect Obsidian';
 	String get msg_connect_obsidian_desc => 'Pair and sync note content with Obsidian over your local network.';
 	String get msg_local_network_migration_more_targets => 'More targets, including SiYuan and other third-party tools, will be added here later.';
-	String get msg_memoflow_migration => 'MemoFlow Migration';
-	String get msg_memoflow_migration_target_desc => 'Migrate local-workspace notes and settings to another MemoFlow device over your local network.';
-	String get msg_memoflow_migration_targets_summary => 'MemoFlow / Obsidian';
-	String get msg_memoflow_migration_role_desc => 'Choose whether this device sends or receives a one-time local migration session. Keep both devices on the same LAN and keep MemoFlow in foreground during transfer.';
+	String get msg_memoflow_migration => 'memo+ Migration';
+	String get msg_memoflow_migration_target_desc => 'Migrate local-workspace notes and settings to another memo+ device over your local network.';
+	String get msg_memoflow_migration_targets_summary => 'memo+ / Obsidian';
+	String get msg_memoflow_migration_role_desc => 'Choose whether this device sends or receives a one-time local migration session. Keep both devices on the same LAN and keep memo+ in foreground during transfer.';
 	String get msg_memoflow_migration_sender => 'I\'m the Sender';
 	String get msg_memoflow_migration_sender_desc => 'Choose notes and settings from the current local workspace, then connect to a nearby receiver.';
 	String get msg_memoflow_migration_sender_only_local_mode => 'The sender role is available only when this device is using a local workspace.';
@@ -1527,8 +1527,8 @@ class _StringsStringsLegacyEn {
 	String get msg_memoflow_migration_workspace_name => 'Workspace';
 	String get msg_memoflow_migration_scan_title => 'Scan receiver QR';
 	String get msg_memoflow_migration_scan_hint => 'Scan the QR code shown on the receiver device.';
-	String get msg_memoflow_migration_foreground_notice => 'Keep MemoFlow in foreground on both devices during migration.';
-	String get msg_bridge_component_title => 'MemoFlow Bridge';
+	String get msg_memoflow_migration_foreground_notice => 'Keep memo+ in foreground on both devices during migration.';
+	String get msg_bridge_component_title => 'memo+ Bridge';
 	String get msg_bridge_component_desc => 'Pair with the Obsidian plugin for local sync.';
 	String get msg_bridge_title => 'Connect Obsidian';
 	String get msg_bridge_local_mode_only => 'Pair with Obsidian over your local network. Other targets may come later.';
@@ -1661,7 +1661,7 @@ class _StringsStringsLegacyEn {
 	String get msg_close_window_minimize_to_tray => 'Minimize to tray when closing window';
 	String get msg_close_window_minimize_to_tray_desc => 'When enabled, clicking the top-right close button will not exit the app. You can restore the window from the system tray.';
 	String get msg_close_window_keep_in_menu_bar => 'Keep running in menu bar when closing window';
-	String get msg_close_window_keep_in_menu_bar_desc => 'When enabled, closing the main window hides it and keeps MemoFlow available from the menu bar. Use Quit to exit the app.';
+	String get msg_close_window_keep_in_menu_bar_desc => 'When enabled, closing the main window hides it and keeps memo+ available from the menu bar. Use Quit to exit the app.';
 	String get msg_local_storage_unavailable => 'Local storage is unavailable';
 	String get msg_check_system_permissions_or_retry_later => 'Please check system permissions or try again later.';
 	String msg_source_value({required Object source}) => 'Source: ${source}';
@@ -1690,7 +1690,7 @@ class _StringsStringsLegacyEn {
 	String get msg_focus_input_area => 'Focus input area';
 	String get msg_toggle_sidebar => 'Toggle sidebar';
 	String get msg_open_settings => 'Open settings';
-	String get msg_show_hide_memoflow => 'Show / hide MemoFlow';
+	String get msg_show_hide_memoflow => 'Show / hide memo+';
 	String get msg_publish_memo => 'Publish memo';
 	String get msg_bold => 'Bold';
 	String get msg_underline => 'Underline';
@@ -1802,12 +1802,12 @@ class _StringsStringsLegacyEn {
 	String get msg_save_failed_check_content_retry => 'Save failed. Please check the content and try again.';
 	String get msg_quick_input_channel_not_ready_retry => 'Quick input channel is not ready. Please reopen the main window and try again.';
 	String msg_visibility_value({required Object value}) => 'Visibility: ${value}';
-	String get msg_saved_to_memoflow => 'Saved to MemoFlow';
+	String get msg_saved_to_memoflow => 'Saved to memo+';
 	String msg_quick_input_failed_with_error({required Object error}) => 'Quick input failed: ${error}';
 	String get msg_feature => 'Feature';
 	String msg_feature_not_implemented_placeholder_with_label({required Object label}) => '“${label}” is not implemented yet (placeholder).';
 	String msg_quick_input_save_failed_with_error({required Object error}) => 'Quick input save failed: ${error}';
-	String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Show / hide MemoFlow failed: ${error}';
+	String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Show / hide memo+ failed: ${error}';
 	String get msg_shortcuts_overview_opened => 'Opened shortcuts overview.';
 	String msg_unsupported_version_value({required Object version}) => 'Unsupported version: ${version}';
 	String msg_version_probe_passed_with_version({required Object version}) => 'v${version} probe passed';
@@ -3051,7 +3051,7 @@ class _StringsStringsLegalConsentDe extends _StringsStringsLegalConsentEn {
 
 	// Translations
 	@override String get title => 'Bitte zuerst zustimmen';
-	@override String get description => 'Bevor du MemoFlow nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu.';
+	@override String get description => 'Bevor du memo+ nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu.';
 	@override String get linksHint => 'Ueber die folgenden Links kannst du den vollstaendigen Text lesen.';
 	@override String get acknowledge => 'Ich habe die Nutzungsbedingungen und die Datenschutzerklaerung gelesen und stimme ihnen zu';
 	@override String get continueAction => 'Zustimmen und fortfahren';
@@ -3168,7 +3168,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override final _StringsDe _root; // ignore: unused_field
 
 	// Translations
-	@override String get msg_memos_backend_docs => 'MemoFlow-Backend-Dokumentation';
+	@override String get msg_memos_backend_docs => 'memo+-Backend-Dokumentation';
 	@override String get msg_remember_moment_feel_warmth_life_take => 'Erinnere dich an den Moment und spüre die Wärme des Lebens.\\nMach jeden Tag eine kurze Rückschau.';
 	@override String get msg_sure_want_delete_shortcut => 'Möchten Sie diese Verknüpfung wirklich löschen?';
 	@override String get msg_scan_completed => 'Scan abgeschlossen';
@@ -3180,7 +3180,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => 'Version: v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => 'Version: v${version} (${build})';
 	@override String get msg_about_website_link => 'Offizielle Website';
-	@override String get msg_about_website_link_subtitle => 'MemoFlow-Website besuchen';
+	@override String get msg_about_website_link_subtitle => 'memo+-Website besuchen';
 	@override String get msg_about_privacy_policy => 'Datenschutzerklaerung';
 	@override String get msg_about_privacy_policy_subtitle => 'Datenschutz- und Datennutzung ansehen';
 	@override String get msg_about_user_agreement => 'Nutzungsbedingungen';
@@ -3194,7 +3194,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => 'Verfuegbar';
 	@override String get msg_status_placeholder => 'Geplant';
 	@override String get msg_debug_tap_logo_enter_debug_tools => 'Debug: Logo 5-mal tippen, um Debug-Tools zu oeffnen';
-	@override String get msg_donors_intro_thanks => 'Danke an alle, die MemoFlow unterstuetzen.\nEure Spenden helfen bei Wartung und Weiterentwicklung.\n\nDie Liste findet ihr unten.';
+	@override String get msg_donors_intro_thanks => 'Danke an alle, die memo+ unterstuetzen.\nEure Spenden helfen bei Wartung und Weiterentwicklung.\n\nDie Liste findet ihr unten.';
 	@override String get msg_enter_keywords_search_box_query_local => 'Geben Sie Schlüsselwörter in das Suchfeld ein, um lokale Inhalte und Tags zu durchsuchen. Funktioniert offline; warten Sie bei der ersten Nutzung, bis die lokale Indizierung abgeschlossen ist.';
 	@override String get msg_memo_not_found_locally => 'Memo lokal nicht gefunden';
 	@override String get msg_token => 'Token';
@@ -3223,7 +3223,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => 'Anfrage abgebrochen.';
 	@override String get msg_generating => 'Wird generiert?';
 	@override String get msg_permissions_denied_reminders_disabled => 'Berechtigungen verweigert. Erinnerungen deaktiviert.';
-	@override String get msg_memoflow_local_reminders => 'MemoFlow lokale Erinnerungen';
+	@override String get msg_memoflow_local_reminders => 'memo+ lokale Erinnerungen';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => 'Verwenden Sie Legacy-Endpunkte (für ältere Memos-Server).';
 	@override String get msg_no_comments_yet => 'Noch keine Kommentare';
 	@override String get msg_open => 'Öffnen';
@@ -3413,14 +3413,14 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => 'Papierkorb';
 	@override String get msg_unpin => 'Lösen';
 	@override String get msg_advanced_security => 'Erweitert & Sicherheit';
-	@override String get msg_run_issues_memoflow_e_g_sync => 'Wenn du in MemoFlow auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => 'Wenn du in memo+ auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => 'Alle Erinnerungszeiten für dieses Memo entfernen.';
 	@override String get msg_no_summary_save => 'Keine Zusammenfassung zum Speichern';
 	@override String get msg_reset_language_selection => 'Sprachauswahl zurücksetzen';
 	@override String get msg_v_30_days => '30 Tage';
 	@override String get msg_e_g_mood_check => 'z. B. Stimmungscheck';
 	@override String get msg_note_some_tokens_returned_only_once => 'Hinweis: Einige Tokens werden nur einmal angezeigt. Bitte beim ersten Anzeigen sicher speichern.';
-	@override String get msg_probe_memo_can_delete => 'Diese Notiz wurde durch die MemoFlow API-Pruefung erstellt und kann sicher geloescht werden.';
+	@override String get msg_probe_memo_can_delete => 'Diese Notiz wurde durch die memo+ API-Pruefung erstellt und kann sicher geloescht werden.';
 	@override String get msg_syncing => 'Synchronisierung läuft...';
 	@override String get msg_retention => 'Aufbewahrung';
 	@override String get msg_open_login_screen => 'Anmeldebildschirm öffnen';
@@ -3469,7 +3469,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_no_download_url_available => 'Keine Download-URL verfügbar';
 	@override String get msg_record_create_memos => 'Aufnehmen, um Memos zu erstellen';
 	@override String get msg_signing => 'Anmeldung...';
-	@override String get msg_memoflow_uses_system_location_permission_get => 'MemoFlow verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden.';
+	@override String get msg_memoflow_uses_system_location_permission_get => 'memo+ verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden.';
 	@override String get msg_continue => 'Weiter';
 	@override String get msg_notification_content_unavailable => 'Benachrichtigungsinhalt nicht verfügbar';
 	@override String get msg_unable_read_file_path => 'Dateipfad kann nicht gelesen werden.';
@@ -3501,7 +3501,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => 'Nach bestätigter Unterstützung schalten Sie entweder ein zeitlich begrenztes Gold-Abzeichen oder ein dauerhaft werbefreies Versprechen frei (obwohl es nie Werbung gab).';
 	@override String get msg_failed_open_system_settings => 'Systemeinstellungen konnten nicht geöffnet werden';
 	@override String get msg_no_mood_trend => 'Kein Stimmungstrend';
-	@override String get msg_memoflow_export => '# MemoFlow-Export';
+	@override String get msg_memoflow_export => '# memo+-Export';
 	@override String get msg_sync_queue => 'Synchronisierungswarteschlange';
 	@override String get msg_only_delete_sync_task_memo_kept => 'Nur die Synchronisierungsaufgabe löschen; das Memo bleibt erhalten.';
 	@override String get msg_add_home_screen => 'Zum Startbildschirm hinzufügen';
@@ -3563,7 +3563,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => 'Importierte Memos anzeigen';
 	@override String get msg_load_failed => 'Laden fehlgeschlagen';
 	@override String get msg_disk_content_conflicts_local_pending_changes => 'Der Festplatteninhalt steht in Konflikt mit lokalen ausstehenden Änderungen. Verwende die Festplatte, um den lokalen Inhalt zu überschreiben.';
-	@override String get msg_all_history_so_far_memoflow_since => 'Das ist bisher die gesamte Chronik\\nMEMOFLOW SEIT 2023';
+	@override String get msg_all_history_so_far_memoflow_since => 'Das ist bisher die gesamte Chronik\\nMEMO+ SEIT 2026';
 	@override String get msg_cancelling => 'Wird abgebrochen';
 	@override String get msg_reading_file => 'Datei wird gelesen...';
 	@override String get msg_switch_workspace => 'Arbeitsbereich wechseln';
@@ -3607,7 +3607,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => 'Chinesisch (Traditionell)';
 	@override String get msg_private_2 => 'Privat';
 	@override String get msg_current_streak => 'Aktuelle Serie';
-	@override String get msg_generated_ai_memoflow => 'Erstellt von KI · MemoFlow';
+	@override String get msg_generated_ai_memoflow => 'Erstellt von KI · memo+';
 	@override String get msg_edit_completed => 'Bearbeitung abgeschlossen';
 	@override String get msg_local => 'Lokal';
 	@override String get msg_edit => 'Bearbeiten';
@@ -3655,13 +3655,13 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '(Leerer Inhalt)';
 	@override String get msg_note_most_features_offline_stats_ai => 'Hinweis: Die meisten Funktionen (offline/Statistiken/KI-Berichte/Export) funktionieren ohne Backend-Änderungen, aber Token werden nur einmal zurückgegeben?bitte bewahren Sie sie sicher auf.';
 	@override String get msg_fixed => 'Behoben: ';
-	@override String get msg_allow_sharing_links_images_other_apps => 'Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in MemoFlow.';
+	@override String get msg_allow_sharing_links_images_other_apps => 'Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in memo+.';
 	@override String get msg_invalid_request_parameters => 'Ungültige Anfrageparameter';
 	@override String get msg_enter_api_url => 'Bitte API-URL eingeben';
 	@override String msg_pending({required Object result_pendingCount}) => ' (ausstehend ${result_pendingCount})';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak} Tage';
 	@override String get msg_poster_not_ready_yet => 'Poster ist noch nicht bereit';
-	@override String get msg_generated_memoflow => 'Erstellt von MemoFlow';
+	@override String get msg_generated_memoflow => 'Erstellt von memo+';
 	@override String get msg_enter_name_2 => 'Geben Sie einen Namen ein';
 	@override String get msg_version => 'Version';
 	@override String get msg_memo_missing_disk_but_has_local => 'Das Memo fehlt auf der Festplatte, hat aber lokale ausstehende Änderungen. Verwenden Sie die Festplatte, um lokal zu löschen.';
@@ -3741,7 +3741,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => 'Feedback';
 	@override String get msg_help_diagnostics => 'Hilfe & Diagnose';
 	@override String get msg_storage_space => 'Speicherplatz';
-	@override String get msg_storage_space_subtitle => 'Bekannte MemoFlow-Nutzung pruefen und Cache leeren.';
+	@override String get msg_storage_space_subtitle => 'Bekannte memo+-Nutzung pruefen und Cache leeren.';
 	@override String get msg_image_bed_2 => 'Bildspeicher';
 	@override String get msg_image_compression => 'Bildkomprimierung';
 	@override String get msg_enable_image_compression => 'Bildkomprimierung aktivieren';
@@ -3919,10 +3919,10 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => 'Mediencache-Bereinigung fehlgeschlagen';
 	@override String get msg_clear_media_cache_partial_failure => 'Mediencache-Bereinigung teilweise abgeschlossen';
 	@override String msg_self_repair_failed({required Object e}) => 'Selbstreparatur fehlgeschlagen: ${e}';
-	@override String get msg_memoflow_known_usage => 'Bekannte MemoFlow-Nutzung';
-	@override String get msg_storage_device_capacity_unavailable => 'Geraetekapazitaet ist nicht verfuegbar. MemoFlow-Nutzung und Kategorien werden weiter angezeigt.';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow nutzt weniger als 1% der Geraetekapazitaet';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow nutzt ${percent}% der Geraetekapazitaet';
+	@override String get msg_memoflow_known_usage => 'Bekannte memo+-Nutzung';
+	@override String get msg_storage_device_capacity_unavailable => 'Geraetekapazitaet ist nicht verfuegbar. memo+-Nutzung und Kategorien werden weiter angezeigt.';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ nutzt weniger als 1% der Geraetekapazitaet';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ nutzt ${percent}% der Geraetekapazitaet';
 	@override String get msg_storage_cache => 'Cache';
 	@override String get msg_storage_note_content => 'Notizinhalt';
 	@override String get msg_storage_note_images => 'Notizbilder';
@@ -4107,7 +4107,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => 'Protokolle exportiert';
 	@override String get msg_delete_sync_task => 'Synchronisierungsaufgabe löschen';
 	@override String get msg_include_archived_2 => '- Archivierte einschließen';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlow ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen ';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+ ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen ';
 	@override String msg_failed_generate({required Object e}) => 'Generierung fehlgeschlagen: ${e}';
 	@override String get msg_search_logs => 'Protokolle durchsuchen';
 	@override String get msg_active_days => 'Aktive Tage';
@@ -4229,7 +4229,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => 'Berechtigungen & Systemeinstellungen';
 	@override String get msg_waiting_tasks_stop => 'Warten, bis Aufgaben beendet sind';
 	@override String get msg_done_2 => 'Fertig';
-	@override String get msg_parsing_memoflow_export => 'MemoFlow-Export wird analysiert...';
+	@override String get msg_parsing_memoflow_export => 'memo+-Export wird analysiert...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => 'Standort aktualisiert: ${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => 'Serverversion wird überprüft...';
 	@override String get msg_next_time_back_fixing_bugs => '👀 Nächstes Mal zurück zum Beheben von Fehlern';
@@ -4249,7 +4249,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_exit_app => 'App beenden';
 	@override String get msg_thanks_energy_fully_restored => 'Danke! Energie vollständig wiederhergestellt ⚡';
 	@override String get msg_connection_timeout_check_network_api_url => 'Zeitüberschreitung bei der Verbindung. Überprüfe das Netzwerk oder die API-URL.';
-	@override String get msg_bridge_component_title => 'MemoFlow-Bridge';
+	@override String get msg_bridge_component_title => 'memo+-Bridge';
 	@override String get msg_bridge_component_desc => 'Mit dem Obsidian-Plugin koppeln und lokal synchronisieren.';
 	@override String get msg_bridge_title => 'Mit Obsidian verbinden';
 	@override String get msg_bridge_local_mode_only => 'Über das lokale Netzwerk mit Obsidian koppeln. Weitere Ziele können später folgen.';
@@ -4439,7 +4439,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_restore_defaults => 'Standardeinstellungen wiederherstellen';
 	@override String get msg_restore_window => 'Wiederherstellen';
 	@override String get msg_save_failed_check_content_retry => 'Speichern fehlgeschlagen. Bitte überprüfen Sie den Inhalt und versuchen Sie es erneut.';
-	@override String get msg_saved_to_memoflow => 'In MemoFlow gespeichert';
+	@override String get msg_saved_to_memoflow => 'In memo+ gespeichert';
 	@override String get msg_screenshot_mode => 'Screenshot-Modus';
 	@override String get msg_screenshot_mode_detail => 'Blenden Sie Status-/Navigationsleisten für saubere Aufnahmen aus';
 	@override String get msg_select_file_save_location => 'Bitte wählen Sie einen Speicherort für die Datei aus.';
@@ -4451,7 +4451,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_shortcuts_overview => 'Übersicht über die Verknüpfungen';
 	@override String get msg_shortcuts_overview_opened => 'Geöffnete Verknüpfungsübersicht.';
 	@override String get msg_shortcuts_supported_windows_macos => 'Nur Windows und macOS unterstützen Verknüpfungseinstellungen.';
-	@override String get msg_show_hide_memoflow => 'MemoFlow ein-/ausblenden';
+	@override String get msg_show_hide_memoflow => 'memo+ ein-/ausblenden';
 	@override String msg_showing_last_lines({required Object lines}) => 'Zeigt die letzten ${lines}-Zeilen';
 	@override String msg_source_value({required Object source}) => 'Quelle: ${source}';
 	@override String get msg_startup_slogan => 'Lassen Sie die Aufzeichnungen natürlich fließen';
@@ -4480,7 +4480,7 @@ class _StringsStringsLegacyDe extends _StringsStringsLegacyEn {
 	@override String get msg_template_variables => 'Vorlagenvariablen';
 	@override String get msg_time_format_variable => 'Zeitformat ({{time}})';
 	@override String get msg_todo => 'Todo';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Ein-/Ausblenden von MemoFlow fehlgeschlagen: ${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Ein-/Ausblenden von memo+ fehlgeschlagen: ${error}';
 	@override String get msg_toggle_sidebar => 'Seitenleiste umschalten';
 	@override String get msg_total_characters_metric => 'Gesamtzahl der Zeichen';
 	@override String get msg_total_characters_short => 'Gesamtzahl der Zeichen';
@@ -5707,7 +5707,7 @@ class _StringsStringsLegalConsentJa extends _StringsStringsLegalConsentEn {
 
 	// Translations
 	@override String get title => '利用前に同意が必要です';
-	@override String get description => 'MemoFlow を利用する前に、利用規約とプライバシーポリシーを読み、同意してください。';
+	@override String get description => 'memo+ を利用する前に、利用規約とプライバシーポリシーを読み、同意してください。';
 	@override String get linksHint => '全文は以下のリンクから確認できます。';
 	@override String get acknowledge => '利用規約とプライバシーポリシーを読み、同意しました';
 	@override String get continueAction => '同意して続行';
@@ -5836,7 +5836,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => 'バージョン: v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => 'バージョン: v${version} (${build})';
 	@override String get msg_about_website_link => '公式サイト';
-	@override String get msg_about_website_link_subtitle => 'MemoFlow の公式サイトを開く';
+	@override String get msg_about_website_link_subtitle => 'memo+ の公式サイトを開く';
 	@override String get msg_about_privacy_policy => 'プライバシーポリシー';
 	@override String get msg_about_privacy_policy_subtitle => 'プライバシーとデータ利用について確認';
 	@override String get msg_about_user_agreement => '利用規約';
@@ -5850,7 +5850,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => '利用可';
 	@override String get msg_status_placeholder => '準備中';
 	@override String get msg_debug_tap_logo_enter_debug_tools => 'Debug: ロゴを5回タップでデバッグツールを開く';
-	@override String get msg_donors_intro_thanks => 'MemoFlow を支えてくださる皆さまに感謝します。\nご寄付により、継続的な保守と改善が可能になります。\n\n以下にお名前を掲載いたします。';
+	@override String get msg_donors_intro_thanks => 'memo+ を支えてくださる皆さまに感謝します。\nご寄付により、継続的な保守と改善が可能になります。\n\n以下にお名前を掲載いたします。';
 	@override String get msg_enter_keywords_search_box_query_local => '検索ボックスにキーワードを入力して、ローカルの内容とタグを検索します。オフラインで利用可能です。初回利用時はローカルインデックスの作成完了までお待ちください。';
 	@override String get msg_memo_not_found_locally => 'メモがローカルに見つかりません';
 	@override String get msg_token => 'トークン';
@@ -5879,7 +5879,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => 'リクエストがキャンセルされました。';
 	@override String get msg_generating => '生成しますか？';
 	@override String get msg_permissions_denied_reminders_disabled => '権限が拒否されました。リマインダーは無効です。';
-	@override String get msg_memoflow_local_reminders => 'MemoFlow ローカルリマインダー';
+	@override String get msg_memoflow_local_reminders => 'memo+ ローカルリマインダー';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => 'レガシーエンドポイントを使用（旧Memosサーバー向け）。';
 	@override String get msg_no_comments_yet => 'まだコメントがありません';
 	@override String get msg_open => '開く';
@@ -6069,14 +6069,14 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => 'ごみ箱';
 	@override String get msg_unpin => 'ピン留めを解除';
 	@override String get msg_advanced_security => '詳細とセキュリティ';
-	@override String get msg_run_issues_memoflow_e_g_sync => 'MemoFlowで問題（例: 同期失敗、クラッシュ）が発生した場合は、以下の手順に従ってください。問題の診断と修正をより迅速に行うために役立ちます。\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => 'memo+で問題（例: 同期失敗、クラッシュ）が発生した場合は、以下の手順に従ってください。問題の診断と修正をより迅速に行うために役立ちます。\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => 'このメモのすべてのリマインダー時刻を削除します。';
 	@override String get msg_no_summary_save => '保存する要約がありません';
 	@override String get msg_reset_language_selection => '言語選択をリセット';
 	@override String get msg_v_30_days => '30日';
 	@override String get msg_e_g_mood_check => '例: 気分チェック';
 	@override String get msg_note_some_tokens_returned_only_once => '注意: 一部のトークンは初回表示時にしか確認できません。表示されたらすぐ安全に保存してください。';
-	@override String get msg_probe_memo_can_delete => 'このメモは MemoFlow API 探測で作成されたもので、安全に削除できます。';
+	@override String get msg_probe_memo_can_delete => 'このメモは memo+ API 探測で作成されたもので、安全に削除できます。';
 	@override String get msg_syncing => '同期中...';
 	@override String get msg_retention => '保持期間';
 	@override String get msg_open_login_screen => 'ログイン画面を開く';
@@ -6125,7 +6125,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_no_download_url_available => 'ダウンロードURLが利用できません';
 	@override String get msg_record_create_memos => 'メモを作成するために記録する';
 	@override String get msg_signing => 'サインイン中...';
-	@override String get msg_memoflow_uses_system_location_permission_get => 'MemoFlowはシステムの位置情報権限で座標を取得し、選択したプロバイダー（Amap、Baidu、Google など）で逆ジオコーディングを行います。表示精度は上で選択できます。';
+	@override String get msg_memoflow_uses_system_location_permission_get => 'memo+はシステムの位置情報権限で座標を取得し、選択したプロバイダー（Amap、Baidu、Google など）で逆ジオコーディングを行います。表示精度は上で選択できます。';
 	@override String get msg_continue => '続行';
 	@override String get msg_notification_content_unavailable => '通知内容を利用できません';
 	@override String get msg_unable_read_file_path => 'ファイルパスを読み取れません。';
@@ -6157,7 +6157,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => 'サポートを確認すると、期間限定のゴールドバッジまたは永久広告なしの約束（そもそも広告はありませんでした）が解除されます。';
 	@override String get msg_failed_open_system_settings => 'システム設定を開けませんでした';
 	@override String get msg_no_mood_trend => '気分の推移はありません';
-	@override String get msg_memoflow_export => '# MemoFlow エクスポート';
+	@override String get msg_memoflow_export => '# memo+ エクスポート';
 	@override String get msg_sync_queue => '同期キュー';
 	@override String get msg_only_delete_sync_task_memo_kept => '同期タスクのみを削除します。メモは保持されます。';
 	@override String get msg_add_home_screen => 'ホーム画面に追加';
@@ -6219,7 +6219,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => 'インポートしたメモを見る';
 	@override String get msg_load_failed => '読み込みに失敗しました';
 	@override String get msg_disk_content_conflicts_local_pending_changes => 'ディスク上の内容がローカルの保留中の変更と競合しています。ディスク上の内容でローカルの内容を上書きしてください。';
-	@override String get msg_all_history_so_far_memoflow_since => 'これまでの履歴は以上です\\nMEMOFLOW SINCE 2023';
+	@override String get msg_all_history_so_far_memoflow_since => 'これまでの履歴は以上です\\nMEMO+ SINCE 2026';
 	@override String get msg_cancelling => 'キャンセル中';
 	@override String get msg_reading_file => 'ファイルを読み込み中…';
 	@override String get msg_switch_workspace => 'ワークスペースを切り替え';
@@ -6263,7 +6263,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => '中国語（繁体字）';
 	@override String get msg_private_2 => '非公開';
 	@override String get msg_current_streak => '現在の連続記録';
-	@override String get msg_generated_ai_memoflow => 'AI により生成 · MemoFlow';
+	@override String get msg_generated_ai_memoflow => 'AI により生成 · memo+';
 	@override String get msg_edit_completed => '編集が完了しました';
 	@override String get msg_local => 'ローカル';
 	@override String get msg_edit => '編集';
@@ -6311,13 +6311,13 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '（内容が空です）';
 	@override String get msg_note_most_features_offline_stats_ai => '注: ほとんどの機能（オフライン/統計/AIレポート/エクスポート）はバックエンド変更なしで動作しますが、トークンは一度しか返されません？安全に保管してください。';
 	@override String get msg_fixed => '修正済み: ';
-	@override String get msg_allow_sharing_links_images_other_apps => '他のアプリからのリンクや画像をMemoFlowに共有できるようにします。';
+	@override String get msg_allow_sharing_links_images_other_apps => '他のアプリからのリンクや画像をmemo+に共有できるようにします。';
 	@override String get msg_invalid_request_parameters => 'リクエストパラメータが無効です';
 	@override String get msg_enter_api_url => 'API URLを入力してください';
 	@override String msg_pending({required Object result_pendingCount}) => '（保留中 ${result_pendingCount}）';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak}日';
 	@override String get msg_poster_not_ready_yet => 'ポスターはまだ準備できていません';
-	@override String get msg_generated_memoflow => 'MemoFlow により生成';
+	@override String get msg_generated_memoflow => 'memo+ により生成';
 	@override String get msg_enter_name_2 => '名前を入力してください';
 	@override String get msg_version => 'バージョン';
 	@override String get msg_memo_missing_disk_but_has_local => 'メモがディスク上に見つかりませんが、ローカルに保留中の変更があります。ローカルで削除するにはディスクを使用してください。';
@@ -6397,7 +6397,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => 'フィードバック';
 	@override String get msg_help_diagnostics => 'ヘルプと診断';
 	@override String get msg_storage_space => 'ストレージ容量';
-	@override String get msg_storage_space_subtitle => 'MemoFlow の既知の使用量を確認し、キャッシュを削除します。';
+	@override String get msg_storage_space_subtitle => 'memo+ の既知の使用量を確認し、キャッシュを削除します。';
 	@override String get msg_image_bed_2 => '画像ベッド';
 	@override String get msg_image_compression => '画像圧縮';
 	@override String get msg_enable_image_compression => '画像圧縮を有効にする';
@@ -6575,10 +6575,10 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => 'メディアキャッシュの削除に失敗しました';
 	@override String get msg_clear_media_cache_partial_failure => 'メディアキャッシュの削除が一部完了しました';
 	@override String msg_self_repair_failed({required Object e}) => '自己修復に失敗しました: ${e}';
-	@override String get msg_memoflow_known_usage => 'MemoFlow の既知の使用量';
-	@override String get msg_storage_device_capacity_unavailable => 'デバイス容量を取得できません。MemoFlow の既知の使用量と分類は引き続き表示されます。';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow はデバイス容量の 1% 未満を使用しています';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow はデバイス容量の ${percent}% を使用しています';
+	@override String get msg_memoflow_known_usage => 'memo+ の既知の使用量';
+	@override String get msg_storage_device_capacity_unavailable => 'デバイス容量を取得できません。memo+ の既知の使用量と分類は引き続き表示されます。';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ はデバイス容量の 1% 未満を使用しています';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ はデバイス容量の ${percent}% を使用しています';
 	@override String get msg_storage_cache => 'キャッシュ';
 	@override String get msg_storage_note_content => 'ノート本文';
 	@override String get msg_storage_note_images => 'ノート画像';
@@ -6762,7 +6762,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => 'ログをエクスポートしました';
 	@override String get msg_delete_sync_task => '同期タスクを削除';
 	@override String get msg_include_archived_2 => '- アーカイブを含める';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlowは、空き時間に開発しているサイドプロジェクトです。バグ修正で夜更かしが続いていて、アイスアメリカーノが本当に欲しいです。あなたのサポートがエネルギー補給になり、新機能のリリースを後押ししてくれます ';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+は、空き時間に開発しているサイドプロジェクトです。バグ修正で夜更かしが続いていて、アイスアメリカーノが本当に欲しいです。あなたのサポートがエネルギー補給になり、新機能のリリースを後押ししてくれます ';
 	@override String msg_failed_generate({required Object e}) => '生成に失敗しました: ${e}';
 	@override String get msg_search_logs => 'ログを検索';
 	@override String get msg_active_days => 'アクティブ日数';
@@ -6884,7 +6884,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => '権限とシステム設定';
 	@override String get msg_waiting_tasks_stop => 'タスクの停止を待機中';
 	@override String get msg_done_2 => '完了';
-	@override String get msg_parsing_memoflow_export => 'MemoFlowエクスポートを解析中...';
+	@override String get msg_parsing_memoflow_export => 'memo+エクスポートを解析中...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => '位置情報が更新されました: ${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => 'サーバーバージョンを確認中...';
 	@override String get msg_next_time_back_fixing_bugs => '👀 次回は、バグ修正に戻る';
@@ -6904,7 +6904,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_exit_app => 'アプリを終了';
 	@override String get msg_thanks_energy_fully_restored => 'ありがとうございます！エネルギーが完全に回復しました⚡';
 	@override String get msg_connection_timeout_check_network_api_url => '接続がタイムアウトしました。ネットワークまたはAPI URLを確認してください。';
-	@override String get msg_bridge_component_title => 'MemoFlow ブリッジ';
+	@override String get msg_bridge_component_title => 'memo+ ブリッジ';
 	@override String get msg_bridge_component_desc => 'Obsidian プラグインとペアリングしてローカル同期します。';
 	@override String get msg_bridge_title => 'Obsidian に接続';
 	@override String get msg_bridge_local_mode_only => 'ローカルネットワーク経由で Obsidian とペアリングします。今後ほかの接続先にも対応予定です。';
@@ -7136,7 +7136,7 @@ class _StringsStringsLegacyJa extends _StringsStringsLegacyEn {
 	@override String get msg_template_variables => 'テンプレート変数';
 	@override String get msg_time_format_variable => '時刻形式 ({{time}})';
 	@override String get msg_todo => '藤堂';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'MemoFlow の表示/非表示に失敗しました:${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'memo+ の表示/非表示に失敗しました:${error}';
 	@override String get msg_toggle_sidebar => 'サイドバーの切り替え';
 	@override String get msg_total_characters_metric => '総文字数';
 	@override String get msg_total_characters_short => '総文字数';
@@ -8363,7 +8363,7 @@ class _StringsStringsLegalConsentKo extends _StringsStringsLegalConsentEn {
 
 	// Translations
 	@override String get title => '계약 검토';
-	@override String get description => 'MemoFlow를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.';
+	@override String get description => 'memo+를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.';
 	@override String get linksHint => '전체 내용을 검토하려면 아래 문서를 열어보세요.';
 	@override String get acknowledge => '나는 사용자 계약 및 개인 정보 보호 정책을 읽었으며 이에 동의합니다.';
 	@override String get continueAction => '동의하고 계속하세요';
@@ -8493,7 +8493,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => '버전: v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => '버전: v${version} (${build})';
 	@override String get msg_about_website_link => '공식 홈페이지';
-	@override String get msg_about_website_link_subtitle => 'MemoFlow 공식 웹사이트를 방문하세요';
+	@override String get msg_about_website_link_subtitle => 'memo+ 공식 웹사이트를 방문하세요';
 	@override String get msg_about_privacy_policy => '개인 정보 보호 정책';
 	@override String get msg_about_privacy_policy_subtitle => '개인정보 보호 및 데이터 사용 세부정보 보기';
 	@override String get msg_about_user_agreement => '사용자 계약';
@@ -8507,7 +8507,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => '살다';
 	@override String get msg_status_placeholder => '곧';
 	@override String get msg_debug_tap_logo_enter_debug_tools => '디버그: 로고를 5번 탭하면 디버그 도구가 열립니다.';
-	@override String get msg_donors_intro_thanks => 'MemoFlow를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.';
+	@override String get msg_donors_intro_thanks => 'memo+를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.';
 	@override String get msg_enter_keywords_search_box_query_local => '로컬 콘텐츠와 태그를 쿼리하려면 검색 상자에 키워드를 입력하세요. 오프라인으로 작동합니다. 처음 사용하려면 로컬 인덱싱이 완료될 때까지 기다리세요.';
 	@override String get msg_memo_not_found_locally => '로컬에서 메모를 찾을 수 없습니다.';
 	@override String get msg_token => '토큰';
@@ -8536,7 +8536,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => '요청이 취소되었습니다.';
 	@override String get msg_generating => '생성 중이신가요?';
 	@override String get msg_permissions_denied_reminders_disabled => '권한이 거부되었습니다. 알림이 비활성화되었습니다.';
-	@override String get msg_memoflow_local_reminders => 'MemoFlow 지역 알림';
+	@override String get msg_memoflow_local_reminders => 'memo+ 지역 알림';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => '레거시 엔드포인트를 사용합니다(이전 Memos 서버의 경우).';
 	@override String get msg_no_comments_yet => '아직 댓글이 없습니다';
 	@override String get msg_open => '열려 있는';
@@ -8727,14 +8727,14 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => '휴지통';
 	@override String get msg_unpin => '고정 해제';
 	@override String get msg_advanced_security => '고급 및 보안';
-	@override String get msg_run_issues_memoflow_e_g_sync => 'MemoFlow에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => 'memo+에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => '이 메모의 모든 알림 시간을 삭제하세요.';
 	@override String get msg_no_summary_save => '저장할 요약이 없습니다.';
 	@override String get msg_reset_language_selection => '언어 선택 재설정';
 	@override String get msg_v_30_days => '30일';
 	@override String get msg_e_g_mood_check => '예를 들어 기분 체크';
 	@override String get msg_note_some_tokens_returned_only_once => '팁: 일부 토큰은 한 번만 표시됩니다. 처음 표시될 때 안전하게 저장하세요.';
-	@override String get msg_probe_memo_can_delete => '이 메모는 MemoFlow API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.';
+	@override String get msg_probe_memo_can_delete => '이 메모는 memo+ API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.';
 	@override String get msg_syncing => '동기화 중...';
 	@override String get msg_retention => '보유';
 	@override String get msg_open_login_screen => '로그인 화면 열기';
@@ -8780,7 +8780,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_no_download_url_available => '다운로드 가능한 URL가 없습니다.';
 	@override String get msg_record_create_memos => '메모를 작성하려면 녹음하세요';
 	@override String get msg_signing => '로그인 중...';
-	@override String get msg_memoflow_uses_system_location_permission_get => 'MemoFlow는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를 통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.';
+	@override String get msg_memoflow_uses_system_location_permission_get => 'memo+는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를 통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.';
 	@override String get msg_continue => '계속하다';
 	@override String get msg_notification_content_unavailable => '알림 내용을 사용할 수 없습니다.';
 	@override String get msg_unable_read_file_path => '파일 경로를 읽을 수 없습니다.';
@@ -8812,7 +8812,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => '지원을 확인한 후 제한된 골드 배지를 잠금 해제하거나 영원히 광고 없는 약속을 받을 수 있습니다(광고는 없었지만).';
 	@override String get msg_failed_open_system_settings => '시스템 설정을 열지 못했습니다.';
 	@override String get msg_no_mood_trend => '기분 추세 없음';
-	@override String get msg_memoflow_export => '# MemoFlow 내보내기';
+	@override String get msg_memoflow_export => '# memo+ 내보내기';
 	@override String get msg_sync_queue => '동기화 대기열';
 	@override String get msg_only_delete_sync_task_memo_kept => '동기화 작업만 삭제하세요. 메모는 보관됩니다.';
 	@override String get msg_add_home_screen => '홈 화면에 추가';
@@ -8874,7 +8874,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => '가져온 메모 보기';
 	@override String get msg_load_failed => '로드 실패';
 	@override String get msg_disk_content_conflicts_local_pending_changes => '디스크 내용이 로컬 보류 중인 변경 사항과 충돌합니다. 디스크를 사용하여 로컬 콘텐츠를 덮어씁니다.';
-	@override String get msg_all_history_so_far_memoflow_since => '이것이 지금까지의 모든 기록입니다.\\n2023년 이후 MEMOFLOW';
+	@override String get msg_all_history_so_far_memoflow_since => '이것이 지금까지의 모든 기록입니다.\\n2026년 이후 MEMO+';
 	@override String get msg_cancelling => '취소 중';
 	@override String get msg_reading_file => '파일을 읽는 중...';
 	@override String get msg_switch_workspace => '작업공간 전환';
@@ -8918,7 +8918,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => '중국어(번체)';
 	@override String get msg_private_2 => '사적인';
 	@override String get msg_current_streak => '현재 연속';
-	@override String get msg_generated_ai_memoflow => 'AI · MemoFlow에 의해 생성됨';
+	@override String get msg_generated_ai_memoflow => 'AI · memo+에 의해 생성됨';
 	@override String get msg_edit_completed => '수정 완료';
 	@override String get msg_local => '현지의';
 	@override String get msg_edit => '편집하다';
@@ -8959,13 +8959,13 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '(빈 콘텐츠)';
 	@override String get msg_note_most_features_offline_stats_ai => '참고: 대부분의 기능(오프라인/통계/AI 보고서/내보내기)은 백엔드 변경 없이 작동하지만 토큰은 한 번만 반환되므로 안전하게 보관하십시오.';
 	@override String get msg_fixed => '결정된:';
-	@override String get msg_allow_sharing_links_images_other_apps => '다른 앱의 링크나 이미지를 MemoFlow로 공유하도록 허용합니다.';
+	@override String get msg_allow_sharing_links_images_other_apps => '다른 앱의 링크나 이미지를 memo+로 공유하도록 허용합니다.';
 	@override String get msg_invalid_request_parameters => '잘못된 요청 매개변수';
 	@override String get msg_enter_api_url => 'API URL를 입력하세요.';
 	@override String msg_pending({required Object result_pendingCount}) => '(${result_pendingCount} 보류 중)';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak}일';
 	@override String get msg_poster_not_ready_yet => '포스터가 아직 준비되지 않았습니다.';
-	@override String get msg_generated_memoflow => 'MemoFlow에 의해 생성됨';
+	@override String get msg_generated_memoflow => 'memo+에 의해 생성됨';
 	@override String get msg_enter_name_2 => '이름을 입력하세요';
 	@override String get msg_version => '버전';
 	@override String get msg_memo_missing_disk_but_has_local => '메모가 디스크에 없지만 로컬에 보류 중인 변경 사항이 있습니다. 로컬에서 삭제하려면 디스크를 사용하세요.';
@@ -9045,7 +9045,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => '피드백';
 	@override String get msg_help_diagnostics => '도움말 및 진단';
 	@override String get msg_storage_space => '저장 공간';
-	@override String get msg_storage_space_subtitle => 'MemoFlow의 알려진 사용량을 확인하고 캐시를 지웁니다.';
+	@override String get msg_storage_space_subtitle => 'memo+의 알려진 사용량을 확인하고 캐시를 지웁니다.';
 	@override String get msg_image_bed_2 => '이미지베드';
 	@override String get msg_image_compression => '이미지 압축';
 	@override String get msg_enable_image_compression => '이미지 압축 활성화';
@@ -9223,10 +9223,10 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => '미디어 캐시 정리에 실패했습니다';
 	@override String get msg_clear_media_cache_partial_failure => '미디어 캐시 정리가 일부 완료되었습니다';
 	@override String msg_self_repair_failed({required Object e}) => '자가 수리 실패: ${e}';
-	@override String get msg_memoflow_known_usage => 'MemoFlow 알려진 사용량';
-	@override String get msg_storage_device_capacity_unavailable => '기기 용량을 사용할 수 없습니다. MemoFlow 알려진 사용량과 분류는 계속 표시됩니다.';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow가 기기 용량의 1% 미만을 사용합니다';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow가 기기 용량의 ${percent}%를 사용합니다';
+	@override String get msg_memoflow_known_usage => 'memo+ 알려진 사용량';
+	@override String get msg_storage_device_capacity_unavailable => '기기 용량을 사용할 수 없습니다. memo+ 알려진 사용량과 분류는 계속 표시됩니다.';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+가 기기 용량의 1% 미만을 사용합니다';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+가 기기 용량의 ${percent}%를 사용합니다';
 	@override String get msg_storage_cache => '캐시';
 	@override String get msg_storage_note_content => '노트 내용';
 	@override String get msg_storage_note_images => '노트 이미지';
@@ -9411,7 +9411,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => '로그 번들을 내보냈습니다.';
 	@override String get msg_delete_sync_task => '동기화 작업 삭제';
 	@override String get msg_include_archived_2 => '- 보관된 내용 포함';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlow는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에 활력을 불어넣고 새로운 기능 출시에 도움이 됩니다';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에 활력을 불어넣고 새로운 기능 출시에 도움이 됩니다';
 	@override String msg_failed_generate({required Object e}) => '생성 실패: ${e}';
 	@override String get msg_search_logs => '로그 검색';
 	@override String get msg_active_days => '활동적인 날';
@@ -9542,7 +9542,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => '권한 및 시스템 설정';
 	@override String get msg_waiting_tasks_stop => '작업이 중지되기를 기다리는 중';
 	@override String get msg_done_2 => '완료';
-	@override String get msg_parsing_memoflow_export => 'MemoFlow 내보내기 구문 분석 중...';
+	@override String get msg_parsing_memoflow_export => 'memo+ 내보내기 구문 분석 중...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => '업데이트된 위치: ${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => '서버 버전 확인 중...';
 	@override String get msg_next_time_back_fixing_bugs => '🙌 다음에는 버그 수정으로 다시 돌아오겠습니다';
@@ -9563,14 +9563,14 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_thanks_energy_fully_restored => '감사해요! 에너지가 완전히 회복되었습니다 ⚡';
 	@override String get msg_connection_timeout_check_network_api_url => '연결 시간이 초과되었습니다. 네트워크 또는 API URL를 확인하세요.';
 	@override String get msg_local_network_migration => '로컬 네트워크 마이그레이션';
-	@override String get msg_local_network_migration_desc => '로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 MemoFlow 장치와 타사 메모 도구를 연결하세요. MemoFlow 마이그레이션 및 Obsidian은 현재 지원됩니다.';
+	@override String get msg_local_network_migration_desc => '로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 memo+ 장치와 타사 메모 도구를 연결하세요. memo+ 마이그레이션 및 Obsidian은 현재 지원됩니다.';
 	@override String get msg_connect_obsidian => '흑요석 연결';
 	@override String get msg_connect_obsidian_desc => '로컬 네트워크를 통해 Obsidian과 노트 콘텐츠를 페어링하고 동기화하세요.';
 	@override String get msg_local_network_migration_more_targets => '나중에 SiYuan 및 기타 타사 도구를 포함한 더 많은 대상이 여기에 추가될 예정입니다.';
-	@override String get msg_memoflow_migration => 'MemoFlow 마이그레이션';
-	@override String get msg_memoflow_migration_target_desc => '로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 MemoFlow 장치로 마이그레이션하세요.';
-	@override String get msg_memoflow_migration_targets_summary => 'MemoFlow / 흑요석';
-	@override String get msg_memoflow_migration_role_desc => '이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 MemoFlow를 포그라운드에 유지하세요.';
+	@override String get msg_memoflow_migration => 'memo+ 마이그레이션';
+	@override String get msg_memoflow_migration_target_desc => '로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 memo+ 장치로 마이그레이션하세요.';
+	@override String get msg_memoflow_migration_targets_summary => 'memo+ / 흑요석';
+	@override String get msg_memoflow_migration_role_desc => '이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 memo+를 포그라운드에 유지하세요.';
 	@override String get msg_memoflow_migration_sender => '나는 보낸 사람이다';
 	@override String get msg_memoflow_migration_sender_desc => '현재 로컬 작업 공간에서 메모와 설정을 선택한 다음 근처 수신기에 연결하세요.';
 	@override String get msg_memoflow_migration_sender_only_local_mode => '보낸 사람 역할은 이 장치가 로컬 작업 공간을 사용하는 경우에만 사용할 수 있습니다.';
@@ -9613,8 +9613,8 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_memoflow_migration_workspace_name => '작업공간';
 	@override String get msg_memoflow_migration_scan_title => '스캔 수신기 QR';
 	@override String get msg_memoflow_migration_scan_hint => '수신 장치에 표시된 QR 코드를 스캔하세요.';
-	@override String get msg_memoflow_migration_foreground_notice => '마이그레이션 중에 두 장치 모두에서 MemoFlow를 포그라운드로 유지합니다.';
-	@override String get msg_bridge_component_title => 'MemoFlow 다리';
+	@override String get msg_memoflow_migration_foreground_notice => '마이그레이션 중에 두 장치 모두에서 memo+를 포그라운드로 유지합니다.';
+	@override String get msg_bridge_component_title => 'memo+ 다리';
 	@override String get msg_bridge_component_desc => '로컬 동기화를 위해 Obsidian 플러그인과 페어링하세요.';
 	@override String get msg_bridge_title => '흑요석 연결';
 	@override String get msg_bridge_local_mode_only => '로컬 네트워크를 통해 Obsidian과 페어링하세요. 나중에 다른 목표가 올 수도 있습니다.';
@@ -9774,7 +9774,7 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_focus_input_area => '초점 입력 영역';
 	@override String get msg_toggle_sidebar => '사이드바 전환';
 	@override String get msg_open_settings => '설정 열기';
-	@override String get msg_show_hide_memoflow => 'MemoFlow 표시 / 숨기기';
+	@override String get msg_show_hide_memoflow => 'memo+ 표시 / 숨기기';
 	@override String get msg_publish_memo => '메모 게시';
 	@override String get msg_bold => '용감한';
 	@override String get msg_underline => '밑줄';
@@ -9886,12 +9886,12 @@ class _StringsStringsLegacyKo extends _StringsStringsLegacyEn {
 	@override String get msg_save_failed_check_content_retry => '저장에 실패했습니다. 내용을 확인하신 후 다시 시도해 주세요.';
 	@override String get msg_quick_input_channel_not_ready_retry => '빠른 입력 채널이 준비되지 않았습니다. 기본 창을 다시 열고 다시 시도해 주세요.';
 	@override String msg_visibility_value({required Object value}) => '가시성 : ${value}';
-	@override String get msg_saved_to_memoflow => 'MemoFlow에 저장되었습니다.';
+	@override String get msg_saved_to_memoflow => 'memo+에 저장되었습니다.';
 	@override String msg_quick_input_failed_with_error({required Object error}) => '빠른 입력 실패: ${error}';
 	@override String get msg_feature => '특징';
 	@override String msg_feature_not_implemented_placeholder_with_label({required Object label}) => '"${label}"는 아직 구현되지 않았습니다(자리 표시자).';
 	@override String msg_quick_input_save_failed_with_error({required Object error}) => '빠른 입력 저장 실패: ${error}';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'MemoFlow 표시/숨기기 실패: ${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'memo+ 표시/숨기기 실패: ${error}';
 	@override String get msg_shortcuts_overview_opened => '바로가기 개요를 열었습니다.';
 	@override String msg_unsupported_version_value({required Object version}) => '지원되지 않는 버전: ${version}';
 	@override String msg_version_probe_passed_with_version({required Object version}) => 'v${version} 프로브 통과';
@@ -11135,7 +11135,7 @@ class _StringsStringsLegalConsentPtBr extends _StringsStringsLegalConsentEn {
 
 	// Translations
 	@override String get title => 'Revise os acordos';
-	@override String get description => 'Antes de usar MemoFlow, leia e concorde com o Contrato do Usuário e a Política de Privacidade.';
+	@override String get description => 'Antes de usar memo+, leia e concorde com o Contrato do Usuário e a Política de Privacidade.';
 	@override String get linksHint => 'Abra os documentos abaixo para revisar o texto completo.';
 	@override String get acknowledge => 'Li e concordo com o Contrato do Usuário e a Política de Privacidade';
 	@override String get continueAction => 'Concordar e continuar';
@@ -11265,7 +11265,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => 'Versão: v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => 'Versão: v${version} (${build})';
 	@override String get msg_about_website_link => 'Site Oficial';
-	@override String get msg_about_website_link_subtitle => 'Visite o site oficial do MemoFlow';
+	@override String get msg_about_website_link_subtitle => 'Visite o site oficial do memo+';
 	@override String get msg_about_privacy_policy => 'Política de Privacidade';
 	@override String get msg_about_privacy_policy_subtitle => 'Ver detalhes de privacidade e uso de dados';
 	@override String get msg_about_user_agreement => 'Contrato do usuário';
@@ -11279,7 +11279,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => 'Ao vivo';
 	@override String get msg_status_placeholder => 'Em breve';
 	@override String get msg_debug_tap_logo_enter_debug_tools => 'Depuração: Toque no logotipo 5 vezes para abrir as ferramentas de depuração';
-	@override String get msg_donors_intro_thanks => 'Obrigado a todos os usuários que apoiam o MemoFlow.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.';
+	@override String get msg_donors_intro_thanks => 'Obrigado a todos os usuários que apoiam o memo+.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.';
 	@override String get msg_enter_keywords_search_box_query_local => 'Insira palavras-chave na caixa de pesquisa para consultar conteúdo e tags locais. Funciona off-line; para o primeiro uso, aguarde até que a indexação local termine.';
 	@override String get msg_memo_not_found_locally => 'Memorando não encontrado localmente';
 	@override String get msg_token => 'Ficha';
@@ -11308,7 +11308,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => 'Solicitação cancelada.';
 	@override String get msg_generating => 'Gerando?';
 	@override String get msg_permissions_denied_reminders_disabled => 'Permissões negadas. Lembretes desativados.';
-	@override String get msg_memoflow_local_reminders => 'Lembretes locais MemoFlow';
+	@override String get msg_memoflow_local_reminders => 'Lembretes locais memo+';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => 'Use endpoints legados (para servidores Memos mais antigos).';
 	@override String get msg_no_comments_yet => 'Ainda não há comentários';
 	@override String get msg_open => 'Aberto';
@@ -11499,14 +11499,14 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => 'Lixeira';
 	@override String get msg_unpin => 'Desafixar';
 	@override String get msg_advanced_security => 'Avançado e segurança';
-	@override String get msg_run_issues_memoflow_e_g_sync => 'Se você tiver problemas no MemoFlow (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => 'Se você tiver problemas no memo+ (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => 'Remova todos os horários de lembrete deste memorando.';
 	@override String get msg_no_summary_save => 'Nenhum resumo para salvar';
 	@override String get msg_reset_language_selection => 'Redefinir seleção de idioma';
 	@override String get msg_v_30_days => '30 dias';
 	@override String get msg_e_g_mood_check => 'por exemplo Verificação de humor';
 	@override String get msg_note_some_tokens_returned_only_once => 'Dica: Alguns tokens são mostrados apenas uma vez. Salve-os com segurança quando forem exibidos pela primeira vez.';
-	@override String get msg_probe_memo_can_delete => 'Este memorando foi criado pelo probe MemoFlow API e pode ser excluído com segurança.';
+	@override String get msg_probe_memo_can_delete => 'Este memorando foi criado pelo probe memo+ API e pode ser excluído com segurança.';
 	@override String get msg_syncing => 'Sincronizando...';
 	@override String get msg_retention => 'Retenção';
 	@override String get msg_open_login_screen => 'Abrir tela de login';
@@ -11552,7 +11552,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_no_download_url_available => 'Nenhum download URL disponível';
 	@override String get msg_record_create_memos => 'Registro para criar memorandos';
 	@override String get msg_signing => 'Fazendo login...';
-	@override String get msg_memoflow_uses_system_location_permission_get => 'MemoFlow usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.';
+	@override String get msg_memoflow_uses_system_location_permission_get => 'memo+ usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.';
 	@override String get msg_continue => 'Continuar';
 	@override String get msg_notification_content_unavailable => 'Conteúdo da notificação indisponível';
 	@override String get msg_unable_read_file_path => 'Não foi possível ler o caminho do arquivo.';
@@ -11584,7 +11584,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => 'Após confirmar o suporte, você desbloqueará um emblema dourado limitado ou uma promessa eterna de ausência de anúncios (embora nunca tenha havido anúncios).';
 	@override String get msg_failed_open_system_settings => 'Falha ao abrir as configurações do sistema';
 	@override String get msg_no_mood_trend => 'Sem tendência de humor';
-	@override String get msg_memoflow_export => '#Exportação MemoFlow';
+	@override String get msg_memoflow_export => '#Exportação memo+';
 	@override String get msg_sync_queue => 'Fila de sincronização';
 	@override String get msg_only_delete_sync_task_memo_kept => 'Exclua apenas a tarefa de sincronização; o memorando será mantido.';
 	@override String get msg_add_home_screen => 'Adicionar à tela inicial';
@@ -11646,7 +11646,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => 'Ver memorandos importados';
 	@override String get msg_load_failed => 'Falha no carregamento';
 	@override String get msg_disk_content_conflicts_local_pending_changes => 'O conteúdo do disco entra em conflito com alterações locais pendentes. Use o disco para substituir o conteúdo local.';
-	@override String get msg_all_history_so_far_memoflow_since => 'Essa é toda a história até agora\\nMEMOFLOW DESDE 2023';
+	@override String get msg_all_history_so_far_memoflow_since => 'Essa é toda a história até agora\\nMEMO+ DESDE 2026';
 	@override String get msg_cancelling => 'Cancelando';
 	@override String get msg_reading_file => 'Lendo arquivo...';
 	@override String get msg_switch_workspace => 'Alternar espaço de trabalho';
@@ -11690,7 +11690,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => 'Chinês (Tradicional)';
 	@override String get msg_private_2 => 'Privado';
 	@override String get msg_current_streak => 'Sequência atual';
-	@override String get msg_generated_ai_memoflow => 'Gerado por AI · MemoFlow';
+	@override String get msg_generated_ai_memoflow => 'Gerado por AI · memo+';
 	@override String get msg_edit_completed => 'Edição concluída';
 	@override String get msg_local => 'Locais';
 	@override String get msg_edit => 'Editar';
@@ -11731,13 +11731,13 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '(conteúdo vazio)';
 	@override String get msg_note_most_features_offline_stats_ai => 'Observação: a maioria dos recursos (offline/estatísticas/relatórios AI/exportação) funcionam sem alterações de back-end, mas os tokens são retornados apenas uma vez? Mantenha-os seguros.';
 	@override String get msg_fixed => 'Corrigido:';
-	@override String get msg_allow_sharing_links_images_other_apps => 'Permitir o compartilhamento de links ou imagens de outros aplicativos no MemoFlow.';
+	@override String get msg_allow_sharing_links_images_other_apps => 'Permitir o compartilhamento de links ou imagens de outros aplicativos no memo+.';
 	@override String get msg_invalid_request_parameters => 'Parâmetros de solicitação inválidos';
 	@override String get msg_enter_api_url => 'Insira API URL';
 	@override String msg_pending({required Object result_pendingCount}) => '(pendente ${result_pendingCount})';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak} dias';
 	@override String get msg_poster_not_ready_yet => 'O pôster ainda não está pronto';
-	@override String get msg_generated_memoflow => 'Gerado por MemoFlow';
+	@override String get msg_generated_memoflow => 'Gerado por memo+';
 	@override String get msg_enter_name_2 => 'Insira um nome';
 	@override String get msg_version => 'Versão';
 	@override String get msg_memo_missing_disk_but_has_local => 'O memorando está faltando no disco, mas possui alterações locais pendentes. Use o disco para excluir localmente.';
@@ -11817,7 +11817,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => 'Comentários';
 	@override String get msg_help_diagnostics => 'Ajuda e diagnostico';
 	@override String get msg_storage_space => 'Espaço de armazenamento';
-	@override String get msg_storage_space_subtitle => 'Revise o uso conhecido do MemoFlow e limpe o cache.';
+	@override String get msg_storage_space_subtitle => 'Revise o uso conhecido do memo+ e limpe o cache.';
 	@override String get msg_image_bed_2 => 'Cama de imagem';
 	@override String get msg_image_compression => 'Compressão de imagem';
 	@override String get msg_enable_image_compression => 'Habilitar compactação de imagem';
@@ -11995,10 +11995,10 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => 'Falha ao limpar cache de midia';
 	@override String get msg_clear_media_cache_partial_failure => 'Limpeza do cache de midia parcialmente concluida';
 	@override String msg_self_repair_failed({required Object e}) => 'Auto-reparo falhou: ${e}';
-	@override String get msg_memoflow_known_usage => 'Uso conhecido do MemoFlow';
-	@override String get msg_storage_device_capacity_unavailable => 'A capacidade do dispositivo nao esta disponivel. O uso conhecido do MemoFlow e as categorias ainda sao mostrados.';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow usa menos de 1% da capacidade do dispositivo';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow usa ${percent}% da capacidade do dispositivo';
+	@override String get msg_memoflow_known_usage => 'Uso conhecido do memo+';
+	@override String get msg_storage_device_capacity_unavailable => 'A capacidade do dispositivo nao esta disponivel. O uso conhecido do memo+ e as categorias ainda sao mostrados.';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ usa menos de 1% da capacidade do dispositivo';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ usa ${percent}% da capacidade do dispositivo';
 	@override String get msg_storage_cache => 'Cache';
 	@override String get msg_storage_note_content => 'Conteudo das notas';
 	@override String get msg_storage_note_images => 'Imagens das notas';
@@ -12183,7 +12183,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => 'Pacote de registros exportado';
 	@override String get msg_delete_sync_task => 'Excluir tarefa de sincronização';
 	@override String get msg_include_archived_2 => '- Incluir arquivado';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlow é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+ é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos';
 	@override String msg_failed_generate({required Object e}) => 'Falha ao gerar: ${e}';
 	@override String get msg_search_logs => 'Registros de pesquisa';
 	@override String get msg_active_days => 'Dias ativos';
@@ -12314,7 +12314,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => 'Permissões e configurações do sistema';
 	@override String get msg_waiting_tasks_stop => 'Aguardando a interrupção das tarefas';
 	@override String get msg_done_2 => 'Concluído';
-	@override String get msg_parsing_memoflow_export => 'Analisando exportação MemoFlow...';
+	@override String get msg_parsing_memoflow_export => 'Analisando exportação memo+...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => 'Localização atualizada: ${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => 'Verificando a versão do servidor...';
 	@override String get msg_next_time_back_fixing_bugs => '👀 Da próxima vez, voltando à correção de bugs';
@@ -12335,14 +12335,14 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_thanks_energy_fully_restored => 'Obrigado! Energia totalmente restaurada ⚡';
 	@override String get msg_connection_timeout_check_network_api_url => 'Tempo limite de conexão. Verifique a rede ou API URL.';
 	@override String get msg_local_network_migration => 'Migração de rede local';
-	@override String get msg_local_network_migration_desc => 'Use a migração de rede local para conectar dispositivos MemoFlow e ferramentas de anotações de terceiros em seu LAN. A migração MemoFlow e Obsidian são suportadas hoje.';
+	@override String get msg_local_network_migration_desc => 'Use a migração de rede local para conectar dispositivos memo+ e ferramentas de anotações de terceiros em seu LAN. A migração memo+ e Obsidian são suportadas hoje.';
 	@override String get msg_connect_obsidian => 'Conectar Obsidiana';
 	@override String get msg_connect_obsidian_desc => 'Emparelhe e sincronize o conteúdo das notas com Obsidian em sua rede local.';
 	@override String get msg_local_network_migration_more_targets => 'Mais alvos, incluindo SiYuan e outras ferramentas de terceiros, serão adicionados aqui posteriormente.';
-	@override String get msg_memoflow_migration => 'Migração MemoFlow';
-	@override String get msg_memoflow_migration_target_desc => 'Migre notas e configurações do espaço de trabalho local para outro dispositivo MemoFlow pela sua rede local.';
-	@override String get msg_memoflow_migration_targets_summary => 'MemoFlow / Obsidiana';
-	@override String get msg_memoflow_migration_role_desc => 'Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o MemoFlow em primeiro plano durante a transferência.';
+	@override String get msg_memoflow_migration => 'Migração memo+';
+	@override String get msg_memoflow_migration_target_desc => 'Migre notas e configurações do espaço de trabalho local para outro dispositivo memo+ pela sua rede local.';
+	@override String get msg_memoflow_migration_targets_summary => 'memo+ / Obsidiana';
+	@override String get msg_memoflow_migration_role_desc => 'Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o memo+ em primeiro plano durante a transferência.';
 	@override String get msg_memoflow_migration_sender => 'Eu sou o remetente';
 	@override String get msg_memoflow_migration_sender_desc => 'Escolha notas e configurações do espaço de trabalho local atual e conecte-se a um receptor próximo.';
 	@override String get msg_memoflow_migration_sender_only_local_mode => 'A função de remetente está disponível somente quando este dispositivo está usando um espaço de trabalho local.';
@@ -12385,8 +12385,8 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_memoflow_migration_workspace_name => 'Espaço de trabalho';
 	@override String get msg_memoflow_migration_scan_title => 'Receptor de digitalização QR';
 	@override String get msg_memoflow_migration_scan_hint => 'Digitalize o código QR mostrado no dispositivo receptor.';
-	@override String get msg_memoflow_migration_foreground_notice => 'Mantenha o MemoFlow em primeiro plano em ambos os dispositivos durante a migração.';
-	@override String get msg_bridge_component_title => 'Ponte MemoFlow';
+	@override String get msg_memoflow_migration_foreground_notice => 'Mantenha o memo+ em primeiro plano em ambos os dispositivos durante a migração.';
+	@override String get msg_bridge_component_title => 'Ponte memo+';
 	@override String get msg_bridge_component_desc => 'Emparelhe com o plugin Obsidian para sincronização local.';
 	@override String get msg_bridge_title => 'Conectar Obsidiana';
 	@override String get msg_bridge_local_mode_only => 'Emparelhe com Obsidian em sua rede local. Outros alvos poderão surgir mais tarde.';
@@ -12546,7 +12546,7 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_focus_input_area => 'Área de entrada de foco';
 	@override String get msg_toggle_sidebar => 'Alternar barra lateral';
 	@override String get msg_open_settings => 'Abrir configurações';
-	@override String get msg_show_hide_memoflow => 'Mostrar/ocultar MemoFlow';
+	@override String get msg_show_hide_memoflow => 'Mostrar/ocultar memo+';
 	@override String get msg_publish_memo => 'Publicar memorando';
 	@override String get msg_bold => 'Negrito';
 	@override String get msg_underline => 'Sublinhado';
@@ -12658,12 +12658,12 @@ class _StringsStringsLegacyPtBr extends _StringsStringsLegacyEn {
 	@override String get msg_save_failed_check_content_retry => 'Falha ao salvar. Verifique o conteúdo e tente novamente.';
 	@override String get msg_quick_input_channel_not_ready_retry => 'O canal de entrada rápida não está pronto. Por favor, reabra a janela principal e tente novamente.';
 	@override String msg_visibility_value({required Object value}) => 'Visibilidade: ${value}';
-	@override String get msg_saved_to_memoflow => 'Salvo em MemoFlow';
+	@override String get msg_saved_to_memoflow => 'Salvo em memo+';
 	@override String msg_quick_input_failed_with_error({required Object error}) => 'Falha na entrada rápida: ${error}';
 	@override String get msg_feature => 'Recurso';
 	@override String msg_feature_not_implemented_placeholder_with_label({required Object label}) => '“${label}” ainda não foi implementado (espaço reservado).';
 	@override String msg_quick_input_save_failed_with_error({required Object error}) => 'Falha ao salvar entrada rápida: ${error}';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Falha ao mostrar/ocultar MemoFlow: ${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => 'Falha ao mostrar/ocultar memo+: ${error}';
 	@override String get msg_shortcuts_overview_opened => 'Visão geral dos atalhos abertos.';
 	@override String msg_unsupported_version_value({required Object version}) => 'Versão não suportada: ${version}';
 	@override String msg_version_probe_passed_with_version({required Object version}) => 'Sondagem v${version} aprovada';
@@ -14037,7 +14037,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => '版本说明：v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => '版本说明：v${version} (${build})';
 	@override String get msg_about_website_link => '官网链接';
-	@override String get msg_about_website_link_subtitle => '访问 MemoFlow 官方网站';
+	@override String get msg_about_website_link_subtitle => '访问 memo+ 官方网站';
 	@override String get msg_about_privacy_policy => '隐私政策';
 	@override String get msg_about_privacy_policy_subtitle => '查看隐私信息与数据说明';
 	@override String get msg_about_user_agreement => '用户协议';
@@ -14051,7 +14051,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => '可用';
 	@override String get msg_status_placeholder => '占位';
 	@override String get msg_debug_tap_logo_enter_debug_tools => 'Debug: 连续点击 Logo 5 次打开调试工具';
-	@override String get msg_donors_intro_thanks => '感谢所有支持 MemoFlow 的用户。\n你们的捐赠帮助项目持续维护与更新。\n\n名单如下，谨此致谢。';
+	@override String get msg_donors_intro_thanks => '感谢所有支持 memo+ 的用户。\n你们的捐赠帮助项目持续维护与更新。\n\n名单如下，谨此致谢。';
 	@override String get msg_enter_keywords_search_box_query_local => '在搜索框输入关键词可检索本地内容与标签。离线可用；首次使用请等待本地索引完成。';
 	@override String get msg_memo_not_found_locally => '本地暂无该笔记';
 	@override String get msg_token => 'Token 摘要';
@@ -14080,7 +14080,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => '请求已取消';
 	@override String get msg_generating => '生成中…';
 	@override String get msg_permissions_denied_reminders_disabled => '权限未授予，提醒未开启';
-	@override String get msg_memoflow_local_reminders => 'MemoFlow 本地提醒';
+	@override String get msg_memoflow_local_reminders => 'memo+ 本地提醒';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => '使用旧版接口（适配旧版 Memos）';
 	@override String get msg_no_comments_yet => '暂无评论';
 	@override String get msg_open => '打开';
@@ -14281,14 +14281,14 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => '回收站';
 	@override String get msg_unpin => '取消置顶';
 	@override String get msg_advanced_security => '高级与安全';
-	@override String get msg_run_issues_memoflow_e_g_sync => '如果您在使用 MemoFlow 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => '如果您在使用 memo+ 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => '将移除该笔记的全部提醒时间。';
 	@override String get msg_no_summary_save => '暂无可保存的总结';
 	@override String get msg_reset_language_selection => '重置语言选择状态';
 	@override String get msg_v_30_days => '30 天';
 	@override String get msg_e_g_mood_check => '如：情绪分析';
 	@override String get msg_note_some_tokens_returned_only_once => '提示：部分 Token 只会显示一次，请在首次显示时立即安全保存。';
-	@override String get msg_probe_memo_can_delete => '此条笔记由 MemoFlow API 探测创建，可安全删除。';
+	@override String get msg_probe_memo_can_delete => '此条笔记由 memo+ API 探测创建，可安全删除。';
 	@override String get msg_syncing => '同步中...';
 	@override String get msg_retention => '版本保留数量';
 	@override String get msg_open_login_screen => '打开登录页面';
@@ -14366,7 +14366,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => '点击确认赞赏后，将解锁限定版金色标识 or 永久去广告承诺（虽然本来就没广告）';
 	@override String get msg_failed_open_system_settings => '无法打开系统设置';
 	@override String get msg_no_mood_trend => '暂无情绪趋势';
-	@override String get msg_memoflow_export => '# MemoFlow 导出';
+	@override String get msg_memoflow_export => '# memo+ 导出';
 	@override String get msg_sync_queue => '同步队列';
 	@override String get msg_only_delete_sync_task_memo_kept => '仅删除同步任务，笔记会保留。';
 	@override String get msg_add_home_screen => '添加到桌面';
@@ -14428,7 +14428,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => '查看导入笔记';
 	@override String get msg_load_failed => '加载失败';
 	@override String get msg_disk_content_conflicts_local_pending_changes => '磁盘与本地未同步内容冲突。选择“以磁盘为准”将覆盖本地内容。';
-	@override String get msg_all_history_so_far_memoflow_since => '以上是全部历史内容\\nMEMOFLOW SINCE 2023';
+	@override String get msg_all_history_so_far_memoflow_since => '以上是全部历史内容\\nMEMO+ SINCE 2026';
 	@override String get msg_cancelling => '取消中';
 	@override String get msg_reading_file => '正在读取文件...';
 	@override String get msg_switch_workspace => '切换工作区';
@@ -14472,7 +14472,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => '繁體中文';
 	@override String get msg_private_2 => '私密';
 	@override String get msg_current_streak => '当前连击';
-	@override String get msg_generated_ai_memoflow => '由 AI 生成 · MemoFlow';
+	@override String get msg_generated_ai_memoflow => '由 AI 生成 · memo+';
 	@override String get msg_edit_completed => '编辑完成';
 	@override String get msg_local => '本地调试';
 	@override String get msg_edit => '编辑';
@@ -14513,13 +14513,13 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '内容为空';
 	@override String get msg_note_most_features_offline_stats_ai => '提示：大部分功能（离线/统计/AI 总结/导出）无需后端改动，但 Token 只返回一次，请妥善保存。';
 	@override String get msg_fixed => '修复：';
-	@override String get msg_allow_sharing_links_images_other_apps => '允许从其他应用分享链接或图片到 MemoFlow。';
+	@override String get msg_allow_sharing_links_images_other_apps => '允许从其他应用分享链接或图片到 memo+。';
 	@override String get msg_invalid_request_parameters => '请求参数错误';
 	@override String get msg_enter_api_url => '请输入 API URL';
 	@override String msg_pending({required Object result_pendingCount}) => '（待发送 ${result_pendingCount}）';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak} 天';
 	@override String get msg_poster_not_ready_yet => '暂时无法生成海报';
-	@override String get msg_generated_memoflow => '由 MemoFlow 生成';
+	@override String get msg_generated_memoflow => '由 memo+ 生成';
 	@override String get msg_enter_name_2 => '请输入名称';
 	@override String get msg_version => '版本';
 	@override String get msg_memo_missing_disk_but_has_local => '磁盘缺失该笔记，但本地还有未同步改动。选择“以磁盘为准”将删除本地记录。';
@@ -14599,7 +14599,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => '反馈';
 	@override String get msg_help_diagnostics => '帮助与诊断';
 	@override String get msg_storage_space => '存储空间';
-	@override String get msg_storage_space_subtitle => '查看 MemoFlow 已知占用并清理缓存。';
+	@override String get msg_storage_space_subtitle => '查看 memo+ 已知占用并清理缓存。';
 	@override String get msg_image_bed_2 => '图床';
 	@override String get msg_image_compression => '图片压缩';
 	@override String get msg_enable_image_compression => '启用图片压缩';
@@ -14788,10 +14788,10 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => '媒体缓存清理失败';
 	@override String get msg_clear_media_cache_partial_failure => '媒体缓存清理已部分完成';
 	@override String msg_self_repair_failed({required Object e}) => '自助修复失败：${e}';
-	@override String get msg_memoflow_known_usage => 'MemoFlow 已知占用';
-	@override String get msg_storage_device_capacity_unavailable => '设备容量不可用。仍会展示 MemoFlow 已知占用和分类。';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow 占用设备容量不足 1%';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow 占用设备容量 ${percent}%';
+	@override String get msg_memoflow_known_usage => 'memo+ 已知占用';
+	@override String get msg_storage_device_capacity_unavailable => '设备容量不可用。仍会展示 memo+ 已知占用和分类。';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ 占用设备容量不足 1%';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ 占用设备容量 ${percent}%';
 	@override String get msg_storage_cache => '缓存';
 	@override String get msg_storage_note_content => '笔记内容';
 	@override String get msg_storage_note_images => '笔记图片';
@@ -14969,7 +14969,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => '日志包已导出';
 	@override String get msg_delete_sync_task => '删除同步任务';
 	@override String get msg_include_archived_2 => '- 包含归档';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlow 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+ 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
 	@override String msg_failed_generate({required Object e}) => '生成失败：${e}';
 	@override String get msg_search_logs => '搜索内容';
 	@override String get msg_active_days => '累计天数';
@@ -15094,7 +15094,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => '权限与系统设置';
 	@override String get msg_waiting_tasks_stop => '正在等待任务停止';
 	@override String get msg_done_2 => '确定';
-	@override String get msg_parsing_memoflow_export => '正在解析 MemoFlow 导出...';
+	@override String get msg_parsing_memoflow_export => '正在解析 memo+ 导出...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => '定位成功：${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => '正在检查后端版本...';
 	@override String get msg_next_time_back_fixing_bugs => '👀 下次一定，先去修 Bug';
@@ -15115,14 +15115,14 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_thanks_energy_fully_restored => '收到心意！能量已充满 ⚡';
 	@override String get msg_connection_timeout_check_network_api_url => '连接超时，请检查网络或 API URL';
 	@override String get msg_local_network_migration => '局域网迁移';
-	@override String get msg_local_network_migration_desc => '通过局域网迁移连接 MemoFlow 设备和第三方笔记工具。当前已支持 MemoFlow 迁移与 Obsidian。';
+	@override String get msg_local_network_migration_desc => '通过局域网迁移连接 memo+ 设备和第三方笔记工具。当前已支持 memo+ 迁移与 Obsidian。';
 	@override String get msg_connect_obsidian => '连接 Obsidian';
 	@override String get msg_connect_obsidian_desc => '通过局域网与 Obsidian 配对并同步笔记内容。';
 	@override String get msg_local_network_migration_more_targets => '后续将在这里扩展思源和其他第三方工具。';
-	@override String get msg_memoflow_migration => 'MemoFlow 迁移';
-	@override String get msg_memoflow_migration_target_desc => '通过局域网将本地工作区中的笔记和设置迁移到另一台 MemoFlow 设备。';
-	@override String get msg_memoflow_migration_targets_summary => 'MemoFlow / Obsidian';
-	@override String get msg_memoflow_migration_role_desc => '选择当前设备是发送方还是接收方。本功能为一次性迁移，请保持两台设备处于同一局域网，并在迁移期间保持 MemoFlow 前台运行。';
+	@override String get msg_memoflow_migration => 'memo+ 迁移';
+	@override String get msg_memoflow_migration_target_desc => '通过局域网将本地工作区中的笔记和设置迁移到另一台 memo+ 设备。';
+	@override String get msg_memoflow_migration_targets_summary => 'memo+ / Obsidian';
+	@override String get msg_memoflow_migration_role_desc => '选择当前设备是发送方还是接收方。本功能为一次性迁移，请保持两台设备处于同一局域网，并在迁移期间保持 memo+ 前台运行。';
 	@override String get msg_memoflow_migration_sender => '我是发送方';
 	@override String get msg_memoflow_migration_sender_desc => '从当前本地工作区选择要发送的笔记和设置，并连接附近接收方。';
 	@override String get msg_memoflow_migration_sender_only_local_mode => '发送方仅在当前设备使用本地工作区模式时可用。';
@@ -15165,8 +15165,8 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_memoflow_migration_workspace_name => '工作区';
 	@override String get msg_memoflow_migration_scan_title => '扫描接收方二维码';
 	@override String get msg_memoflow_migration_scan_hint => '扫描接收方设备上显示的二维码。';
-	@override String get msg_memoflow_migration_foreground_notice => '迁移过程中请保持两台设备上的 MemoFlow 处于前台。';
-	@override String get msg_bridge_component_title => 'MemoFlow 同步桥';
+	@override String get msg_memoflow_migration_foreground_notice => '迁移过程中请保持两台设备上的 memo+ 处于前台。';
+	@override String get msg_bridge_component_title => 'memo+ 同步桥';
 	@override String get msg_bridge_component_desc => '与 Obsidian 插件配对进行本地同步。';
 	@override String get msg_bridge_title => '连接 Obsidian';
 	@override String get msg_bridge_local_mode_only => '通过局域网与 Obsidian 配对连接，后续会支持更多目标。';
@@ -15328,7 +15328,7 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_focus_input_area => '聚焦输入区';
 	@override String get msg_toggle_sidebar => '切换侧边栏';
 	@override String get msg_open_settings => '打开设置';
-	@override String get msg_show_hide_memoflow => '显示 / 隐藏 MemoFlow';
+	@override String get msg_show_hide_memoflow => '显示 / 隐藏 memo+';
 	@override String get msg_publish_memo => '发布记录';
 	@override String get msg_bold => '加粗';
 	@override String get msg_underline => '下划线';
@@ -15434,12 +15434,12 @@ class _StringsStringsLegacyZhHans extends _StringsStringsLegacyEn {
 	@override String get msg_save_failed_check_content_retry => '保存失败，请检查内容后重试。';
 	@override String get msg_quick_input_channel_not_ready_retry => '快速输入通道尚未就绪，请重新打开主窗口后重试。';
 	@override String msg_visibility_value({required Object value}) => '可见性：${value}';
-	@override String get msg_saved_to_memoflow => '已保存到 MemoFlow';
+	@override String get msg_saved_to_memoflow => '已保存到 memo+';
 	@override String msg_quick_input_failed_with_error({required Object error}) => '快速输入失败：${error}';
 	@override String get msg_feature => '功能';
 	@override String msg_feature_not_implemented_placeholder_with_label({required Object label}) => '“${label}”功能暂未实现（占位）。';
 	@override String msg_quick_input_save_failed_with_error({required Object error}) => '快速输入保存失败：${error}';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => '显示 / 隐藏 MemoFlow 失败：${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => '显示 / 隐藏 memo+ 失败：${error}';
 	@override String get msg_shortcuts_overview_opened => '已打开快捷键总览。';
 	@override String msg_unsupported_version_value({required Object version}) => '不支持的版本：${version}';
 	@override String msg_version_probe_passed_with_version({required Object version}) => 'v${version} 探测通过';
@@ -16692,7 +16692,7 @@ class _StringsStringsLegalConsentZhHantTw extends _StringsStringsLegalConsentEn 
 
 	// Translations
 	@override String get title => '請先閱讀並同意協議';
-	@override String get description => '使用 MemoFlow 前，請先閱讀並同意《用戶協議》和《隱私協議》。';
+	@override String get description => '使用 memo+ 前，請先閱讀並同意《用戶協議》和《隱私協議》。';
 	@override String get linksHint => '你可以先打開以下文件查看完整內容。';
 	@override String get acknowledge => '我已閱讀並同意《用戶協議》和《隱私協議》';
 	@override String get continueAction => '同意並繼續';
@@ -16821,7 +16821,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String msg_version_description_v({required Object version}) => '版本说明：v${version}';
 	@override String msg_version_description_v_build({required Object version, required Object build}) => '版本说明：v${version} (${build})';
 	@override String get msg_about_website_link => '官网连结';
-	@override String get msg_about_website_link_subtitle => '前往 MemoFlow 官方网站';
+	@override String get msg_about_website_link_subtitle => '前往 memo+ 官方网站';
 	@override String get msg_about_privacy_policy => '隐私协议';
 	@override String get msg_about_privacy_policy_subtitle => '查看隐私资讯与资料说明';
 	@override String get msg_about_user_agreement => '用户协议';
@@ -16835,7 +16835,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_status_available => '可用';
 	@override String get msg_status_placeholder => '占位';
 	@override String get msg_debug_tap_logo_enter_debug_tools => 'Debug: 连续点击 Logo 5 次开启调试工具';
-	@override String get msg_donors_intro_thanks => '感谢所有支持 MemoFlow 的用户。\n你们的捐赠帮助专案持续维护与更新。\n\n名单如下，谨此致谢。';
+	@override String get msg_donors_intro_thanks => '感谢所有支持 memo+ 的用户。\n你们的捐赠帮助专案持续维护与更新。\n\n名单如下，谨此致谢。';
 	@override String get msg_enter_keywords_search_box_query_local => '在搜索框输入关键词可检索本地内容与标签。离线可用；首次使用请等待本地索引完成。';
 	@override String get msg_memo_not_found_locally => '本地暂无该笔记';
 	@override String get msg_token => 'Token 摘要';
@@ -16864,7 +16864,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_request_cancelled => '请求已取消';
 	@override String get msg_generating => '生成中…';
 	@override String get msg_permissions_denied_reminders_disabled => '权限未授予，提醒未开启';
-	@override String get msg_memoflow_local_reminders => 'MemoFlow 本地提醒';
+	@override String get msg_memoflow_local_reminders => 'memo+ 本地提醒';
 	@override String get msg_use_legacy_endpoints_older_memos_servers => '使用旧版接口（适配旧版 Memos）';
 	@override String get msg_no_comments_yet => '暂无评论';
 	@override String get msg_open => '打开';
@@ -17065,14 +17065,14 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_recycle_bin => '回收站';
 	@override String get msg_unpin => '取消置顶';
 	@override String get msg_advanced_security => '高级与安全';
-	@override String get msg_run_issues_memoflow_e_g_sync => '如果您在使用 MemoFlow 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
+	@override String get msg_run_issues_memoflow_e_g_sync => '如果您在使用 memo+ 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
 	@override String get msg_remove_all_reminder_times_memo => '将移除该笔记的全部提醒时间。';
 	@override String get msg_no_summary_save => '暂无可保存的总结';
 	@override String get msg_reset_language_selection => '重置语言选择状态';
 	@override String get msg_v_30_days => '30 天';
 	@override String get msg_e_g_mood_check => '如：情绪分析';
 	@override String get msg_note_some_tokens_returned_only_once => '提示：部分 Token 只會顯示一次，請在首次顯示時立即安全保存。';
-	@override String get msg_probe_memo_can_delete => '此筆記由 MemoFlow API 探測建立，可安全刪除。';
+	@override String get msg_probe_memo_can_delete => '此筆記由 memo+ API 探測建立，可安全刪除。';
 	@override String get msg_syncing => '同步中...';
 	@override String get msg_retention => '版本保留数量';
 	@override String get msg_open_login_screen => '打开登录页面';
@@ -17150,7 +17150,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_after_confirming_support_unlock_limited_gold => '点击确认赞赏后，将解锁限定版金色标识 or 永久去广告承诺（虽然本来就没广告）';
 	@override String get msg_failed_open_system_settings => '无法打开系统设置';
 	@override String get msg_no_mood_trend => '暂无情绪趋势';
-	@override String get msg_memoflow_export => '# MemoFlow 导出';
+	@override String get msg_memoflow_export => '# memo+ 导出';
 	@override String get msg_sync_queue => '同步队列';
 	@override String get msg_only_delete_sync_task_memo_kept => '仅删除同步任务，笔记会保留。';
 	@override String get msg_add_home_screen => '添加到桌面';
@@ -17212,7 +17212,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_view_imported_memos => '查看导入笔记';
 	@override String get msg_load_failed => '加载失败';
 	@override String get msg_disk_content_conflicts_local_pending_changes => '磁盘与本地未同步内容冲突。选择“以磁盘为准”将覆盖本地内容。';
-	@override String get msg_all_history_so_far_memoflow_since => '以上是全部历史内容\\nMEMOFLOW SINCE 2023';
+	@override String get msg_all_history_so_far_memoflow_since => '以上是全部历史内容\\nMEMO+ SINCE 2026';
 	@override String get msg_cancelling => '取消中';
 	@override String get msg_reading_file => '正在读取文件...';
 	@override String get msg_switch_workspace => '切换工作区';
@@ -17256,7 +17256,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_chinese_traditional => '繁體中文';
 	@override String get msg_private_2 => '私密';
 	@override String get msg_current_streak => '当前连击';
-	@override String get msg_generated_ai_memoflow => '由 AI 生成 · MemoFlow';
+	@override String get msg_generated_ai_memoflow => '由 AI 生成 · memo+';
 	@override String get msg_edit_completed => '编辑完成';
 	@override String get msg_local => '本地调试';
 	@override String get msg_edit => '编辑';
@@ -17297,13 +17297,13 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_empty_content => '內容為空';
 	@override String get msg_note_most_features_offline_stats_ai => '提示：大部分功能（离线/统计/AI 总结/导出）无需后端改动，但 Token 只返回一次，请妥善保存。';
 	@override String get msg_fixed => '修复：';
-	@override String get msg_allow_sharing_links_images_other_apps => '允许从其他应用分享链接或图片到 MemoFlow。';
+	@override String get msg_allow_sharing_links_images_other_apps => '允许从其他应用分享链接或图片到 memo+。';
 	@override String get msg_invalid_request_parameters => '请求参数错误';
 	@override String get msg_enter_api_url => '请输入 API URL';
 	@override String msg_pending({required Object result_pendingCount}) => '（待发送 ${result_pendingCount}）';
 	@override String msg_days_3({required Object currentStreak}) => '${currentStreak} 天';
 	@override String get msg_poster_not_ready_yet => '暂时无法生成海报';
-	@override String get msg_generated_memoflow => '由 MemoFlow 生成';
+	@override String get msg_generated_memoflow => '由 memo+ 生成';
 	@override String get msg_enter_name_2 => '请输入名称';
 	@override String get msg_version => '版本';
 	@override String get msg_memo_missing_disk_but_has_local => '磁盘缺失该笔记，但本地还有未同步改动。选择“以磁盘为准”将删除本地记录。';
@@ -17383,7 +17383,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_feedback => '反馈';
 	@override String get msg_help_diagnostics => '幫助與診斷';
 	@override String get msg_storage_space => '儲存空間';
-	@override String get msg_storage_space_subtitle => '查看 MemoFlow 已知佔用並清理快取。';
+	@override String get msg_storage_space_subtitle => '查看 memo+ 已知佔用並清理快取。';
 	@override String get msg_image_bed_2 => '图床';
 	@override String get msg_image_compression => '圖片壓縮';
 	@override String get msg_enable_image_compression => '啟用圖片壓縮';
@@ -17561,10 +17561,10 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_clear_media_cache_failed => '媒體快取清理失敗';
 	@override String get msg_clear_media_cache_partial_failure => '媒體快取清理已部分完成';
 	@override String msg_self_repair_failed({required Object e}) => '自助修復失敗：${e}';
-	@override String get msg_memoflow_known_usage => 'MemoFlow 已知佔用';
-	@override String get msg_storage_device_capacity_unavailable => '裝置容量不可用。仍會顯示 MemoFlow 已知佔用和分類。';
-	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'MemoFlow 佔用裝置容量不足 1%';
-	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'MemoFlow 佔用裝置容量 ${percent}%';
+	@override String get msg_memoflow_known_usage => 'memo+ 已知佔用';
+	@override String get msg_storage_device_capacity_unavailable => '裝置容量不可用。仍會顯示 memo+ 已知佔用和分類。';
+	@override String get msg_storage_memoflow_device_usage_less_than_one_percent => 'memo+ 佔用裝置容量不足 1%';
+	@override String msg_storage_memoflow_device_usage_percent({required Object percent}) => 'memo+ 佔用裝置容量 ${percent}%';
 	@override String get msg_storage_cache => '快取';
 	@override String get msg_storage_note_content => '筆記內容';
 	@override String get msg_storage_note_images => '筆記圖片';
@@ -17741,7 +17741,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_log_file_created => '日誌包已匯出';
 	@override String get msg_delete_sync_task => '删除同步任务';
 	@override String get msg_include_archived_2 => '- 包含歸檔';
-	@override String get msg_memoflow_side_project_i_build_my => 'MemoFlow 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
+	@override String get msg_memoflow_side_project_i_build_my => 'memo+ 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
 	@override String msg_failed_generate({required Object e}) => '生成失败：${e}';
 	@override String get msg_search_logs => '搜索内容';
 	@override String get msg_active_days => '累计天数';
@@ -17866,7 +17866,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_permissions_system_settings => '权限与系统设置';
 	@override String get msg_waiting_tasks_stop => '正在等待任务停止';
 	@override String get msg_done_2 => '确定';
-	@override String get msg_parsing_memoflow_export => '正在解析 MemoFlow 导出...';
+	@override String get msg_parsing_memoflow_export => '正在解析 memo+ 导出...';
 	@override String msg_location_updated({required Object next_displayText_fractionDigits_6}) => '定位成功：${next_displayText_fractionDigits_6}';
 	@override String get msg_checking_server_version => '正在检查后端版本...';
 	@override String get msg_next_time_back_fixing_bugs => '👀 下次一定，先去修 Bug';
@@ -17887,14 +17887,14 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_thanks_energy_fully_restored => '收到心意！能量已充满 ⚡';
 	@override String get msg_connection_timeout_check_network_api_url => '连接超时，请检查网络或 API URL';
 	@override String get msg_local_network_migration => '局域網遷移';
-	@override String get msg_local_network_migration_desc => '透過局域網遷移連接 MemoFlow 裝置與第三方筆記工具。目前已支援 MemoFlow 遷移與 Obsidian。';
+	@override String get msg_local_network_migration_desc => '透過局域網遷移連接 memo+ 裝置與第三方筆記工具。目前已支援 memo+ 遷移與 Obsidian。';
 	@override String get msg_connect_obsidian => '連接 Obsidian';
 	@override String get msg_connect_obsidian_desc => '透過局域網與 Obsidian 配對並同步筆記內容。';
 	@override String get msg_local_network_migration_more_targets => '後續將在這裡擴充思源與其他第三方工具。';
-	@override String get msg_memoflow_migration => 'MemoFlow 遷移';
-	@override String get msg_memoflow_migration_target_desc => '透過局域網將本地工作區中的筆記和設定遷移到另一台 MemoFlow 裝置。';
-	@override String get msg_memoflow_migration_targets_summary => 'MemoFlow / Obsidian';
-	@override String get msg_memoflow_migration_role_desc => '選擇目前裝置是發送方還是接收方。本功能為一次性遷移，請保持兩台裝置處於同一局域網，並在遷移期間保持 MemoFlow 於前景運行。';
+	@override String get msg_memoflow_migration => 'memo+ 遷移';
+	@override String get msg_memoflow_migration_target_desc => '透過局域網將本地工作區中的筆記和設定遷移到另一台 memo+ 裝置。';
+	@override String get msg_memoflow_migration_targets_summary => 'memo+ / Obsidian';
+	@override String get msg_memoflow_migration_role_desc => '選擇目前裝置是發送方還是接收方。本功能為一次性遷移，請保持兩台裝置處於同一局域網，並在遷移期間保持 memo+ 於前景運行。';
 	@override String get msg_memoflow_migration_sender => '我是發送方';
 	@override String get msg_memoflow_migration_sender_desc => '從目前本地工作區選擇要發送的筆記和設定，並連接附近接收方。';
 	@override String get msg_memoflow_migration_sender_only_local_mode => '發送方僅在目前裝置使用本地工作區模式時可用。';
@@ -17937,8 +17937,8 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_memoflow_migration_workspace_name => '工作區';
 	@override String get msg_memoflow_migration_scan_title => '掃描接收方二維碼';
 	@override String get msg_memoflow_migration_scan_hint => '掃描接收方裝置上顯示的二維碼。';
-	@override String get msg_memoflow_migration_foreground_notice => '遷移過程中請保持兩台裝置上的 MemoFlow 處於前景。';
-	@override String get msg_bridge_component_title => 'MemoFlow 同步橋';
+	@override String get msg_memoflow_migration_foreground_notice => '遷移過程中請保持兩台裝置上的 memo+ 處於前景。';
+	@override String get msg_bridge_component_title => 'memo+ 同步橋';
 	@override String get msg_bridge_component_desc => '與 Obsidian 外掛配對以進行本地同步。';
 	@override String get msg_bridge_title => '連接 Obsidian';
 	@override String get msg_bridge_local_mode_only => '透過局域網與 Obsidian 配對連接，後續會支援更多目標。';
@@ -18100,7 +18100,7 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_focus_input_area => '聚焦輸入區';
 	@override String get msg_toggle_sidebar => '切換側邊欄';
 	@override String get msg_open_settings => '開啟設定';
-	@override String get msg_show_hide_memoflow => '顯示 / 隱藏 MemoFlow';
+	@override String get msg_show_hide_memoflow => '顯示 / 隱藏 memo+';
 	@override String get msg_publish_memo => '發布記錄';
 	@override String get msg_bold => '粗體';
 	@override String get msg_underline => '底線';
@@ -18206,12 +18206,12 @@ class _StringsStringsLegacyZhHantTw extends _StringsStringsLegacyEn {
 	@override String get msg_save_failed_check_content_retry => '儲存失敗，請檢查內容後再試。';
 	@override String get msg_quick_input_channel_not_ready_retry => '快速輸入通道尚未就緒，請重新開啟主視窗後再試。';
 	@override String msg_visibility_value({required Object value}) => '可見性：${value}';
-	@override String get msg_saved_to_memoflow => '已儲存到 MemoFlow';
+	@override String get msg_saved_to_memoflow => '已儲存到 memo+';
 	@override String msg_quick_input_failed_with_error({required Object error}) => '快速輸入失敗：${error}';
 	@override String get msg_feature => '功能';
 	@override String msg_feature_not_implemented_placeholder_with_label({required Object label}) => '「${label}」功能尚未實作（占位）。';
 	@override String msg_quick_input_save_failed_with_error({required Object error}) => '快速輸入儲存失敗：${error}';
-	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => '顯示 / 隱藏 MemoFlow 失敗：${error}';
+	@override String msg_toggle_memoflow_failed_with_error({required Object error}) => '顯示 / 隱藏 memo+ 失敗：${error}';
 	@override String get msg_shortcuts_overview_opened => '已開啟快捷鍵總覽。';
 	@override String msg_unsupported_version_value({required Object version}) => '不支援的版本：${version}';
 	@override String msg_version_probe_passed_with_version({required Object version}) => 'v${version} 探測通過';
@@ -19321,7 +19321,7 @@ extension on Translations {
 			case 'strings.onboarding.localLibraryDefaultName': return 'Local library';
 			case 'strings.onboarding.getStarted': return 'Get started';
 			case 'strings.legalConsent.title': return 'Review agreements';
-			case 'strings.legalConsent.description': return 'Before using MemoFlow, please read and agree to the User Agreement and Privacy Policy.';
+			case 'strings.legalConsent.description': return 'Before using memo+, please read and agree to the User Agreement and Privacy Policy.';
 			case 'strings.legalConsent.linksHint': return 'Open the documents below to review the full text.';
 			case 'strings.legalConsent.acknowledge': return 'I have read and agree to the User Agreement and Privacy Policy';
 			case 'strings.legalConsent.continueAction': return 'Agree and continue';
@@ -19565,7 +19565,7 @@ extension on Translations {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => 'Version: v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => 'Version: v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return 'Official Website';
-			case 'strings.legacy.msg_about_website_link_subtitle': return 'Visit the MemoFlow official website';
+			case 'strings.legacy.msg_about_website_link_subtitle': return 'Visit the memo+ official website';
 			case 'strings.legacy.msg_about_privacy_policy': return 'Privacy Policy';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return 'View privacy and data usage details';
 			case 'strings.legacy.msg_about_user_agreement': return 'User Agreement';
@@ -19579,7 +19579,7 @@ extension on Translations {
 			case 'strings.legacy.msg_status_available': return 'Live';
 			case 'strings.legacy.msg_status_placeholder': return 'Soon';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Debug: Tap the logo 5 times to open debug tools';
-			case 'strings.legacy.msg_donors_intro_thanks': return 'Thanks to all users who support MemoFlow.\nYour donations help us maintain and improve the project.\n\nAcknowledged below.';
+			case 'strings.legacy.msg_donors_intro_thanks': return 'Thanks to all users who support memo+.\nYour donations help us maintain and improve the project.\n\nAcknowledged below.';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return 'Enter keywords in the search box to query local content and tags. Works offline; for first use, wait until local indexing finishes.';
 			case 'strings.legacy.msg_memo_not_found_locally': return 'Memo not found locally';
 			case 'strings.legacy.msg_token': return 'Token';
@@ -19608,7 +19608,7 @@ extension on Translations {
 			case 'strings.legacy.msg_request_cancelled': return 'Request cancelled.';
 			case 'strings.legacy.msg_generating': return 'Generating?';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return 'Permissions denied. Reminders disabled.';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow local reminders';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ local reminders';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return 'Use legacy endpoints (for older Memos servers).';
 			case 'strings.legacy.msg_no_comments_yet': return 'No comments yet';
 			case 'strings.legacy.msg_open': return 'Open';
@@ -19799,14 +19799,14 @@ extension on Translations {
 			case 'strings.legacy.msg_recycle_bin': return 'Recycle Bin';
 			case 'strings.legacy.msg_unpin': return 'Unpin';
 			case 'strings.legacy.msg_advanced_security': return 'Advanced & security';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'If you run into issues in MemoFlow (e.g. sync failures, crashes), please follow the steps below to help us diagnose and fix the problem faster.\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'If you run into issues in memo+ (e.g. sync failures, crashes), please follow the steps below to help us diagnose and fix the problem faster.\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return 'Remove all reminder times for this memo.';
 			case 'strings.legacy.msg_no_summary_save': return 'No summary to save';
 			case 'strings.legacy.msg_reset_language_selection': return 'Reset language selection';
 			case 'strings.legacy.msg_v_30_days': return '30 days';
 			case 'strings.legacy.msg_e_g_mood_check': return 'e.g. Mood check';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return 'Tip: Some tokens are shown only once. Save them securely when they are first displayed.';
-			case 'strings.legacy.msg_probe_memo_can_delete': return 'This memo is created by MemoFlow API probe and can be safely deleted.';
+			case 'strings.legacy.msg_probe_memo_can_delete': return 'This memo is created by memo+ API probe and can be safely deleted.';
 			case 'strings.legacy.msg_syncing': return 'Syncing...';
 			case 'strings.legacy.msg_retention': return 'Retention';
 			case 'strings.legacy.msg_open_login_screen': return 'Open login screen';
@@ -19852,7 +19852,7 @@ extension on Translations {
 			case 'strings.legacy.msg_no_download_url_available': return 'No download URL available';
 			case 'strings.legacy.msg_record_create_memos': return 'Record to create memos';
 			case 'strings.legacy.msg_signing': return 'Signing in...';
-			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'MemoFlow uses system location permission to get coordinates, then reverse geocodes via the selected provider service (such as Amap, Baidu, or Google). You can choose the display precision above.';
+			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'memo+ uses system location permission to get coordinates, then reverse geocodes via the selected provider service (such as Amap, Baidu, or Google). You can choose the display precision above.';
 			case 'strings.legacy.msg_continue': return 'Continue';
 			case 'strings.legacy.msg_notification_content_unavailable': return 'Notification content unavailable';
 			case 'strings.legacy.msg_unable_read_file_path': return 'Unable to read file path.';
@@ -19884,7 +19884,7 @@ extension on Translations {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return 'After confirming support, you will unlock a limited gold badge or a forever ad-free promise (though there were never ads).';
 			case 'strings.legacy.msg_failed_open_system_settings': return 'Failed to open system settings';
 			case 'strings.legacy.msg_no_mood_trend': return 'No mood trend';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow Export';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+ Export';
 			case 'strings.legacy.msg_sync_queue': return 'Sync queue';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return 'Only delete the sync task; the memo will be kept.';
 			case 'strings.legacy.msg_add_home_screen': return 'Add to Home Screen';
@@ -19946,7 +19946,7 @@ extension on Translations {
 			case 'strings.legacy.msg_view_imported_memos': return 'View imported memos';
 			case 'strings.legacy.msg_load_failed': return 'Load failed';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return 'Disk content conflicts with local pending changes. Use disk to overwrite local content.';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'That is all the history so far\\nMEMOFLOW SINCE 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'That is all the history so far\\nMEMO+ SINCE 2026';
 			case 'strings.legacy.msg_cancelling': return 'Cancelling';
 			case 'strings.legacy.msg_reading_file': return 'Reading file...';
 			case 'strings.legacy.msg_switch_workspace': return 'Switch workspace';
@@ -19990,7 +19990,7 @@ extension on Translations {
 			case 'strings.legacy.msg_chinese_traditional': return 'Chinese (Traditional)';
 			case 'strings.legacy.msg_private_2': return 'Private';
 			case 'strings.legacy.msg_current_streak': return 'Current streak';
-			case 'strings.legacy.msg_generated_ai_memoflow': return 'Generated by AI · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return 'Generated by AI · memo+';
 			case 'strings.legacy.msg_edit_completed': return 'Edit completed';
 			case 'strings.legacy.msg_local': return 'Local';
 			case 'strings.legacy.msg_edit': return 'Edit';
@@ -20031,13 +20031,13 @@ extension on Translations {
 			case 'strings.legacy.msg_empty_content': return '(Empty content)';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return 'Note: Most features (offline/stats/AI reports/export) work without backend changes, but tokens are returned only once?please keep them safe.';
 			case 'strings.legacy.msg_fixed': return 'Fixed: ';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Allow sharing links or images from other apps into MemoFlow.';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Allow sharing links or images from other apps into memo+.';
 			case 'strings.legacy.msg_invalid_request_parameters': return 'Invalid request parameters';
 			case 'strings.legacy.msg_enter_api_url': return 'Please enter API URL';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => ' (pending ${result_pendingCount})';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak} days';
 			case 'strings.legacy.msg_poster_not_ready_yet': return 'Poster is not ready yet';
-			case 'strings.legacy.msg_generated_memoflow': return 'Generated by MemoFlow';
+			case 'strings.legacy.msg_generated_memoflow': return 'Generated by memo+';
 			case 'strings.legacy.msg_enter_name_2': return 'Enter a name';
 			case 'strings.legacy.msg_version': return 'Version';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return 'The memo is missing on disk but has local pending changes. Use disk to delete locally.';
@@ -20117,7 +20117,7 @@ extension on Translations {
 			case 'strings.legacy.msg_feedback': return 'Feedback';
 			case 'strings.legacy.msg_help_diagnostics': return 'Help & Diagnostics';
 			case 'strings.legacy.msg_storage_space': return 'Storage Space';
-			case 'strings.legacy.msg_storage_space_subtitle': return 'Review MemoFlow known usage and clear cache.';
+			case 'strings.legacy.msg_storage_space_subtitle': return 'Review memo+ known usage and clear cache.';
 			case 'strings.legacy.msg_image_bed_2': return 'Image Bed';
 			case 'strings.legacy.msg_image_compression': return 'Image Compression';
 			case 'strings.legacy.msg_enable_image_compression': return 'Enable image compression';
@@ -20306,10 +20306,10 @@ extension on Translations {
 			case 'strings.legacy.msg_clear_media_cache_failed': return 'Media cache cleanup failed';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return 'Media cache cleanup partially completed';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => 'Self repair failed: ${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'MemoFlow known usage';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'Device capacity is unavailable. MemoFlow known usage and categories are still shown.';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow uses less than 1% of device capacity';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow uses ${percent}% of device capacity';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'memo+ known usage';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'Device capacity is unavailable. memo+ known usage and categories are still shown.';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ uses less than 1% of device capacity';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ uses ${percent}% of device capacity';
 			case 'strings.legacy.msg_storage_cache': return 'Cache';
 			case 'strings.legacy.msg_storage_note_content': return 'Note content';
 			case 'strings.legacy.msg_storage_note_images': return 'Note images';
@@ -20494,7 +20494,7 @@ extension on Translations {
 			case 'strings.legacy.msg_log_file_created': return 'Log bundle exported';
 			case 'strings.legacy.msg_delete_sync_task': return 'Delete sync task';
 			case 'strings.legacy.msg_include_archived_2': return '- Include archived';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow is a side project I build in my spare time. I have been up late fixing bugs and could really use an iced Americano. Your support refuels my battery and helps new features ship ';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+ is a side project I build in my spare time. I have been up late fixing bugs and could really use an iced Americano. Your support refuels my battery and helps new features ship ';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => 'Failed to generate: ${e}';
 			case 'strings.legacy.msg_search_logs': return 'Search logs';
 			case 'strings.legacy.msg_active_days': return 'Active days';
@@ -20625,7 +20625,7 @@ extension on Translations {
 			case 'strings.legacy.msg_permissions_system_settings': return 'Permissions & system settings';
 			case 'strings.legacy.msg_waiting_tasks_stop': return 'Waiting for tasks to stop';
 			case 'strings.legacy.msg_done_2': return 'Done';
-			case 'strings.legacy.msg_parsing_memoflow_export': return 'Parsing MemoFlow export...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return 'Parsing memo+ export...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => 'Location updated: ${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return 'Checking server version...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 Next time, back to fixing bugs';
@@ -20646,14 +20646,14 @@ extension on Translations {
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return 'Thanks! Energy fully restored ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return 'Connection timeout. Check network or API URL.';
 			case 'strings.legacy.msg_local_network_migration': return 'Local Network Migration';
-			case 'strings.legacy.msg_local_network_migration_desc': return 'Use local network migration to connect MemoFlow devices and third-party note tools over your LAN. MemoFlow migration and Obsidian are supported today.';
+			case 'strings.legacy.msg_local_network_migration_desc': return 'Use local network migration to connect memo+ devices and third-party note tools over your LAN. memo+ migration and Obsidian are supported today.';
 			case 'strings.legacy.msg_connect_obsidian': return 'Connect Obsidian';
 			case 'strings.legacy.msg_connect_obsidian_desc': return 'Pair and sync note content with Obsidian over your local network.';
 			case 'strings.legacy.msg_local_network_migration_more_targets': return 'More targets, including SiYuan and other third-party tools, will be added here later.';
-			case 'strings.legacy.msg_memoflow_migration': return 'MemoFlow Migration';
-			case 'strings.legacy.msg_memoflow_migration_target_desc': return 'Migrate local-workspace notes and settings to another MemoFlow device over your local network.';
-			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'MemoFlow / Obsidian';
-			case 'strings.legacy.msg_memoflow_migration_role_desc': return 'Choose whether this device sends or receives a one-time local migration session. Keep both devices on the same LAN and keep MemoFlow in foreground during transfer.';
+			case 'strings.legacy.msg_memoflow_migration': return 'memo+ Migration';
+			case 'strings.legacy.msg_memoflow_migration_target_desc': return 'Migrate local-workspace notes and settings to another memo+ device over your local network.';
+			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'memo+ / Obsidian';
+			case 'strings.legacy.msg_memoflow_migration_role_desc': return 'Choose whether this device sends or receives a one-time local migration session. Keep both devices on the same LAN and keep memo+ in foreground during transfer.';
 			case 'strings.legacy.msg_memoflow_migration_sender': return 'I\'m the Sender';
 			case 'strings.legacy.msg_memoflow_migration_sender_desc': return 'Choose notes and settings from the current local workspace, then connect to a nearby receiver.';
 			case 'strings.legacy.msg_memoflow_migration_sender_only_local_mode': return 'The sender role is available only when this device is using a local workspace.';
@@ -20696,8 +20696,8 @@ extension on Translations {
 			case 'strings.legacy.msg_memoflow_migration_workspace_name': return 'Workspace';
 			case 'strings.legacy.msg_memoflow_migration_scan_title': return 'Scan receiver QR';
 			case 'strings.legacy.msg_memoflow_migration_scan_hint': return 'Scan the QR code shown on the receiver device.';
-			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return 'Keep MemoFlow in foreground on both devices during migration.';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow Bridge';
+			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return 'Keep memo+ in foreground on both devices during migration.';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+ Bridge';
 			case 'strings.legacy.msg_bridge_component_desc': return 'Pair with the Obsidian plugin for local sync.';
 			case 'strings.legacy.msg_bridge_title': return 'Connect Obsidian';
 			case 'strings.legacy.msg_bridge_local_mode_only': return 'Pair with Obsidian over your local network. Other targets may come later.';
@@ -20879,7 +20879,7 @@ extension on Translations {
 			case 'strings.legacy.msg_close_window_minimize_to_tray': return 'Minimize to tray when closing window';
 			case 'strings.legacy.msg_close_window_minimize_to_tray_desc': return 'When enabled, clicking the top-right close button will not exit the app. You can restore the window from the system tray.';
 			case 'strings.legacy.msg_close_window_keep_in_menu_bar': return 'Keep running in menu bar when closing window';
-			case 'strings.legacy.msg_close_window_keep_in_menu_bar_desc': return 'When enabled, closing the main window hides it and keeps MemoFlow available from the menu bar. Use Quit to exit the app.';
+			case 'strings.legacy.msg_close_window_keep_in_menu_bar_desc': return 'When enabled, closing the main window hides it and keeps memo+ available from the menu bar. Use Quit to exit the app.';
 			case 'strings.legacy.msg_local_storage_unavailable': return 'Local storage is unavailable';
 			case 'strings.legacy.msg_check_system_permissions_or_retry_later': return 'Please check system permissions or try again later.';
 			case 'strings.legacy.msg_source_value': return ({required Object source}) => 'Source: ${source}';
@@ -20908,7 +20908,7 @@ extension on Translations {
 			case 'strings.legacy.msg_focus_input_area': return 'Focus input area';
 			case 'strings.legacy.msg_toggle_sidebar': return 'Toggle sidebar';
 			case 'strings.legacy.msg_open_settings': return 'Open settings';
-			case 'strings.legacy.msg_show_hide_memoflow': return 'Show / hide MemoFlow';
+			case 'strings.legacy.msg_show_hide_memoflow': return 'Show / hide memo+';
 			case 'strings.legacy.msg_publish_memo': return 'Publish memo';
 			case 'strings.legacy.msg_bold': return 'Bold';
 			case 'strings.legacy.msg_underline': return 'Underline';
@@ -21020,12 +21020,12 @@ extension on Translations {
 			case 'strings.legacy.msg_save_failed_check_content_retry': return 'Save failed. Please check the content and try again.';
 			case 'strings.legacy.msg_quick_input_channel_not_ready_retry': return 'Quick input channel is not ready. Please reopen the main window and try again.';
 			case 'strings.legacy.msg_visibility_value': return ({required Object value}) => 'Visibility: ${value}';
-			case 'strings.legacy.msg_saved_to_memoflow': return 'Saved to MemoFlow';
+			case 'strings.legacy.msg_saved_to_memoflow': return 'Saved to memo+';
 			case 'strings.legacy.msg_quick_input_failed_with_error': return ({required Object error}) => 'Quick input failed: ${error}';
 			case 'strings.legacy.msg_feature': return 'Feature';
 			case 'strings.legacy.msg_feature_not_implemented_placeholder_with_label': return ({required Object label}) => '“${label}” is not implemented yet (placeholder).';
 			case 'strings.legacy.msg_quick_input_save_failed_with_error': return ({required Object error}) => 'Quick input save failed: ${error}';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Show / hide MemoFlow failed: ${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Show / hide memo+ failed: ${error}';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return 'Opened shortcuts overview.';
 			case 'strings.legacy.msg_unsupported_version_value': return ({required Object version}) => 'Unsupported version: ${version}';
 			case 'strings.legacy.msg_version_probe_passed_with_version': return ({required Object version}) => 'v${version} probe passed';
@@ -21506,7 +21506,7 @@ extension on _StringsDe {
 			case 'strings.onboarding.localLibraryDefaultName': return 'Lokale Bibliothek';
 			case 'strings.onboarding.getStarted': return 'Loslegen';
 			case 'strings.legalConsent.title': return 'Bitte zuerst zustimmen';
-			case 'strings.legalConsent.description': return 'Bevor du MemoFlow nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu.';
+			case 'strings.legalConsent.description': return 'Bevor du memo+ nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu.';
 			case 'strings.legalConsent.linksHint': return 'Ueber die folgenden Links kannst du den vollstaendigen Text lesen.';
 			case 'strings.legalConsent.acknowledge': return 'Ich habe die Nutzungsbedingungen und die Datenschutzerklaerung gelesen und stimme ihnen zu';
 			case 'strings.legalConsent.continueAction': return 'Zustimmen und fortfahren';
@@ -21722,7 +21722,7 @@ extension on _StringsDe {
 			case 'strings.aiProxy.invalidTestUrl': return 'Please enter a valid HTTP or HTTPS URL.';
 			case 'strings.aiProxy.testSuccess': return ({required Object statusCode, required Object elapsedMs}) => 'Connection successful · HTTP ${statusCode} · ${elapsedMs} ms';
 			case 'strings.aiProxy.testFailure': return ({required Object message}) => 'Connection failed: ${message}';
-			case 'strings.legacy.msg_memos_backend_docs': return 'MemoFlow-Backend-Dokumentation';
+			case 'strings.legacy.msg_memos_backend_docs': return 'memo+-Backend-Dokumentation';
 			case 'strings.legacy.msg_remember_moment_feel_warmth_life_take': return 'Erinnere dich an den Moment und spüre die Wärme des Lebens.\\nMach jeden Tag eine kurze Rückschau.';
 			case 'strings.legacy.msg_sure_want_delete_shortcut': return 'Möchten Sie diese Verknüpfung wirklich löschen?';
 			case 'strings.legacy.msg_scan_completed': return 'Scan abgeschlossen';
@@ -21734,7 +21734,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => 'Version: v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => 'Version: v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return 'Offizielle Website';
-			case 'strings.legacy.msg_about_website_link_subtitle': return 'MemoFlow-Website besuchen';
+			case 'strings.legacy.msg_about_website_link_subtitle': return 'memo+-Website besuchen';
 			case 'strings.legacy.msg_about_privacy_policy': return 'Datenschutzerklaerung';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return 'Datenschutz- und Datennutzung ansehen';
 			case 'strings.legacy.msg_about_user_agreement': return 'Nutzungsbedingungen';
@@ -21748,7 +21748,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_status_available': return 'Verfuegbar';
 			case 'strings.legacy.msg_status_placeholder': return 'Geplant';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Debug: Logo 5-mal tippen, um Debug-Tools zu oeffnen';
-			case 'strings.legacy.msg_donors_intro_thanks': return 'Danke an alle, die MemoFlow unterstuetzen.\nEure Spenden helfen bei Wartung und Weiterentwicklung.\n\nDie Liste findet ihr unten.';
+			case 'strings.legacy.msg_donors_intro_thanks': return 'Danke an alle, die memo+ unterstuetzen.\nEure Spenden helfen bei Wartung und Weiterentwicklung.\n\nDie Liste findet ihr unten.';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return 'Geben Sie Schlüsselwörter in das Suchfeld ein, um lokale Inhalte und Tags zu durchsuchen. Funktioniert offline; warten Sie bei der ersten Nutzung, bis die lokale Indizierung abgeschlossen ist.';
 			case 'strings.legacy.msg_memo_not_found_locally': return 'Memo lokal nicht gefunden';
 			case 'strings.legacy.msg_token': return 'Token';
@@ -21777,7 +21777,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_request_cancelled': return 'Anfrage abgebrochen.';
 			case 'strings.legacy.msg_generating': return 'Wird generiert?';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return 'Berechtigungen verweigert. Erinnerungen deaktiviert.';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow lokale Erinnerungen';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ lokale Erinnerungen';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return 'Verwenden Sie Legacy-Endpunkte (für ältere Memos-Server).';
 			case 'strings.legacy.msg_no_comments_yet': return 'Noch keine Kommentare';
 			case 'strings.legacy.msg_open': return 'Öffnen';
@@ -21967,14 +21967,14 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_recycle_bin': return 'Papierkorb';
 			case 'strings.legacy.msg_unpin': return 'Lösen';
 			case 'strings.legacy.msg_advanced_security': return 'Erweitert & Sicherheit';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'Wenn du in MemoFlow auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'Wenn du in memo+ auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return 'Alle Erinnerungszeiten für dieses Memo entfernen.';
 			case 'strings.legacy.msg_no_summary_save': return 'Keine Zusammenfassung zum Speichern';
 			case 'strings.legacy.msg_reset_language_selection': return 'Sprachauswahl zurücksetzen';
 			case 'strings.legacy.msg_v_30_days': return '30 Tage';
 			case 'strings.legacy.msg_e_g_mood_check': return 'z. B. Stimmungscheck';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return 'Hinweis: Einige Tokens werden nur einmal angezeigt. Bitte beim ersten Anzeigen sicher speichern.';
-			case 'strings.legacy.msg_probe_memo_can_delete': return 'Diese Notiz wurde durch die MemoFlow API-Pruefung erstellt und kann sicher geloescht werden.';
+			case 'strings.legacy.msg_probe_memo_can_delete': return 'Diese Notiz wurde durch die memo+ API-Pruefung erstellt und kann sicher geloescht werden.';
 			case 'strings.legacy.msg_syncing': return 'Synchronisierung läuft...';
 			case 'strings.legacy.msg_retention': return 'Aufbewahrung';
 			case 'strings.legacy.msg_open_login_screen': return 'Anmeldebildschirm öffnen';
@@ -22023,7 +22023,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_no_download_url_available': return 'Keine Download-URL verfügbar';
 			case 'strings.legacy.msg_record_create_memos': return 'Aufnehmen, um Memos zu erstellen';
 			case 'strings.legacy.msg_signing': return 'Anmeldung...';
-			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'MemoFlow verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden.';
+			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'memo+ verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden.';
 			case 'strings.legacy.msg_continue': return 'Weiter';
 			case 'strings.legacy.msg_notification_content_unavailable': return 'Benachrichtigungsinhalt nicht verfügbar';
 			case 'strings.legacy.msg_unable_read_file_path': return 'Dateipfad kann nicht gelesen werden.';
@@ -22055,7 +22055,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return 'Nach bestätigter Unterstützung schalten Sie entweder ein zeitlich begrenztes Gold-Abzeichen oder ein dauerhaft werbefreies Versprechen frei (obwohl es nie Werbung gab).';
 			case 'strings.legacy.msg_failed_open_system_settings': return 'Systemeinstellungen konnten nicht geöffnet werden';
 			case 'strings.legacy.msg_no_mood_trend': return 'Kein Stimmungstrend';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow-Export';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+-Export';
 			case 'strings.legacy.msg_sync_queue': return 'Synchronisierungswarteschlange';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return 'Nur die Synchronisierungsaufgabe löschen; das Memo bleibt erhalten.';
 			case 'strings.legacy.msg_add_home_screen': return 'Zum Startbildschirm hinzufügen';
@@ -22117,7 +22117,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_view_imported_memos': return 'Importierte Memos anzeigen';
 			case 'strings.legacy.msg_load_failed': return 'Laden fehlgeschlagen';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return 'Der Festplatteninhalt steht in Konflikt mit lokalen ausstehenden Änderungen. Verwende die Festplatte, um den lokalen Inhalt zu überschreiben.';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'Das ist bisher die gesamte Chronik\\nMEMOFLOW SEIT 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'Das ist bisher die gesamte Chronik\\nMEMO+ SEIT 2026';
 			case 'strings.legacy.msg_cancelling': return 'Wird abgebrochen';
 			case 'strings.legacy.msg_reading_file': return 'Datei wird gelesen...';
 			case 'strings.legacy.msg_switch_workspace': return 'Arbeitsbereich wechseln';
@@ -22161,7 +22161,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_chinese_traditional': return 'Chinesisch (Traditionell)';
 			case 'strings.legacy.msg_private_2': return 'Privat';
 			case 'strings.legacy.msg_current_streak': return 'Aktuelle Serie';
-			case 'strings.legacy.msg_generated_ai_memoflow': return 'Erstellt von KI · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return 'Erstellt von KI · memo+';
 			case 'strings.legacy.msg_edit_completed': return 'Bearbeitung abgeschlossen';
 			case 'strings.legacy.msg_local': return 'Lokal';
 			case 'strings.legacy.msg_edit': return 'Bearbeiten';
@@ -22209,13 +22209,13 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_empty_content': return '(Leerer Inhalt)';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return 'Hinweis: Die meisten Funktionen (offline/Statistiken/KI-Berichte/Export) funktionieren ohne Backend-Änderungen, aber Token werden nur einmal zurückgegeben?bitte bewahren Sie sie sicher auf.';
 			case 'strings.legacy.msg_fixed': return 'Behoben: ';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in MemoFlow.';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in memo+.';
 			case 'strings.legacy.msg_invalid_request_parameters': return 'Ungültige Anfrageparameter';
 			case 'strings.legacy.msg_enter_api_url': return 'Bitte API-URL eingeben';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => ' (ausstehend ${result_pendingCount})';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak} Tage';
 			case 'strings.legacy.msg_poster_not_ready_yet': return 'Poster ist noch nicht bereit';
-			case 'strings.legacy.msg_generated_memoflow': return 'Erstellt von MemoFlow';
+			case 'strings.legacy.msg_generated_memoflow': return 'Erstellt von memo+';
 			case 'strings.legacy.msg_enter_name_2': return 'Geben Sie einen Namen ein';
 			case 'strings.legacy.msg_version': return 'Version';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return 'Das Memo fehlt auf der Festplatte, hat aber lokale ausstehende Änderungen. Verwenden Sie die Festplatte, um lokal zu löschen.';
@@ -22295,7 +22295,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_feedback': return 'Feedback';
 			case 'strings.legacy.msg_help_diagnostics': return 'Hilfe & Diagnose';
 			case 'strings.legacy.msg_storage_space': return 'Speicherplatz';
-			case 'strings.legacy.msg_storage_space_subtitle': return 'Bekannte MemoFlow-Nutzung pruefen und Cache leeren.';
+			case 'strings.legacy.msg_storage_space_subtitle': return 'Bekannte memo+-Nutzung pruefen und Cache leeren.';
 			case 'strings.legacy.msg_image_bed_2': return 'Bildspeicher';
 			case 'strings.legacy.msg_image_compression': return 'Bildkomprimierung';
 			case 'strings.legacy.msg_enable_image_compression': return 'Bildkomprimierung aktivieren';
@@ -22473,10 +22473,10 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_clear_media_cache_failed': return 'Mediencache-Bereinigung fehlgeschlagen';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return 'Mediencache-Bereinigung teilweise abgeschlossen';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => 'Selbstreparatur fehlgeschlagen: ${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'Bekannte MemoFlow-Nutzung';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'Geraetekapazitaet ist nicht verfuegbar. MemoFlow-Nutzung und Kategorien werden weiter angezeigt.';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow nutzt weniger als 1% der Geraetekapazitaet';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow nutzt ${percent}% der Geraetekapazitaet';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'Bekannte memo+-Nutzung';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'Geraetekapazitaet ist nicht verfuegbar. memo+-Nutzung und Kategorien werden weiter angezeigt.';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ nutzt weniger als 1% der Geraetekapazitaet';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ nutzt ${percent}% der Geraetekapazitaet';
 			case 'strings.legacy.msg_storage_cache': return 'Cache';
 			case 'strings.legacy.msg_storage_note_content': return 'Notizinhalt';
 			case 'strings.legacy.msg_storage_note_images': return 'Notizbilder';
@@ -22661,7 +22661,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_log_file_created': return 'Protokolle exportiert';
 			case 'strings.legacy.msg_delete_sync_task': return 'Synchronisierungsaufgabe löschen';
 			case 'strings.legacy.msg_include_archived_2': return '- Archivierte einschließen';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen ';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+ ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen ';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => 'Generierung fehlgeschlagen: ${e}';
 			case 'strings.legacy.msg_search_logs': return 'Protokolle durchsuchen';
 			case 'strings.legacy.msg_active_days': return 'Aktive Tage';
@@ -22783,7 +22783,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_permissions_system_settings': return 'Berechtigungen & Systemeinstellungen';
 			case 'strings.legacy.msg_waiting_tasks_stop': return 'Warten, bis Aufgaben beendet sind';
 			case 'strings.legacy.msg_done_2': return 'Fertig';
-			case 'strings.legacy.msg_parsing_memoflow_export': return 'MemoFlow-Export wird analysiert...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return 'memo+-Export wird analysiert...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => 'Standort aktualisiert: ${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return 'Serverversion wird überprüft...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 Nächstes Mal zurück zum Beheben von Fehlern';
@@ -22803,7 +22803,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_exit_app': return 'App beenden';
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return 'Danke! Energie vollständig wiederhergestellt ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return 'Zeitüberschreitung bei der Verbindung. Überprüfe das Netzwerk oder die API-URL.';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow-Bridge';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+-Bridge';
 			case 'strings.legacy.msg_bridge_component_desc': return 'Mit dem Obsidian-Plugin koppeln und lokal synchronisieren.';
 			case 'strings.legacy.msg_bridge_title': return 'Mit Obsidian verbinden';
 			case 'strings.legacy.msg_bridge_local_mode_only': return 'Über das lokale Netzwerk mit Obsidian koppeln. Weitere Ziele können später folgen.';
@@ -23055,7 +23055,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_restore_defaults': return 'Standardeinstellungen wiederherstellen';
 			case 'strings.legacy.msg_restore_window': return 'Wiederherstellen';
 			case 'strings.legacy.msg_save_failed_check_content_retry': return 'Speichern fehlgeschlagen. Bitte überprüfen Sie den Inhalt und versuchen Sie es erneut.';
-			case 'strings.legacy.msg_saved_to_memoflow': return 'In MemoFlow gespeichert';
+			case 'strings.legacy.msg_saved_to_memoflow': return 'In memo+ gespeichert';
 			case 'strings.legacy.msg_screenshot_mode': return 'Screenshot-Modus';
 			case 'strings.legacy.msg_screenshot_mode_detail': return 'Blenden Sie Status-/Navigationsleisten für saubere Aufnahmen aus';
 			case 'strings.legacy.msg_select_file_save_location': return 'Bitte wählen Sie einen Speicherort für die Datei aus.';
@@ -23067,7 +23067,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_shortcuts_overview': return 'Übersicht über die Verknüpfungen';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return 'Geöffnete Verknüpfungsübersicht.';
 			case 'strings.legacy.msg_shortcuts_supported_windows_macos': return 'Nur Windows und macOS unterstützen Verknüpfungseinstellungen.';
-			case 'strings.legacy.msg_show_hide_memoflow': return 'MemoFlow ein-/ausblenden';
+			case 'strings.legacy.msg_show_hide_memoflow': return 'memo+ ein-/ausblenden';
 			case 'strings.legacy.msg_showing_last_lines': return ({required Object lines}) => 'Zeigt die letzten ${lines}-Zeilen';
 			case 'strings.legacy.msg_source_value': return ({required Object source}) => 'Quelle: ${source}';
 			case 'strings.legacy.msg_startup_slogan': return 'Lassen Sie die Aufzeichnungen natürlich fließen';
@@ -23096,7 +23096,7 @@ extension on _StringsDe {
 			case 'strings.legacy.msg_template_variables': return 'Vorlagenvariablen';
 			case 'strings.legacy.msg_time_format_variable': return 'Zeitformat ({{time}})';
 			case 'strings.legacy.msg_todo': return 'Todo';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Ein-/Ausblenden von MemoFlow fehlgeschlagen: ${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Ein-/Ausblenden von memo+ fehlgeschlagen: ${error}';
 			case 'strings.legacy.msg_toggle_sidebar': return 'Seitenleiste umschalten';
 			case 'strings.legacy.msg_total_characters_metric': return 'Gesamtzahl der Zeichen';
 			case 'strings.legacy.msg_total_characters_short': return 'Gesamtzahl der Zeichen';
@@ -23572,7 +23572,7 @@ extension on _StringsJa {
 			case 'strings.onboarding.localLibraryDefaultName': return 'ローカルライブラリ';
 			case 'strings.onboarding.getStarted': return 'はじめる';
 			case 'strings.legalConsent.title': return '利用前に同意が必要です';
-			case 'strings.legalConsent.description': return 'MemoFlow を利用する前に、利用規約とプライバシーポリシーを読み、同意してください。';
+			case 'strings.legalConsent.description': return 'memo+ を利用する前に、利用規約とプライバシーポリシーを読み、同意してください。';
 			case 'strings.legalConsent.linksHint': return '全文は以下のリンクから確認できます。';
 			case 'strings.legalConsent.acknowledge': return '利用規約とプライバシーポリシーを読み、同意しました';
 			case 'strings.legalConsent.continueAction': return '同意して続行';
@@ -23800,7 +23800,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => 'バージョン: v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => 'バージョン: v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return '公式サイト';
-			case 'strings.legacy.msg_about_website_link_subtitle': return 'MemoFlow の公式サイトを開く';
+			case 'strings.legacy.msg_about_website_link_subtitle': return 'memo+ の公式サイトを開く';
 			case 'strings.legacy.msg_about_privacy_policy': return 'プライバシーポリシー';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return 'プライバシーとデータ利用について確認';
 			case 'strings.legacy.msg_about_user_agreement': return '利用規約';
@@ -23814,7 +23814,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_status_available': return '利用可';
 			case 'strings.legacy.msg_status_placeholder': return '準備中';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Debug: ロゴを5回タップでデバッグツールを開く';
-			case 'strings.legacy.msg_donors_intro_thanks': return 'MemoFlow を支えてくださる皆さまに感謝します。\nご寄付により、継続的な保守と改善が可能になります。\n\n以下にお名前を掲載いたします。';
+			case 'strings.legacy.msg_donors_intro_thanks': return 'memo+ を支えてくださる皆さまに感謝します。\nご寄付により、継続的な保守と改善が可能になります。\n\n以下にお名前を掲載いたします。';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return '検索ボックスにキーワードを入力して、ローカルの内容とタグを検索します。オフラインで利用可能です。初回利用時はローカルインデックスの作成完了までお待ちください。';
 			case 'strings.legacy.msg_memo_not_found_locally': return 'メモがローカルに見つかりません';
 			case 'strings.legacy.msg_token': return 'トークン';
@@ -23843,7 +23843,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_request_cancelled': return 'リクエストがキャンセルされました。';
 			case 'strings.legacy.msg_generating': return '生成しますか？';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return '権限が拒否されました。リマインダーは無効です。';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow ローカルリマインダー';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ ローカルリマインダー';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return 'レガシーエンドポイントを使用（旧Memosサーバー向け）。';
 			case 'strings.legacy.msg_no_comments_yet': return 'まだコメントがありません';
 			case 'strings.legacy.msg_open': return '開く';
@@ -24033,14 +24033,14 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_recycle_bin': return 'ごみ箱';
 			case 'strings.legacy.msg_unpin': return 'ピン留めを解除';
 			case 'strings.legacy.msg_advanced_security': return '詳細とセキュリティ';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'MemoFlowで問題（例: 同期失敗、クラッシュ）が発生した場合は、以下の手順に従ってください。問題の診断と修正をより迅速に行うために役立ちます。\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'memo+で問題（例: 同期失敗、クラッシュ）が発生した場合は、以下の手順に従ってください。問題の診断と修正をより迅速に行うために役立ちます。\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return 'このメモのすべてのリマインダー時刻を削除します。';
 			case 'strings.legacy.msg_no_summary_save': return '保存する要約がありません';
 			case 'strings.legacy.msg_reset_language_selection': return '言語選択をリセット';
 			case 'strings.legacy.msg_v_30_days': return '30日';
 			case 'strings.legacy.msg_e_g_mood_check': return '例: 気分チェック';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return '注意: 一部のトークンは初回表示時にしか確認できません。表示されたらすぐ安全に保存してください。';
-			case 'strings.legacy.msg_probe_memo_can_delete': return 'このメモは MemoFlow API 探測で作成されたもので、安全に削除できます。';
+			case 'strings.legacy.msg_probe_memo_can_delete': return 'このメモは memo+ API 探測で作成されたもので、安全に削除できます。';
 			case 'strings.legacy.msg_syncing': return '同期中...';
 			case 'strings.legacy.msg_retention': return '保持期間';
 			case 'strings.legacy.msg_open_login_screen': return 'ログイン画面を開く';
@@ -24089,7 +24089,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_no_download_url_available': return 'ダウンロードURLが利用できません';
 			case 'strings.legacy.msg_record_create_memos': return 'メモを作成するために記録する';
 			case 'strings.legacy.msg_signing': return 'サインイン中...';
-			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'MemoFlowはシステムの位置情報権限で座標を取得し、選択したプロバイダー（Amap、Baidu、Google など）で逆ジオコーディングを行います。表示精度は上で選択できます。';
+			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'memo+はシステムの位置情報権限で座標を取得し、選択したプロバイダー（Amap、Baidu、Google など）で逆ジオコーディングを行います。表示精度は上で選択できます。';
 			case 'strings.legacy.msg_continue': return '続行';
 			case 'strings.legacy.msg_notification_content_unavailable': return '通知内容を利用できません';
 			case 'strings.legacy.msg_unable_read_file_path': return 'ファイルパスを読み取れません。';
@@ -24121,7 +24121,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return 'サポートを確認すると、期間限定のゴールドバッジまたは永久広告なしの約束（そもそも広告はありませんでした）が解除されます。';
 			case 'strings.legacy.msg_failed_open_system_settings': return 'システム設定を開けませんでした';
 			case 'strings.legacy.msg_no_mood_trend': return '気分の推移はありません';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow エクスポート';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+ エクスポート';
 			case 'strings.legacy.msg_sync_queue': return '同期キュー';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return '同期タスクのみを削除します。メモは保持されます。';
 			case 'strings.legacy.msg_add_home_screen': return 'ホーム画面に追加';
@@ -24183,7 +24183,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_view_imported_memos': return 'インポートしたメモを見る';
 			case 'strings.legacy.msg_load_failed': return '読み込みに失敗しました';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return 'ディスク上の内容がローカルの保留中の変更と競合しています。ディスク上の内容でローカルの内容を上書きしてください。';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'これまでの履歴は以上です\\nMEMOFLOW SINCE 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'これまでの履歴は以上です\\nMEMO+ SINCE 2026';
 			case 'strings.legacy.msg_cancelling': return 'キャンセル中';
 			case 'strings.legacy.msg_reading_file': return 'ファイルを読み込み中…';
 			case 'strings.legacy.msg_switch_workspace': return 'ワークスペースを切り替え';
@@ -24227,7 +24227,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_chinese_traditional': return '中国語（繁体字）';
 			case 'strings.legacy.msg_private_2': return '非公開';
 			case 'strings.legacy.msg_current_streak': return '現在の連続記録';
-			case 'strings.legacy.msg_generated_ai_memoflow': return 'AI により生成 · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return 'AI により生成 · memo+';
 			case 'strings.legacy.msg_edit_completed': return '編集が完了しました';
 			case 'strings.legacy.msg_local': return 'ローカル';
 			case 'strings.legacy.msg_edit': return '編集';
@@ -24275,13 +24275,13 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_empty_content': return '（内容が空です）';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return '注: ほとんどの機能（オフライン/統計/AIレポート/エクスポート）はバックエンド変更なしで動作しますが、トークンは一度しか返されません？安全に保管してください。';
 			case 'strings.legacy.msg_fixed': return '修正済み: ';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '他のアプリからのリンクや画像をMemoFlowに共有できるようにします。';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '他のアプリからのリンクや画像をmemo+に共有できるようにします。';
 			case 'strings.legacy.msg_invalid_request_parameters': return 'リクエストパラメータが無効です';
 			case 'strings.legacy.msg_enter_api_url': return 'API URLを入力してください';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => '（保留中 ${result_pendingCount}）';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak}日';
 			case 'strings.legacy.msg_poster_not_ready_yet': return 'ポスターはまだ準備できていません';
-			case 'strings.legacy.msg_generated_memoflow': return 'MemoFlow により生成';
+			case 'strings.legacy.msg_generated_memoflow': return 'memo+ により生成';
 			case 'strings.legacy.msg_enter_name_2': return '名前を入力してください';
 			case 'strings.legacy.msg_version': return 'バージョン';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return 'メモがディスク上に見つかりませんが、ローカルに保留中の変更があります。ローカルで削除するにはディスクを使用してください。';
@@ -24361,7 +24361,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_feedback': return 'フィードバック';
 			case 'strings.legacy.msg_help_diagnostics': return 'ヘルプと診断';
 			case 'strings.legacy.msg_storage_space': return 'ストレージ容量';
-			case 'strings.legacy.msg_storage_space_subtitle': return 'MemoFlow の既知の使用量を確認し、キャッシュを削除します。';
+			case 'strings.legacy.msg_storage_space_subtitle': return 'memo+ の既知の使用量を確認し、キャッシュを削除します。';
 			case 'strings.legacy.msg_image_bed_2': return '画像ベッド';
 			case 'strings.legacy.msg_image_compression': return '画像圧縮';
 			case 'strings.legacy.msg_enable_image_compression': return '画像圧縮を有効にする';
@@ -24539,10 +24539,10 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_clear_media_cache_failed': return 'メディアキャッシュの削除に失敗しました';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return 'メディアキャッシュの削除が一部完了しました';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => '自己修復に失敗しました: ${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'MemoFlow の既知の使用量';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'デバイス容量を取得できません。MemoFlow の既知の使用量と分類は引き続き表示されます。';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow はデバイス容量の 1% 未満を使用しています';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow はデバイス容量の ${percent}% を使用しています';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'memo+ の既知の使用量';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'デバイス容量を取得できません。memo+ の既知の使用量と分類は引き続き表示されます。';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ はデバイス容量の 1% 未満を使用しています';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ はデバイス容量の ${percent}% を使用しています';
 			case 'strings.legacy.msg_storage_cache': return 'キャッシュ';
 			case 'strings.legacy.msg_storage_note_content': return 'ノート本文';
 			case 'strings.legacy.msg_storage_note_images': return 'ノート画像';
@@ -24726,7 +24726,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_log_file_created': return 'ログをエクスポートしました';
 			case 'strings.legacy.msg_delete_sync_task': return '同期タスクを削除';
 			case 'strings.legacy.msg_include_archived_2': return '- アーカイブを含める';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlowは、空き時間に開発しているサイドプロジェクトです。バグ修正で夜更かしが続いていて、アイスアメリカーノが本当に欲しいです。あなたのサポートがエネルギー補給になり、新機能のリリースを後押ししてくれます ';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+は、空き時間に開発しているサイドプロジェクトです。バグ修正で夜更かしが続いていて、アイスアメリカーノが本当に欲しいです。あなたのサポートがエネルギー補給になり、新機能のリリースを後押ししてくれます ';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => '生成に失敗しました: ${e}';
 			case 'strings.legacy.msg_search_logs': return 'ログを検索';
 			case 'strings.legacy.msg_active_days': return 'アクティブ日数';
@@ -24848,7 +24848,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_permissions_system_settings': return '権限とシステム設定';
 			case 'strings.legacy.msg_waiting_tasks_stop': return 'タスクの停止を待機中';
 			case 'strings.legacy.msg_done_2': return '完了';
-			case 'strings.legacy.msg_parsing_memoflow_export': return 'MemoFlowエクスポートを解析中...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return 'memo+エクスポートを解析中...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => '位置情報が更新されました: ${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return 'サーバーバージョンを確認中...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 次回は、バグ修正に戻る';
@@ -24868,7 +24868,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_exit_app': return 'アプリを終了';
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return 'ありがとうございます！エネルギーが完全に回復しました⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return '接続がタイムアウトしました。ネットワークまたはAPI URLを確認してください。';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow ブリッジ';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+ ブリッジ';
 			case 'strings.legacy.msg_bridge_component_desc': return 'Obsidian プラグインとペアリングしてローカル同期します。';
 			case 'strings.legacy.msg_bridge_title': return 'Obsidian に接続';
 			case 'strings.legacy.msg_bridge_local_mode_only': return 'ローカルネットワーク経由で Obsidian とペアリングします。今後ほかの接続先にも対応予定です。';
@@ -25162,7 +25162,7 @@ extension on _StringsJa {
 			case 'strings.legacy.msg_template_variables': return 'テンプレート変数';
 			case 'strings.legacy.msg_time_format_variable': return '時刻形式 ({{time}})';
 			case 'strings.legacy.msg_todo': return '藤堂';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'MemoFlow の表示/非表示に失敗しました:${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'memo+ の表示/非表示に失敗しました:${error}';
 			case 'strings.legacy.msg_toggle_sidebar': return 'サイドバーの切り替え';
 			case 'strings.legacy.msg_total_characters_metric': return '総文字数';
 			case 'strings.legacy.msg_total_characters_short': return '総文字数';
@@ -25638,7 +25638,7 @@ extension on _StringsKo {
 			case 'strings.onboarding.localLibraryDefaultName': return '로컬 라이브러리';
 			case 'strings.onboarding.getStarted': return '시작하기';
 			case 'strings.legalConsent.title': return '계약 검토';
-			case 'strings.legalConsent.description': return 'MemoFlow를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.';
+			case 'strings.legalConsent.description': return 'memo+를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.';
 			case 'strings.legalConsent.linksHint': return '전체 내용을 검토하려면 아래 문서를 열어보세요.';
 			case 'strings.legalConsent.acknowledge': return '나는 사용자 계약 및 개인 정보 보호 정책을 읽었으며 이에 동의합니다.';
 			case 'strings.legalConsent.continueAction': return '동의하고 계속하세요';
@@ -25882,7 +25882,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => '버전: v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => '버전: v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return '공식 홈페이지';
-			case 'strings.legacy.msg_about_website_link_subtitle': return 'MemoFlow 공식 웹사이트를 방문하세요';
+			case 'strings.legacy.msg_about_website_link_subtitle': return 'memo+ 공식 웹사이트를 방문하세요';
 			case 'strings.legacy.msg_about_privacy_policy': return '개인 정보 보호 정책';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return '개인정보 보호 및 데이터 사용 세부정보 보기';
 			case 'strings.legacy.msg_about_user_agreement': return '사용자 계약';
@@ -25896,7 +25896,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_status_available': return '살다';
 			case 'strings.legacy.msg_status_placeholder': return '곧';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return '디버그: 로고를 5번 탭하면 디버그 도구가 열립니다.';
-			case 'strings.legacy.msg_donors_intro_thanks': return 'MemoFlow를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.';
+			case 'strings.legacy.msg_donors_intro_thanks': return 'memo+를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return '로컬 콘텐츠와 태그를 쿼리하려면 검색 상자에 키워드를 입력하세요. 오프라인으로 작동합니다. 처음 사용하려면 로컬 인덱싱이 완료될 때까지 기다리세요.';
 			case 'strings.legacy.msg_memo_not_found_locally': return '로컬에서 메모를 찾을 수 없습니다.';
 			case 'strings.legacy.msg_token': return '토큰';
@@ -25925,7 +25925,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_request_cancelled': return '요청이 취소되었습니다.';
 			case 'strings.legacy.msg_generating': return '생성 중이신가요?';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return '권한이 거부되었습니다. 알림이 비활성화되었습니다.';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow 지역 알림';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ 지역 알림';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return '레거시 엔드포인트를 사용합니다(이전 Memos 서버의 경우).';
 			case 'strings.legacy.msg_no_comments_yet': return '아직 댓글이 없습니다';
 			case 'strings.legacy.msg_open': return '열려 있는';
@@ -26116,14 +26116,14 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_recycle_bin': return '휴지통';
 			case 'strings.legacy.msg_unpin': return '고정 해제';
 			case 'strings.legacy.msg_advanced_security': return '고급 및 보안';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'MemoFlow에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'memo+에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return '이 메모의 모든 알림 시간을 삭제하세요.';
 			case 'strings.legacy.msg_no_summary_save': return '저장할 요약이 없습니다.';
 			case 'strings.legacy.msg_reset_language_selection': return '언어 선택 재설정';
 			case 'strings.legacy.msg_v_30_days': return '30일';
 			case 'strings.legacy.msg_e_g_mood_check': return '예를 들어 기분 체크';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return '팁: 일부 토큰은 한 번만 표시됩니다. 처음 표시될 때 안전하게 저장하세요.';
-			case 'strings.legacy.msg_probe_memo_can_delete': return '이 메모는 MemoFlow API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.';
+			case 'strings.legacy.msg_probe_memo_can_delete': return '이 메모는 memo+ API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.';
 			case 'strings.legacy.msg_syncing': return '동기화 중...';
 			case 'strings.legacy.msg_retention': return '보유';
 			case 'strings.legacy.msg_open_login_screen': return '로그인 화면 열기';
@@ -26169,7 +26169,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_no_download_url_available': return '다운로드 가능한 URL가 없습니다.';
 			case 'strings.legacy.msg_record_create_memos': return '메모를 작성하려면 녹음하세요';
 			case 'strings.legacy.msg_signing': return '로그인 중...';
-			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'MemoFlow는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를 통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.';
+			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'memo+는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를 통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.';
 			case 'strings.legacy.msg_continue': return '계속하다';
 			case 'strings.legacy.msg_notification_content_unavailable': return '알림 내용을 사용할 수 없습니다.';
 			case 'strings.legacy.msg_unable_read_file_path': return '파일 경로를 읽을 수 없습니다.';
@@ -26201,7 +26201,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return '지원을 확인한 후 제한된 골드 배지를 잠금 해제하거나 영원히 광고 없는 약속을 받을 수 있습니다(광고는 없었지만).';
 			case 'strings.legacy.msg_failed_open_system_settings': return '시스템 설정을 열지 못했습니다.';
 			case 'strings.legacy.msg_no_mood_trend': return '기분 추세 없음';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow 내보내기';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+ 내보내기';
 			case 'strings.legacy.msg_sync_queue': return '동기화 대기열';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return '동기화 작업만 삭제하세요. 메모는 보관됩니다.';
 			case 'strings.legacy.msg_add_home_screen': return '홈 화면에 추가';
@@ -26263,7 +26263,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_view_imported_memos': return '가져온 메모 보기';
 			case 'strings.legacy.msg_load_failed': return '로드 실패';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return '디스크 내용이 로컬 보류 중인 변경 사항과 충돌합니다. 디스크를 사용하여 로컬 콘텐츠를 덮어씁니다.';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '이것이 지금까지의 모든 기록입니다.\\n2023년 이후 MEMOFLOW';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '이것이 지금까지의 모든 기록입니다.\\n2026년 이후 MEMO+';
 			case 'strings.legacy.msg_cancelling': return '취소 중';
 			case 'strings.legacy.msg_reading_file': return '파일을 읽는 중...';
 			case 'strings.legacy.msg_switch_workspace': return '작업공간 전환';
@@ -26307,7 +26307,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_chinese_traditional': return '중국어(번체)';
 			case 'strings.legacy.msg_private_2': return '사적인';
 			case 'strings.legacy.msg_current_streak': return '현재 연속';
-			case 'strings.legacy.msg_generated_ai_memoflow': return 'AI · MemoFlow에 의해 생성됨';
+			case 'strings.legacy.msg_generated_ai_memoflow': return 'AI · memo+에 의해 생성됨';
 			case 'strings.legacy.msg_edit_completed': return '수정 완료';
 			case 'strings.legacy.msg_local': return '현지의';
 			case 'strings.legacy.msg_edit': return '편집하다';
@@ -26348,13 +26348,13 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_empty_content': return '(빈 콘텐츠)';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return '참고: 대부분의 기능(오프라인/통계/AI 보고서/내보내기)은 백엔드 변경 없이 작동하지만 토큰은 한 번만 반환되므로 안전하게 보관하십시오.';
 			case 'strings.legacy.msg_fixed': return '결정된:';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '다른 앱의 링크나 이미지를 MemoFlow로 공유하도록 허용합니다.';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '다른 앱의 링크나 이미지를 memo+로 공유하도록 허용합니다.';
 			case 'strings.legacy.msg_invalid_request_parameters': return '잘못된 요청 매개변수';
 			case 'strings.legacy.msg_enter_api_url': return 'API URL를 입력하세요.';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => '(${result_pendingCount} 보류 중)';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak}일';
 			case 'strings.legacy.msg_poster_not_ready_yet': return '포스터가 아직 준비되지 않았습니다.';
-			case 'strings.legacy.msg_generated_memoflow': return 'MemoFlow에 의해 생성됨';
+			case 'strings.legacy.msg_generated_memoflow': return 'memo+에 의해 생성됨';
 			case 'strings.legacy.msg_enter_name_2': return '이름을 입력하세요';
 			case 'strings.legacy.msg_version': return '버전';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return '메모가 디스크에 없지만 로컬에 보류 중인 변경 사항이 있습니다. 로컬에서 삭제하려면 디스크를 사용하세요.';
@@ -26434,7 +26434,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_feedback': return '피드백';
 			case 'strings.legacy.msg_help_diagnostics': return '도움말 및 진단';
 			case 'strings.legacy.msg_storage_space': return '저장 공간';
-			case 'strings.legacy.msg_storage_space_subtitle': return 'MemoFlow의 알려진 사용량을 확인하고 캐시를 지웁니다.';
+			case 'strings.legacy.msg_storage_space_subtitle': return 'memo+의 알려진 사용량을 확인하고 캐시를 지웁니다.';
 			case 'strings.legacy.msg_image_bed_2': return '이미지베드';
 			case 'strings.legacy.msg_image_compression': return '이미지 압축';
 			case 'strings.legacy.msg_enable_image_compression': return '이미지 압축 활성화';
@@ -26612,10 +26612,10 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_clear_media_cache_failed': return '미디어 캐시 정리에 실패했습니다';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return '미디어 캐시 정리가 일부 완료되었습니다';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => '자가 수리 실패: ${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'MemoFlow 알려진 사용량';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '기기 용량을 사용할 수 없습니다. MemoFlow 알려진 사용량과 분류는 계속 표시됩니다.';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow가 기기 용량의 1% 미만을 사용합니다';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow가 기기 용량의 ${percent}%를 사용합니다';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'memo+ 알려진 사용량';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '기기 용량을 사용할 수 없습니다. memo+ 알려진 사용량과 분류는 계속 표시됩니다.';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+가 기기 용량의 1% 미만을 사용합니다';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+가 기기 용량의 ${percent}%를 사용합니다';
 			case 'strings.legacy.msg_storage_cache': return '캐시';
 			case 'strings.legacy.msg_storage_note_content': return '노트 내용';
 			case 'strings.legacy.msg_storage_note_images': return '노트 이미지';
@@ -26800,7 +26800,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_log_file_created': return '로그 번들을 내보냈습니다.';
 			case 'strings.legacy.msg_delete_sync_task': return '동기화 작업 삭제';
 			case 'strings.legacy.msg_include_archived_2': return '- 보관된 내용 포함';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에 활력을 불어넣고 새로운 기능 출시에 도움이 됩니다';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에 활력을 불어넣고 새로운 기능 출시에 도움이 됩니다';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => '생성 실패: ${e}';
 			case 'strings.legacy.msg_search_logs': return '로그 검색';
 			case 'strings.legacy.msg_active_days': return '활동적인 날';
@@ -26931,7 +26931,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_permissions_system_settings': return '권한 및 시스템 설정';
 			case 'strings.legacy.msg_waiting_tasks_stop': return '작업이 중지되기를 기다리는 중';
 			case 'strings.legacy.msg_done_2': return '완료';
-			case 'strings.legacy.msg_parsing_memoflow_export': return 'MemoFlow 내보내기 구문 분석 중...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return 'memo+ 내보내기 구문 분석 중...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => '업데이트된 위치: ${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return '서버 버전 확인 중...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '🙌 다음에는 버그 수정으로 다시 돌아오겠습니다';
@@ -26952,14 +26952,14 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return '감사해요! 에너지가 완전히 회복되었습니다 ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return '연결 시간이 초과되었습니다. 네트워크 또는 API URL를 확인하세요.';
 			case 'strings.legacy.msg_local_network_migration': return '로컬 네트워크 마이그레이션';
-			case 'strings.legacy.msg_local_network_migration_desc': return '로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 MemoFlow 장치와 타사 메모 도구를 연결하세요. MemoFlow 마이그레이션 및 Obsidian은 현재 지원됩니다.';
+			case 'strings.legacy.msg_local_network_migration_desc': return '로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 memo+ 장치와 타사 메모 도구를 연결하세요. memo+ 마이그레이션 및 Obsidian은 현재 지원됩니다.';
 			case 'strings.legacy.msg_connect_obsidian': return '흑요석 연결';
 			case 'strings.legacy.msg_connect_obsidian_desc': return '로컬 네트워크를 통해 Obsidian과 노트 콘텐츠를 페어링하고 동기화하세요.';
 			case 'strings.legacy.msg_local_network_migration_more_targets': return '나중에 SiYuan 및 기타 타사 도구를 포함한 더 많은 대상이 여기에 추가될 예정입니다.';
-			case 'strings.legacy.msg_memoflow_migration': return 'MemoFlow 마이그레이션';
-			case 'strings.legacy.msg_memoflow_migration_target_desc': return '로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 MemoFlow 장치로 마이그레이션하세요.';
-			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'MemoFlow / 흑요석';
-			case 'strings.legacy.msg_memoflow_migration_role_desc': return '이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 MemoFlow를 포그라운드에 유지하세요.';
+			case 'strings.legacy.msg_memoflow_migration': return 'memo+ 마이그레이션';
+			case 'strings.legacy.msg_memoflow_migration_target_desc': return '로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 memo+ 장치로 마이그레이션하세요.';
+			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'memo+ / 흑요석';
+			case 'strings.legacy.msg_memoflow_migration_role_desc': return '이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 memo+를 포그라운드에 유지하세요.';
 			case 'strings.legacy.msg_memoflow_migration_sender': return '나는 보낸 사람이다';
 			case 'strings.legacy.msg_memoflow_migration_sender_desc': return '현재 로컬 작업 공간에서 메모와 설정을 선택한 다음 근처 수신기에 연결하세요.';
 			case 'strings.legacy.msg_memoflow_migration_sender_only_local_mode': return '보낸 사람 역할은 이 장치가 로컬 작업 공간을 사용하는 경우에만 사용할 수 있습니다.';
@@ -27002,8 +27002,8 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_memoflow_migration_workspace_name': return '작업공간';
 			case 'strings.legacy.msg_memoflow_migration_scan_title': return '스캔 수신기 QR';
 			case 'strings.legacy.msg_memoflow_migration_scan_hint': return '수신 장치에 표시된 QR 코드를 스캔하세요.';
-			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '마이그레이션 중에 두 장치 모두에서 MemoFlow를 포그라운드로 유지합니다.';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow 다리';
+			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '마이그레이션 중에 두 장치 모두에서 memo+를 포그라운드로 유지합니다.';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+ 다리';
 			case 'strings.legacy.msg_bridge_component_desc': return '로컬 동기화를 위해 Obsidian 플러그인과 페어링하세요.';
 			case 'strings.legacy.msg_bridge_title': return '흑요석 연결';
 			case 'strings.legacy.msg_bridge_local_mode_only': return '로컬 네트워크를 통해 Obsidian과 페어링하세요. 나중에 다른 목표가 올 수도 있습니다.';
@@ -27212,7 +27212,7 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_focus_input_area': return '초점 입력 영역';
 			case 'strings.legacy.msg_toggle_sidebar': return '사이드바 전환';
 			case 'strings.legacy.msg_open_settings': return '설정 열기';
-			case 'strings.legacy.msg_show_hide_memoflow': return 'MemoFlow 표시 / 숨기기';
+			case 'strings.legacy.msg_show_hide_memoflow': return 'memo+ 표시 / 숨기기';
 			case 'strings.legacy.msg_publish_memo': return '메모 게시';
 			case 'strings.legacy.msg_bold': return '용감한';
 			case 'strings.legacy.msg_underline': return '밑줄';
@@ -27324,12 +27324,12 @@ extension on _StringsKo {
 			case 'strings.legacy.msg_save_failed_check_content_retry': return '저장에 실패했습니다. 내용을 확인하신 후 다시 시도해 주세요.';
 			case 'strings.legacy.msg_quick_input_channel_not_ready_retry': return '빠른 입력 채널이 준비되지 않았습니다. 기본 창을 다시 열고 다시 시도해 주세요.';
 			case 'strings.legacy.msg_visibility_value': return ({required Object value}) => '가시성 : ${value}';
-			case 'strings.legacy.msg_saved_to_memoflow': return 'MemoFlow에 저장되었습니다.';
+			case 'strings.legacy.msg_saved_to_memoflow': return 'memo+에 저장되었습니다.';
 			case 'strings.legacy.msg_quick_input_failed_with_error': return ({required Object error}) => '빠른 입력 실패: ${error}';
 			case 'strings.legacy.msg_feature': return '특징';
 			case 'strings.legacy.msg_feature_not_implemented_placeholder_with_label': return ({required Object label}) => '"${label}"는 아직 구현되지 않았습니다(자리 표시자).';
 			case 'strings.legacy.msg_quick_input_save_failed_with_error': return ({required Object error}) => '빠른 입력 저장 실패: ${error}';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'MemoFlow 표시/숨기기 실패: ${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'memo+ 표시/숨기기 실패: ${error}';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return '바로가기 개요를 열었습니다.';
 			case 'strings.legacy.msg_unsupported_version_value': return ({required Object version}) => '지원되지 않는 버전: ${version}';
 			case 'strings.legacy.msg_version_probe_passed_with_version': return ({required Object version}) => 'v${version} 프로브 통과';
@@ -27810,7 +27810,7 @@ extension on _StringsPtBr {
 			case 'strings.onboarding.localLibraryDefaultName': return 'Biblioteca local';
 			case 'strings.onboarding.getStarted': return 'Comece';
 			case 'strings.legalConsent.title': return 'Revise os acordos';
-			case 'strings.legalConsent.description': return 'Antes de usar MemoFlow, leia e concorde com o Contrato do Usuário e a Política de Privacidade.';
+			case 'strings.legalConsent.description': return 'Antes de usar memo+, leia e concorde com o Contrato do Usuário e a Política de Privacidade.';
 			case 'strings.legalConsent.linksHint': return 'Abra os documentos abaixo para revisar o texto completo.';
 			case 'strings.legalConsent.acknowledge': return 'Li e concordo com o Contrato do Usuário e a Política de Privacidade';
 			case 'strings.legalConsent.continueAction': return 'Concordar e continuar';
@@ -28054,7 +28054,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => 'Versão: v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => 'Versão: v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return 'Site Oficial';
-			case 'strings.legacy.msg_about_website_link_subtitle': return 'Visite o site oficial do MemoFlow';
+			case 'strings.legacy.msg_about_website_link_subtitle': return 'Visite o site oficial do memo+';
 			case 'strings.legacy.msg_about_privacy_policy': return 'Política de Privacidade';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return 'Ver detalhes de privacidade e uso de dados';
 			case 'strings.legacy.msg_about_user_agreement': return 'Contrato do usuário';
@@ -28068,7 +28068,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_status_available': return 'Ao vivo';
 			case 'strings.legacy.msg_status_placeholder': return 'Em breve';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Depuração: Toque no logotipo 5 vezes para abrir as ferramentas de depuração';
-			case 'strings.legacy.msg_donors_intro_thanks': return 'Obrigado a todos os usuários que apoiam o MemoFlow.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.';
+			case 'strings.legacy.msg_donors_intro_thanks': return 'Obrigado a todos os usuários que apoiam o memo+.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return 'Insira palavras-chave na caixa de pesquisa para consultar conteúdo e tags locais. Funciona off-line; para o primeiro uso, aguarde até que a indexação local termine.';
 			case 'strings.legacy.msg_memo_not_found_locally': return 'Memorando não encontrado localmente';
 			case 'strings.legacy.msg_token': return 'Ficha';
@@ -28097,7 +28097,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_request_cancelled': return 'Solicitação cancelada.';
 			case 'strings.legacy.msg_generating': return 'Gerando?';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return 'Permissões negadas. Lembretes desativados.';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'Lembretes locais MemoFlow';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'Lembretes locais memo+';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return 'Use endpoints legados (para servidores Memos mais antigos).';
 			case 'strings.legacy.msg_no_comments_yet': return 'Ainda não há comentários';
 			case 'strings.legacy.msg_open': return 'Aberto';
@@ -28288,14 +28288,14 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_recycle_bin': return 'Lixeira';
 			case 'strings.legacy.msg_unpin': return 'Desafixar';
 			case 'strings.legacy.msg_advanced_security': return 'Avançado e segurança';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'Se você tiver problemas no MemoFlow (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return 'Se você tiver problemas no memo+ (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return 'Remova todos os horários de lembrete deste memorando.';
 			case 'strings.legacy.msg_no_summary_save': return 'Nenhum resumo para salvar';
 			case 'strings.legacy.msg_reset_language_selection': return 'Redefinir seleção de idioma';
 			case 'strings.legacy.msg_v_30_days': return '30 dias';
 			case 'strings.legacy.msg_e_g_mood_check': return 'por exemplo Verificação de humor';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return 'Dica: Alguns tokens são mostrados apenas uma vez. Salve-os com segurança quando forem exibidos pela primeira vez.';
-			case 'strings.legacy.msg_probe_memo_can_delete': return 'Este memorando foi criado pelo probe MemoFlow API e pode ser excluído com segurança.';
+			case 'strings.legacy.msg_probe_memo_can_delete': return 'Este memorando foi criado pelo probe memo+ API e pode ser excluído com segurança.';
 			case 'strings.legacy.msg_syncing': return 'Sincronizando...';
 			case 'strings.legacy.msg_retention': return 'Retenção';
 			case 'strings.legacy.msg_open_login_screen': return 'Abrir tela de login';
@@ -28341,7 +28341,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_no_download_url_available': return 'Nenhum download URL disponível';
 			case 'strings.legacy.msg_record_create_memos': return 'Registro para criar memorandos';
 			case 'strings.legacy.msg_signing': return 'Fazendo login...';
-			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'MemoFlow usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.';
+			case 'strings.legacy.msg_memoflow_uses_system_location_permission_get': return 'memo+ usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.';
 			case 'strings.legacy.msg_continue': return 'Continuar';
 			case 'strings.legacy.msg_notification_content_unavailable': return 'Conteúdo da notificação indisponível';
 			case 'strings.legacy.msg_unable_read_file_path': return 'Não foi possível ler o caminho do arquivo.';
@@ -28373,7 +28373,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return 'Após confirmar o suporte, você desbloqueará um emblema dourado limitado ou uma promessa eterna de ausência de anúncios (embora nunca tenha havido anúncios).';
 			case 'strings.legacy.msg_failed_open_system_settings': return 'Falha ao abrir as configurações do sistema';
 			case 'strings.legacy.msg_no_mood_trend': return 'Sem tendência de humor';
-			case 'strings.legacy.msg_memoflow_export': return '#Exportação MemoFlow';
+			case 'strings.legacy.msg_memoflow_export': return '#Exportação memo+';
 			case 'strings.legacy.msg_sync_queue': return 'Fila de sincronização';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return 'Exclua apenas a tarefa de sincronização; o memorando será mantido.';
 			case 'strings.legacy.msg_add_home_screen': return 'Adicionar à tela inicial';
@@ -28435,7 +28435,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_view_imported_memos': return 'Ver memorandos importados';
 			case 'strings.legacy.msg_load_failed': return 'Falha no carregamento';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return 'O conteúdo do disco entra em conflito com alterações locais pendentes. Use o disco para substituir o conteúdo local.';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'Essa é toda a história até agora\\nMEMOFLOW DESDE 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return 'Essa é toda a história até agora\\nMEMO+ DESDE 2026';
 			case 'strings.legacy.msg_cancelling': return 'Cancelando';
 			case 'strings.legacy.msg_reading_file': return 'Lendo arquivo...';
 			case 'strings.legacy.msg_switch_workspace': return 'Alternar espaço de trabalho';
@@ -28479,7 +28479,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_chinese_traditional': return 'Chinês (Tradicional)';
 			case 'strings.legacy.msg_private_2': return 'Privado';
 			case 'strings.legacy.msg_current_streak': return 'Sequência atual';
-			case 'strings.legacy.msg_generated_ai_memoflow': return 'Gerado por AI · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return 'Gerado por AI · memo+';
 			case 'strings.legacy.msg_edit_completed': return 'Edição concluída';
 			case 'strings.legacy.msg_local': return 'Locais';
 			case 'strings.legacy.msg_edit': return 'Editar';
@@ -28520,13 +28520,13 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_empty_content': return '(conteúdo vazio)';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return 'Observação: a maioria dos recursos (offline/estatísticas/relatórios AI/exportação) funcionam sem alterações de back-end, mas os tokens são retornados apenas uma vez? Mantenha-os seguros.';
 			case 'strings.legacy.msg_fixed': return 'Corrigido:';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Permitir o compartilhamento de links ou imagens de outros aplicativos no MemoFlow.';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return 'Permitir o compartilhamento de links ou imagens de outros aplicativos no memo+.';
 			case 'strings.legacy.msg_invalid_request_parameters': return 'Parâmetros de solicitação inválidos';
 			case 'strings.legacy.msg_enter_api_url': return 'Insira API URL';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => '(pendente ${result_pendingCount})';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak} dias';
 			case 'strings.legacy.msg_poster_not_ready_yet': return 'O pôster ainda não está pronto';
-			case 'strings.legacy.msg_generated_memoflow': return 'Gerado por MemoFlow';
+			case 'strings.legacy.msg_generated_memoflow': return 'Gerado por memo+';
 			case 'strings.legacy.msg_enter_name_2': return 'Insira um nome';
 			case 'strings.legacy.msg_version': return 'Versão';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return 'O memorando está faltando no disco, mas possui alterações locais pendentes. Use o disco para excluir localmente.';
@@ -28606,7 +28606,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_feedback': return 'Comentários';
 			case 'strings.legacy.msg_help_diagnostics': return 'Ajuda e diagnostico';
 			case 'strings.legacy.msg_storage_space': return 'Espaço de armazenamento';
-			case 'strings.legacy.msg_storage_space_subtitle': return 'Revise o uso conhecido do MemoFlow e limpe o cache.';
+			case 'strings.legacy.msg_storage_space_subtitle': return 'Revise o uso conhecido do memo+ e limpe o cache.';
 			case 'strings.legacy.msg_image_bed_2': return 'Cama de imagem';
 			case 'strings.legacy.msg_image_compression': return 'Compressão de imagem';
 			case 'strings.legacy.msg_enable_image_compression': return 'Habilitar compactação de imagem';
@@ -28784,10 +28784,10 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_clear_media_cache_failed': return 'Falha ao limpar cache de midia';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return 'Limpeza do cache de midia parcialmente concluida';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => 'Auto-reparo falhou: ${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'Uso conhecido do MemoFlow';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'A capacidade do dispositivo nao esta disponivel. O uso conhecido do MemoFlow e as categorias ainda sao mostrados.';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow usa menos de 1% da capacidade do dispositivo';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow usa ${percent}% da capacidade do dispositivo';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'Uso conhecido do memo+';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return 'A capacidade do dispositivo nao esta disponivel. O uso conhecido do memo+ e as categorias ainda sao mostrados.';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ usa menos de 1% da capacidade do dispositivo';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ usa ${percent}% da capacidade do dispositivo';
 			case 'strings.legacy.msg_storage_cache': return 'Cache';
 			case 'strings.legacy.msg_storage_note_content': return 'Conteudo das notas';
 			case 'strings.legacy.msg_storage_note_images': return 'Imagens das notas';
@@ -28972,7 +28972,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_log_file_created': return 'Pacote de registros exportado';
 			case 'strings.legacy.msg_delete_sync_task': return 'Excluir tarefa de sincronização';
 			case 'strings.legacy.msg_include_archived_2': return '- Incluir arquivado';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+ é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => 'Falha ao gerar: ${e}';
 			case 'strings.legacy.msg_search_logs': return 'Registros de pesquisa';
 			case 'strings.legacy.msg_active_days': return 'Dias ativos';
@@ -29103,7 +29103,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_permissions_system_settings': return 'Permissões e configurações do sistema';
 			case 'strings.legacy.msg_waiting_tasks_stop': return 'Aguardando a interrupção das tarefas';
 			case 'strings.legacy.msg_done_2': return 'Concluído';
-			case 'strings.legacy.msg_parsing_memoflow_export': return 'Analisando exportação MemoFlow...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return 'Analisando exportação memo+...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => 'Localização atualizada: ${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return 'Verificando a versão do servidor...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 Da próxima vez, voltando à correção de bugs';
@@ -29124,14 +29124,14 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return 'Obrigado! Energia totalmente restaurada ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return 'Tempo limite de conexão. Verifique a rede ou API URL.';
 			case 'strings.legacy.msg_local_network_migration': return 'Migração de rede local';
-			case 'strings.legacy.msg_local_network_migration_desc': return 'Use a migração de rede local para conectar dispositivos MemoFlow e ferramentas de anotações de terceiros em seu LAN. A migração MemoFlow e Obsidian são suportadas hoje.';
+			case 'strings.legacy.msg_local_network_migration_desc': return 'Use a migração de rede local para conectar dispositivos memo+ e ferramentas de anotações de terceiros em seu LAN. A migração memo+ e Obsidian são suportadas hoje.';
 			case 'strings.legacy.msg_connect_obsidian': return 'Conectar Obsidiana';
 			case 'strings.legacy.msg_connect_obsidian_desc': return 'Emparelhe e sincronize o conteúdo das notas com Obsidian em sua rede local.';
 			case 'strings.legacy.msg_local_network_migration_more_targets': return 'Mais alvos, incluindo SiYuan e outras ferramentas de terceiros, serão adicionados aqui posteriormente.';
-			case 'strings.legacy.msg_memoflow_migration': return 'Migração MemoFlow';
-			case 'strings.legacy.msg_memoflow_migration_target_desc': return 'Migre notas e configurações do espaço de trabalho local para outro dispositivo MemoFlow pela sua rede local.';
-			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'MemoFlow / Obsidiana';
-			case 'strings.legacy.msg_memoflow_migration_role_desc': return 'Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o MemoFlow em primeiro plano durante a transferência.';
+			case 'strings.legacy.msg_memoflow_migration': return 'Migração memo+';
+			case 'strings.legacy.msg_memoflow_migration_target_desc': return 'Migre notas e configurações do espaço de trabalho local para outro dispositivo memo+ pela sua rede local.';
+			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'memo+ / Obsidiana';
+			case 'strings.legacy.msg_memoflow_migration_role_desc': return 'Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o memo+ em primeiro plano durante a transferência.';
 			case 'strings.legacy.msg_memoflow_migration_sender': return 'Eu sou o remetente';
 			case 'strings.legacy.msg_memoflow_migration_sender_desc': return 'Escolha notas e configurações do espaço de trabalho local atual e conecte-se a um receptor próximo.';
 			case 'strings.legacy.msg_memoflow_migration_sender_only_local_mode': return 'A função de remetente está disponível somente quando este dispositivo está usando um espaço de trabalho local.';
@@ -29174,8 +29174,8 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_memoflow_migration_workspace_name': return 'Espaço de trabalho';
 			case 'strings.legacy.msg_memoflow_migration_scan_title': return 'Receptor de digitalização QR';
 			case 'strings.legacy.msg_memoflow_migration_scan_hint': return 'Digitalize o código QR mostrado no dispositivo receptor.';
-			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return 'Mantenha o MemoFlow em primeiro plano em ambos os dispositivos durante a migração.';
-			case 'strings.legacy.msg_bridge_component_title': return 'Ponte MemoFlow';
+			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return 'Mantenha o memo+ em primeiro plano em ambos os dispositivos durante a migração.';
+			case 'strings.legacy.msg_bridge_component_title': return 'Ponte memo+';
 			case 'strings.legacy.msg_bridge_component_desc': return 'Emparelhe com o plugin Obsidian para sincronização local.';
 			case 'strings.legacy.msg_bridge_title': return 'Conectar Obsidiana';
 			case 'strings.legacy.msg_bridge_local_mode_only': return 'Emparelhe com Obsidian em sua rede local. Outros alvos poderão surgir mais tarde.';
@@ -29384,7 +29384,7 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_focus_input_area': return 'Área de entrada de foco';
 			case 'strings.legacy.msg_toggle_sidebar': return 'Alternar barra lateral';
 			case 'strings.legacy.msg_open_settings': return 'Abrir configurações';
-			case 'strings.legacy.msg_show_hide_memoflow': return 'Mostrar/ocultar MemoFlow';
+			case 'strings.legacy.msg_show_hide_memoflow': return 'Mostrar/ocultar memo+';
 			case 'strings.legacy.msg_publish_memo': return 'Publicar memorando';
 			case 'strings.legacy.msg_bold': return 'Negrito';
 			case 'strings.legacy.msg_underline': return 'Sublinhado';
@@ -29496,12 +29496,12 @@ extension on _StringsPtBr {
 			case 'strings.legacy.msg_save_failed_check_content_retry': return 'Falha ao salvar. Verifique o conteúdo e tente novamente.';
 			case 'strings.legacy.msg_quick_input_channel_not_ready_retry': return 'O canal de entrada rápida não está pronto. Por favor, reabra a janela principal e tente novamente.';
 			case 'strings.legacy.msg_visibility_value': return ({required Object value}) => 'Visibilidade: ${value}';
-			case 'strings.legacy.msg_saved_to_memoflow': return 'Salvo em MemoFlow';
+			case 'strings.legacy.msg_saved_to_memoflow': return 'Salvo em memo+';
 			case 'strings.legacy.msg_quick_input_failed_with_error': return ({required Object error}) => 'Falha na entrada rápida: ${error}';
 			case 'strings.legacy.msg_feature': return 'Recurso';
 			case 'strings.legacy.msg_feature_not_implemented_placeholder_with_label': return ({required Object label}) => '“${label}” ainda não foi implementado (espaço reservado).';
 			case 'strings.legacy.msg_quick_input_save_failed_with_error': return ({required Object error}) => 'Falha ao salvar entrada rápida: ${error}';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Falha ao mostrar/ocultar MemoFlow: ${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => 'Falha ao mostrar/ocultar memo+: ${error}';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return 'Visão geral dos atalhos abertos.';
 			case 'strings.legacy.msg_unsupported_version_value': return ({required Object version}) => 'Versão não suportada: ${version}';
 			case 'strings.legacy.msg_version_probe_passed_with_version': return ({required Object version}) => 'Sondagem v${version} aprovada';
@@ -30226,7 +30226,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => '版本说明：v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => '版本说明：v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return '官网链接';
-			case 'strings.legacy.msg_about_website_link_subtitle': return '访问 MemoFlow 官方网站';
+			case 'strings.legacy.msg_about_website_link_subtitle': return '访问 memo+ 官方网站';
 			case 'strings.legacy.msg_about_privacy_policy': return '隐私政策';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return '查看隐私信息与数据说明';
 			case 'strings.legacy.msg_about_user_agreement': return '用户协议';
@@ -30240,7 +30240,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_status_available': return '可用';
 			case 'strings.legacy.msg_status_placeholder': return '占位';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Debug: 连续点击 Logo 5 次打开调试工具';
-			case 'strings.legacy.msg_donors_intro_thanks': return '感谢所有支持 MemoFlow 的用户。\n你们的捐赠帮助项目持续维护与更新。\n\n名单如下，谨此致谢。';
+			case 'strings.legacy.msg_donors_intro_thanks': return '感谢所有支持 memo+ 的用户。\n你们的捐赠帮助项目持续维护与更新。\n\n名单如下，谨此致谢。';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return '在搜索框输入关键词可检索本地内容与标签。离线可用；首次使用请等待本地索引完成。';
 			case 'strings.legacy.msg_memo_not_found_locally': return '本地暂无该笔记';
 			case 'strings.legacy.msg_token': return 'Token 摘要';
@@ -30269,7 +30269,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_request_cancelled': return '请求已取消';
 			case 'strings.legacy.msg_generating': return '生成中…';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return '权限未授予，提醒未开启';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow 本地提醒';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ 本地提醒';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return '使用旧版接口（适配旧版 Memos）';
 			case 'strings.legacy.msg_no_comments_yet': return '暂无评论';
 			case 'strings.legacy.msg_open': return '打开';
@@ -30470,14 +30470,14 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_recycle_bin': return '回收站';
 			case 'strings.legacy.msg_unpin': return '取消置顶';
 			case 'strings.legacy.msg_advanced_security': return '高级与安全';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return '如果您在使用 MemoFlow 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return '如果您在使用 memo+ 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return '将移除该笔记的全部提醒时间。';
 			case 'strings.legacy.msg_no_summary_save': return '暂无可保存的总结';
 			case 'strings.legacy.msg_reset_language_selection': return '重置语言选择状态';
 			case 'strings.legacy.msg_v_30_days': return '30 天';
 			case 'strings.legacy.msg_e_g_mood_check': return '如：情绪分析';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return '提示：部分 Token 只会显示一次，请在首次显示时立即安全保存。';
-			case 'strings.legacy.msg_probe_memo_can_delete': return '此条笔记由 MemoFlow API 探测创建，可安全删除。';
+			case 'strings.legacy.msg_probe_memo_can_delete': return '此条笔记由 memo+ API 探测创建，可安全删除。';
 			case 'strings.legacy.msg_syncing': return '同步中...';
 			case 'strings.legacy.msg_retention': return '版本保留数量';
 			case 'strings.legacy.msg_open_login_screen': return '打开登录页面';
@@ -30555,7 +30555,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return '点击确认赞赏后，将解锁限定版金色标识 or 永久去广告承诺（虽然本来就没广告）';
 			case 'strings.legacy.msg_failed_open_system_settings': return '无法打开系统设置';
 			case 'strings.legacy.msg_no_mood_trend': return '暂无情绪趋势';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow 导出';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+ 导出';
 			case 'strings.legacy.msg_sync_queue': return '同步队列';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return '仅删除同步任务，笔记会保留。';
 			case 'strings.legacy.msg_add_home_screen': return '添加到桌面';
@@ -30617,7 +30617,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_view_imported_memos': return '查看导入笔记';
 			case 'strings.legacy.msg_load_failed': return '加载失败';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return '磁盘与本地未同步内容冲突。选择“以磁盘为准”将覆盖本地内容。';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '以上是全部历史内容\\nMEMOFLOW SINCE 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '以上是全部历史内容\\nMEMO+ SINCE 2026';
 			case 'strings.legacy.msg_cancelling': return '取消中';
 			case 'strings.legacy.msg_reading_file': return '正在读取文件...';
 			case 'strings.legacy.msg_switch_workspace': return '切换工作区';
@@ -30661,7 +30661,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_chinese_traditional': return '繁體中文';
 			case 'strings.legacy.msg_private_2': return '私密';
 			case 'strings.legacy.msg_current_streak': return '当前连击';
-			case 'strings.legacy.msg_generated_ai_memoflow': return '由 AI 生成 · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return '由 AI 生成 · memo+';
 			case 'strings.legacy.msg_edit_completed': return '编辑完成';
 			case 'strings.legacy.msg_local': return '本地调试';
 			case 'strings.legacy.msg_edit': return '编辑';
@@ -30702,13 +30702,13 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_empty_content': return '内容为空';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return '提示：大部分功能（离线/统计/AI 总结/导出）无需后端改动，但 Token 只返回一次，请妥善保存。';
 			case 'strings.legacy.msg_fixed': return '修复：';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '允许从其他应用分享链接或图片到 MemoFlow。';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '允许从其他应用分享链接或图片到 memo+。';
 			case 'strings.legacy.msg_invalid_request_parameters': return '请求参数错误';
 			case 'strings.legacy.msg_enter_api_url': return '请输入 API URL';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => '（待发送 ${result_pendingCount}）';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak} 天';
 			case 'strings.legacy.msg_poster_not_ready_yet': return '暂时无法生成海报';
-			case 'strings.legacy.msg_generated_memoflow': return '由 MemoFlow 生成';
+			case 'strings.legacy.msg_generated_memoflow': return '由 memo+ 生成';
 			case 'strings.legacy.msg_enter_name_2': return '请输入名称';
 			case 'strings.legacy.msg_version': return '版本';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return '磁盘缺失该笔记，但本地还有未同步改动。选择“以磁盘为准”将删除本地记录。';
@@ -30788,7 +30788,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_feedback': return '反馈';
 			case 'strings.legacy.msg_help_diagnostics': return '帮助与诊断';
 			case 'strings.legacy.msg_storage_space': return '存储空间';
-			case 'strings.legacy.msg_storage_space_subtitle': return '查看 MemoFlow 已知占用并清理缓存。';
+			case 'strings.legacy.msg_storage_space_subtitle': return '查看 memo+ 已知占用并清理缓存。';
 			case 'strings.legacy.msg_image_bed_2': return '图床';
 			case 'strings.legacy.msg_image_compression': return '图片压缩';
 			case 'strings.legacy.msg_enable_image_compression': return '启用图片压缩';
@@ -30977,10 +30977,10 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_clear_media_cache_failed': return '媒体缓存清理失败';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return '媒体缓存清理已部分完成';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => '自助修复失败：${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'MemoFlow 已知占用';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '设备容量不可用。仍会展示 MemoFlow 已知占用和分类。';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow 占用设备容量不足 1%';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow 占用设备容量 ${percent}%';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'memo+ 已知占用';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '设备容量不可用。仍会展示 memo+ 已知占用和分类。';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ 占用设备容量不足 1%';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ 占用设备容量 ${percent}%';
 			case 'strings.legacy.msg_storage_cache': return '缓存';
 			case 'strings.legacy.msg_storage_note_content': return '笔记内容';
 			case 'strings.legacy.msg_storage_note_images': return '笔记图片';
@@ -31158,7 +31158,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_log_file_created': return '日志包已导出';
 			case 'strings.legacy.msg_delete_sync_task': return '删除同步任务';
 			case 'strings.legacy.msg_include_archived_2': return '- 包含归档';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+ 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => '生成失败：${e}';
 			case 'strings.legacy.msg_search_logs': return '搜索内容';
 			case 'strings.legacy.msg_active_days': return '累计天数';
@@ -31283,7 +31283,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_permissions_system_settings': return '权限与系统设置';
 			case 'strings.legacy.msg_waiting_tasks_stop': return '正在等待任务停止';
 			case 'strings.legacy.msg_done_2': return '确定';
-			case 'strings.legacy.msg_parsing_memoflow_export': return '正在解析 MemoFlow 导出...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return '正在解析 memo+ 导出...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => '定位成功：${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return '正在检查后端版本...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 下次一定，先去修 Bug';
@@ -31304,14 +31304,14 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return '收到心意！能量已充满 ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return '连接超时，请检查网络或 API URL';
 			case 'strings.legacy.msg_local_network_migration': return '局域网迁移';
-			case 'strings.legacy.msg_local_network_migration_desc': return '通过局域网迁移连接 MemoFlow 设备和第三方笔记工具。当前已支持 MemoFlow 迁移与 Obsidian。';
+			case 'strings.legacy.msg_local_network_migration_desc': return '通过局域网迁移连接 memo+ 设备和第三方笔记工具。当前已支持 memo+ 迁移与 Obsidian。';
 			case 'strings.legacy.msg_connect_obsidian': return '连接 Obsidian';
 			case 'strings.legacy.msg_connect_obsidian_desc': return '通过局域网与 Obsidian 配对并同步笔记内容。';
 			case 'strings.legacy.msg_local_network_migration_more_targets': return '后续将在这里扩展思源和其他第三方工具。';
-			case 'strings.legacy.msg_memoflow_migration': return 'MemoFlow 迁移';
-			case 'strings.legacy.msg_memoflow_migration_target_desc': return '通过局域网将本地工作区中的笔记和设置迁移到另一台 MemoFlow 设备。';
-			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'MemoFlow / Obsidian';
-			case 'strings.legacy.msg_memoflow_migration_role_desc': return '选择当前设备是发送方还是接收方。本功能为一次性迁移，请保持两台设备处于同一局域网，并在迁移期间保持 MemoFlow 前台运行。';
+			case 'strings.legacy.msg_memoflow_migration': return 'memo+ 迁移';
+			case 'strings.legacy.msg_memoflow_migration_target_desc': return '通过局域网将本地工作区中的笔记和设置迁移到另一台 memo+ 设备。';
+			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'memo+ / Obsidian';
+			case 'strings.legacy.msg_memoflow_migration_role_desc': return '选择当前设备是发送方还是接收方。本功能为一次性迁移，请保持两台设备处于同一局域网，并在迁移期间保持 memo+ 前台运行。';
 			case 'strings.legacy.msg_memoflow_migration_sender': return '我是发送方';
 			case 'strings.legacy.msg_memoflow_migration_sender_desc': return '从当前本地工作区选择要发送的笔记和设置，并连接附近接收方。';
 			case 'strings.legacy.msg_memoflow_migration_sender_only_local_mode': return '发送方仅在当前设备使用本地工作区模式时可用。';
@@ -31354,8 +31354,8 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_memoflow_migration_workspace_name': return '工作区';
 			case 'strings.legacy.msg_memoflow_migration_scan_title': return '扫描接收方二维码';
 			case 'strings.legacy.msg_memoflow_migration_scan_hint': return '扫描接收方设备上显示的二维码。';
-			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '迁移过程中请保持两台设备上的 MemoFlow 处于前台。';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow 同步桥';
+			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '迁移过程中请保持两台设备上的 memo+ 处于前台。';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+ 同步桥';
 			case 'strings.legacy.msg_bridge_component_desc': return '与 Obsidian 插件配对进行本地同步。';
 			case 'strings.legacy.msg_bridge_title': return '连接 Obsidian';
 			case 'strings.legacy.msg_bridge_local_mode_only': return '通过局域网与 Obsidian 配对连接，后续会支持更多目标。';
@@ -31566,7 +31566,7 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_focus_input_area': return '聚焦输入区';
 			case 'strings.legacy.msg_toggle_sidebar': return '切换侧边栏';
 			case 'strings.legacy.msg_open_settings': return '打开设置';
-			case 'strings.legacy.msg_show_hide_memoflow': return '显示 / 隐藏 MemoFlow';
+			case 'strings.legacy.msg_show_hide_memoflow': return '显示 / 隐藏 memo+';
 			case 'strings.legacy.msg_publish_memo': return '发布记录';
 			case 'strings.legacy.msg_bold': return '加粗';
 			case 'strings.legacy.msg_underline': return '下划线';
@@ -31672,12 +31672,12 @@ extension on _StringsZhHans {
 			case 'strings.legacy.msg_save_failed_check_content_retry': return '保存失败，请检查内容后重试。';
 			case 'strings.legacy.msg_quick_input_channel_not_ready_retry': return '快速输入通道尚未就绪，请重新打开主窗口后重试。';
 			case 'strings.legacy.msg_visibility_value': return ({required Object value}) => '可见性：${value}';
-			case 'strings.legacy.msg_saved_to_memoflow': return '已保存到 MemoFlow';
+			case 'strings.legacy.msg_saved_to_memoflow': return '已保存到 memo+';
 			case 'strings.legacy.msg_quick_input_failed_with_error': return ({required Object error}) => '快速输入失败：${error}';
 			case 'strings.legacy.msg_feature': return '功能';
 			case 'strings.legacy.msg_feature_not_implemented_placeholder_with_label': return ({required Object label}) => '“${label}”功能暂未实现（占位）。';
 			case 'strings.legacy.msg_quick_input_save_failed_with_error': return ({required Object error}) => '快速输入保存失败：${error}';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => '显示 / 隐藏 MemoFlow 失败：${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => '显示 / 隐藏 memo+ 失败：${error}';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return '已打开快捷键总览。';
 			case 'strings.legacy.msg_unsupported_version_value': return ({required Object version}) => '不支持的版本：${version}';
 			case 'strings.legacy.msg_version_probe_passed_with_version': return ({required Object version}) => 'v${version} 探测通过';
@@ -32167,7 +32167,7 @@ extension on _StringsZhHantTw {
 			case 'strings.onboarding.localLibraryDefaultName': return '本機庫';
 			case 'strings.onboarding.getStarted': return '開始使用';
 			case 'strings.legalConsent.title': return '請先閱讀並同意協議';
-			case 'strings.legalConsent.description': return '使用 MemoFlow 前，請先閱讀並同意《用戶協議》和《隱私協議》。';
+			case 'strings.legalConsent.description': return '使用 memo+ 前，請先閱讀並同意《用戶協議》和《隱私協議》。';
 			case 'strings.legalConsent.linksHint': return '你可以先打開以下文件查看完整內容。';
 			case 'strings.legalConsent.acknowledge': return '我已閱讀並同意《用戶協議》和《隱私協議》';
 			case 'strings.legalConsent.continueAction': return '同意並繼續';
@@ -32395,7 +32395,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_version_description_v': return ({required Object version}) => '版本说明：v${version}';
 			case 'strings.legacy.msg_version_description_v_build': return ({required Object version, required Object build}) => '版本说明：v${version} (${build})';
 			case 'strings.legacy.msg_about_website_link': return '官网连结';
-			case 'strings.legacy.msg_about_website_link_subtitle': return '前往 MemoFlow 官方网站';
+			case 'strings.legacy.msg_about_website_link_subtitle': return '前往 memo+ 官方网站';
 			case 'strings.legacy.msg_about_privacy_policy': return '隐私协议';
 			case 'strings.legacy.msg_about_privacy_policy_subtitle': return '查看隐私资讯与资料说明';
 			case 'strings.legacy.msg_about_user_agreement': return '用户协议';
@@ -32409,7 +32409,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_status_available': return '可用';
 			case 'strings.legacy.msg_status_placeholder': return '占位';
 			case 'strings.legacy.msg_debug_tap_logo_enter_debug_tools': return 'Debug: 连续点击 Logo 5 次开启调试工具';
-			case 'strings.legacy.msg_donors_intro_thanks': return '感谢所有支持 MemoFlow 的用户。\n你们的捐赠帮助专案持续维护与更新。\n\n名单如下，谨此致谢。';
+			case 'strings.legacy.msg_donors_intro_thanks': return '感谢所有支持 memo+ 的用户。\n你们的捐赠帮助专案持续维护与更新。\n\n名单如下，谨此致谢。';
 			case 'strings.legacy.msg_enter_keywords_search_box_query_local': return '在搜索框输入关键词可检索本地内容与标签。离线可用；首次使用请等待本地索引完成。';
 			case 'strings.legacy.msg_memo_not_found_locally': return '本地暂无该笔记';
 			case 'strings.legacy.msg_token': return 'Token 摘要';
@@ -32438,7 +32438,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_request_cancelled': return '请求已取消';
 			case 'strings.legacy.msg_generating': return '生成中…';
 			case 'strings.legacy.msg_permissions_denied_reminders_disabled': return '权限未授予，提醒未开启';
-			case 'strings.legacy.msg_memoflow_local_reminders': return 'MemoFlow 本地提醒';
+			case 'strings.legacy.msg_memoflow_local_reminders': return 'memo+ 本地提醒';
 			case 'strings.legacy.msg_use_legacy_endpoints_older_memos_servers': return '使用旧版接口（适配旧版 Memos）';
 			case 'strings.legacy.msg_no_comments_yet': return '暂无评论';
 			case 'strings.legacy.msg_open': return '打开';
@@ -32639,14 +32639,14 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_recycle_bin': return '回收站';
 			case 'strings.legacy.msg_unpin': return '取消置顶';
 			case 'strings.legacy.msg_advanced_security': return '高级与安全';
-			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return '如果您在使用 MemoFlow 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
+			case 'strings.legacy.msg_run_issues_memoflow_e_g_sync': return '如果您在使用 memo+ 时遇到问题（如同步失败、崩溃等），请按照以下步骤向我们反馈，这将帮助开发者快速定位并修复问题。\\n\\n';
 			case 'strings.legacy.msg_remove_all_reminder_times_memo': return '将移除该笔记的全部提醒时间。';
 			case 'strings.legacy.msg_no_summary_save': return '暂无可保存的总结';
 			case 'strings.legacy.msg_reset_language_selection': return '重置语言选择状态';
 			case 'strings.legacy.msg_v_30_days': return '30 天';
 			case 'strings.legacy.msg_e_g_mood_check': return '如：情绪分析';
 			case 'strings.legacy.msg_note_some_tokens_returned_only_once': return '提示：部分 Token 只會顯示一次，請在首次顯示時立即安全保存。';
-			case 'strings.legacy.msg_probe_memo_can_delete': return '此筆記由 MemoFlow API 探測建立，可安全刪除。';
+			case 'strings.legacy.msg_probe_memo_can_delete': return '此筆記由 memo+ API 探測建立，可安全刪除。';
 			case 'strings.legacy.msg_syncing': return '同步中...';
 			case 'strings.legacy.msg_retention': return '版本保留数量';
 			case 'strings.legacy.msg_open_login_screen': return '打开登录页面';
@@ -32724,7 +32724,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_after_confirming_support_unlock_limited_gold': return '点击确认赞赏后，将解锁限定版金色标识 or 永久去广告承诺（虽然本来就没广告）';
 			case 'strings.legacy.msg_failed_open_system_settings': return '无法打开系统设置';
 			case 'strings.legacy.msg_no_mood_trend': return '暂无情绪趋势';
-			case 'strings.legacy.msg_memoflow_export': return '# MemoFlow 导出';
+			case 'strings.legacy.msg_memoflow_export': return '# memo+ 导出';
 			case 'strings.legacy.msg_sync_queue': return '同步队列';
 			case 'strings.legacy.msg_only_delete_sync_task_memo_kept': return '仅删除同步任务，笔记会保留。';
 			case 'strings.legacy.msg_add_home_screen': return '添加到桌面';
@@ -32786,7 +32786,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_view_imported_memos': return '查看导入笔记';
 			case 'strings.legacy.msg_load_failed': return '加载失败';
 			case 'strings.legacy.msg_disk_content_conflicts_local_pending_changes': return '磁盘与本地未同步内容冲突。选择“以磁盘为准”将覆盖本地内容。';
-			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '以上是全部历史内容\\nMEMOFLOW SINCE 2023';
+			case 'strings.legacy.msg_all_history_so_far_memoflow_since': return '以上是全部历史内容\\nMEMO+ SINCE 2026';
 			case 'strings.legacy.msg_cancelling': return '取消中';
 			case 'strings.legacy.msg_reading_file': return '正在读取文件...';
 			case 'strings.legacy.msg_switch_workspace': return '切换工作区';
@@ -32830,7 +32830,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_chinese_traditional': return '繁體中文';
 			case 'strings.legacy.msg_private_2': return '私密';
 			case 'strings.legacy.msg_current_streak': return '当前连击';
-			case 'strings.legacy.msg_generated_ai_memoflow': return '由 AI 生成 · MemoFlow';
+			case 'strings.legacy.msg_generated_ai_memoflow': return '由 AI 生成 · memo+';
 			case 'strings.legacy.msg_edit_completed': return '编辑完成';
 			case 'strings.legacy.msg_local': return '本地调试';
 			case 'strings.legacy.msg_edit': return '编辑';
@@ -32871,13 +32871,13 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_empty_content': return '內容為空';
 			case 'strings.legacy.msg_note_most_features_offline_stats_ai': return '提示：大部分功能（离线/统计/AI 总结/导出）无需后端改动，但 Token 只返回一次，请妥善保存。';
 			case 'strings.legacy.msg_fixed': return '修复：';
-			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '允许从其他应用分享链接或图片到 MemoFlow。';
+			case 'strings.legacy.msg_allow_sharing_links_images_other_apps': return '允许从其他应用分享链接或图片到 memo+。';
 			case 'strings.legacy.msg_invalid_request_parameters': return '请求参数错误';
 			case 'strings.legacy.msg_enter_api_url': return '请输入 API URL';
 			case 'strings.legacy.msg_pending': return ({required Object result_pendingCount}) => '（待发送 ${result_pendingCount}）';
 			case 'strings.legacy.msg_days_3': return ({required Object currentStreak}) => '${currentStreak} 天';
 			case 'strings.legacy.msg_poster_not_ready_yet': return '暂时无法生成海报';
-			case 'strings.legacy.msg_generated_memoflow': return '由 MemoFlow 生成';
+			case 'strings.legacy.msg_generated_memoflow': return '由 memo+ 生成';
 			case 'strings.legacy.msg_enter_name_2': return '请输入名称';
 			case 'strings.legacy.msg_version': return '版本';
 			case 'strings.legacy.msg_memo_missing_disk_but_has_local': return '磁盘缺失该笔记，但本地还有未同步改动。选择“以磁盘为准”将删除本地记录。';
@@ -32957,7 +32957,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_feedback': return '反馈';
 			case 'strings.legacy.msg_help_diagnostics': return '幫助與診斷';
 			case 'strings.legacy.msg_storage_space': return '儲存空間';
-			case 'strings.legacy.msg_storage_space_subtitle': return '查看 MemoFlow 已知佔用並清理快取。';
+			case 'strings.legacy.msg_storage_space_subtitle': return '查看 memo+ 已知佔用並清理快取。';
 			case 'strings.legacy.msg_image_bed_2': return '图床';
 			case 'strings.legacy.msg_image_compression': return '圖片壓縮';
 			case 'strings.legacy.msg_enable_image_compression': return '啟用圖片壓縮';
@@ -33135,10 +33135,10 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_clear_media_cache_failed': return '媒體快取清理失敗';
 			case 'strings.legacy.msg_clear_media_cache_partial_failure': return '媒體快取清理已部分完成';
 			case 'strings.legacy.msg_self_repair_failed': return ({required Object e}) => '自助修復失敗：${e}';
-			case 'strings.legacy.msg_memoflow_known_usage': return 'MemoFlow 已知佔用';
-			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '裝置容量不可用。仍會顯示 MemoFlow 已知佔用和分類。';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'MemoFlow 佔用裝置容量不足 1%';
-			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'MemoFlow 佔用裝置容量 ${percent}%';
+			case 'strings.legacy.msg_memoflow_known_usage': return 'memo+ 已知佔用';
+			case 'strings.legacy.msg_storage_device_capacity_unavailable': return '裝置容量不可用。仍會顯示 memo+ 已知佔用和分類。';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_less_than_one_percent': return 'memo+ 佔用裝置容量不足 1%';
+			case 'strings.legacy.msg_storage_memoflow_device_usage_percent': return ({required Object percent}) => 'memo+ 佔用裝置容量 ${percent}%';
 			case 'strings.legacy.msg_storage_cache': return '快取';
 			case 'strings.legacy.msg_storage_note_content': return '筆記內容';
 			case 'strings.legacy.msg_storage_note_images': return '筆記圖片';
@@ -33315,7 +33315,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_log_file_created': return '日誌包已匯出';
 			case 'strings.legacy.msg_delete_sync_task': return '删除同步任务';
 			case 'strings.legacy.msg_include_archived_2': return '- 包含歸檔';
-			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'MemoFlow 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
+			case 'strings.legacy.msg_memoflow_side_project_i_build_my': return 'memo+ 是我用业余时间肝出来的孩子。目前开发者已连续熬夜修 Bug，急需一杯冰美式“续命”。你的投喂不仅能恢复我的电量，还能让新功能提早 ';
 			case 'strings.legacy.msg_failed_generate': return ({required Object e}) => '生成失败：${e}';
 			case 'strings.legacy.msg_search_logs': return '搜索内容';
 			case 'strings.legacy.msg_active_days': return '累计天数';
@@ -33440,7 +33440,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_permissions_system_settings': return '权限与系统设置';
 			case 'strings.legacy.msg_waiting_tasks_stop': return '正在等待任务停止';
 			case 'strings.legacy.msg_done_2': return '确定';
-			case 'strings.legacy.msg_parsing_memoflow_export': return '正在解析 MemoFlow 导出...';
+			case 'strings.legacy.msg_parsing_memoflow_export': return '正在解析 memo+ 导出...';
 			case 'strings.legacy.msg_location_updated': return ({required Object next_displayText_fractionDigits_6}) => '定位成功：${next_displayText_fractionDigits_6}';
 			case 'strings.legacy.msg_checking_server_version': return '正在检查后端版本...';
 			case 'strings.legacy.msg_next_time_back_fixing_bugs': return '👀 下次一定，先去修 Bug';
@@ -33461,14 +33461,14 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_thanks_energy_fully_restored': return '收到心意！能量已充满 ⚡';
 			case 'strings.legacy.msg_connection_timeout_check_network_api_url': return '连接超时，请检查网络或 API URL';
 			case 'strings.legacy.msg_local_network_migration': return '局域網遷移';
-			case 'strings.legacy.msg_local_network_migration_desc': return '透過局域網遷移連接 MemoFlow 裝置與第三方筆記工具。目前已支援 MemoFlow 遷移與 Obsidian。';
+			case 'strings.legacy.msg_local_network_migration_desc': return '透過局域網遷移連接 memo+ 裝置與第三方筆記工具。目前已支援 memo+ 遷移與 Obsidian。';
 			case 'strings.legacy.msg_connect_obsidian': return '連接 Obsidian';
 			case 'strings.legacy.msg_connect_obsidian_desc': return '透過局域網與 Obsidian 配對並同步筆記內容。';
 			case 'strings.legacy.msg_local_network_migration_more_targets': return '後續將在這裡擴充思源與其他第三方工具。';
-			case 'strings.legacy.msg_memoflow_migration': return 'MemoFlow 遷移';
-			case 'strings.legacy.msg_memoflow_migration_target_desc': return '透過局域網將本地工作區中的筆記和設定遷移到另一台 MemoFlow 裝置。';
-			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'MemoFlow / Obsidian';
-			case 'strings.legacy.msg_memoflow_migration_role_desc': return '選擇目前裝置是發送方還是接收方。本功能為一次性遷移，請保持兩台裝置處於同一局域網，並在遷移期間保持 MemoFlow 於前景運行。';
+			case 'strings.legacy.msg_memoflow_migration': return 'memo+ 遷移';
+			case 'strings.legacy.msg_memoflow_migration_target_desc': return '透過局域網將本地工作區中的筆記和設定遷移到另一台 memo+ 裝置。';
+			case 'strings.legacy.msg_memoflow_migration_targets_summary': return 'memo+ / Obsidian';
+			case 'strings.legacy.msg_memoflow_migration_role_desc': return '選擇目前裝置是發送方還是接收方。本功能為一次性遷移，請保持兩台裝置處於同一局域網，並在遷移期間保持 memo+ 於前景運行。';
 			case 'strings.legacy.msg_memoflow_migration_sender': return '我是發送方';
 			case 'strings.legacy.msg_memoflow_migration_sender_desc': return '從目前本地工作區選擇要發送的筆記和設定，並連接附近接收方。';
 			case 'strings.legacy.msg_memoflow_migration_sender_only_local_mode': return '發送方僅在目前裝置使用本地工作區模式時可用。';
@@ -33511,8 +33511,8 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_memoflow_migration_workspace_name': return '工作區';
 			case 'strings.legacy.msg_memoflow_migration_scan_title': return '掃描接收方二維碼';
 			case 'strings.legacy.msg_memoflow_migration_scan_hint': return '掃描接收方裝置上顯示的二維碼。';
-			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '遷移過程中請保持兩台裝置上的 MemoFlow 處於前景。';
-			case 'strings.legacy.msg_bridge_component_title': return 'MemoFlow 同步橋';
+			case 'strings.legacy.msg_memoflow_migration_foreground_notice': return '遷移過程中請保持兩台裝置上的 memo+ 處於前景。';
+			case 'strings.legacy.msg_bridge_component_title': return 'memo+ 同步橋';
 			case 'strings.legacy.msg_bridge_component_desc': return '與 Obsidian 外掛配對以進行本地同步。';
 			case 'strings.legacy.msg_bridge_title': return '連接 Obsidian';
 			case 'strings.legacy.msg_bridge_local_mode_only': return '透過局域網與 Obsidian 配對連接，後續會支援更多目標。';
@@ -33723,7 +33723,7 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_focus_input_area': return '聚焦輸入區';
 			case 'strings.legacy.msg_toggle_sidebar': return '切換側邊欄';
 			case 'strings.legacy.msg_open_settings': return '開啟設定';
-			case 'strings.legacy.msg_show_hide_memoflow': return '顯示 / 隱藏 MemoFlow';
+			case 'strings.legacy.msg_show_hide_memoflow': return '顯示 / 隱藏 memo+';
 			case 'strings.legacy.msg_publish_memo': return '發布記錄';
 			case 'strings.legacy.msg_bold': return '粗體';
 			case 'strings.legacy.msg_underline': return '底線';
@@ -33829,12 +33829,12 @@ extension on _StringsZhHantTw {
 			case 'strings.legacy.msg_save_failed_check_content_retry': return '儲存失敗，請檢查內容後再試。';
 			case 'strings.legacy.msg_quick_input_channel_not_ready_retry': return '快速輸入通道尚未就緒，請重新開啟主視窗後再試。';
 			case 'strings.legacy.msg_visibility_value': return ({required Object value}) => '可見性：${value}';
-			case 'strings.legacy.msg_saved_to_memoflow': return '已儲存到 MemoFlow';
+			case 'strings.legacy.msg_saved_to_memoflow': return '已儲存到 memo+';
 			case 'strings.legacy.msg_quick_input_failed_with_error': return ({required Object error}) => '快速輸入失敗：${error}';
 			case 'strings.legacy.msg_feature': return '功能';
 			case 'strings.legacy.msg_feature_not_implemented_placeholder_with_label': return ({required Object label}) => '「${label}」功能尚未實作（占位）。';
 			case 'strings.legacy.msg_quick_input_save_failed_with_error': return ({required Object error}) => '快速輸入儲存失敗：${error}';
-			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => '顯示 / 隱藏 MemoFlow 失敗：${error}';
+			case 'strings.legacy.msg_toggle_memoflow_failed_with_error': return ({required Object error}) => '顯示 / 隱藏 memo+ 失敗：${error}';
 			case 'strings.legacy.msg_shortcuts_overview_opened': return '已開啟快捷鍵總覽。';
 			case 'strings.legacy.msg_unsupported_version_value': return ({required Object version}) => '不支援的版本：${version}';
 			case 'strings.legacy.msg_version_probe_passed_with_version': return ({required Object version}) => 'v${version} 探測通過';

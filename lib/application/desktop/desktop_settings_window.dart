@@ -271,7 +271,7 @@ Future<WindowController> _ensureDesktopSettingsWindowReady({
     );
     _desktopSettingsWindow = window;
     _desktopSettingsWindowId = window.windowId;
-    await window.setTitle('MemoFlow Settings');
+    await window.setTitle('memo+ Settings');
     final frame = switch (defaultTargetPlatform) {
       TargetPlatform.macOS => const Offset(0, 0) & Size(960, 760),
       _ => const Offset(0, 0) & Size(1260, 820),

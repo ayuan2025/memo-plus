@@ -23,7 +23,7 @@
 "sync.webdavBackup" = "WebDAV 备份";
 "sync.import" = "导入";
 "sync.export" = "导出";
-"sync.migration" = "MemoFlow 迁移";
+"sync.migration" = "memo+ 迁移";
 "import.file" = "导入文件";
 "import.markdown" = "从 Markdown 导入";
 "import.flomo" = "从 Flomo 导入";

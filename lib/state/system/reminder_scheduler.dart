@@ -141,7 +141,7 @@ class ReminderScheduler {
     if (Platform.isWindows) {
       try {
         await localNotifier.setup(
-          appName: 'MemoFlow',
+          appName: 'memo+',
           shortcutPolicy: ShortcutPolicy.requireCreate,
         );
         _windowsNotifierReady = true;

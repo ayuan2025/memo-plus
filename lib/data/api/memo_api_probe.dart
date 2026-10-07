@@ -117,7 +117,7 @@ class MemoApiProbeService {
     final forceDeleteMemo = _supportsForceDeleteMemo(version);
     final seed = DateTime.now().toUtc().microsecondsSinceEpoch;
     final memoId = 'memoflow-probe-$seed';
-    final contentPrefix = '[MemoFlow Probe ${version.versionString}]';
+    final contentPrefix = '[memo+ Probe ${version.versionString}]';
     final normalizedProbeMemoNotice = probeMemoNotice.trim();
     final createContent = normalizedProbeMemoNotice.isEmpty
         ? '$contentPrefix create'

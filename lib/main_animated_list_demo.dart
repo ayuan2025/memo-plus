@@ -10,7 +10,7 @@ class MemoFlowAnimatedListDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MemoFlow AnimatedList Demo',
+      title: 'memo+ AnimatedList Demo',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: const Color(0xFFC0564D)),
       home: const AnimatedNotesPage(),
     );

@@ -6,6 +6,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'image_ops.dart';
+
 /// Pure-Dart replacements for the OpenCV grayscale/blur/edge/dilate/threshold
 /// steps OpenScan used to run natively via
 /// `Imgproc.cvtColor`/`GaussianBlur`/`Canny`/`dilate`/`threshold`.
@@ -198,6 +200,114 @@ Uint8List dilate(Uint8List mask, int width, int height, int radius) {
         if (rowPass[sy * width + x] == 1) v = 1;
       }
       out[y * width + x] = v;
+    }
+  }
+  return out;
+}
+
+/// Scale the boundary gradient is measured at, as a fraction of the work
+/// image's longest side.
+///
+/// This is the single most consequential number in the detector. At the 3x3
+/// scale the pipeline used to work at, a photographed page's edge competes with
+/// everything else that produces a luminance step a few pixels wide: wood
+/// grain, marble speckling, leather creases, and the document's own text. On
+/// the sample photos that motivated this parameter those fine textures won and
+/// the paper lost, so detection latched either onto a block of text well inside
+/// the sheet or onto the picture's own border.
+///
+/// A page's boundary is a step that survives smoothing; the textures above are
+/// not. Measuring the gradient after a blur of roughly 0.8% of the frame's
+/// longest side keeps the step and drops the texture.
+const double kBoundaryBlurFraction = 0.008;
+
+/// Weight given to the chroma gradient when it is fused with the luminance one.
+///
+/// Both terms are Sobel magnitudes over a Rec.601 plane. Rec.601 is close
+/// enough to perceptually uniform that a unit of Cb costs roughly what a unit
+/// of Y does, so equal weight is the neutral choice rather than a number picked
+/// to make one sample pass: chroma then only ever wins where the luminance step
+/// genuinely is smaller than the colour step — a pale sheet on a pale surface
+/// of a different hue — which is exactly the case luminance alone cannot see.
+const double kChromaGradientWeight = 1.0;
+
+/// Boundary-detection gradient magnitude: luminance *and* chroma, measured at
+/// [kBoundaryBlurFraction] of the frame rather than at 3x3.
+///
+/// [rgbaToGrayscale] + [sobelMagnitude] is the fine-scale, luminance-only
+/// gradient; this is the gradient for finding *where a sheet of paper ends*,
+/// and differs in both respects:
+///
+/// * **Chroma.** A page usually differs from the surface under it in hue before
+///   it differs in brightness — a cream receipt on a warm wood table, a pale
+///   blue ID card on an off-white tile, a yellow sticky note on a white desk.
+///   Rec.601 Cb/Cr carry that difference; a single luminance number cannot.
+/// * **Scale.** See [kBoundaryBlurFraction] for why 3x3 is the wrong scale to
+///   ask the question at.
+///
+/// Takes the RGBA buffer rather than a grayscale one precisely because of the
+/// chroma term: by the time luminance has been reduced to one plane the hue
+/// information is gone.
+Uint8List documentEdgeMagnitude(
+  Uint8List rgba,
+  int width,
+  int height, {
+  double chromaWeight = kChromaGradientWeight,
+}) {
+  if (width <= 0 || height <= 0) return Uint8List(0);
+
+  final radius = max(1, (max(width, height) * kBoundaryBlurFraction).round());
+
+  final luma = Uint8List(width * height);
+  final blue = Uint8List(width * height);
+  final red = Uint8List(width * height);
+  for (int i = 0, p = 0; p < luma.length; i += 4, p++) {
+    final r = rgba[i], g = rgba[i + 1], b = rgba[i + 2];
+    luma[p] = (0.299 * r + 0.587 * g + 0.114 * b).round().clamp(0, 255);
+    blue[p] =
+        (128 - 0.168736 * r - 0.331264 * g + 0.5 * b).round().clamp(0, 255);
+    red[p] =
+        (128 + 0.5 * r - 0.418688 * g - 0.081312 * b).round().clamp(0, 255);
+  }
+
+  final smoothLuma = boxBlurGray(luma, width, height, radius);
+  final smoothBlue = boxBlurGray(blue, width, height, radius);
+  final smoothRed = boxBlurGray(red, width, height, radius);
+
+  int at(int x, int y) =>
+      y.clamp(0, height - 1) * width + x.clamp(0, width - 1);
+
+  double gx(Uint8List plane, int x, int y) =>
+      (-plane[at(x - 1, y - 1)] -
+              2 * plane[at(x - 1, y)] -
+              plane[at(x - 1, y + 1)] +
+              plane[at(x + 1, y - 1)] +
+              2 * plane[at(x + 1, y)] +
+              plane[at(x + 1, y + 1)])
+          .toDouble();
+
+  double gy(Uint8List plane, int x, int y) =>
+      (-plane[at(x - 1, y - 1)] -
+              2 * plane[at(x, y - 1)] -
+              plane[at(x + 1, y - 1)] +
+              plane[at(x - 1, y + 1)] +
+              2 * plane[at(x, y + 1)] +
+              plane[at(x + 1, y + 1)])
+          .toDouble();
+
+  final out = Uint8List(width * height);
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      final luminance =
+          sqrt(pow(gx(smoothLuma, x, y), 2) + pow(gy(smoothLuma, x, y), 2));
+      final chroma = sqrt(
+        pow(gx(smoothBlue, x, y), 2) +
+            pow(gy(smoothBlue, x, y), 2) +
+            pow(gx(smoothRed, x, y), 2) +
+            pow(gy(smoothRed, x, y), 2),
+      );
+      out[y * width + x] =
+          max(luminance, chromaWeight * chroma).clamp(0.0, 255.0).round();
     }
   }
   return out;

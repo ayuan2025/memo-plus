@@ -13,6 +13,7 @@ import '../../core/app_localization.dart';
 import '../../core/drawer_navigation.dart';
 import '../../core/platform_layout.dart';
 import '../../core/top_toast.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/models/attachment.dart';
 import '../../data/models/local_memo.dart';
@@ -118,10 +119,8 @@ class _ResourcesScreenState extends ConsumerState<ResourcesScreen> {
       return appendThumbnailParam(resolved);
     }
     if (baseUrl == null) return null;
-    final url = joinBaseUrl(
-      baseUrl,
-      'file/${attachment.name}/${attachment.filename}',
-    );
+    final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+    if (url == null) return null;
     return thumbnail ? appendThumbnailParam(url) : url;
   }
 
@@ -195,7 +194,7 @@ class _ResourcesScreenState extends ConsumerState<ResourcesScreen> {
     try {
       final rootDir = await _resolveDownloadDirectory();
       if (!context.mounted) return;
-      final outDir = Directory(p.join(rootDir.path, 'MemoFlow_attachments'));
+      final outDir = Directory(p.join(rootDir.path, 'memo+_attachments'));
       if (!outDir.existsSync()) {
         outDir.createSync(recursive: true);
       }
@@ -369,7 +368,7 @@ class _ResourcesScreenState extends ConsumerState<ResourcesScreen> {
       buildPlatformPageRoute<void>(
         context: context,
         builder: (_) => const MemosListScreen(
-          title: 'MemoFlow',
+          title: 'memo+',
           state: 'NORMAL',
           showDrawer: true,
           enableCompose: true,

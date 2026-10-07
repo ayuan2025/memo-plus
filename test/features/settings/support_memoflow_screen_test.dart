@@ -38,7 +38,7 @@ void main() {
 
     expect(find.byType(SupportMemoFlowScreen), findsOneWidget);
     expect(find.byType(SettingsPage), findsOneWidget);
-    expect(find.text('Support MemoFlow'), findsWidgets);
+    expect(find.text('Support memo+'), findsWidgets);
     expect(find.text('Why support'), findsOneWidget);
     expect(find.text('Public-good note'), findsOneWidget);
     expect(find.text('Support the developer'), findsOneWidget);
@@ -70,7 +70,7 @@ void main() {
     );
     expect(find.text('Open support link'), findsNothing);
     expect(
-      find.text('Scan with Alipay on your phone to support MemoFlow.'),
+      find.text('Scan with Alipay on your phone to support memo+.'),
       findsOneWidget,
     );
   });

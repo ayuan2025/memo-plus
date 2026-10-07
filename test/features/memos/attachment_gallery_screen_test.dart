@@ -249,8 +249,17 @@ void main() {
     expect(find.byType(ImagePreviewGalleryBody), findsNothing);
     expect(find.byType(PageView), findsOneWidget);
 
+    // Matched by prefix: the key carries a counter that changes whenever a
+    // picture is replaced (rotated, edited), and this is about the geometry
+    // of the box, not about which generation of it is on screen.
     final size = tester.getSize(
-      find.byKey(const Key('attachment_gallery_display_box_portrait')),
+      find.byWidgetPredicate(
+        (widget) =>
+            widget.key != null &&
+            widget.key.toString().contains(
+              'attachment_gallery_display_box_portrait',
+            ),
+      ),
     );
     expect(size.width, closeTo(244.8, 0.2));
     expect(size.height, closeTo(544.0, 0.2));

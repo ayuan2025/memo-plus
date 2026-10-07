@@ -65,6 +65,18 @@ GPL-3.0 兼容，并入后保留原始版权声明即可。
 4. **`Filter` 子类改为 `const` 构造**，滤镜清单改为 `const List<Filter>`。
 5. **注释与文档改写**为 MemoFlow 语境（英文），删去指向 OpenScan 自身 UI、数据库
    与 `compute()` 入口的交叉引用。每个文件头部标注了上游出处与许可。
+6. **`corner_refinement.dart` / `quad_smoothing.dart` / `ocr_preprocess.dart` /
+   `full_frame_page.dart` 为本地新增**（上游无对应实现）：
+
+   * `corner_refinement.dart` —— 上游只用 RDP 简化轮廓，角点落在轮廓弯折处而非
+     纸张真正的转角；本地版对四条边逐点重拟合后再求交点。
+   * `quad_smoothing.dart` —— 实时预览的帧间 EMA 平滑与丢帧保持。
+   * `ocr_preprocess.dart` —— OCR 输入的分档预处理（去光照 / 自动色阶）。
+   * `full_frame_page.dart` —— **判断输入本身是否已经是一整页**（相册导入、
+     截图、别处裁剪过的图）。上游假设输入总是「（纸张 + 背景）的照片」，
+     对已满裁的输入会把画面内部的某个方框当成纸张边而裁掉页面其余部分。
+     相应地，`DetectionSuccess` / `DetectionNotFound` 增加了 `fullPageReason`
+     字段，`document_detector.dart` 在返回前多跑一次 Sobel 用于该判定。
 
 ## 使用
 

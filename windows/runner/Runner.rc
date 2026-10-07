@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.memoflow" "\0"
-            VALUE "FileDescription", "MemoFlow" "\0"
+            VALUE "FileDescription", "memo+" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "MemoFlow" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.memoflow. All rights reserved." "\0"
-            VALUE "OriginalFilename", "MemoFlow.exe" "\0"
-            VALUE "ProductName", "MemoFlow" "\0"
+            VALUE "InternalName", "memo+" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 memo+ contributors. Based on MemoFlow (GPL-3.0)." "\0"
+            VALUE "OriginalFilename", "memo+.exe" "\0"
+            VALUE "ProductName", "memo+" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

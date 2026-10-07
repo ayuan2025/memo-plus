@@ -59,7 +59,7 @@ void main() {
     );
 
     expect(request.enableDownload, isTrue);
-    expect(request.albumName, 'MemoFlow');
+    expect(request.albumName, 'memo+');
   });
 
   test('display size parser swaps axes for rotated jpeg', () {

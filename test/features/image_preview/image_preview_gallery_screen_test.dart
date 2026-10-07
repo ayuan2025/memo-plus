@@ -289,7 +289,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final size = tester.getSize(
-      find.byKey(const Key('image_preview_display_box_portrait')),
+      find.byKey(const Key('image_preview_display_box_portrait#0')),
     );
     expect(size.width, closeTo(244.8, 0.2));
     expect(size.height, closeTo(544.0, 0.2));

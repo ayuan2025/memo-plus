@@ -1,14 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../application/legal/legal_consent_policy.dart';
+import '../../core/app_links.dart';
+import '../../core/app_version.dart';
 import '../../i18n/strings.g.dart';
 import '../../platform/platform_route.dart';
+import '../../state/system/update_config_provider.dart';
 import '../debug/debug_tools_screen.dart';
 import '../updates/donors_wall_screen.dart';
 import '../updates/release_notes_screen.dart';
+import '../updates/update_announcement_dialog.dart';
 import 'settings_ui.dart';
 
 class AboutUsScreen extends StatelessWidget {
@@ -29,16 +34,71 @@ class AboutUsScreen extends StatelessWidget {
   }
 }
 
-class AboutUsContent extends StatefulWidget {
+class AboutUsContent extends ConsumerStatefulWidget {
   const AboutUsContent({super.key});
 
   @override
-  State<AboutUsContent> createState() => _AboutUsContentState();
+  ConsumerState<AboutUsContent> createState() => _AboutUsContentState();
 }
 
-class _AboutUsContentState extends State<AboutUsContent> {
+class _AboutUsContentState extends ConsumerState<AboutUsContent> {
   int _debugTapCount = 0;
   DateTime? _lastDebugTapAt;
+  bool _checkingUpdate = false;
+
+  /// 手动检查更新。
+  ///
+  /// 与启动时那次自动检测是**两条独立的路**：启动检测有幂等锁，而且用户点过
+  /// 「以后再说」会写 `skipUpdateVersion`——那两条路都会导致之后不再提示，所以
+  /// 必须有一条能随时重查的路，否则用户永远看不到新版本。
+  ///
+  /// 已经是最新时只给一条 SnackBar，不开弹窗：弹窗在无更新时只剩一个「以后再说」
+  /// 按钮（`showUpdateAction` 会算成 false），点它等于什么都没发生。
+  Future<void> _checkForUpdate(BuildContext context) async {
+    if (_checkingUpdate) return;
+    setState(() => _checkingUpdate = true);
+    try {
+      final config = await ref
+          .read(updateConfigServiceProvider)
+          .fetchLatest(
+            localeTag: Localizations.localeOf(context).toLanguageTag(),
+          );
+      if (!context.mounted) return;
+      if (config == null) {
+        _say(context, '检查更新失败，请检查网络后重试');
+        return;
+      }
+      final info = await AboutUsScreen._packageInfoFuture;
+      if (!context.mounted) return;
+      final latest = config.versionInfo.latestVersion.trim();
+      // 比较逻辑与启动弹窗一致：只比版本号的前三段数字，versionCode 不参与。
+      if (!_isNewerVersion(latest, info.version)) {
+        _say(context, '已是最新版本（${info.version}）');
+        return;
+      }
+      await UpdateAnnouncementDialog.show(
+        context,
+        config: config,
+        currentVersion: info.version,
+      );
+    } catch (_) {
+      if (context.mounted) _say(context, '检查更新失败，请检查网络后重试');
+    } finally {
+      if (mounted) setState(() => _checkingUpdate = false);
+    }
+  }
+
+  static void _say(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  /// 远端版本是否比本地新。规则由 `core/app_version.dart` 统一提供：剥掉
+  /// `+build`/`-suffix` 段，每段取其中的数字，只比前三段。启动弹窗、设置页
+  /// 与更新策略共用同一份实现，避免同一版本在两处得出相反结论。
+  static bool _isNewerVersion(String remote, String local) =>
+      isNewerVersion(remote, local);
 
   void _handleDebugTap() {
     if (!kDebugMode) return;
@@ -102,9 +162,10 @@ class _AboutUsContentState extends State<AboutUsContent> {
   @override
   Widget build(BuildContext context) {
     final tokens = settingsPageTokens(context);
-    const websiteUrl = 'https://memoflow.hzc073.com/';
-    const helpUrl = 'https://memoflow.hzc073.com/help/';
-    const feedbackUrl = 'https://github.com/hzc073/memoflow/issues';
+    // 品牌入口统一由 core/app_links.dart 定义（GitHub 仓库）。
+    const websiteUrl = MemoPlusLinks.websiteUrl;
+    const helpUrl = MemoPlusLinks.helpUrl;
+    const feedbackUrl = MemoPlusLinks.feedbackUrl;
     final entries = <_AboutEntry>[
       _AboutEntry(
         icon: Icons.public_outlined,
@@ -139,6 +200,12 @@ class _AboutUsContentState extends State<AboutUsContent> {
         subtitle: context.t.strings.legacy.msg_about_help_center_subtitle,
         external: true,
         onTap: () => _openExternalLink(context, helpUrl),
+      ),
+      _AboutEntry(
+        icon: Icons.system_update_alt_outlined,
+        title: '检查更新',
+        subtitle: '从发布页获取最新版本',
+        onTap: () => _checkForUpdate(context),
       ),
       _AboutEntry(
         icon: Icons.update_outlined,
@@ -236,7 +303,7 @@ class _AboutSummary extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           const SettingsContentHeader(
-            title: 'MemoFlow',
+            title: 'memo+',
             textAlign: TextAlign.center,
             prominent: true,
           ),

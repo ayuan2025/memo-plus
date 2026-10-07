@@ -636,7 +636,7 @@ class VideoThumbnailCache {
       player = Player(
         configuration: const PlayerConfiguration(
           muted: true,
-          title: 'MemoFlow Thumbnail',
+          title: 'memo+ Thumbnail',
         ),
       );
       videoController = VideoController(

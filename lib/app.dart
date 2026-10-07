@@ -21,6 +21,7 @@ import 'application/sync/sync_feedback_presenter.dart';
 import 'application/sync/sync_request.dart';
 import 'application/updates/update_announcement_runner.dart';
 import 'application/widgets/home_widgets_updater.dart';
+import 'core/app_links.dart';
 import 'core/app_localization.dart';
 import 'core/app_theme.dart';
 import 'core/app_typography_policy.dart';
@@ -73,6 +74,7 @@ import 'state/system/local_library_provider.dart';
 import 'state/memos/app_bootstrap_adapter_provider.dart';
 import 'state/memos/app_bootstrap_controller.dart';
 import 'state/settings/device_preferences_provider.dart';
+import 'state/settings/note_display_theme_settings_provider.dart';
 import 'state/settings/resolved_preferences_provider.dart';
 import 'state/sync/sync_coordinator_provider.dart';
 import 'state/system/session_provider.dart';
@@ -373,7 +375,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         }
         await _pushMacosMenuRoute(
           const MemosListScreen(
-            title: 'MemoFlow',
+            title: 'memo+',
             state: 'NORMAL',
             showDrawer: true,
             enableCompose: true,
@@ -392,7 +394,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
       case macosMenuCommandSearchMemos:
         await _pushMacosMenuRoute(
           const MemosListScreen(
-            title: 'MemoFlow',
+            title: 'memo+',
             state: 'NORMAL',
             showDrawer: true,
             enableCompose: true,
@@ -405,7 +407,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         }
         await _pushMacosMenuRoute(
           const MemosListScreen(
-            title: 'MemoFlow',
+            title: 'memo+',
             state: 'NORMAL',
             showDrawer: true,
             enableCompose: true,
@@ -549,7 +551,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         await DesktopExitCoordinator.requestExit(reason: 'macos_app_menu_quit');
         return;
       case macosMenuCommandHelpCenter:
-        await _openExternalUrl('https://memoflow.hzc073.com/help/');
+        await _openExternalUrl(MemoPlusLinks.helpUrl);
         return;
       case macosMenuCommandMemosBackendDocs:
         await _openExternalUrl('https://usememos.com/docs');
@@ -869,7 +871,16 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     final themeColor = resolvedSettings.resolvedThemeColor;
     final customTheme = resolvedSettings.resolvedCustomTheme;
     MemoFlowPalette.applyThemeColor(themeColor, customTheme: customTheme);
-    final themeMode = themeModeFor(devicePrefs.themeMode);
+    // 所选的应用主题是全 App 唯一的配色来源，投影回 MemoFlowPalette 后，
+    // 那 854 处静态引用（88 个文件）无需改动即自动跟随。必须排在
+    // applyThemeColor 之后 —— 否则上面刚按自定义主题色铺好的 surface 会被这里
+    // 覆盖掉，自定义主题色这条旧路径就彻底失效。
+    final appTheme = ref.watch(selectedMemoCardThemeProvider);
+    appTheme.applyToPalette();
+    // 主题自带明暗（见 MemoCardTheme.brightness），所以 themeMode 恒为 light：
+    // 深浅色已经是主题的一部分，再叠一层系统深浅色就成了第三套配色。
+    final themeMode = ThemeMode.light;
+    final appThemeData = appTheme.toThemeData();
     final loggerService = _bootstrapAdapter.watchLoggerService(ref);
     final appLocale = appLocaleForLanguage(devicePrefs.language);
     if (_activeLocale != appLocale) {
@@ -902,16 +913,10 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
     final app = TranslationProvider(
       child: MaterialApp(
-        title: 'MemoFlow',
+        title: 'memo+',
         debugShowCheckedModeBanner: !screenshotModeEnabled,
-        theme: applyPreferencesToTheme(
-          buildAppTheme(Brightness.light),
-          deviceLegacyPrefs,
-        ),
-        darkTheme: applyPreferencesToTheme(
-          buildAppTheme(Brightness.dark),
-          deviceLegacyPrefs,
-        ),
+        theme: applyPreferencesToTheme(appThemeData, deviceLegacyPrefs),
+        darkTheme: appThemeData,
         scrollBehavior: const PlatformAppScrollBehavior(),
         themeMode: themeMode,
         locale: appLocale.flutterLocale,
@@ -928,7 +933,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
             final arg = settings.arguments;
             return MaterialPageRoute<void>(
               builder: (_) => MemosListScreen(
-                title: 'MemoFlow',
+                title: 'memo+',
                 state: 'NORMAL',
                 showDrawer: true,
                 enableCompose: true,

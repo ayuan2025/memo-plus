@@ -17,7 +17,7 @@ void main() {
     _TestBootstrapAdapter.reset();
     debugAppChannelOverride = AppChannel.full;
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'com.example.memoflow',
       version: '1.0.0',
       buildNumber: '1',

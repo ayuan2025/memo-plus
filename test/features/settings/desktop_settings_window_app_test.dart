@@ -628,11 +628,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byIcon(Icons.favorite_border), findsOneWidget);
-      expect(find.text('Support MemoFlow'), findsOneWidget);
+      expect(find.text('Support memo+'), findsOneWidget);
       expect(find.text('Import / Export'), findsOneWidget);
       expect(find.text('About'), findsOneWidget);
 
-      final supportTop = tester.getTopLeft(find.text('Support MemoFlow')).dy;
+      final supportTop = tester.getTopLeft(find.text('Support memo+')).dy;
       final importExportTop = tester
           .getTopLeft(find.text('Import / Export'))
           .dy;
@@ -640,7 +640,7 @@ void main() {
       expect(supportTop, lessThan(importExportTop));
       expect(importExportTop, lessThan(aboutTop));
 
-      await tester.tap(find.text('Support MemoFlow'));
+      await tester.tap(find.text('Support memo+'));
       await tester.pumpAndSettle();
 
       expect(find.byType(SupportMemoFlowScreen), findsOneWidget);
@@ -709,7 +709,7 @@ void main() {
         ),
         DesktopSettingsWindowTarget.supportMemoFlow,
       );
-      expect(find.text('Support MemoFlow'), findsOneWidget);
+      expect(find.text('Support memo+'), findsOneWidget);
 
       final accepted = await _dispatchIncomingMultiWindowMethod(
         desktopSettingsOpenTargetMethod,

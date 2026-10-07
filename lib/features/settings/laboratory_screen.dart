@@ -87,7 +87,7 @@ class _LaboratoryVersionFooter extends StatelessWidget {
     return Column(
       children: [
         const SettingsContentHeader(
-          title: 'MemoFlow',
+          title: 'memo+',
           textAlign: TextAlign.center,
           prominent: true,
         ),

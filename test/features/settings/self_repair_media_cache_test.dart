@@ -70,10 +70,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Storage Space'), findsOneWidget);
-    expect(find.text('MemoFlow known usage'), findsOneWidget);
+    expect(find.text('memo+ known usage'), findsOneWidget);
     expect(
       find.text(
-        'Device capacity is unavailable. MemoFlow known usage and categories are still shown.',
+        'Device capacity is unavailable. memo+ known usage and categories are still shown.',
       ),
       findsOneWidget,
     );

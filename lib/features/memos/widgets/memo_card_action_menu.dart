@@ -127,6 +127,12 @@ List<MemoCardActionDescriptor> buildMemoCardActionDescriptors({
       icon: Icons.archive_outlined,
       section: MemoCardActionMenuSection.primary,
     ),
+    const MemoCardActionDescriptor(
+      action: MemoCardAction.beautifyPreview,
+      label: '美化预览',
+      icon: Icons.auto_awesome_outlined,
+      section: MemoCardActionMenuSection.primary,
+    ),
     MemoCardActionDescriptor(
       action: MemoCardAction.adjustTime,
       label: context.t.strings.memoTimeAdjustment.action,

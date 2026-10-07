@@ -26,7 +26,7 @@ void main() {
 
   setUpAll(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'dev.memoflow.test',
       version: '1.0.0',
       buildNumber: '1',

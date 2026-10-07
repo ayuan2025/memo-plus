@@ -1,60 +1,39 @@
-# 第三方组件授权声明（THIRD_PARTY_LICENSES）
+# 第三方组件与许可证声明（THIRD PARTY NOTICES）
 
-本项目（memo+）基于以下开源项目二次开发。**上游版权归各自作者所有**，本项目保留其全部版权声明与许可证文本。
+memo+ 由多个开源项目组成。本文件列出所有进入发行包的第三方代码/素材及其许可证。各组件的版权与许可原文归各自作者所有；本仓库按其条款引用。
 
----
+## 主要组成部分
 
-## 一、主要上游项目
+### 1. MemoFlow — 应用基底（GPL-3.0）
 
-### 1. memoflow
+- 上游仓库：<https://github.com/hzc073/memoflow>
+- 许可证：GNU General Public License v3.0（见仓库根目录 [LICENSE](./LICENSE)）
+- 说明：memo+ 的界面、数据模型、同步、备份、迁移等主体代码衍生自 MemoFlow。memo+ 作为其衍生作品按 GPL-3.0 以同许可证发布，保留上游版权声明；相对上游的修改以源码形式随本仓库公开。
+- 保留的上游标识：备份格式（`MemoFlowVault` / `MemoFlowBackup`、`/MemoFlow/settings/v1` 路径）、局域网迁移 Bonjour 服务名（`_memoflow._tcp` 等）与包名（`com.memoflow.*`）为保证兼容性而原样保留，属于协议标识，不代表品牌。
 
-- **用途**：应用基础架构、Flutter 客户端、笔记管理、编辑器、同步与附件体系
-- **许可证**：**GNU General Public License v3.0**
-- **版权**：归 memoflow 原作者及贡献者所有
-- **本项目改动**：新增文档扫描、离线 OCR、批量重扫、本地标题生成；移除语音转写（详见 `发布声明.md` 第二节）
-- **许可证文本**：见仓库根目录 `LICENSE`
+### 2. OpenScan — 文档扫描引擎（BSD-3-Clause）
 
-> 因上游为 GPL-3.0，本项目整体同样以 GPL-3.0 发布。
+- 上游仓库：<https://github.com/ethereal-developers/OpenScan>（取用 tag `v3.0.0`）
+- 上游版权：Copyright (c) 2021, Vijay T S and Vikram H
+- 许可证全文：[third_party/openscan_cv/LICENSE](./third_party/openscan_cv/LICENSE)
+- 取用内容：文档边界检测、透视校正、扫描仪色彩滤镜（纯 Dart 实现），落在 `lib/core/scan/`；逐文件的出处与改动记录见 [third_party/openscan_cv/README.md](./third_party/openscan_cv/README.md)。
 
-### 2. OpenScan
+### 3. zhaoolee/notes — 锤子便签风格卡片主题（Apache-2.0）
 
-- **用途**：文档边缘检测、透视矫正、图像滤镜等扫描核心算法
-- **许可证**：**BSD 3-Clause License**
-- **版权**：Copyright (c) 2021, Vijay T S and Vikram H
-- **引入方式**：vendored（`third_party/openscan_cv`）
-- **许可证文本**：见 `third_party/openscan_cv/LICENSE`
+- 上游仓库：<https://github.com/zhaoolee/notes>（复刻锤子便签的开源 Web 应用）
+- 许可证：Apache License 2.0
+- 取用内容：`src/lib/note-card-theme-styles.ts` 中的卡片主题设计令牌（配色、纸面、字体栈），1:1 移植为 `lib/features/memos/theme/memo_card_theme.dart`，用于「笔记导出为图片」的分享卡片与模板样式。第三方产品名主题（Bear 等）已改为中性名称。
 
-BSD-3-Clause 要求：保留版权声明、许可证文本，且不得使用作者名称为本项目推广背书。本项目遵循上述要求。
+## 其他组件
 
----
+| 组件 | 许可证 | 版权 | 在本仓库的位置 | 用途 |
+| --- | --- | --- | --- | --- |
+| libcaesium 0.17.4 | Apache-2.0 | Copyright Matteo Paonessa | 预编译产物（见 `third_party/libcaesium/README.md`） | 图片压缩（FFI） |
+| image_gallery_saver | MIT | Copyright (c) 2023 zaihui | `third_party/image_gallery_saver/` | 保存图片到系统相册 |
+| phosphor_flutter | MIT | Copyright (c) 2020-2021 Phosphor Icons | `third_party/phosphor_flutter/` | 图标字体 |
+| Readability.js | Apache-2.0 | Copyright (c) 2010 Arc90 Inc | `third_party/readability/` | 网页正文提取 |
 
-## 二、其他第三方组件
+## 运行时依赖说明
 
-| 组件 | 用途 | 许可证 |
-|---|---|---|
-| Google ML Kit Text Recognition (Chinese) | 离线中文字符识别（bundled 模型） | Google APIs Terms of Service |
-| phosphor_flutter（vendored，仅 Regular 字重） | 图标字体 | MIT |
-| image_gallery_saver（vendored） | 图片保存到相册 | 见 `third_party/image_gallery_saver/LICENSE` |
-| readability（vendored） | 正文抽取 | 见 `third_party/readability/LICENSE.md` |
-| Flutter 及 pub 生态依赖 | 跨平台框架与各类工具库 | 各依其原许可证（见 `pubspec.yaml` / pub.dev） |
-
-> 本构建基于上游 memoflow 的依赖集合（`pubspec.yaml`），未另行引入额外 copyleft 组件。
-> 项目整体的 copyleft 义务来源为上游 memoflow（GPL-3.0）。
-
----
-
-## 三、合规义务提醒（对本项目的下游使用者）
-
-若你基于 memo+ 二次开发或分发，须遵守：
-
-1. **提供完整源码**——不得仅分发 APK 而不提供源码
-2. **保留全部上游版权声明**——包括 memoflow 与 OpenScan
-3. **衍生作品同样以 GPL-3.0 发布**——不得改为闭源或其他不兼容许可证
-4. **标注你的修改内容与日期**（参考本仓库 `修改说明.md`）
-5. **不得附加额外限制**，妨碍下游用户行使 GPL-3.0 授予的权利
-
-GPL-3.0 允许商业使用与收费，但上述开源义务**不因收费而豁免**。
-
----
-
-_本文档为许可证信息说明，不构成法律意见。若涉及商业分发或合规审查，建议咨询专业法律人士。_
+- **Google ML Kit 文字识别**（`google_mlkit_text_recognition`）：设备端离线推理，不联网上传；作为系统组件随 Google Play services 分发（或随 APK 内置模型）。
+- **Memos 服务端**（[usememos/memos](https://github.com/usememos/memos)）：memo+ 通过其 HTTP API 与自建 Memos 服务器通信，但**不捆绑**其代码，故不构成衍生。

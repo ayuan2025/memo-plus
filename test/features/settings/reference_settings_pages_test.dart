@@ -19,7 +19,7 @@ void main() {
 
   setUpAll(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'dev.memoflow.test',
       version: '1.0.0',
       buildNumber: '1',
@@ -41,7 +41,7 @@ void main() {
     expect(find.byType(SettingsNavigationRow), findsNWidgets(5));
     expect(find.text('Laboratory'), findsOneWidget);
     expect(find.text('Navigation Mode'), findsOneWidget);
-    expect(find.text('MemoFlow'), findsOneWidget);
+    expect(find.text('memo+'), findsOneWidget);
     expect(find.text('VERSION 1.0.0'), findsOneWidget);
 
     await tester.tap(find.text('Navigation Mode'));

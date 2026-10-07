@@ -67,15 +67,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(_expandButton, findsOneWidget);
-    expect(_fullscreenTopToolbar, findsNothing);
+    expect(_fullscreenToolbarRow, findsNothing);
     expect(find.text('Long draft body'), findsOneWidget);
 
     await tester.tap(_expandButton);
     await tester.pumpAndSettle();
 
     expect(_expandButton, findsNothing);
-    expect(_fullscreenTopToolbar, findsOneWidget);
-    expect(_fullscreenBottomToolbar, findsOneWidget);
+    expect(_fullscreenToolbarRow, findsOneWidget);
     expect(_collapseButton, findsOneWidget);
     expect(_closeButton, findsOneWidget);
     expect(find.text('Create Memo'), findsNothing);
@@ -84,24 +83,22 @@ void main() {
       tester.getCenter(_closeButton).dx,
       lessThan(tester.getCenter(_collapseButton).dx),
     );
+    // 工具栏整行位于输入框下方；可见性开关与发送键现在同在这一行，顺序仍是
+    // 开关在左、发送在右。
     expect(
-      tester.getTopLeft(_fullscreenTopToolbar).dy,
+      tester.getTopLeft(_fullscreenToolbarRow).dy,
       greaterThan(tester.getBottomLeft(_fullscreenTextField).dy),
     );
     expect(
-      tester.getTopLeft(_fullscreenBottomToolbar).dy,
-      greaterThan(tester.getBottomLeft(_fullscreenTextField).dy),
-    );
-    expect(
-      tester.getCenter(_fullscreenVisibilityButton).dy,
-      lessThan(tester.getCenter(_fullscreenSendButton).dy),
+      tester.getCenter(_fullscreenVisibilityButton).dx,
+      lessThan(tester.getCenter(_fullscreenSendButton).dx),
     );
 
     await tester.tap(_collapseButton);
     await tester.pumpAndSettle();
 
     expect(_expandButton, findsOneWidget);
-    expect(_fullscreenTopToolbar, findsNothing);
+    expect(_fullscreenToolbarRow, findsNothing);
     expect(find.text('Long draft body'), findsOneWidget);
 
     await _disposeHarness(tester);
@@ -518,11 +515,9 @@ Finder get _collapseButton =>
     find.byKey(const ValueKey<String>('note-input-fullscreen-collapse-button'));
 Finder get _closeButton =>
     find.byKey(const ValueKey<String>('note-input-fullscreen-close-button'));
-Finder get _fullscreenTopToolbar =>
-    find.byKey(const ValueKey<String>('note-input-fullscreen-top-toolbar-row'));
-Finder get _fullscreenBottomToolbar => find.byKey(
-  const ValueKey<String>('note-input-fullscreen-bottom-toolbar-row'),
-);
+// 工具栏已由上下两行合并为一行，这里断言的是整行位于输入框下方。
+Finder get _fullscreenToolbarRow =>
+    find.byKey(const ValueKey<String>('note-input-fullscreen-toolbar-row'));
 Finder get _fullscreenSendButton =>
     find.byKey(const ValueKey<String>('note-input-fullscreen-send-button'));
 Finder get _fullscreenTextField =>

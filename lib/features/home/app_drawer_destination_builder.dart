@@ -43,7 +43,7 @@ MemosListScreen buildDesktopHomeUtilityDestination({
   HomeEmbeddedNavigationHost? navigationHost,
 }) {
   return MemosListScreen(
-    title: 'MemoFlow',
+    title: 'memo+',
     state: 'NORMAL',
     showDrawer: true,
     enableCompose: true,
@@ -69,7 +69,7 @@ MemosListScreen buildDesktopHomeDayFilterDestination({
 }) {
   final normalizedDay = DateTime(day.year, day.month, day.day);
   return MemosListScreen(
-    title: 'MemoFlow',
+    title: 'memo+',
     state: 'NORMAL',
     showDrawer: true,
     enableCompose: true,
@@ -166,7 +166,7 @@ Widget buildDrawerDestinationScreen({
 }) {
   return switch (destination) {
     AppDrawerDestination.memos => MemosListScreen(
-      title: 'MemoFlow',
+      title: 'memo+',
       state: 'NORMAL',
       showDrawer: true,
       enableCompose: true,

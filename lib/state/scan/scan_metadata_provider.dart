@@ -5,6 +5,7 @@ import '../../data/ai/ai_task_runtime.dart';
 import '../../data/scan/local_document_text_service.dart';
 import '../../data/scan/local_scan_metadata_service.dart';
 import '../../data/scan/ocr_page_preprocessor.dart';
+import '../../data/scan/scan_orientation_detector.dart';
 import '../settings/ai_settings_provider.dart';
 
 /// Flattens the lighting out of a page before the recogniser sees it.
@@ -30,6 +31,14 @@ final localScanMetadataServiceProvider = Provider<LocalScanMetadataService>((
   return LocalScanMetadataService(
     textService: ref.watch(localDocumentTextServiceProvider),
     preprocessor: ref.watch(ocrPagePreprocessorProvider),
+  );
+});
+
+/// Detects whether a scanned page is sideways or upside down, from the text
+/// the recogniser already reads on device.
+final scanOrientationDetectorProvider = Provider<ScanOrientationDetector>((ref) {
+  return ScanOrientationDetector(
+    textService: ref.watch(localDocumentTextServiceProvider),
   );
 });
 

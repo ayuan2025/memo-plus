@@ -162,12 +162,18 @@ mixin _WebDavBackupImportMixin on _WebDavBackupServiceBase {
               );
               draftAttachmentRootDirectory ??= await Directory.systemTemp
                   .createTemp('webdav_draft_restore_');
-              final targetFile = File(
-                p.joinAll(<String>[
-                  draftAttachmentRootDirectory.path,
-                  ...p.split(entry.path.replaceAll('\\', '/')),
-                ]),
+              final draftPath = _resolveDraftAttachmentPath(
+                draftAttachmentRootDirectory,
+                entry.path,
               );
+              if (draftPath == null) {
+                throw SyncError(
+                  code: SyncErrorCode.dataCorrupt,
+                  retryable: false,
+                  message: 'BACKUP_ENTRY_PATH_ESCAPES_ROOT',
+                );
+              }
+              final targetFile = File(draftPath);
               await targetFile.parent.create(recursive: true);
               await targetFile.writeAsBytes(bytes, flush: true);
               restoredCount += 1;
@@ -400,12 +406,18 @@ mixin _WebDavBackupImportMixin on _WebDavBackupServiceBase {
               }
               draftAttachmentRootDirectory ??= await Directory.systemTemp
                   .createTemp('webdav_draft_restore_');
-              final targetFile = File(
-                p.joinAll(<String>[
-                  draftAttachmentRootDirectory.path,
-                  ...p.split(entry.path.replaceAll('\\', '/')),
-                ]),
+              final draftPath = _resolveDraftAttachmentPath(
+                draftAttachmentRootDirectory,
+                entry.path,
               );
+              if (draftPath == null) {
+                throw SyncError(
+                  code: SyncErrorCode.dataCorrupt,
+                  retryable: false,
+                  message: 'BACKUP_ENTRY_PATH_ESCAPES_ROOT',
+                );
+              }
+              final targetFile = File(draftPath);
               await targetFile.parent.create(recursive: true);
               await targetFile.writeAsBytes(bytes, flush: true);
               restoredCount += 1;
@@ -713,12 +725,18 @@ mixin _WebDavBackupImportMixin on _WebDavBackupServiceBase {
             );
             draftAttachmentRootDirectory ??= await Directory.systemTemp
                 .createTemp('webdav_draft_restore_');
-            final tempFile = File(
-              p.joinAll(<String>[
-                draftAttachmentRootDirectory.path,
-                ...p.split(entry.path.replaceAll('\\', '/')),
-              ]),
+            final draftPath = _resolveDraftAttachmentPath(
+              draftAttachmentRootDirectory,
+              entry.path,
             );
+            if (draftPath == null) {
+              throw SyncError(
+                code: SyncErrorCode.dataCorrupt,
+                retryable: false,
+                message: 'BACKUP_ENTRY_PATH_ESCAPES_ROOT',
+              );
+            }
+            final tempFile = File(draftPath);
             await tempFile.parent.create(recursive: true);
             await tempFile.writeAsBytes(bytes, flush: true);
             await fileSystem.writeFileFromChunks(
@@ -981,12 +999,18 @@ mixin _WebDavBackupImportMixin on _WebDavBackupServiceBase {
           if (_isDraftAttachmentPath(entry.path)) {
             draftAttachmentRootDirectory ??= await Directory.systemTemp
                 .createTemp('webdav_draft_restore_');
-            final tempFile = File(
-              p.joinAll(<String>[
-                draftAttachmentRootDirectory.path,
-                ...p.split(entry.path.replaceAll('\\', '/')),
-              ]),
+            final draftPath = _resolveDraftAttachmentPath(
+              draftAttachmentRootDirectory,
+              entry.path,
             );
+            if (draftPath == null) {
+              throw SyncError(
+                code: SyncErrorCode.dataCorrupt,
+                retryable: false,
+                message: 'BACKUP_ENTRY_PATH_ESCAPES_ROOT',
+              );
+            }
+            final tempFile = File(draftPath);
             await tempFile.parent.create(recursive: true);
             await tempFile.writeAsBytes(bytes, flush: true);
           }
@@ -1156,5 +1180,24 @@ mixin _WebDavBackupImportMixin on _WebDavBackupServiceBase {
   bool _isDraftAttachmentPath(String rawPath) {
     final path = rawPath.trim().replaceAll('\\', '/').toLowerCase();
     return path.startsWith('$composeDraftTransferAttachmentsDir/');
+  }
+
+  /// [entryPath] resolved under [root], or null when it would land outside.
+  ///
+  /// The path comes out of the remote snapshot's own index, so it is data, not
+  /// a path this app chose: `p.joinAll` throws away everything before an
+  /// absolute segment and resolves `..` upwards, which turns an index entry
+  /// into an arbitrary write anywhere the process can reach. Harmless against
+  /// an honest backup of one's own, worth refusing anyway — the flomo import
+  /// path has checked this the whole time.
+  String? _resolveDraftAttachmentPath(Directory root, String entryPath) {
+    final segments = p.split(entryPath.trim().replaceAll('\\', '/'));
+    if (segments.any((segment) => segment.isEmpty || segment == '.')) {
+      return null;
+    }
+    final outPath = p.normalize(
+      p.joinAll(<String>[root.path, ...segments]),
+    );
+    return p.isWithin(root.path, outPath) ? outPath : null;
   }
 }

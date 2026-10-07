@@ -16,6 +16,7 @@ import '../../core/sync_error_presenter.dart';
 import '../../core/top_toast.dart';
 import '../../core/tags.dart';
 import '../../core/uid.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/models/app_preferences.dart';
 import '../../data/models/attachment.dart';
@@ -51,6 +52,8 @@ import 'memo_inline_image_sources.dart';
 import 'memo_inline_image_syntax.dart';
 import 'memo_media_grid.dart';
 import 'memo_markdown.dart';
+import 'theme/memo_card_share_screen.dart';
+import 'theme/memo_themed_preview_sheet.dart';
 import 'memo_render_pipeline.dart';
 import 'memo_hero_flight.dart';
 import 'memo_time_adjustment_sheet.dart';
@@ -548,7 +551,7 @@ class _MemoDetailScreenState extends ConsumerState<MemoDetailScreen> {
         buildPlatformPageRoute<void>(
           context: context,
           builder: (_) => MemosListScreen(
-            title: 'MemoFlow',
+            title: 'memo+',
             state: 'NORMAL',
             showDrawer: true,
             enableCompose: true,
@@ -588,6 +591,16 @@ class _MemoDetailScreenState extends ConsumerState<MemoDetailScreen> {
       case MemoCardAction.archive:
       case MemoCardAction.restore:
         await _toggleArchived();
+        return;
+      case MemoCardAction.beautifyPreview:
+        final currentMemo = _memo;
+        if (currentMemo != null) {
+          await MemoThemedPreviewSheet.show(
+            context,
+            content: currentMemo.content,
+            time: currentMemo.effectiveDisplayTime,
+          );
+        }
         return;
       case MemoCardAction.delete:
         await _delete();
@@ -1157,6 +1170,20 @@ class _MemoDetailScreenState extends ConsumerState<MemoDetailScreen> {
               icon: Icon(isArchived ? Icons.unarchive : Icons.archive),
             ),
             IconButton(
+              tooltip: '分享为图片卡片',
+              onPressed: () {
+                maybeHaptic();
+                unawaited(
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => MemoCardShareScreen(memo: memo),
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.image),
+            ),
+            IconButton(
               tooltip: context.t.strings.legacy.msg_delete,
               onPressed: () {
                 maybeHaptic();
@@ -1233,10 +1260,8 @@ class MemoDocumentBody extends StatelessWidget {
             ? appendThumbnailParam(resolved)
             : resolved;
       }
-      final url = joinBaseUrl(
-        baseUrl,
-        'file/${attachment.name}/${attachment.filename}',
-      );
+      final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+      if (url == null) return '';
       return thumbnail ? appendThumbnailParam(url) : url;
     }
 
@@ -1486,7 +1511,8 @@ class MemoDocumentPrimaryContent extends ConsumerWidget {
           nonMediaAttachmentsOverride: resolvedData.nonImageAttachments,
           showAttachmentsSection: false,
           onTimeTap: onTimeTap,
-          onReplaceAttachment: allowImageEdit ? onReplaceAttachment : null,
+          onReplaceAttachment:
+              allowImageEdit ? onReplaceAttachment : null,
         ),
         if (mediaEntries.isNotEmpty) const SizedBox(height: 12),
         if (resolvedData.memoErrorText != null &&

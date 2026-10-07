@@ -625,6 +625,7 @@ class SettingsSelectableItemRow extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.leading,
     this.onEdit,
     this.onDelete,
     this.editTooltip,
@@ -635,6 +636,7 @@ class SettingsSelectableItemRow extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final Widget? leading;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
   final String? editTooltip;
@@ -658,12 +660,23 @@ class SettingsSelectableItemRow extends StatelessWidget {
         ),
     ];
 
+    final selectionIcon = Icon(
+      selected ? Icons.radio_button_checked : Icons.radio_button_off,
+      size: 20,
+      color: tokens.textMuted,
+    );
+
     return PlatformListSectionRow(
-      leading: Icon(
-        selected ? Icons.radio_button_checked : Icons.radio_button_off,
-        size: 20,
-        color: tokens.textMuted,
-      ),
+      leading: leading == null
+          ? selectionIcon
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                leading!,
+                const SizedBox(width: 10),
+                selectionIcon,
+              ],
+            ),
       title: SettingsRowTitle(title),
       subtitle: SettingsRowDescription(subtitle),
       trailing: actions.isEmpty

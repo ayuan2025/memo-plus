@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import '../../core/memo_scan_metadata.dart';
+import '../../core/scan_document_kind.dart' show ScanLabelLanguage;
 import '../../core/scan_document_outline.dart';
 import '../../core/scan/src/ocr_preprocess.dart';
 import './local_document_text_service.dart';
@@ -72,6 +73,7 @@ class LocalScanMetadataService {
     required Uint8List imageBytes,
     required DateTime scannedAt,
     String fallbackPrefix = '扫描件',
+    ScanLabelLanguage labels = ScanLabelLanguage.chinese,
   }) async {
     if (!isSupported || imageBytes.isEmpty) return null;
 
@@ -95,6 +97,7 @@ class LocalScanMetadataService {
         text,
         scannedAt: scannedAt,
         fallbackPrefix: fallbackPrefix,
+        labels: labels,
       );
       if (draft == null || draft.isEmpty) continue;
 

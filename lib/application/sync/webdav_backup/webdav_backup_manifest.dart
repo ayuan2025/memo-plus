@@ -1376,7 +1376,15 @@ mixin _WebDavBackupManifestMixin on _WebDavBackupServiceBase {
   }
 
   @override
-  Future<WebDavBackupIndex> _applyRetention({
+  /// Works out which snapshots the retention count drops and which objects
+  /// that leaves with no referrer, **without deleting anything**.
+  ///
+  /// Split from the deletion so the caller can save the index first: the index
+  /// is the only record of what exists, so deleting an object while the index
+  /// still lists it — and then losing the connection before the index is
+  /// written — leaves a backup that points at files which are no longer there.
+  /// The leftover objects are reclaimed on the next run instead.
+  Future<_RetentionPlan> _planRetention({
     required WebDavClient client,
     required Uri baseUrl,
     required String rootPath,
@@ -1385,18 +1393,20 @@ mixin _WebDavBackupManifestMixin on _WebDavBackupServiceBase {
     required WebDavBackupIndex index,
     required int retention,
   }) async {
-    if (retention <= 0) return index;
-    if (index.snapshots.length <= retention) return index;
+    if (retention <= 0 || index.snapshots.length <= retention) {
+      return const _RetentionPlan.none();
+    }
 
     final sorted = [...index.snapshots];
     sorted.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     final toRemove = sorted.take(sorted.length - retention).toList();
-    if (toRemove.isEmpty) return index;
+    if (toRemove.isEmpty) return const _RetentionPlan.none();
 
     final objectRefs = <String, WebDavBackupObjectInfo>{...index.objects};
     final remainingSnapshots = index.snapshots
         .where((s) => !toRemove.any((r) => r.id == s.id))
         .toList();
+    final orphanedObjects = <String>[];
     for (final snapshot in toRemove) {
       final data = await _loadSnapshot(
         client: client,
@@ -1416,7 +1426,7 @@ mixin _WebDavBackupManifestMixin on _WebDavBackupServiceBase {
         final nextRefs = info.refs - 1;
         if (nextRefs <= 0) {
           objectRefs.remove(hash);
-          await _delete(client, _objectUri(baseUrl, rootPath, accountId, hash));
+          orphanedObjects.add(hash);
         } else {
           objectRefs[hash] = WebDavBackupObjectInfo(
             size: info.size,
@@ -1424,18 +1434,53 @@ mixin _WebDavBackupManifestMixin on _WebDavBackupServiceBase {
           );
         }
       }
-      await _delete(
-        client,
-        _snapshotUri(baseUrl, rootPath, accountId, snapshot.id),
-      );
     }
 
-    return WebDavBackupIndex(
-      schemaVersion: 1,
-      updatedAt: DateTime.now().toUtc().toIso8601String(),
-      snapshots: remainingSnapshots,
-      objects: objectRefs,
+    return _RetentionPlan(
+      index: WebDavBackupIndex(
+        schemaVersion: 1,
+        updatedAt: DateTime.now().toUtc().toIso8601String(),
+        snapshots: remainingSnapshots,
+        objects: objectRefs,
+      ),
+      removedSnapshotIds: toRemove
+          .map((snapshot) => snapshot.id)
+          .toList(growable: false),
+      orphanedObjects: orphanedObjects,
     );
+  }
+
+  /// Deletes what [_planRetention] worked out, once the trimmed index is safely
+  /// stored. Every deletion is best-effort: an object left behind costs space,
+  /// an index that lists a deleted object costs a backup.
+  @override
+  Future<void> _applyRetention({
+    required WebDavClient client,
+    required Uri baseUrl,
+    required String rootPath,
+    required String accountId,
+    required _RetentionPlan plan,
+  }) async {
+    for (final hash in plan.orphanedObjects) {
+      try {
+        await _delete(
+          client,
+          _objectUri(baseUrl, rootPath, accountId, hash),
+        );
+      } catch (_) {
+        // Left on the server; the next run's index no longer mentions it.
+      }
+    }
+    for (final snapshotId in plan.removedSnapshotIds) {
+      try {
+        await _delete(
+          client,
+          _snapshotUri(baseUrl, rootPath, accountId, snapshotId),
+        );
+      } catch (_) {
+        // Same: an unreferenced snapshot file is harmless clutter.
+      }
+    }
   }
 
   @override
@@ -1556,4 +1601,24 @@ mixin _WebDavBackupManifestMixin on _WebDavBackupServiceBase {
     final utc = now.toUtc();
     return '${utc.year}${two(utc.month)}${two(utc.day)}_${two(utc.hour)}${two(utc.minute)}${two(utc.second)}';
   }
+}
+
+/// What dropping the oldest snapshots implies: the trimmed index to store, the
+/// snapshots that fall out of it, and the objects nothing refers to any more.
+class _RetentionPlan {
+  const _RetentionPlan({
+    this.index,
+    this.removedSnapshotIds = const <String>[],
+    this.orphanedObjects = const <String>[],
+  });
+
+  /// Nothing to drop.
+  const _RetentionPlan.none() : this();
+
+  /// The index with the trimmed snapshots and their reference counts, or null
+  /// when the retention count is not exceeded and the index is unchanged.
+  final WebDavBackupIndex? index;
+
+  final List<String> removedSnapshotIds;
+  final List<String> orphanedObjects;
 }

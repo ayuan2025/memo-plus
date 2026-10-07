@@ -264,7 +264,7 @@ class SettingsScreen extends ConsumerWidget
         ? account!.user.displayName
         : (account?.user.name.isNotEmpty ?? false)
         ? account!.user.name
-        : 'MemoFlow';
+        : 'memo+';
     final description = (account?.user.description ?? '').trim();
     final subtitle = localLibrary != null
         ? localLibrary.locationLabel
@@ -483,8 +483,8 @@ class SettingsScreen extends ConsumerWidget
                           color: textMuted,
                         ),
                         label: context.tr(
-                          zh: '支持 MemoFlow',
-                          en: 'Support MemoFlow',
+                          zh: '支持 memo+',
+                          en: 'Support memo+',
                         ),
                         onTap: () {
                           haptic();

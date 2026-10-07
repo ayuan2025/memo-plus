@@ -14,18 +14,19 @@ import '../../core/theme_colors.dart';
 import '../../platform/platform_route.dart';
 import '../../platform/widgets/platform_controls.dart';
 import '../../platform/widgets/platform_dialog.dart';
-import '../../platform/widgets/platform_list_section.dart';
 import '../../platform/widgets/platform_picker.dart';
 import '../../data/models/app_preferences.dart';
 import '../../data/models/device_preferences.dart';
 import '../../i18n/strings.g.dart';
 import '../../platform/platform_target.dart';
 import '../../state/settings/device_preferences_provider.dart';
+import '../../state/settings/note_display_theme_settings_provider.dart';
 import '../../state/settings/resolved_preferences_provider.dart';
 import '../../state/settings/workspace_preferences_provider.dart';
 import '../../state/system/system_fonts_provider.dart';
 import 'settings_ui.dart';
 import 'memo_toolbar_settings_screen.dart';
+import 'note_display_theme_settings_screen.dart';
 
 class PreferencesSettingsScreen extends ConsumerWidget {
   const PreferencesSettingsScreen({super.key, this.showBackButton = true});
@@ -172,29 +173,8 @@ class PreferencesSettingsScreen extends ConsumerWidget {
     final workspaceNotifier = ref.read(
       currentWorkspacePreferencesProvider.notifier,
     );
-    final workspaceKey = ref.watch(currentWorkspaceKeyProvider);
     final resolvedSettings = ref.watch(resolvedAppSettingsProvider);
 
-    void setThemeColor(AppThemeColor color) {
-      if (workspaceKey == null) {
-        deviceNotifier.setThemeColor(color);
-        return;
-      }
-      workspaceNotifier.setThemeColorOverride(color);
-    }
-
-    void setCustomTheme(CustomThemeSettings settings) {
-      if (workspaceKey == null) {
-        deviceNotifier.setCustomTheme(settings);
-        return;
-      }
-      workspaceNotifier.setCustomThemeOverride(settings);
-    }
-
-    final themeMode = devicePrefs.themeMode;
-    final themeModeLabel = themeMode.labelFor(devicePrefs.language);
-    final themeColor = resolvedSettings.resolvedThemeColor;
-    final customTheme = resolvedSettings.resolvedCustomTheme;
     final canChooseSystemFonts =
         !isAppleMobilePlatform() && canChooseSystemFontsForPlatform();
     final fontsAsync = canChooseSystemFonts
@@ -206,8 +186,8 @@ class PreferencesSettingsScreen extends ConsumerWidget {
       fontsAsync?.valueOrNull ?? const [],
       canChooseSystemFonts: canChooseSystemFonts,
     );
+    final noteTheme = ref.watch(selectedMemoCardThemeProvider);
 
-    final tokens = settingsPageTokens(context);
 
     return SettingsPage(
       showBackButton: showBackButton,
@@ -294,6 +274,17 @@ class PreferencesSettingsScreen extends ConsumerWidget {
               value: workspacePrefs.collapseReferences,
               onChanged: workspaceNotifier.setCollapseReferences,
             ),
+            SettingsNavigationRow(
+              label: '外观主题',
+              value: noteTheme.label,
+              description: '整个 App 的配色：底色、文字、强调色与字体',
+              onTap: () => Navigator.of(context).push(
+                buildPlatformPageRoute<void>(
+                  context: context,
+                  builder: (_) => const NoteDisplayThemeSettingsScreen(),
+                ),
+              ),
+            ),
             if (!resolvedSettings.isLocalLibraryMode)
               SettingsToggleRow(
                 label:
@@ -348,39 +339,6 @@ class PreferencesSettingsScreen extends ConsumerWidget {
         const SizedBox(height: 12),
         SettingsSection(
           children: [
-            SettingsValueRow(
-              label: context.t.strings.settings.preferences.appearance,
-              value: themeModeLabel,
-              icon: Icons.expand_more,
-              onTap: () => _selectEnum<AppThemeMode>(
-                context: context,
-                title: context.t.strings.settings.preferences.appearance,
-                values: const [
-                  AppThemeMode.system,
-                  AppThemeMode.light,
-                  AppThemeMode.dark,
-                ],
-                label: (v) => v.labelFor(devicePrefs.language),
-                selected: themeMode,
-                onSelect: deviceNotifier.setThemeMode,
-              ),
-            ),
-            _ThemeColorRow(
-              label: context.t.strings.settings.preferences.themeColor,
-              selected: themeColor,
-              textMain: tokens.textMain,
-              isDark: tokens.isDark,
-              onSelect: setThemeColor,
-              onCustomTap: () async {
-                final next = await CustomThemeDialog.show(
-                  context: context,
-                  initial: customTheme,
-                );
-                if (next == null || !context.mounted) return;
-                setCustomTheme(next);
-                setThemeColor(AppThemeColor.custom);
-              },
-            ),
             SettingsToggleRow(
               label: context.t.strings.settings.preferences.haptics,
               value: devicePrefs.hapticsEnabled,
@@ -389,165 +347,6 @@ class PreferencesSettingsScreen extends ConsumerWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _ThemeColorRow extends StatelessWidget {
-  const _ThemeColorRow({
-    required this.label,
-    required this.selected,
-    required this.textMain,
-    required this.isDark,
-    required this.onSelect,
-    required this.onCustomTap,
-  });
-
-  final String label;
-  final AppThemeColor selected;
-  final Color textMain;
-  final bool isDark;
-  final ValueChanged<AppThemeColor> onSelect;
-  final VoidCallback onCustomTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final ringColor = textMain.withValues(alpha: isDark ? 0.28 : 0.18);
-
-    return PlatformListSectionRow(
-      title: Text(
-        label,
-        style: TextStyle(fontWeight: FontWeight.w600, color: textMain),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (final color in AppThemeColor.values) ...[
-            if (color == AppThemeColor.custom)
-              _CustomThemeColorDot(
-                selected: color == selected,
-                ringColor: ringColor,
-                onTap: onCustomTap,
-              )
-            else
-              _ThemeColorDot(
-                color: color,
-                selected: color == selected,
-                ringColor: ringColor,
-                onTap: () => onSelect(color),
-              ),
-            if (color != AppThemeColor.values.last) const SizedBox(width: 10),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _ThemeColorDot extends StatelessWidget {
-  const _ThemeColorDot({
-    required this.color,
-    required this.selected,
-    required this.ringColor,
-    required this.onTap,
-  });
-
-  final AppThemeColor color;
-  final bool selected;
-  final Color ringColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final spec = themeColorSpec(color);
-    final fill = spec.primary;
-    final size = 22.0;
-    final ringPadding = selected ? 2.0 : 0.0;
-
-    return Material(
-      color: Colors.transparent,
-      shape: const CircleBorder(),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: AnimatedContainer(
-          duration: AppMotion.effectiveDuration(context, AppMotion.fast),
-          curve: AppMotion.standardCurve,
-          padding: EdgeInsets.all(ringPadding),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: selected ? Border.all(color: ringColor, width: 1.4) : null,
-          ),
-          child: Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(color: fill, shape: BoxShape.circle),
-            child: selected
-                ? const Icon(Icons.check, size: 14, color: Colors.white)
-                : null,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomThemeColorDot extends StatelessWidget {
-  const _CustomThemeColorDot({
-    required this.selected,
-    required this.ringColor,
-    required this.onTap,
-  });
-
-  final bool selected;
-  final Color ringColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    const size = 22.0;
-    final ringPadding = selected ? 2.0 : 0.0;
-    const gradient = SweepGradient(
-      colors: [
-        Color(0xFFE55B5B),
-        Color(0xFFF2C879),
-        Color(0xFF7BB98A),
-        Color(0xFF5FB1C2),
-        Color(0xFF5E7CE0),
-        Color(0xFFB36BD3),
-        Color(0xFFE55B5B),
-      ],
-    );
-
-    return Material(
-      color: Colors.transparent,
-      shape: const CircleBorder(),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: AnimatedContainer(
-          duration: AppMotion.effectiveDuration(context, AppMotion.fast),
-          curve: AppMotion.standardCurve,
-          padding: EdgeInsets.all(ringPadding),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: selected ? Border.all(color: ringColor, width: 1.4) : null,
-          ),
-          child: Container(
-            width: size,
-            height: size,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: gradient,
-            ),
-            child: Icon(
-              selected ? Icons.check : Icons.add,
-              size: 14,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

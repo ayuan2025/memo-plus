@@ -23,7 +23,7 @@
 "sync.webdavBackup" = "WebDAV Backup";
 "sync.import" = "Import";
 "sync.export" = "Export";
-"sync.migration" = "MemoFlow Migration";
+"sync.migration" = "memo+ Migration";
 "import.file" = "Import File";
 "import.markdown" = "Import from Markdown";
 "import.flomo" = "Import from Flomo";

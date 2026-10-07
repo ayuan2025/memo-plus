@@ -47,7 +47,7 @@ onboarding:
   getStarted: "Loslegen"
 legalConsent:
   title: "Bitte zuerst zustimmen"
-  description: "Bevor du MemoFlow nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu."
+  description: "Bevor du memo+ nutzt, lies bitte die Nutzungsbedingungen und die Datenschutzerklaerung und stimme ihnen zu."
   linksHint: "Ueber die folgenden Links kannst du den vollstaendigen Text lesen."
   acknowledge: "Ich habe die Nutzungsbedingungen und die Datenschutzerklaerung gelesen und stimme ihnen zu"
   continueAction: "Zustimmen und fortfahren"
@@ -298,7 +298,7 @@ aiProxy:
   testFailure: "Connection failed: $message"
 
 legacy:
-  msg_memos_backend_docs: "MemoFlow-Backend-Dokumentation"
+  msg_memos_backend_docs: "memo+-Backend-Dokumentation"
   msg_remember_moment_feel_warmth_life_take: "Erinnere dich an den Moment und spüre die Wärme des Lebens.\\\\nMach jeden Tag eine kurze Rückschau."
   msg_sure_want_delete_shortcut: "Möchten Sie diese Verknüpfung wirklich löschen?"
   msg_scan_completed: "Scan abgeschlossen"
@@ -310,7 +310,7 @@ legacy:
   msg_version_description_v: "Version: v$version"
   msg_version_description_v_build: "Version: v$version ($build)"
   msg_about_website_link: "Offizielle Website"
-  msg_about_website_link_subtitle: "MemoFlow-Website besuchen"
+  msg_about_website_link_subtitle: "memo+-Website besuchen"
   msg_about_privacy_policy: "Datenschutzerklaerung"
   msg_about_privacy_policy_subtitle: "Datenschutz- und Datennutzung ansehen"
   msg_about_user_agreement: "Nutzungsbedingungen"
@@ -324,7 +324,7 @@ legacy:
   msg_status_available: "Verfuegbar"
   msg_status_placeholder: "Geplant"
   msg_debug_tap_logo_enter_debug_tools: "Debug: Logo 5-mal tippen, um Debug-Tools zu oeffnen"
-  msg_donors_intro_thanks: "Danke an alle, die MemoFlow unterstuetzen.\\nEure Spenden helfen bei Wartung und Weiterentwicklung.\\n\\nDie Liste findet ihr unten."
+  msg_donors_intro_thanks: "Danke an alle, die memo+ unterstuetzen.\\nEure Spenden helfen bei Wartung und Weiterentwicklung.\\n\\nDie Liste findet ihr unten."
   msg_enter_keywords_search_box_query_local: "Geben Sie Schlüsselwörter in das Suchfeld ein, um lokale Inhalte und Tags zu durchsuchen. Funktioniert offline; warten Sie bei der ersten Nutzung, bis die lokale Indizierung abgeschlossen ist."
   msg_memo_not_found_locally: "Memo lokal nicht gefunden"
   msg_token: "Token"
@@ -353,7 +353,7 @@ legacy:
   msg_request_cancelled: "Anfrage abgebrochen."
   msg_generating: "Wird generiert?"
   msg_permissions_denied_reminders_disabled: "Berechtigungen verweigert. Erinnerungen deaktiviert."
-  msg_memoflow_local_reminders: "MemoFlow lokale Erinnerungen"
+  msg_memoflow_local_reminders: "memo+ lokale Erinnerungen"
   msg_use_legacy_endpoints_older_memos_servers: "Verwenden Sie Legacy-Endpunkte (für ältere Memos-Server)."
   msg_no_comments_yet: "Noch keine Kommentare"
   msg_open: "Öffnen"
@@ -543,14 +543,14 @@ legacy:
   msg_recycle_bin: "Papierkorb"
   msg_unpin: "Lösen"
   msg_advanced_security: "Erweitert & Sicherheit"
-  msg_run_issues_memoflow_e_g_sync: "Wenn du in MemoFlow auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\\\n\\\\n"
+  msg_run_issues_memoflow_e_g_sync: "Wenn du in memo+ auf Probleme stößt (z. B. Synchronisierungsfehler, Abstürze), befolge bitte die folgenden Schritte, damit wir das Problem schneller diagnostizieren und beheben können.\\\\n\\\\n"
   msg_remove_all_reminder_times_memo: "Alle Erinnerungszeiten für dieses Memo entfernen."
   msg_no_summary_save: "Keine Zusammenfassung zum Speichern"
   msg_reset_language_selection: "Sprachauswahl zurücksetzen"
   msg_v_30_days: "30 Tage"
   msg_e_g_mood_check: "z. B. Stimmungscheck"
   msg_note_some_tokens_returned_only_once: "Hinweis: Einige Tokens werden nur einmal angezeigt. Bitte beim ersten Anzeigen sicher speichern."
-  msg_probe_memo_can_delete: "Diese Notiz wurde durch die MemoFlow API-Pruefung erstellt und kann sicher geloescht werden."
+  msg_probe_memo_can_delete: "Diese Notiz wurde durch die memo+ API-Pruefung erstellt und kann sicher geloescht werden."
   msg_syncing: "Synchronisierung läuft..."
   msg_retention: "Aufbewahrung"
   msg_open_login_screen: "Anmeldebildschirm öffnen"
@@ -599,7 +599,7 @@ legacy:
   msg_no_download_url_available: "Keine Download-URL verfügbar"
   msg_record_create_memos: "Aufnehmen, um Memos zu erstellen"
   msg_signing: "Anmeldung..."
-  msg_memoflow_uses_system_location_permission_get: "MemoFlow verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden."
+  msg_memoflow_uses_system_location_permission_get: "memo+ verwendet die Standortberechtigung des Systems, um Koordinaten zu erhalten, und führt die Reverse-Geokodierung über den gewählten Anbieter (z. B. Amap, Baidu oder Google) aus. Die Anzeigegenauigkeit kann oben gewählt werden."
   msg_continue: "Weiter"
   msg_notification_content_unavailable: "Benachrichtigungsinhalt nicht verfügbar"
   msg_unable_read_file_path: "Dateipfad kann nicht gelesen werden."
@@ -631,7 +631,7 @@ legacy:
   msg_after_confirming_support_unlock_limited_gold: "Nach bestätigter Unterstützung schalten Sie entweder ein zeitlich begrenztes Gold-Abzeichen oder ein dauerhaft werbefreies Versprechen frei (obwohl es nie Werbung gab)."
   msg_failed_open_system_settings: "Systemeinstellungen konnten nicht geöffnet werden"
   msg_no_mood_trend: "Kein Stimmungstrend"
-  msg_memoflow_export: "# MemoFlow-Export"
+  msg_memoflow_export: "# memo+-Export"
   msg_sync_queue: "Synchronisierungswarteschlange"
   msg_only_delete_sync_task_memo_kept: "Nur die Synchronisierungsaufgabe löschen; das Memo bleibt erhalten."
   msg_add_home_screen: "Zum Startbildschirm hinzufügen"
@@ -693,7 +693,7 @@ legacy:
   msg_view_imported_memos: "Importierte Memos anzeigen"
   msg_load_failed: "Laden fehlgeschlagen"
   msg_disk_content_conflicts_local_pending_changes: "Der Festplatteninhalt steht in Konflikt mit lokalen ausstehenden Änderungen. Verwende die Festplatte, um den lokalen Inhalt zu überschreiben."
-  msg_all_history_so_far_memoflow_since: "Das ist bisher die gesamte Chronik\\\\nMEMOFLOW SEIT 2023"
+  msg_all_history_so_far_memoflow_since: "Das ist bisher die gesamte Chronik\\\\nMEMO+ SEIT 2026"
   msg_cancelling: "Wird abgebrochen"
   msg_reading_file: "Datei wird gelesen..."
   msg_switch_workspace: "Arbeitsbereich wechseln"
@@ -737,7 +737,7 @@ legacy:
   msg_chinese_traditional: "Chinesisch (Traditionell)"
   msg_private_2: "Privat"
   msg_current_streak: "Aktuelle Serie"
-  msg_generated_ai_memoflow: "Erstellt von KI · MemoFlow"
+  msg_generated_ai_memoflow: "Erstellt von KI · memo+"
   msg_edit_completed: "Bearbeitung abgeschlossen"
   msg_local: "Lokal"
   msg_edit: "Bearbeiten"
@@ -785,13 +785,13 @@ legacy:
   msg_empty_content: "(Leerer Inhalt)"
   msg_note_most_features_offline_stats_ai: "Hinweis: Die meisten Funktionen (offline/Statistiken/KI-Berichte/Export) funktionieren ohne Backend-Änderungen, aber Token werden nur einmal zurückgegeben?bitte bewahren Sie sie sicher auf."
   msg_fixed: "Behoben: "
-  msg_allow_sharing_links_images_other_apps: "Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in MemoFlow."
+  msg_allow_sharing_links_images_other_apps: "Erlauben Sie das Teilen von Links oder Bildern aus anderen Apps in memo+."
   msg_invalid_request_parameters: "Ungültige Anfrageparameter"
   msg_enter_api_url: "Bitte API-URL eingeben"
   msg_pending: " (ausstehend $result_pendingCount)"
   msg_days_3: "$currentStreak Tage"
   msg_poster_not_ready_yet: "Poster ist noch nicht bereit"
-  msg_generated_memoflow: "Erstellt von MemoFlow"
+  msg_generated_memoflow: "Erstellt von memo+"
   msg_enter_name_2: "Geben Sie einen Namen ein"
   msg_version: "Version"
   msg_memo_missing_disk_but_has_local: "Das Memo fehlt auf der Festplatte, hat aber lokale ausstehende Änderungen. Verwenden Sie die Festplatte, um lokal zu löschen."
@@ -871,7 +871,7 @@ legacy:
   msg_feedback: "Feedback"
   msg_help_diagnostics: "Hilfe & Diagnose"
   msg_storage_space: "Speicherplatz"
-  msg_storage_space_subtitle: "Bekannte MemoFlow-Nutzung pruefen und Cache leeren."
+  msg_storage_space_subtitle: "Bekannte memo+-Nutzung pruefen und Cache leeren."
   msg_image_bed_2: "Bildspeicher"
   msg_image_compression: "Bildkomprimierung"
   msg_enable_image_compression: "Bildkomprimierung aktivieren"
@@ -1049,10 +1049,10 @@ legacy:
   msg_clear_media_cache_failed: "Mediencache-Bereinigung fehlgeschlagen"
   msg_clear_media_cache_partial_failure: "Mediencache-Bereinigung teilweise abgeschlossen"
   msg_self_repair_failed: "Selbstreparatur fehlgeschlagen: $e"
-  msg_memoflow_known_usage: "Bekannte MemoFlow-Nutzung"
-  msg_storage_device_capacity_unavailable: "Geraetekapazitaet ist nicht verfuegbar. MemoFlow-Nutzung und Kategorien werden weiter angezeigt."
-  msg_storage_memoflow_device_usage_less_than_one_percent: "MemoFlow nutzt weniger als 1% der Geraetekapazitaet"
-  msg_storage_memoflow_device_usage_percent: "MemoFlow nutzt $percent% der Geraetekapazitaet"
+  msg_memoflow_known_usage: "Bekannte memo+-Nutzung"
+  msg_storage_device_capacity_unavailable: "Geraetekapazitaet ist nicht verfuegbar. memo+-Nutzung und Kategorien werden weiter angezeigt."
+  msg_storage_memoflow_device_usage_less_than_one_percent: "memo+ nutzt weniger als 1% der Geraetekapazitaet"
+  msg_storage_memoflow_device_usage_percent: "memo+ nutzt $percent% der Geraetekapazitaet"
   msg_storage_cache: "Cache"
   msg_storage_note_content: "Notizinhalt"
   msg_storage_note_images: "Notizbilder"
@@ -1237,7 +1237,7 @@ legacy:
   msg_log_file_created: "Protokolle exportiert"
   msg_delete_sync_task: "Synchronisierungsaufgabe löschen"
   msg_include_archived_2: "- Archivierte einschließen"
-  msg_memoflow_side_project_i_build_my: "MemoFlow ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen "
+  msg_memoflow_side_project_i_build_my: "memo+ ist ein Nebenprojekt, das ich in meiner Freizeit entwickle. Ich habe bis spät in die Nacht Bugs behoben und könnte wirklich einen Iced Americano gebrauchen. Deine Unterstützung lädt meine Batterie wieder auf und hilft dabei, neue Funktionen zu veröffentlichen "
   msg_failed_generate: "Generierung fehlgeschlagen: $e"
   msg_search_logs: "Protokolle durchsuchen"
   msg_active_days: "Aktive Tage"
@@ -1359,7 +1359,7 @@ legacy:
   msg_permissions_system_settings: "Berechtigungen & Systemeinstellungen"
   msg_waiting_tasks_stop: "Warten, bis Aufgaben beendet sind"
   msg_done_2: "Fertig"
-  msg_parsing_memoflow_export: "MemoFlow-Export wird analysiert..."
+  msg_parsing_memoflow_export: "memo+-Export wird analysiert..."
   msg_location_updated: "Standort aktualisiert: $next_displayText_fractionDigits_6"
   msg_checking_server_version: "Serverversion wird überprüft..."
   msg_next_time_back_fixing_bugs: "👀 Nächstes Mal zurück zum Beheben von Fehlern"
@@ -1379,7 +1379,7 @@ legacy:
   msg_exit_app: "App beenden"
   msg_thanks_energy_fully_restored: "Danke! Energie vollständig wiederhergestellt ⚡"
   msg_connection_timeout_check_network_api_url: "Zeitüberschreitung bei der Verbindung. Überprüfe das Netzwerk oder die API-URL."
-  msg_bridge_component_title: "MemoFlow-Bridge"
+  msg_bridge_component_title: "memo+-Bridge"
   msg_bridge_component_desc: "Mit dem Obsidian-Plugin koppeln und lokal synchronisieren."
   msg_bridge_title: "Mit Obsidian verbinden"
   msg_bridge_local_mode_only: "Über das lokale Netzwerk mit Obsidian koppeln. Weitere Ziele können später folgen."
@@ -1651,7 +1651,7 @@ legacy:
   msg_restore_defaults: Standardeinstellungen wiederherstellen
   msg_restore_window: Wiederherstellen
   msg_save_failed_check_content_retry: Speichern fehlgeschlagen. Bitte überprüfen Sie den Inhalt und versuchen Sie es erneut.
-  msg_saved_to_memoflow: In MemoFlow gespeichert
+  msg_saved_to_memoflow: In memo+ gespeichert
   msg_screenshot_mode: Screenshot-Modus
   msg_screenshot_mode_detail: Blenden Sie Status-/Navigationsleisten für saubere Aufnahmen aus
   msg_select_file_save_location: Bitte wählen Sie einen Speicherort für die Datei aus.
@@ -1663,7 +1663,7 @@ legacy:
   msg_shortcuts_overview: Übersicht über die Verknüpfungen
   msg_shortcuts_overview_opened: Geöffnete Verknüpfungsübersicht.
   msg_shortcuts_supported_windows_macos: Nur Windows und macOS unterstützen Verknüpfungseinstellungen.
-  msg_show_hide_memoflow: MemoFlow ein-/ausblenden
+  msg_show_hide_memoflow: memo+ ein-/ausblenden
   msg_showing_last_lines: Zeigt die letzten $lines-Zeilen
   msg_source_value: 'Quelle: $source'
   msg_startup_slogan: Lassen Sie die Aufzeichnungen natürlich fließen
@@ -1696,7 +1696,7 @@ legacy:
   msg_template_variables: Vorlagenvariablen
   msg_time_format_variable: Zeitformat ({{time}})
   msg_todo: Todo
-  msg_toggle_memoflow_failed_with_error: 'Ein-/Ausblenden von MemoFlow fehlgeschlagen: $error'
+  msg_toggle_memoflow_failed_with_error: 'Ein-/Ausblenden von memo+ fehlgeschlagen: $error'
   msg_toggle_sidebar: Seitenleiste umschalten
   msg_total_characters_metric: Gesamtzahl der Zeichen
   msg_total_characters_short: Gesamtzahl der Zeichen

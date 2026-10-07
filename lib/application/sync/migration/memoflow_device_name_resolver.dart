@@ -23,6 +23,6 @@ class MemoFlowDeviceNameResolver {
     } catch (_) {}
     final fallback = Platform.localHostname.trim();
     if (fallback.isNotEmpty) return fallback;
-    return 'MemoFlow Device';
+    return 'memo+ Device';
   }
 }

@@ -18,7 +18,7 @@ void main() {
 
   setUpAll(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'dev.memoflow.test',
       version: '1.2.3',
       buildNumber: '4',
@@ -100,7 +100,7 @@ void main() {
       expect(find.text('Random Review'), findsWidgets);
       expect(find.text('Quick Input'), findsOneWidget);
       expect(find.text('Activity Heatmap'), findsOneWidget);
-      expect(find.text('MemoFlow | v1.2.3'), findsOneWidget);
+      expect(find.text('memo+ | v1.2.3'), findsOneWidget);
 
       debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
       await tester.tap(find.text('Add to Home Screen').first);

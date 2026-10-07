@@ -36,7 +36,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
     Win32Window::Size size(1360, 860);
     window.SetMinimumSize(Win32Window::Size(960, 640));
     RunnerLog("main_window_create_start");
-    if (!window.Create(L"MemoFlow", origin, size)) {
+    if (!window.Create(L"memo+", origin, size)) {
       RunnerLog("main_window_create_failed");
       exit_code = EXIT_FAILURE;
     } else {

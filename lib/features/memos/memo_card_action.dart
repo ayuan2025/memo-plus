@@ -9,6 +9,7 @@ enum MemoCardAction {
   archive,
   restore,
   delete,
+  beautifyPreview,
 }
 
 enum MemoSyncStatus { none, pending, failed }

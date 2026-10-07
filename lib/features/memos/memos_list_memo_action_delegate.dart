@@ -4,6 +4,7 @@ import '../../data/models/local_memo.dart';
 import '../../i18n/strings.g.dart';
 import 'memo_card_action.dart';
 import 'memo_time_adjustment_sheet.dart';
+import 'theme/memo_themed_preview_sheet.dart';
 import 'memo_task_list_service.dart';
 import 'memos_list_mutation_coordinator.dart';
 
@@ -222,6 +223,15 @@ class MemosListMemoActionDelegate {
         return;
       case MemoCardAction.restore:
         await restoreMemo(memo);
+        return;
+      case MemoCardAction.beautifyPreview:
+        final context = _contextResolver();
+        if (!context.mounted) return;
+        await MemoThemedPreviewSheet.show(
+          context,
+          content: memo.content,
+          time: memo.effectiveDisplayTime,
+        );
         return;
       case MemoCardAction.delete:
         await deleteMemo(memo);

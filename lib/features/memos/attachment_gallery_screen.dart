@@ -19,6 +19,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../core/app_localization.dart';
 import '../../core/desktop/desktop_titlebar_navigation_policy.dart';
 import '../../core/image_formats.dart';
 import '../../core/image_error_logger.dart';
@@ -30,6 +31,7 @@ import '../../i18n/strings.g.dart';
 import '../../state/system/scene_micro_guide_provider.dart';
 import '../image_preview/image_preview_item.dart';
 import '../image_preview/image_preview_open_request.dart';
+import '../image_preview/image_quarter_turn.dart';
 import '../image_preview/widgets/_image_preview_desktop_frame.dart';
 import '../image_preview/widgets/_image_preview_progressive_raster.dart';
 import '../image_preview/widgets/_image_preview_zoomable_viewport.dart';
@@ -384,7 +386,7 @@ class AttachmentGalleryScreen extends ConsumerStatefulWidget {
     this.items,
     this.onReplace,
     this.enableDownload = true,
-    this.albumName = 'MemoFlow',
+    this.albumName = 'memo+',
     @visibleForTesting this.isDesktopOverride,
   });
 
@@ -409,7 +411,18 @@ class _AttachmentGalleryScreenState
 
   late final PageController _controller;
   late final FocusNode _focusNode;
-  late final List<AttachmentGalleryItem> _items;
+
+  /// The items on screen, replaced wholesale when a turn or an edit produces a
+  /// new file for one of them.
+  ///
+  /// Grown from a `final` list on purpose: a replace writes a *new* file, and
+  /// an immutable list keeps pointing at the old one, so the stored picture was
+  /// turned while the screen still showed it the other way up.
+  late List<AttachmentGalleryItem> _items;
+
+  /// Bumped after every replace and mixed into the picture's widget key, so the
+  /// frame decoded for the previous file cannot survive the swap.
+  int _replaceTick = 0;
   int _index = 0;
   bool _busy = false;
   final Set<int> _zoomedImageIndexes = <int>{};
@@ -432,9 +445,9 @@ class _AttachmentGalleryScreenState
   void initState() {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'attachment_gallery');
-    _items =
-        widget.items ??
-        widget.images.map(AttachmentGalleryItem.image).toList(growable: false);
+    _items = (widget.items ??
+            widget.images.map(AttachmentGalleryItem.image).toList())
+        .toList();
     final safeIndex = _items.isEmpty
         ? 0
         : widget.initialIndex.clamp(0, _items.length - 1);
@@ -784,9 +797,9 @@ class _AttachmentGalleryScreenState
 
   String _safeBaseName(String raw) {
     final trimmed = raw.trim();
-    if (trimmed.isEmpty) return 'MemoFlow';
+    if (trimmed.isEmpty) return 'memo+';
     final base = p.basenameWithoutExtension(trimmed);
-    if (base.trim().isEmpty) return 'MemoFlow';
+    if (base.trim().isEmpty) return 'memo+';
     return base.replaceAll(RegExp(r'[<>:"/\\\\|?*]'), '_');
   }
 
@@ -1136,6 +1149,84 @@ class _AttachmentGalleryScreenState
     await widget.onReplace?.call(result);
   }
 
+  /// Turns the shown image a quarter turn clockwise, in place.
+  ///
+  /// The same replace pipeline the editor uses: the turned bytes become a new
+  /// file and the attachment is swapped for it, so the turn is stored and
+  /// synced like any other edit. The item on screen is swapped to match (see
+  /// [_items]) — without that the stored file was turned while the screen kept
+  /// showing the old orientation.
+  Future<void> _rotateCurrent() async {
+    final source = _currentImage;
+    if (source == null || _busy || widget.onReplace == null) {
+      return;
+    }
+    if (shouldUseSvgRenderer(
+      url: source.localFile?.path ?? source.imageUrl ?? '',
+      mimeType: source.mimeType,
+    )) {
+      return;
+    }
+    // Taken before the first await so that nothing has to reach back through
+    // an async gap for a piece of text.
+    final turnedMessage = context.tr(
+      zh: '已顺时针旋转 90°',
+      en: 'Turned 90° clockwise',
+    );
+    final failedMessage = context.tr(
+      zh: '旋转失败，请稍后再试',
+      en: 'Could not turn this image',
+    );
+    setState(() => _busy = true);
+    EditedImageResult? turned;
+    try {
+      final bytes = await _loadBytes(source);
+      if (bytes != null) {
+        final rotated = await compute(rotateImageQuarterTurn, (bytes, 90));
+        if (rotated != null) {
+          turned = await _persistEditedImage(source, rotated);
+        }
+      }
+    } catch (error) {
+      turned = null;
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() => _busy = false);
+    if (turned == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(failedMessage)),
+      );
+      return;
+    }
+    await widget.onReplace?.call(turned);
+    if (!mounted) {
+      return;
+    }
+    // The id is kept: it is what the size lookups, the render-mode log and the
+    // saved zoom recognise the picture by. The tick in the widget key is what
+    // makes the new bytes get decoded.
+    final replaced = AttachmentImageSource(
+      id: source.id,
+      title: turned.filename,
+      mimeType: turned.mimeType,
+      localFile: File(turned.filePath),
+      width: source.width,
+      height: source.height,
+    );
+    setState(() {
+      _items = <AttachmentGalleryItem>[
+        for (final entry in _items)
+          if (entry.isImage && entry.image!.id == source.id)
+            AttachmentGalleryItem.image(replaced)
+          else entry,
+      ];
+      _replaceTick++;
+    });
+    showTopToast(context, turnedMessage);
+  }
+
   void _openVideo(MemoVideoEntry entry) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -1200,6 +1291,10 @@ class _AttachmentGalleryScreenState
       }
       if (preferDirectRender) {
         return Image(
+          // A turned or edited picture is a new file; without a fresh key this
+          // widget is the same one as before and the frame already decoded
+          // stays on screen. The key is what makes the reload happen.
+          key: Key('attachment_gallery_local_${source.id}#$_replaceTick'),
           image: FileImage(file),
           fit: BoxFit.contain,
           filterQuality: FilterQuality.medium,
@@ -1230,6 +1325,9 @@ class _AttachmentGalleryScreenState
         );
       }
       return ImagePreviewProgressiveRaster(
+        // See the note on the direct-render branch above: a replaced picture
+        // has to become a different widget for the new bytes to be decoded.
+        key: Key('attachment_gallery_raster_${source.id}#$_replaceTick'),
         debugTag: source.id,
         lowResImage: ResizeImage.resizeIfNeeded(
           previewCacheWidth,
@@ -1333,6 +1431,9 @@ class _AttachmentGalleryScreenState
         );
       }
       return ImagePreviewProgressiveRaster(
+        // See the note on the direct-render branch above: a replaced picture
+        // has to become a different widget for the new bytes to be decoded.
+        key: Key('attachment_gallery_raster_${source.id}#$_replaceTick'),
         debugTag: source.id,
         lowResImage: CachedNetworkImageProvider(
           url,
@@ -1531,7 +1632,9 @@ class _AttachmentGalleryScreenState
                             preferDirectRender: preferDirectRender,
                           )
                   : SizedBox(
-                      key: Key('attachment_gallery_display_box_${source.id}'),
+                      key: Key(
+                        'attachment_gallery_display_box_${source.id}#$_replaceTick',
+                      ),
                       width: displaySize.width,
                       height: displaySize.height,
                       child: shouldWaitForIntrinsicSize
@@ -1700,7 +1803,16 @@ class _AttachmentGalleryScreenState
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (canEdit)
+                      if (canEdit) ...[
+                        _actionButton(
+                          onTap: _rotateCurrent,
+                          child: const Icon(
+                            Icons.rotate_90_degrees_cw_rounded,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
                         _actionButton(
                           onTap: _editCurrent,
                           child: const Icon(
@@ -1709,6 +1821,7 @@ class _AttachmentGalleryScreenState
                             size: 22,
                           ),
                         ),
+                      ],
                       if (canEdit && canDownload) const SizedBox(width: 12),
                       if (canDownload)
                         _actionButton(

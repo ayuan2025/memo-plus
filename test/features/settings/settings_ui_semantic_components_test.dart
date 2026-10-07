@@ -101,7 +101,7 @@ void main() {
             children: [
               SettingsHomeProfileEntry(
                 avatar: const CircleAvatar(child: Icon(Icons.person)),
-                name: 'MemoFlow',
+                name: 'memo+',
                 subtitle: 'Capture every moment',
                 onTap: () {},
               ),

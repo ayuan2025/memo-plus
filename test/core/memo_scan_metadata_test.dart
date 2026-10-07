@@ -206,4 +206,37 @@ void main() {
       );
     });
   });
+
+  group('appendScanTag', () {
+    test('adds the tag to the line the other tags are on', () {
+      expect(
+        appendScanTag('# 发票\n\n#2026\n\n可见正文', '发票'),
+        '# 发票\n\n#2026 #发票\n\n可见正文',
+      );
+    });
+
+    test('starts a tag line under the title when there is none', () {
+      expect(appendScanTag('# 发票\n\n可见正文', '发票'), '# 发票\n\n#发票\n\n可见正文');
+    });
+
+    test('leaves the content alone when the tag is there already', () {
+      const content = '# 某某\n\n#发票 #2026\n\n可见正文';
+      expect(appendScanTag(content, '发票'), content);
+    });
+
+    test('does not invent a heading for a note that has none', () {
+      const content = '随手记的一行字';
+      expect(appendScanTag(content, '发票'), content);
+    });
+
+    test('drops the trimmings a tag name may arrive with', () {
+      expect(appendScanTag('# 某某\n\n#2026', ' #发票 '), '# 某某\n\n#2026 #发票');
+      expect(appendScanTag('# 某某', ''), '# 某某');
+    });
+
+    test('never touches the hidden OCR block', () {
+      final content = withHiddenScanOcr('# 扫描件', '原文');
+      expect(appendScanTag(content, '身份证'), contains('<!--scan-ocr\n原文\n-->'));
+    });
+  });
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/app_version.dart';
 import '../../core/memoflow_palette.dart';
 import '../../data/updates/update_config.dart';
 import '../../application/desktop/desktop_exit_coordinator.dart';
@@ -415,26 +416,5 @@ class _ReleaseNoteRow extends StatelessWidget {
   }
 }
 
-List<int> _parseVersionTriplet(String version) {
-  if (version.trim().isEmpty) return const [0, 0, 0];
-  final trimmed = version.split(RegExp(r'[-+]')).first;
-  final parts = trimmed.split('.');
-  final values = <int>[0, 0, 0];
-  for (var i = 0; i < 3; i++) {
-    if (i >= parts.length) break;
-    final match = RegExp(r'\d+').firstMatch(parts[i]);
-    if (match == null) continue;
-    values[i] = int.tryParse(match.group(0) ?? '') ?? 0;
-  }
-  return values;
-}
-
-int _compareVersionTriplets(String a, String b) {
-  final left = _parseVersionTriplet(a);
-  final right = _parseVersionTriplet(b);
-  for (var i = 0; i < 3; i++) {
-    final diff = left[i] - right[i];
-    if (diff != 0) return diff;
-  }
-  return 0;
-}
+int _compareVersionTriplets(String a, String b) =>
+    compareVersionTriplets(a, b);

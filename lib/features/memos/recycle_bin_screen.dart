@@ -100,6 +100,15 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
     );
   }
 
+  /// Which recycle bin action is running right now, or null when idle.
+  ///
+  /// Restoring copies attachments back out of the recycle directory, and
+  /// clearing or expiring deletes those very files; a second action started
+  /// while the first is still running works on what the first one is halfway
+  /// through with. The service queues them now — this keeps a second press
+  /// from being started at all, which is the half a queue cannot fix.
+  String? _busyAction;
+
   @override
   void initState() {
     super.initState();
@@ -153,6 +162,8 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
     );
 
     Future<void> handleRestore(RecycleBinItem item) async {
+      if (_busyAction != null) return;
+      setState(() => _busyAction = 'restore:${item.id}');
       try {
         await service.restoreRecycleBinItem(item);
         if (!mounted) return;
@@ -166,10 +177,14 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
             content: Text(context.t.strings.legacy.msg_restore_failed(e: e)),
           ),
         );
+      } finally {
+        if (mounted) setState(() => _busyAction = null);
       }
     }
 
     Future<void> handleDelete(RecycleBinItem item) async {
+      if (_busyAction != null) return;
+      setState(() => _busyAction = 'delete:${item.id}');
       try {
         await service.deleteRecycleBinItem(item);
       } catch (e) {
@@ -179,6 +194,8 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
             content: Text(context.t.strings.legacy.msg_delete_failed(e: e)),
           ),
         );
+      } finally {
+        if (mounted) setState(() => _busyAction = null);
       }
     }
 
@@ -191,6 +208,7 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
     }
 
     Future<void> handleClearAll() async {
+      if (_busyAction != null) return;
       final confirmed =
           await showDialog<bool>(
             context: context,
@@ -213,6 +231,7 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
           ) ??
           false;
       if (!confirmed) return;
+      setState(() => _busyAction = 'clear');
       try {
         await service.clearRecycleBin();
       } catch (e) {
@@ -222,6 +241,8 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
             content: Text(context.t.strings.legacy.msg_delete_failed(e: e)),
           ),
         );
+      } finally {
+        if (mounted) setState(() => _busyAction = null);
       }
     }
 
@@ -254,25 +275,34 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
               subtitle: Text('$deletedLabel  |  $expireLabel'),
-              trailing: PopupMenuButton<String>(
-                onSelected: (value) {
-                  if (value == 'restore') {
-                    unawaited(handleRestore(item));
-                  } else if (value == 'delete') {
-                    unawaited(handleDelete(item));
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem<String>(
-                    value: 'restore',
-                    child: Text(context.t.strings.legacy.msg_restore),
-                  ),
-                  PopupMenuItem<String>(
-                    value: 'delete',
-                    child: Text(context.t.strings.legacy.msg_delete),
-                  ),
-                ],
-              ),
+              trailing: _busyAction != null
+                  ? const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    )
+                  : PopupMenuButton<String>(
+                      onSelected: (value) {
+                        if (value == 'restore') {
+                          unawaited(handleRestore(item));
+                        } else if (value == 'delete') {
+                          unawaited(handleDelete(item));
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem<String>(
+                          value: 'restore',
+                          child: Text(context.t.strings.legacy.msg_restore),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'delete',
+                          child: Text(context.t.strings.legacy.msg_delete),
+                        ),
+                      ],
+                    ),
             );
           },
         );
@@ -301,7 +331,7 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
           if ((asyncItems.valueOrNull ?? const <RecycleBinItem>[]).isNotEmpty)
             IconButton(
               tooltip: context.t.strings.legacy.msg_clear,
-              onPressed: handleClearAll,
+              onPressed: _busyAction == null ? handleClearAll : null,
               icon: const Icon(Icons.delete_sweep_outlined),
             ),
         ],
@@ -342,7 +372,7 @@ class _RecycleBinScreenState extends ConsumerState<RecycleBinScreen> {
                   .isNotEmpty)
                 IconButton(
                   tooltip: context.t.strings.legacy.msg_clear,
-                  onPressed: handleClearAll,
+                  onPressed: _busyAction == null ? handleClearAll : null,
                   icon: const Icon(Icons.delete_sweep_outlined),
                 ),
             ],

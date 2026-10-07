@@ -15,6 +15,7 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 
 import 'models/quad.dart';
+import 'deskew.dart' show deskewPage;
 import 'perspective_crop.dart' show warpToPage;
 
 /// Long edge, in pixels, a stored page is capped at. 2400px is ~200 DPI across
@@ -78,7 +79,15 @@ ScannedPage renderScannedPage(
       page = warpToPage(decoded, quad, maxEdge: maxEdge);
     }
     final cropped = page != null;
-    page ??= fitToMaxEdge(decoded, maxEdge);
+    if (!cropped) {
+      // A page that passes through whole — a gallery import, a screenshot —
+      // carries whatever tilt it was trimmed with. Warping would straighten it
+      // but also resample it against some guessed rectangle; a projection
+      // sweep finds the text's own angle instead and turns just that much.
+      // Pages already upright come back untouched, and a page on its side is
+      // left for the orientation step, which reads the text to decide.
+      page = deskewPage(fitToMaxEdge(decoded, maxEdge));
+    }
 
     return (
       bytes: img.encodeJpg(page, quality: quality),

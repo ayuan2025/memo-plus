@@ -30,11 +30,19 @@ class LocalDocumentTextService {
   /// is already cropped to the paper and capped in size, which is both a better
   /// input and a smaller one to decode.
   Future<String?> readText(Uint8List imageBytes) async {
-    if (!isSupported || imageBytes.isEmpty) return null;
+    final recognized = await readRecognized(imageBytes);
+    return recognized?.text;
+  }
 
-    // The Android side of the plugin takes a path rather than bytes, and
-    // staging the page is cheaper than decoding it once more just to build the
-    // metadata object the bytes constructor would demand.
+  /// The full recognition result for the page in [imageBytes] — text plus the
+  /// per-line geometry (corner points) the orientation detector reads — or
+  /// null when nothing could be recognised.
+  ///
+  /// Same staging as [readText]: the Android side of the plugin takes a path
+  /// rather than bytes, and staging the page is cheaper than decoding it once
+  /// more just to build the metadata object the bytes constructor would demand.
+  Future<RecognizedText?> readRecognized(Uint8List imageBytes) async {
+    if (!isSupported || imageBytes.isEmpty) return null;
     Directory? staging;
     TextRecognizer? recognizer;
     try {
@@ -43,10 +51,9 @@ class LocalDocumentTextService {
       await page.writeAsBytes(imageBytes, flush: true);
 
       recognizer = TextRecognizer(script: TextRecognitionScript.chinese);
-      final recognized = await recognizer.processImage(
+      return await recognizer.processImage(
         InputImage.fromFilePath(page.path),
       );
-      return recognized.text;
     } catch (error, stackTrace) {
       // A malformed page, a device without the model, an out-of-memory decode —
       // all of them mean the same thing to the user, and none of them should

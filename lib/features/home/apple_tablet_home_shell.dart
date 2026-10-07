@@ -285,7 +285,7 @@ class _AppleTabletSidebar extends StatelessWidget {
       children: [
         const SizedBox(height: 6),
         Text(
-          'MemoFlow',
+          'memo+',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: CupertinoTheme.of(

@@ -202,11 +202,8 @@ class _NoteInputSheetState extends ConsumerState<NoteInputSheet> {
   static const _fullscreenCloseButtonKey = ValueKey<String>(
     'note-input-fullscreen-close-button',
   );
-  static const _fullscreenTopToolbarKey = ValueKey<String>(
-    'note-input-fullscreen-top-toolbar-row',
-  );
-  static const _fullscreenBottomToolbarKey = ValueKey<String>(
-    'note-input-fullscreen-bottom-toolbar-row',
+  static const _fullscreenToolbarRowKey = ValueKey<String>(
+    'note-input-fullscreen-toolbar-row',
   );
   static const _fullscreenSendButtonKey = ValueKey<String>(
     'note-input-fullscreen-send-button',
@@ -2672,6 +2669,7 @@ class _NoteInputSheetState extends ConsumerState<NoteInputSheet> {
     return NoteInputFullscreenCompose(
       isDark: isDark,
       sheetColor: sheetColor,
+      toolbarRowKey: _fullscreenToolbarRowKey,
       chipBg: chipBg,
       chipText: chipText,
       chipDelete: chipDelete,
@@ -2704,8 +2702,6 @@ class _NoteInputSheetState extends ConsumerState<NoteInputSheet> {
           _visibleDeferredShareVideoTasks.isNotEmpty,
       expandCollapseKey: _fullscreenCollapseButtonKey,
       closeKey: _fullscreenCloseButtonKey,
-      topToolbarKey: _fullscreenTopToolbarKey,
-      bottomToolbarKey: _fullscreenBottomToolbarKey,
       sendButtonKey: _fullscreenSendButtonKey,
       visibilityButtonKey: _visibilityMenuKey,
       onCollapse: _collapseFullscreenCompose,

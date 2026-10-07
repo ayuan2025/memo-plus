@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/app_localization.dart';
+import '../../core/app_version.dart';
 import '../../data/models/device_preferences.dart';
 import '../../data/updates/update_config.dart';
 import '../../state/memos/app_bootstrap_adapter_provider.dart';
@@ -93,29 +94,8 @@ class UpdateAnnouncementRunner {
     return _appVersionFuture ??= _fetchAppVersion();
   }
 
-  int _compareVersionTriplets(String remote, String local) {
-    final remoteParts = _parseVersionTriplet(remote);
-    final localParts = _parseVersionTriplet(local);
-    for (var i = 0; i < 3; i++) {
-      final diff = remoteParts[i].compareTo(localParts[i]);
-      if (diff != 0) return diff;
-    }
-    return 0;
-  }
-
-  List<int> _parseVersionTriplet(String version) {
-    if (version.trim().isEmpty) return const [0, 0, 0];
-    final trimmed = version.split(RegExp(r'[-+]')).first;
-    final parts = trimmed.split('.');
-    final values = <int>[0, 0, 0];
-    for (var i = 0; i < 3; i++) {
-      if (i >= parts.length) break;
-      final match = RegExp(r'\d+').firstMatch(parts[i]);
-      if (match == null) continue;
-      values[i] = int.tryParse(match.group(0) ?? '') ?? 0;
-    }
-    return values;
-  }
+  int _compareVersionTriplets(String remote, String local) =>
+      compareVersionTriplets(remote, local);
 
   Future<void> _maybeShowAnnouncements(WidgetRef ref) async {
     var version = await _resolveAppVersion();

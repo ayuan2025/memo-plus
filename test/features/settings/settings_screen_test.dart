@@ -89,7 +89,7 @@ void main() {
 
   setUpAll(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'dev.memoflow.test',
       version: '1.0.0',
       buildNumber: '1',
@@ -144,7 +144,7 @@ void main() {
     );
 
     expect(supportFinder, findsWidgets);
-    expect(find.text('Support MemoFlow'), findsOneWidget);
+    expect(find.text('Support memo+'), findsOneWidget);
     expect(find.byIcon(Icons.workspace_premium_rounded), findsNothing);
     expect(find.text('Private Entry'), findsNothing);
   });
@@ -289,14 +289,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(StorageSpaceScreen), findsOneWidget);
-    expect(find.text('MemoFlow known usage'), findsOneWidget);
+    expect(find.text('memo+ known usage'), findsOneWidget);
   });
 
-  testWidgets('settings home opens Support MemoFlow page', (tester) async {
+  testWidgets('settings home opens Support memo+ page', (tester) async {
     await tester.pumpWidget(buildTestApp());
     await tester.pumpAndSettle();
 
-    final supportFinder = find.text('Support MemoFlow');
+    final supportFinder = find.text('Support memo+');
     await tester.scrollUntilVisible(
       supportFinder,
       300,
@@ -320,12 +320,16 @@ void main() {
 
       expect(find.byType(SettingsPage), findsOneWidget);
       expect(find.byType(SettingsSection), findsOneWidget);
-      expect(find.byType(SettingsNavigationRow), findsNWidgets(7));
-      expect(find.text('MemoFlow'), findsOneWidget);
+      // 7 upstream entries + 手动「检查更新」这一行。更新检查必须是可点的入口：
+      // 启动自动检测有幂等锁，且用户点过「以后再说」会写 skipUpdateVersion——
+      // 没有手动入口，用户永远看不到新版本。
+      expect(find.byType(SettingsNavigationRow), findsNWidgets(8));
+      expect(find.text('memo+'), findsOneWidget);
       expect(find.text('Version: v1.0.0 (1)'), findsOneWidget);
       expect(find.text('Official Website'), findsOneWidget);
       expect(find.text('Release Notes'), findsOneWidget);
       expect(find.text('Contributors'), findsOneWidget);
+      expect(find.text('检查更新'), findsOneWidget);
     },
   );
 

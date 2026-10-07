@@ -47,7 +47,7 @@ onboarding:
   getStarted: Comece
 legalConsent:
   title: Revise os acordos
-  description: Antes de usar MemoFlow, leia e concorde com o Contrato do Usuário e a Política de Privacidade.
+  description: Antes de usar memo+, leia e concorde com o Contrato do Usuário e a Política de Privacidade.
   linksHint: Abra os documentos abaixo para revisar o texto completo.
   acknowledge: Li e concordo com o Contrato do Usuário e a Política de Privacidade
   continueAction: Concordar e continuar
@@ -324,7 +324,7 @@ legacy:
   msg_version_description_v: 'Versão: v$version'
   msg_version_description_v_build: 'Versão: v$version ($build)'
   msg_about_website_link: Site Oficial
-  msg_about_website_link_subtitle: Visite o site oficial do MemoFlow
+  msg_about_website_link_subtitle: Visite o site oficial do memo+
   msg_about_privacy_policy: Política de Privacidade
   msg_about_privacy_policy_subtitle: Ver detalhes de privacidade e uso de dados
   msg_about_user_agreement: Contrato do usuário
@@ -338,7 +338,7 @@ legacy:
   msg_status_available: Ao vivo
   msg_status_placeholder: Em breve
   msg_debug_tap_logo_enter_debug_tools: 'Depuração: Toque no logotipo 5 vezes para abrir as ferramentas de depuração'
-  msg_donors_intro_thanks: Obrigado a todos os usuários que apoiam o MemoFlow.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.
+  msg_donors_intro_thanks: Obrigado a todos os usuários que apoiam o memo+.\nSuas doações nos ajudam a manter e melhorar o projeto.\n\nAgradecido abaixo.
   msg_enter_keywords_search_box_query_local: Insira palavras-chave na caixa de pesquisa para consultar conteúdo e tags locais. Funciona off-line; para o primeiro uso, aguarde até que a indexação local termine.
   msg_memo_not_found_locally: Memorando não encontrado localmente
   msg_token: Ficha
@@ -367,7 +367,7 @@ legacy:
   msg_request_cancelled: Solicitação cancelada.
   msg_generating: Gerando?
   msg_permissions_denied_reminders_disabled: Permissões negadas. Lembretes desativados.
-  msg_memoflow_local_reminders: Lembretes locais MemoFlow
+  msg_memoflow_local_reminders: Lembretes locais memo+
   msg_use_legacy_endpoints_older_memos_servers: Use endpoints legados (para servidores Memos mais antigos).
   msg_no_comments_yet: Ainda não há comentários
   msg_open: Aberto
@@ -558,14 +558,14 @@ legacy:
   msg_recycle_bin: Lixeira
   msg_unpin: Desafixar
   msg_advanced_security: Avançado e segurança
-  msg_run_issues_memoflow_e_g_sync: Se você tiver problemas no MemoFlow (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n
+  msg_run_issues_memoflow_e_g_sync: Se você tiver problemas no memo+ (por exemplo, falhas de sincronização, travamentos), siga as etapas abaixo para nos ajudar a diagnosticar e corrigir o problema mais rapidamente.\\n\\n
   msg_remove_all_reminder_times_memo: Remova todos os horários de lembrete deste memorando.
   msg_no_summary_save: Nenhum resumo para salvar
   msg_reset_language_selection: Redefinir seleção de idioma
   msg_v_30_days: 30 dias
   msg_e_g_mood_check: por exemplo Verificação de humor
   msg_note_some_tokens_returned_only_once: 'Dica: Alguns tokens são mostrados apenas uma vez. Salve-os com segurança quando forem exibidos pela primeira vez.'
-  msg_probe_memo_can_delete: Este memorando foi criado pelo probe MemoFlow API e pode ser excluído com segurança.
+  msg_probe_memo_can_delete: Este memorando foi criado pelo probe memo+ API e pode ser excluído com segurança.
   msg_syncing: Sincronizando...
   msg_retention: Retenção
   msg_open_login_screen: Abrir tela de login
@@ -611,7 +611,7 @@ legacy:
   msg_no_download_url_available: Nenhum download URL disponível
   msg_record_create_memos: Registro para criar memorandos
   msg_signing: Fazendo login...
-  msg_memoflow_uses_system_location_permission_get: MemoFlow usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.
+  msg_memoflow_uses_system_location_permission_get: memo+ usa permissão de localização do sistema para obter coordenadas e, em seguida, reverter geocódigos por meio do serviço do provedor selecionado (como Amap, Baidu ou Google). Você pode escolher a precisão da exibição acima.
   msg_continue: Continuar
   msg_notification_content_unavailable: Conteúdo da notificação indisponível
   msg_unable_read_file_path: Não foi possível ler o caminho do arquivo.
@@ -643,7 +643,7 @@ legacy:
   msg_after_confirming_support_unlock_limited_gold: Após confirmar o suporte, você desbloqueará um emblema dourado limitado ou uma promessa eterna de ausência de anúncios (embora nunca tenha havido anúncios).
   msg_failed_open_system_settings: Falha ao abrir as configurações do sistema
   msg_no_mood_trend: Sem tendência de humor
-  msg_memoflow_export: '#Exportação MemoFlow'
+  msg_memoflow_export: '#Exportação memo+'
   msg_sync_queue: Fila de sincronização
   msg_only_delete_sync_task_memo_kept: Exclua apenas a tarefa de sincronização; o memorando será mantido.
   msg_add_home_screen: Adicionar à tela inicial
@@ -705,7 +705,7 @@ legacy:
   msg_view_imported_memos: Ver memorandos importados
   msg_load_failed: Falha no carregamento
   msg_disk_content_conflicts_local_pending_changes: O conteúdo do disco entra em conflito com alterações locais pendentes. Use o disco para substituir o conteúdo local.
-  msg_all_history_so_far_memoflow_since: Essa é toda a história até agora\\nMEMOFLOW DESDE 2023
+  msg_all_history_so_far_memoflow_since: Essa é toda a história até agora\\nMEMO+ DESDE 2026
   msg_cancelling: Cancelando
   msg_reading_file: Lendo arquivo...
   msg_switch_workspace: Alternar espaço de trabalho
@@ -749,7 +749,7 @@ legacy:
   msg_chinese_traditional: Chinês (Tradicional)
   msg_private_2: Privado
   msg_current_streak: Sequência atual
-  msg_generated_ai_memoflow: Gerado por AI · MemoFlow
+  msg_generated_ai_memoflow: Gerado por AI · memo+
   msg_edit_completed: Edição concluída
   msg_local: Locais
   msg_edit: Editar
@@ -790,13 +790,13 @@ legacy:
   msg_empty_content: (conteúdo vazio)
   msg_note_most_features_offline_stats_ai: 'Observação: a maioria dos recursos (offline/estatísticas/relatórios AI/exportação) funcionam sem alterações de back-end, mas os tokens são retornados apenas uma vez? Mantenha-os seguros.'
   msg_fixed: 'Corrigido:'
-  msg_allow_sharing_links_images_other_apps: Permitir o compartilhamento de links ou imagens de outros aplicativos no MemoFlow.
+  msg_allow_sharing_links_images_other_apps: Permitir o compartilhamento de links ou imagens de outros aplicativos no memo+.
   msg_invalid_request_parameters: Parâmetros de solicitação inválidos
   msg_enter_api_url: Insira API URL
   msg_pending: (pendente $result_pendingCount)
   msg_days_3: $currentStreak dias
   msg_poster_not_ready_yet: O pôster ainda não está pronto
-  msg_generated_memoflow: Gerado por MemoFlow
+  msg_generated_memoflow: Gerado por memo+
   msg_enter_name_2: Insira um nome
   msg_version: Versão
   msg_memo_missing_disk_but_has_local: O memorando está faltando no disco, mas possui alterações locais pendentes. Use o disco para excluir localmente.
@@ -876,7 +876,7 @@ legacy:
   msg_feedback: Comentários
   msg_help_diagnostics: Ajuda e diagnostico
   msg_storage_space: Espaço de armazenamento
-  msg_storage_space_subtitle: Revise o uso conhecido do MemoFlow e limpe o cache.
+  msg_storage_space_subtitle: Revise o uso conhecido do memo+ e limpe o cache.
   msg_image_bed_2: Cama de imagem
   msg_image_compression: Compressão de imagem
   msg_enable_image_compression: Habilitar compactação de imagem
@@ -1054,10 +1054,10 @@ legacy:
   msg_clear_media_cache_failed: Falha ao limpar cache de midia
   msg_clear_media_cache_partial_failure: Limpeza do cache de midia parcialmente concluida
   msg_self_repair_failed: "Auto-reparo falhou: $e"
-  msg_memoflow_known_usage: Uso conhecido do MemoFlow
-  msg_storage_device_capacity_unavailable: A capacidade do dispositivo nao esta disponivel. O uso conhecido do MemoFlow e as categorias ainda sao mostrados.
-  msg_storage_memoflow_device_usage_less_than_one_percent: MemoFlow usa menos de 1% da capacidade do dispositivo
-  msg_storage_memoflow_device_usage_percent: MemoFlow usa $percent% da capacidade do dispositivo
+  msg_memoflow_known_usage: Uso conhecido do memo+
+  msg_storage_device_capacity_unavailable: A capacidade do dispositivo nao esta disponivel. O uso conhecido do memo+ e as categorias ainda sao mostrados.
+  msg_storage_memoflow_device_usage_less_than_one_percent: memo+ usa menos de 1% da capacidade do dispositivo
+  msg_storage_memoflow_device_usage_percent: memo+ usa $percent% da capacidade do dispositivo
   msg_storage_cache: Cache
   msg_storage_note_content: Conteudo das notas
   msg_storage_note_images: Imagens das notas
@@ -1242,7 +1242,7 @@ legacy:
   msg_log_file_created: Pacote de registros exportado
   msg_delete_sync_task: Excluir tarefa de sincronização
   msg_include_archived_2: '- Incluir arquivado'
-  msg_memoflow_side_project_i_build_my: MemoFlow é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos
+  msg_memoflow_side_project_i_build_my: memo+ é um projeto paralelo que construo em meu tempo livre. Fiquei acordado até tarde consertando bugs e realmente preciso de um Americano gelado. Seu suporte reabastece minha bateria e ajuda a lançar novos recursos
   msg_failed_generate: 'Falha ao gerar: $e'
   msg_search_logs: Registros de pesquisa
   msg_active_days: Dias ativos
@@ -1373,7 +1373,7 @@ legacy:
   msg_permissions_system_settings: Permissões e configurações do sistema
   msg_waiting_tasks_stop: Aguardando a interrupção das tarefas
   msg_done_2: Concluído
-  msg_parsing_memoflow_export: Analisando exportação MemoFlow...
+  msg_parsing_memoflow_export: Analisando exportação memo+...
   msg_location_updated: 'Localização atualizada: $next_displayText_fractionDigits_6'
   msg_checking_server_version: Verificando a versão do servidor...
   msg_next_time_back_fixing_bugs: 👀 Da próxima vez, voltando à correção de bugs
@@ -1394,14 +1394,14 @@ legacy:
   msg_thanks_energy_fully_restored: Obrigado! Energia totalmente restaurada ⚡
   msg_connection_timeout_check_network_api_url: Tempo limite de conexão. Verifique a rede ou API URL.
   msg_local_network_migration: Migração de rede local
-  msg_local_network_migration_desc: Use a migração de rede local para conectar dispositivos MemoFlow e ferramentas de anotações de terceiros em seu LAN. A migração MemoFlow e Obsidian são suportadas hoje.
+  msg_local_network_migration_desc: Use a migração de rede local para conectar dispositivos memo+ e ferramentas de anotações de terceiros em seu LAN. A migração memo+ e Obsidian são suportadas hoje.
   msg_connect_obsidian: Conectar Obsidiana
   msg_connect_obsidian_desc: Emparelhe e sincronize o conteúdo das notas com Obsidian em sua rede local.
   msg_local_network_migration_more_targets: Mais alvos, incluindo SiYuan e outras ferramentas de terceiros, serão adicionados aqui posteriormente.
-  msg_memoflow_migration: Migração MemoFlow
-  msg_memoflow_migration_target_desc: Migre notas e configurações do espaço de trabalho local para outro dispositivo MemoFlow pela sua rede local.
-  msg_memoflow_migration_targets_summary: MemoFlow / Obsidiana
-  msg_memoflow_migration_role_desc: Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o MemoFlow em primeiro plano durante a transferência.
+  msg_memoflow_migration: Migração memo+
+  msg_memoflow_migration_target_desc: Migre notas e configurações do espaço de trabalho local para outro dispositivo memo+ pela sua rede local.
+  msg_memoflow_migration_targets_summary: memo+ / Obsidiana
+  msg_memoflow_migration_role_desc: Escolha se este dispositivo envia ou recebe uma sessão única de migração local. Mantenha os dois dispositivos no mesmo LAN e mantenha o memo+ em primeiro plano durante a transferência.
   msg_memoflow_migration_sender: Eu sou o remetente
   msg_memoflow_migration_sender_desc: Escolha notas e configurações do espaço de trabalho local atual e conecte-se a um receptor próximo.
   msg_memoflow_migration_sender_only_local_mode: A função de remetente está disponível somente quando este dispositivo está usando um espaço de trabalho local.
@@ -1444,8 +1444,8 @@ legacy:
   msg_memoflow_migration_workspace_name: Espaço de trabalho
   msg_memoflow_migration_scan_title: Receptor de digitalização QR
   msg_memoflow_migration_scan_hint: Digitalize o código QR mostrado no dispositivo receptor.
-  msg_memoflow_migration_foreground_notice: Mantenha o MemoFlow em primeiro plano em ambos os dispositivos durante a migração.
-  msg_bridge_component_title: Ponte MemoFlow
+  msg_memoflow_migration_foreground_notice: Mantenha o memo+ em primeiro plano em ambos os dispositivos durante a migração.
+  msg_bridge_component_title: Ponte memo+
   msg_bridge_component_desc: Emparelhe com o plugin Obsidian para sincronização local.
   msg_bridge_title: Conectar Obsidiana
   msg_bridge_local_mode_only: Emparelhe com Obsidian em sua rede local. Outros alvos poderão surgir mais tarde.
@@ -1663,7 +1663,7 @@ legacy:
   msg_focus_input_area: Área de entrada de foco
   msg_toggle_sidebar: Alternar barra lateral
   msg_open_settings: Abrir configurações
-  msg_show_hide_memoflow: Mostrar/ocultar MemoFlow
+  msg_show_hide_memoflow: Mostrar/ocultar memo+
   msg_publish_memo: Publicar memorando
   msg_bold: Negrito
   msg_underline: Sublinhado
@@ -1775,12 +1775,12 @@ legacy:
   msg_save_failed_check_content_retry: Falha ao salvar. Verifique o conteúdo e tente novamente.
   msg_quick_input_channel_not_ready_retry: O canal de entrada rápida não está pronto. Por favor, reabra a janela principal e tente novamente.
   msg_visibility_value: 'Visibilidade: $value'
-  msg_saved_to_memoflow: Salvo em MemoFlow
+  msg_saved_to_memoflow: Salvo em memo+
   msg_quick_input_failed_with_error: 'Falha na entrada rápida: $error'
   msg_feature: Recurso
   msg_feature_not_implemented_placeholder_with_label: “$label” ainda não foi implementado (espaço reservado).
   msg_quick_input_save_failed_with_error: 'Falha ao salvar entrada rápida: $error'
-  msg_toggle_memoflow_failed_with_error: 'Falha ao mostrar/ocultar MemoFlow: $error'
+  msg_toggle_memoflow_failed_with_error: 'Falha ao mostrar/ocultar memo+: $error'
   msg_shortcuts_overview_opened: Visão geral dos atalhos abertos.
   msg_unsupported_version_value: 'Versão não suportada: $version'
   msg_version_probe_passed_with_version: Sondagem v$version aprovada

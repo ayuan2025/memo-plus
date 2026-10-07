@@ -1,5 +1,5 @@
 name: memos_flutter_app
-description: "A new Flutter project."
+description: "memo+ - a local-first note-taking app with document scanning, based on MemoFlow (GPL-3.0)."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -13,7 +13,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about Android versioning at https://developer.android.com/studio/publish/versioning
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.49+50
+version: 1.0.69+70
 
 environment:
   sdk: ^3.10.4

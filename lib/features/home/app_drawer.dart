@@ -262,7 +262,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ? account!.user.displayName
         : (account?.user.name.isNotEmpty ?? false)
         ? account!.user.name
-        : 'MemoFlow';
+        : 'memo+';
 
     final statsAsync = ref.watch(localStatsProvider);
     final tagsAsync = ref.watch(tagStatsProvider);

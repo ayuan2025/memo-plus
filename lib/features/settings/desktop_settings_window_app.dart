@@ -163,7 +163,7 @@ class DesktopSettingsWindowApp extends ConsumerWidget {
     return TranslationProvider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'MemoFlow Settings',
+        title: 'memo+ Settings',
         theme: _applyPreferencesToTheme(
           buildAppTheme(Brightness.light),
           devicePrefs,
@@ -1231,7 +1231,7 @@ class _DesktopSettingsWorkbenchState extends State<_DesktopSettingsWorkbench> {
         _DesktopPaneItem(
           pane: _DesktopSettingsPane.supportMemoFlow,
           icon: Icons.favorite_border,
-          label: context.tr(zh: '支持 MemoFlow', en: 'Support MemoFlow'),
+          label: context.tr(zh: '支持 memo+', en: 'Support memo+'),
         ),
       _DesktopPaneItem(
         pane: _DesktopSettingsPane.importExport,

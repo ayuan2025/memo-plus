@@ -297,7 +297,10 @@ mixin _WebDavBackupExportMixin on _WebDavBackupServiceBase {
             now,
             build.newObjectSizes,
           );
-          index = await _applyRetention(
+          // What retention drops is worked out here but nothing is deleted
+          // yet: the index is stored further down, and a connection lost in
+          // between must not leave it listing objects that are already gone.
+          final retentionPlan = await _planRetention(
             client: client,
             baseUrl: baseUrl,
             rootPath: rootPath,
@@ -306,6 +309,10 @@ mixin _WebDavBackupExportMixin on _WebDavBackupServiceBase {
             index: index,
             retention: settings.backupRetentionCount,
           );
+          final trimmedIndex = retentionPlan.index;
+          if (trimmedIndex != null) {
+            index = trimmedIndex;
+          }
 
           await _waitIfPaused();
           _updateProgress(
@@ -334,6 +341,13 @@ mixin _WebDavBackupExportMixin on _WebDavBackupServiceBase {
             accountId,
             masterKey,
             index,
+          );
+          await _applyRetention(
+            client: client,
+            baseUrl: baseUrl,
+            rootPath: rootPath,
+            accountId: accountId,
+            plan: retentionPlan,
           );
 
           uploadSuccessAt = DateTime.now();

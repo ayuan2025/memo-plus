@@ -244,7 +244,7 @@ class _StartupScreenState extends State<StartupScreen>
                     ),
                   SizedBox(height: widget.showSlogan ? textGap : 0),
                   Text(
-                    'MemoFlow',
+                    'memo+',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: primaryColor,

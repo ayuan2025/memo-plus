@@ -11,6 +11,7 @@ import '../../core/memo_relations.dart';
 import '../../core/memoflow_palette.dart';
 import '../../core/platform_layout.dart';
 import '../../core/top_toast.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/models/attachment.dart';
 import '../../data/models/local_memo.dart';
@@ -830,10 +831,8 @@ class _NotificationMemoCommentTileState
           : resolved;
     }
     if (baseUrl == null) return '';
-    final url = joinBaseUrl(
-      baseUrl,
-      'file/${attachment.name}/${attachment.filename}',
-    );
+    final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+    if (url == null) return '';
     return thumbnail ? appendThumbnailParam(url) : url;
   }
 

@@ -47,7 +47,7 @@ onboarding:
   getStarted: 시작하기
 legalConsent:
   title: 계약 검토
-  description: MemoFlow를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.
+  description: memo+를 사용하기 전에 사용자 계약 및 개인 정보 보호 정책을 읽고 동의하십시오.
   linksHint: 전체 내용을 검토하려면 아래 문서를 열어보세요.
   acknowledge: 나는 사용자 계약 및 개인 정보 보호 정책을 읽었으며 이에 동의합니다.
   continueAction: 동의하고 계속하세요
@@ -325,7 +325,7 @@ legacy:
   msg_version_description_v: '버전: v$version'
   msg_version_description_v_build: '버전: v$version ($build)'
   msg_about_website_link: 공식 홈페이지
-  msg_about_website_link_subtitle: MemoFlow 공식 웹사이트를 방문하세요
+  msg_about_website_link_subtitle: memo+ 공식 웹사이트를 방문하세요
   msg_about_privacy_policy: 개인 정보 보호 정책
   msg_about_privacy_policy_subtitle: 개인정보 보호 및 데이터 사용 세부정보 보기
   msg_about_user_agreement: 사용자 계약
@@ -339,7 +339,7 @@ legacy:
   msg_status_available: 살다
   msg_status_placeholder: 곧
   msg_debug_tap_logo_enter_debug_tools: '디버그: 로고를 5번 탭하면 디버그 도구가 열립니다.'
-  msg_donors_intro_thanks: MemoFlow를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.
+  msg_donors_intro_thanks: memo+를 지원하는 모든 사용자에게 감사드립니다.\n귀하의 기부는 프로젝트를 유지하고 개선하는 데 도움이 됩니다.\n\n아래에 확인되었습니다.
   msg_enter_keywords_search_box_query_local: 로컬 콘텐츠와 태그를 쿼리하려면 검색 상자에 키워드를 입력하세요. 오프라인으로 작동합니다. 처음 사용하려면 로컬 인덱싱이 완료될 때까지 기다리세요.
   msg_memo_not_found_locally: 로컬에서 메모를 찾을 수 없습니다.
   msg_token: 토큰
@@ -368,7 +368,7 @@ legacy:
   msg_request_cancelled: 요청이 취소되었습니다.
   msg_generating: 생성 중이신가요?
   msg_permissions_denied_reminders_disabled: 권한이 거부되었습니다. 알림이 비활성화되었습니다.
-  msg_memoflow_local_reminders: MemoFlow 지역 알림
+  msg_memoflow_local_reminders: memo+ 지역 알림
   msg_use_legacy_endpoints_older_memos_servers: 레거시 엔드포인트를 사용합니다(이전 Memos 서버의 경우).
   msg_no_comments_yet: 아직 댓글이 없습니다
   msg_open: 열려 있는
@@ -560,14 +560,14 @@ legacy:
   msg_recycle_bin: 휴지통
   msg_unpin: 고정 해제
   msg_advanced_security: 고급 및 보안
-  msg_run_issues_memoflow_e_g_sync: 'MemoFlow에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n'
+  msg_run_issues_memoflow_e_g_sync: 'memo+에서 문제가 발생하는 경우(예: 동기화 실패, 충돌) 아래 단계에 따라 문제를 더 빠르게 진단하고 해결할 수 있습니다.\\n\\n'
   msg_remove_all_reminder_times_memo: 이 메모의 모든 알림 시간을 삭제하세요.
   msg_no_summary_save: 저장할 요약이 없습니다.
   msg_reset_language_selection: 언어 선택 재설정
   msg_v_30_days: 30일
   msg_e_g_mood_check: 예를 들어 기분 체크
   msg_note_some_tokens_returned_only_once: '팁: 일부 토큰은 한 번만 표시됩니다. 처음 표시될 때 안전하게 저장하세요.'
-  msg_probe_memo_can_delete: 이 메모는 MemoFlow API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.
+  msg_probe_memo_can_delete: 이 메모는 memo+ API 프로브에 의해 생성되었으며 안전하게 삭제할 수 있습니다.
   msg_syncing: 동기화 중...
   msg_retention: 보유
   msg_open_login_screen: 로그인 화면 열기
@@ -613,7 +613,7 @@ legacy:
   msg_no_download_url_available: 다운로드 가능한 URL가 없습니다.
   msg_record_create_memos: 메모를 작성하려면 녹음하세요
   msg_signing: 로그인 중...
-  msg_memoflow_uses_system_location_permission_get: 'MemoFlow는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를
+  msg_memoflow_uses_system_location_permission_get: 'memo+는 시스템 위치 권한을 사용하여 좌표를 얻은 다음 선택한 공급자 서비스(예: Amap, Baidu 또는 Google)를
     통해 역지오코딩합니다. 위에서 표시 정밀도를 선택할 수 있습니다.'
   msg_continue: 계속하다
   msg_notification_content_unavailable: 알림 내용을 사용할 수 없습니다.
@@ -647,7 +647,7 @@ legacy:
   msg_after_confirming_support_unlock_limited_gold: 지원을 확인한 후 제한된 골드 배지를 잠금 해제하거나 영원히 광고 없는 약속을 받을 수 있습니다(광고는 없었지만).
   msg_failed_open_system_settings: 시스템 설정을 열지 못했습니다.
   msg_no_mood_trend: 기분 추세 없음
-  msg_memoflow_export: '# MemoFlow 내보내기'
+  msg_memoflow_export: '# memo+ 내보내기'
   msg_sync_queue: 동기화 대기열
   msg_only_delete_sync_task_memo_kept: 동기화 작업만 삭제하세요. 메모는 보관됩니다.
   msg_add_home_screen: 홈 화면에 추가
@@ -709,7 +709,7 @@ legacy:
   msg_view_imported_memos: 가져온 메모 보기
   msg_load_failed: 로드 실패
   msg_disk_content_conflicts_local_pending_changes: 디스크 내용이 로컬 보류 중인 변경 사항과 충돌합니다. 디스크를 사용하여 로컬 콘텐츠를 덮어씁니다.
-  msg_all_history_so_far_memoflow_since: 이것이 지금까지의 모든 기록입니다.\\n2023년 이후 MEMOFLOW
+  msg_all_history_so_far_memoflow_since: 이것이 지금까지의 모든 기록입니다.\\n2026년 이후 MEMO+
   msg_cancelling: 취소 중
   msg_reading_file: 파일을 읽는 중...
   msg_switch_workspace: 작업공간 전환
@@ -753,7 +753,7 @@ legacy:
   msg_chinese_traditional: 중국어(번체)
   msg_private_2: 사적인
   msg_current_streak: 현재 연속
-  msg_generated_ai_memoflow: AI · MemoFlow에 의해 생성됨
+  msg_generated_ai_memoflow: AI · memo+에 의해 생성됨
   msg_edit_completed: 수정 완료
   msg_local: 현지의
   msg_edit: 편집하다
@@ -795,13 +795,13 @@ legacy:
   msg_empty_content: (빈 콘텐츠)
   msg_note_most_features_offline_stats_ai: '참고: 대부분의 기능(오프라인/통계/AI 보고서/내보내기)은 백엔드 변경 없이 작동하지만 토큰은 한 번만 반환되므로 안전하게 보관하십시오.'
   msg_fixed: '결정된:'
-  msg_allow_sharing_links_images_other_apps: 다른 앱의 링크나 이미지를 MemoFlow로 공유하도록 허용합니다.
+  msg_allow_sharing_links_images_other_apps: 다른 앱의 링크나 이미지를 memo+로 공유하도록 허용합니다.
   msg_invalid_request_parameters: 잘못된 요청 매개변수
   msg_enter_api_url: API URL를 입력하세요.
   msg_pending: ($result_pendingCount 보류 중)
   msg_days_3: $currentStreak일
   msg_poster_not_ready_yet: 포스터가 아직 준비되지 않았습니다.
-  msg_generated_memoflow: MemoFlow에 의해 생성됨
+  msg_generated_memoflow: memo+에 의해 생성됨
   msg_enter_name_2: 이름을 입력하세요
   msg_version: 버전
   msg_memo_missing_disk_but_has_local: 메모가 디스크에 없지만 로컬에 보류 중인 변경 사항이 있습니다. 로컬에서 삭제하려면 디스크를 사용하세요.
@@ -881,7 +881,7 @@ legacy:
   msg_feedback: 피드백
   msg_help_diagnostics: 도움말 및 진단
   msg_storage_space: 저장 공간
-  msg_storage_space_subtitle: MemoFlow의 알려진 사용량을 확인하고 캐시를 지웁니다.
+  msg_storage_space_subtitle: memo+의 알려진 사용량을 확인하고 캐시를 지웁니다.
   msg_image_bed_2: 이미지베드
   msg_image_compression: 이미지 압축
   msg_enable_image_compression: 이미지 압축 활성화
@@ -1059,10 +1059,10 @@ legacy:
   msg_clear_media_cache_failed: "미디어 캐시 정리에 실패했습니다"
   msg_clear_media_cache_partial_failure: "미디어 캐시 정리가 일부 완료되었습니다"
   msg_self_repair_failed: "\uc790\uac00 \uc218\ub9ac \uc2e4\ud328: $e"
-  msg_memoflow_known_usage: MemoFlow 알려진 사용량
-  msg_storage_device_capacity_unavailable: 기기 용량을 사용할 수 없습니다. MemoFlow 알려진 사용량과 분류는 계속 표시됩니다.
-  msg_storage_memoflow_device_usage_less_than_one_percent: MemoFlow가 기기 용량의 1% 미만을 사용합니다
-  msg_storage_memoflow_device_usage_percent: MemoFlow가 기기 용량의 $percent%를 사용합니다
+  msg_memoflow_known_usage: memo+ 알려진 사용량
+  msg_storage_device_capacity_unavailable: 기기 용량을 사용할 수 없습니다. memo+ 알려진 사용량과 분류는 계속 표시됩니다.
+  msg_storage_memoflow_device_usage_less_than_one_percent: memo+가 기기 용량의 1% 미만을 사용합니다
+  msg_storage_memoflow_device_usage_percent: memo+가 기기 용량의 $percent%를 사용합니다
   msg_storage_cache: 캐시
   msg_storage_note_content: 노트 내용
   msg_storage_note_images: 노트 이미지
@@ -1250,7 +1250,7 @@ legacy:
   msg_log_file_created: 로그 번들을 내보냈습니다.
   msg_delete_sync_task: 동기화 작업 삭제
   msg_include_archived_2: '- 보관된 내용 포함'
-  msg_memoflow_side_project_i_build_my: MemoFlow는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에
+  msg_memoflow_side_project_i_build_my: memo+는 여가 시간에 만드는 사이드 프로젝트입니다. 늦게까지 버그를 고치느라 아이스 아메리카노가 정말 먹고 싶었습니다. 귀하의 지원은 배터리에
     활력을 불어넣고 새로운 기능 출시에 도움이 됩니다
   msg_failed_generate: '생성 실패: $e'
   msg_search_logs: 로그 검색
@@ -1382,7 +1382,7 @@ legacy:
   msg_permissions_system_settings: 권한 및 시스템 설정
   msg_waiting_tasks_stop: 작업이 중지되기를 기다리는 중
   msg_done_2: 완료
-  msg_parsing_memoflow_export: MemoFlow 내보내기 구문 분석 중...
+  msg_parsing_memoflow_export: memo+ 내보내기 구문 분석 중...
   msg_location_updated: '업데이트된 위치: $next_displayText_fractionDigits_6'
   msg_checking_server_version: 서버 버전 확인 중...
   msg_next_time_back_fixing_bugs: 🙌 다음에는 버그 수정으로 다시 돌아오겠습니다
@@ -1403,15 +1403,15 @@ legacy:
   msg_thanks_energy_fully_restored: 감사해요! 에너지가 완전히 회복되었습니다 ⚡
   msg_connection_timeout_check_network_api_url: 연결 시간이 초과되었습니다. 네트워크 또는 API URL를 확인하세요.
   msg_local_network_migration: 로컬 네트워크 마이그레이션
-  msg_local_network_migration_desc: 로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 MemoFlow 장치와 타사 메모 도구를 연결하세요. MemoFlow 마이그레이션 및 Obsidian은
+  msg_local_network_migration_desc: 로컬 네트워크 마이그레이션을 사용하여 LAN을 통해 memo+ 장치와 타사 메모 도구를 연결하세요. memo+ 마이그레이션 및 Obsidian은
     현재 지원됩니다.
   msg_connect_obsidian: 흑요석 연결
   msg_connect_obsidian_desc: 로컬 네트워크를 통해 Obsidian과 노트 콘텐츠를 페어링하고 동기화하세요.
   msg_local_network_migration_more_targets: 나중에 SiYuan 및 기타 타사 도구를 포함한 더 많은 대상이 여기에 추가될 예정입니다.
-  msg_memoflow_migration: MemoFlow 마이그레이션
-  msg_memoflow_migration_target_desc: 로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 MemoFlow 장치로 마이그레이션하세요.
-  msg_memoflow_migration_targets_summary: MemoFlow / 흑요석
-  msg_memoflow_migration_role_desc: 이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 MemoFlow를 포그라운드에 유지하세요.
+  msg_memoflow_migration: memo+ 마이그레이션
+  msg_memoflow_migration_target_desc: 로컬 네트워크를 통해 로컬 작업 공간 메모 및 설정을 다른 memo+ 장치로 마이그레이션하세요.
+  msg_memoflow_migration_targets_summary: memo+ / 흑요석
+  msg_memoflow_migration_role_desc: 이 기기가 일회성 로컬 마이그레이션 세션을 보낼지 받을지 선택하세요. 두 장치를 동일한 LAN에 유지하고 전송 중에 memo+를 포그라운드에 유지하세요.
   msg_memoflow_migration_sender: 나는 보낸 사람이다
   msg_memoflow_migration_sender_desc: 현재 로컬 작업 공간에서 메모와 설정을 선택한 다음 근처 수신기에 연결하세요.
   msg_memoflow_migration_sender_only_local_mode: 보낸 사람 역할은 이 장치가 로컬 작업 공간을 사용하는 경우에만 사용할 수 있습니다.
@@ -1454,8 +1454,8 @@ legacy:
   msg_memoflow_migration_workspace_name: 작업공간
   msg_memoflow_migration_scan_title: 스캔 수신기 QR
   msg_memoflow_migration_scan_hint: 수신 장치에 표시된 QR 코드를 스캔하세요.
-  msg_memoflow_migration_foreground_notice: 마이그레이션 중에 두 장치 모두에서 MemoFlow를 포그라운드로 유지합니다.
-  msg_bridge_component_title: MemoFlow 다리
+  msg_memoflow_migration_foreground_notice: 마이그레이션 중에 두 장치 모두에서 memo+를 포그라운드로 유지합니다.
+  msg_bridge_component_title: memo+ 다리
   msg_bridge_component_desc: 로컬 동기화를 위해 Obsidian 플러그인과 페어링하세요.
   msg_bridge_title: 흑요석 연결
   msg_bridge_local_mode_only: 로컬 네트워크를 통해 Obsidian과 페어링하세요. 나중에 다른 목표가 올 수도 있습니다.
@@ -1675,7 +1675,7 @@ legacy:
   msg_focus_input_area: 초점 입력 영역
   msg_toggle_sidebar: 사이드바 전환
   msg_open_settings: 설정 열기
-  msg_show_hide_memoflow: MemoFlow 표시 / 숨기기
+  msg_show_hide_memoflow: memo+ 표시 / 숨기기
   msg_publish_memo: 메모 게시
   msg_bold: 용감한
   msg_underline: 밑줄
@@ -1787,12 +1787,12 @@ legacy:
   msg_save_failed_check_content_retry: 저장에 실패했습니다. 내용을 확인하신 후 다시 시도해 주세요.
   msg_quick_input_channel_not_ready_retry: 빠른 입력 채널이 준비되지 않았습니다. 기본 창을 다시 열고 다시 시도해 주세요.
   msg_visibility_value: '가시성 : $value'
-  msg_saved_to_memoflow: MemoFlow에 저장되었습니다.
+  msg_saved_to_memoflow: memo+에 저장되었습니다.
   msg_quick_input_failed_with_error: '빠른 입력 실패: $error'
   msg_feature: 특징
   msg_feature_not_implemented_placeholder_with_label: '"$label"는 아직 구현되지 않았습니다(자리 표시자).'
   msg_quick_input_save_failed_with_error: '빠른 입력 저장 실패: $error'
-  msg_toggle_memoflow_failed_with_error: 'MemoFlow 표시/숨기기 실패: $error'
+  msg_toggle_memoflow_failed_with_error: 'memo+ 표시/숨기기 실패: $error'
   msg_shortcuts_overview_opened: 바로가기 개요를 열었습니다.
   msg_unsupported_version_value: '지원되지 않는 버전: $version'
   msg_version_probe_passed_with_version: v$version 프로브 통과

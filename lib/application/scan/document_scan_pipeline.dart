@@ -18,6 +18,7 @@ class ScanBoundaryDetection {
     required this.imageWidth,
     required this.imageHeight,
     required this.quad,
+    this.fullPageReason,
   });
 
   /// Size of the capture the quad is expressed in — always known, even when no
@@ -27,10 +28,21 @@ class ScanBoundaryDetection {
   final int imageHeight;
 
   /// The detected boundary in the capture's pixel coordinates, or null when the
-  /// detector ran but found nothing.
+  /// detector ran and found nothing it trusted.
   final Quad? quad;
 
+  /// Set when [quad] is the whole frame because the capture already *is* the
+  /// page — an import from the gallery, a screenshot, anything trimmed
+  /// elsewhere. Detection looks for a paper edge against its surroundings, and
+  /// an already-trimmed page has none: the strongest rectangle in it is some
+  /// block of its own content, and cutting to that would lose everything
+  /// around it.
+  final FullPageReason? fullPageReason;
+
   bool get found => quad != null;
+
+  /// Whether the capture is being passed through without a crop.
+  bool get isFullPage => fullPageReason != null;
 }
 
 /// Looks for a document boundary in the encoded capture [encoded].
@@ -44,17 +56,28 @@ class ScanBoundaryDetection {
 Future<ScanBoundaryDetection?> detectScanBoundary(Uint8List encoded) async {
   final result = await compute(detectDocumentInBytes, encoded);
   return switch (result) {
-    DetectionSuccess(:final quad, :final imageWidth, :final imageHeight) =>
+    DetectionSuccess(
+      :final quad,
+      :final imageWidth,
+      :final imageHeight,
+      :final fullPageReason,
+    ) =>
       ScanBoundaryDetection(
         imageWidth: imageWidth,
         imageHeight: imageHeight,
         quad: quad,
+        fullPageReason: fullPageReason,
       ),
-    DetectionNotFound(:final imageWidth, :final imageHeight) =>
+    DetectionNotFound(
+      :final imageWidth,
+      :final imageHeight,
+      :final fullPageReason,
+    ) =>
       ScanBoundaryDetection(
         imageWidth: imageWidth,
         imageHeight: imageHeight,
         quad: null,
+        fullPageReason: fullPageReason,
       ),
     DetectionFailure() => null,
   };

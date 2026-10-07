@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/scan/document_scan_pipeline.dart';
 import '../../core/app_localization.dart';
 import '../../core/scan/document_scan.dart';
+import '../../core/scan_document_kind.dart' show ScanLabelLanguage;
 import '../../data/ai/ai_scan_metadata_service.dart';
 import '../../state/scan/scan_metadata_provider.dart';
 import '../../state/settings/ai_settings_provider.dart';
@@ -107,6 +109,10 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
   bool _detecting = true;
   bool _autoDetected = false;
   bool _saving = false;
+
+  /// Why this capture is being handed through without a crop, or null when it
+  /// really was cut to a boundary. See [FullPageReason].
+  FullPageReason? _fullPageReason;
   int? _activeCorner;
 
   /// Whether the preview shows the raw capture with draggable corners rather
@@ -121,6 +127,21 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
 
   String _filterName = defaultDocumentFilter.name;
   int _quarterTurns = 0;
+
+  /// Quarter turns baked into [_pageBytes].
+  ///
+  /// Kept next to [_quarterTurns] because a page is re-rendered in a worker
+  /// isolate, and on a multi-megapixel capture that takes long enough that a
+  /// tap on the rotate control would look like it did nothing at all — the
+  /// screen would sit on the old render until the new one landed. Turning what
+  /// is already on screen by the difference (see [_pendingTurns]) gives the tap
+  /// its feedback straight away, and the render then arrives with those turns
+  /// already in it, so the difference — and the extra rotation with it —
+  /// quietly disappears.
+  int _renderedTurns = 0;
+
+  /// Quarter turns to apply on top of the render on screen, 0–3.
+  int get _pendingTurns => ((_quarterTurns - _renderedTurns) % 4 + 4) % 4;
 
   /// The rendered page: what the preview shows, and — so the work is not
   /// repeated — the payload that gets confirmed and that a model is asked to
@@ -152,6 +173,14 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
   /// tags are ready by the time the user confirms — but only once per screen,
   /// so later filter or rotation changes do not re-read the page.
   bool _autoReadTriggered = false;
+
+  /// Whether the automatic orientation check has already run.
+  ///
+  /// It runs once, on the first finished render: the page's own text either
+  /// says "I am sideways, turn me" or it does not, and no later crop or filter
+  /// changes that answer. The user's own rotation always wins — the check
+  /// never fires after they have touched the rotate control.
+  bool _autoOrientTriggered = false;
 
   @override
   void initState() {
@@ -189,10 +218,16 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
 
     _applyBoundary(
       detection.quad ??
-          defaultScanBoundary(detection.imageWidth, detection.imageHeight),
+          (detection.isFullPage
+              ? fullFrameQuad(detection.imageWidth, detection.imageHeight)
+              : defaultScanBoundary(detection.imageWidth, detection.imageHeight)),
       imageWidth: detection.imageWidth,
       imageHeight: detection.imageHeight,
-      autoDetected: detection.found,
+      // A capture judged to be a page already is its own answer: showing the
+      // finished whole is exactly what the user imported it for, where an
+      // un-found edge is only ever a guess that has to be corrected.
+      autoDetected: detection.found || detection.isFullPage,
+      fullPageReason: detection.fullPageReason,
     );
   }
 
@@ -201,22 +236,40 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
     required int imageWidth,
     required int imageHeight,
     required bool autoDetected,
+    FullPageReason? fullPageReason,
   }) {
     final clamped = clampQuadToImage(quad, imageWidth, imageHeight);
     final normalized = normalizeQuad(clamped, imageWidth, imageHeight);
     setState(() {
       _detecting = false;
       _autoDetected = autoDetected;
+      _fullPageReason = fullPageReason;
       _imageWidth = imageWidth;
       _imageHeight = imageHeight;
       _corners = normalized.points;
       // Found on its own: the page goes up straight away, which is the whole
       // "photograph a document" gesture. Nothing found: the corners are only a
       // guess, so the handles come up for the user to place instead of showing
-      // them a page cut to the wrong rectangle.
+      // them a page cut to the wrong rectangle. Except when there was nothing
+      // to find because the capture *is* the page — see [FullPageReason].
       _adjustingEdges = !autoDetected;
     });
     _schedulePreviewRender();
+  }
+
+  /// Tells the user why no crop is being offered, in place of the "nothing was
+  /// detected" warning that would otherwise sit over a perfectly usable page.
+  String _fullPageHint(BuildContext context) {
+    return switch (_fullPageReason) {
+      FullPageReason.contentOutsideQuad => context.tr(
+        zh: '只能找到图片内的一个方框，已按整页处理',
+        en: 'Only a box inside the image was found — kept the whole page',
+      ),
+      _ => context.tr(
+        zh: '这张图片已经是完整页面，未做裁剪',
+        en: 'This image is already a full page — nothing to crop',
+      ),
+    };
   }
 
   void _showMessage(String message) {
@@ -282,7 +335,10 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
     final result = await renderScanPage(
       ScanPageRequest(
         encoded: widget.encoded,
-        quad: quad,
+        // Keeping the capture whole rather than warping to its own corners: a
+        // homography onto a quad that is the image itself can only resample the
+        // pixels, softening them, and cannot add anything.
+        quad: _fullPageReason == null ? quad : null,
         filterName: _filterName,
         quarterTurns: _quarterTurns,
       ),
@@ -297,8 +353,12 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
       setState(() {
         _pageBytes = result.bytes;
         _pageStale = false;
+        // The render carries the turns that were asked for, so the preview
+        // stops compensating for them.
+        _renderedTurns = _quarterTurns;
       });
       _maybeAutoRead();
+      unawaited(_maybeAutoOrient());
     }
     return result.bytes;
   }
@@ -354,6 +414,68 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
     unawaited(_readDocument(silent: true));
   }
 
+  /// The finished page's own size in pixels, or null before it is known.
+  ///
+  /// Read from the boundary rather than by decoding the render: the crop is
+  /// warped to the quad and capped at a maximum edge, both of which leave the
+  /// proportions alone, and only the proportions matter to the caller.
+  Size? get _pagePixelSize {
+    if (_imageWidth <= 0 || _imageHeight <= 0) return null;
+    final quad = _fullPageReason == null ? _pixelQuad : null;
+    if (quad == null) {
+      return Size(_imageWidth.toDouble(), _imageHeight.toDouble());
+    }
+    final xs = <double>[
+      quad.topLeft.x,
+      quad.topRight.x,
+      quad.bottomRight.x,
+      quad.bottomLeft.x,
+    ];
+    final ys = <double>[
+      quad.topLeft.y,
+      quad.topRight.y,
+      quad.bottomRight.y,
+      quad.bottomLeft.y,
+    ];
+    return Size(
+      xs.reduce(math.max) - xs.reduce(math.min),
+      ys.reduce(math.max) - ys.reduce(math.min),
+    );
+  }
+
+  /// Turns the page upright when its own text says it is sideways or upside
+  /// down.
+  ///
+  /// One recognition pass over the finished render — the same on-device reader
+  /// the title suggestion uses, so nothing is uploaded and nothing new is
+  /// bundled. Deliberately conservative: the verdict only counts when several
+  /// lines agree on the same quarter turn, so a page left as it was is the
+  /// cost of any doubt, while a page turned wrongly is a page the user has to
+  /// notice and undo.
+  Future<void> _maybeAutoOrient() async {
+    if (_autoOrientTriggered || _quarterTurns != 0) return;
+    if (_detecting || _saving) return;
+    final detector = ref.read(scanOrientationDetectorProvider);
+    if (!detector.isSupported) return;
+    _autoOrientTriggered = true;
+
+    final bytes = _pageBytes;
+    if (bytes == null) return;
+    final page = _pagePixelSize;
+    final turns = await detector.detectQuarterTurns(
+      bytes,
+      pageWidth: page?.width.round(),
+      pageHeight: page?.height.round(),
+    );
+    if (!mounted || turns == null || turns == 0) return;
+    // The user may have picked a rotation while the recognition ran.
+    if (_quarterTurns != 0) return;
+    setState(() {
+      _quarterTurns = turns;
+    });
+    _schedulePreviewRender(delay: _kPreviewRenderQuick);
+  }
+
   /// Reads the page and proposes a title and tags for it.
   ///
   /// [silent] skips the informational snackbars, which is what the automatic
@@ -382,6 +504,7 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
             imageBytes: bytes,
             scannedAt: DateTime.now(),
             fallbackPrefix: context.tr(zh: '扫描件', en: 'Scan'),
+            labels: _scanLabelLanguage(context),
           );
       if (!mounted) return;
       if (local != null && !local.isEmpty) {
@@ -583,6 +706,14 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
                     style: const TextStyle(color: Colors.white60, fontSize: 12),
                   ),
                 ),
+              if (_fullPageReason != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 4),
+                  child: Text(
+                    _fullPageHint(context),
+                    style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  ),
+                ),
               _buildResultStrip(context, canAsk: canAsk),
               if (_title.isNotEmpty || _tags.isNotEmpty)
                 _buildMetadataSummary(context),
@@ -593,6 +724,15 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
         ),
       ),
     );
+  }
+
+  /// Wraps [child] in the quarter turns the finished render has not caught up
+  /// with yet, so a rotation lands on screen at once instead of after the
+  /// isolate comes back.
+  Widget _withPendingTurns(Widget child) {
+    final pending = _pendingTurns;
+    if (pending == 0) return child;
+    return RotatedBox(quarterTurns: pending, child: child);
   }
 
   /// The preview: the finished page by default, or the raw capture with corner
@@ -618,10 +758,8 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
       child: InteractiveViewer(
         minScale: 1,
         maxScale: 4,
-        child: Image.memory(
-          pageBytes,
-          fit: BoxFit.contain,
-          gaplessPlayback: true,
+        child: _withPendingTurns(
+          Image.memory(pageBytes, fit: BoxFit.contain, gaplessPlayback: true),
         ),
       ),
     );
@@ -630,70 +768,76 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
   /// The raw capture with draggable corner handles, used to correct where the
   /// page's edges actually are.
   Widget _buildEdgeEditor(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final size = Size(_imageWidth.toDouble(), _imageHeight.toDouble());
-        final fitted = (_imageWidth > 0 && _imageHeight > 0)
-            ? applyBoxFit(BoxFit.contain, size, constraints.biggest)
-            : null;
-        final imageRect = fitted == null
-            ? Rect.zero
-            : Alignment.center.inscribe(
-                fitted.destination,
-                Offset.zero & constraints.biggest,
-              );
+    // The whole editor turns, not just the picture: [RenderRotatedBox] hands
+    // the gesture detector its positions back in the editor's own space, so a
+    // corner grabbed on the turned view is still the same corner of the
+    // capture, and the handles and the dimmed surround stay where they belong.
+    return _withPendingTurns(
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final size = Size(_imageWidth.toDouble(), _imageHeight.toDouble());
+          final fitted = (_imageWidth > 0 && _imageHeight > 0)
+              ? applyBoxFit(BoxFit.contain, size, constraints.biggest)
+              : null;
+          final imageRect = fitted == null
+              ? Rect.zero
+              : Alignment.center.inscribe(
+                  fitted.destination,
+                  Offset.zero & constraints.biggest,
+                );
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            if (imageRect.isEmpty)
-              Center(
-                child: _detecting
-                    ? const CircularProgressIndicator()
-                    : Text(
-                        context.tr(
-                          zh: '无法读取这张图片',
-                          en: 'This image could not be read',
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              if (imageRect.isEmpty)
+                Center(
+                  child: _detecting
+                      ? const CircularProgressIndicator()
+                      : Text(
+                          context.tr(
+                            zh: '无法读取这张图片',
+                            en: 'This image could not be read',
+                          ),
+                          style: const TextStyle(color: Colors.white54),
                         ),
-                        style: const TextStyle(color: Colors.white54),
-                      ),
-              )
-            else ...[
-              Positioned.fromRect(
-                rect: imageRect,
-                child: Image.memory(
-                  widget.encoded,
-                  fit: BoxFit.contain,
-                  gaplessPlayback: true,
+                )
+              else ...[
+                Positioned.fromRect(
+                  rect: imageRect,
+                  child: Image.memory(
+                    widget.encoded,
+                    fit: BoxFit.contain,
+                    gaplessPlayback: true,
+                  ),
                 ),
-              ),
-              Positioned.fill(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onPanStart: (details) {
-                    _activeCorner = _cornerAt(details.localPosition, imageRect);
-                  },
-                  onPanUpdate: (details) {
-                    final corner = _activeCorner;
-                    if (corner == null) return;
-                    _dragCorner(corner, details.localPosition, imageRect);
-                  },
-                  onPanEnd: (_) => _endDrag(),
-                  child: CustomPaint(
-                    painter: _ScanQuadPainter(
-                      imageRect: imageRect,
-                      corners: _corners
-                          .map((p) => _toLocal(p, imageRect))
-                          .toList(),
-                      activeCorner: _activeCorner,
+                Positioned.fill(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onPanStart: (details) {
+                      _activeCorner = _cornerAt(details.localPosition, imageRect);
+                    },
+                    onPanUpdate: (details) {
+                      final corner = _activeCorner;
+                      if (corner == null) return;
+                      _dragCorner(corner, details.localPosition, imageRect);
+                    },
+                    onPanEnd: (_) => _endDrag(),
+                    child: CustomPaint(
+                      painter: _ScanQuadPainter(
+                        imageRect: imageRect,
+                        corners: _corners
+                            .map((p) => _toLocal(p, imageRect))
+                            .toList(),
+                        activeCorner: _activeCorner,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -734,7 +878,9 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
                               ),
                             ),
                     )
-                  : Image.memory(pageBytes, fit: BoxFit.cover),
+                  : _withPendingTurns(
+                      Image.memory(pageBytes, fit: BoxFit.cover),
+                    ),
             ),
             const SizedBox(width: 12),
           ],
@@ -873,6 +1019,17 @@ class _ScanReviewScreenState extends ConsumerState<ScanReviewScreen> {
       ),
     );
   }
+}
+
+/// Which spelling of the recognised document types the reading wants.
+///
+/// The tags a card is filed under go into the note itself, so they follow the
+/// language the note is being written in rather than always being Chinese.
+ScanLabelLanguage _scanLabelLanguage(BuildContext context) {
+  final language = Localizations.localeOf(context).languageCode.toLowerCase();
+  return language == 'zh'
+      ? ScanLabelLanguage.chinese
+      : ScanLabelLanguage.english;
 }
 
 String _filterLabel(BuildContext context, String name) {

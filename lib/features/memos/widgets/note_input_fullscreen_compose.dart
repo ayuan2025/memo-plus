@@ -45,8 +45,7 @@ class NoteInputFullscreenCompose extends StatelessWidget {
     required this.hasAttachmentsForSend,
     required this.expandCollapseKey,
     required this.closeKey,
-    required this.topToolbarKey,
-    required this.bottomToolbarKey,
+    required this.toolbarRowKey,
     required this.sendButtonKey,
     required this.visibilityButtonKey,
     required this.onCollapse,
@@ -91,8 +90,7 @@ class NoteInputFullscreenCompose extends StatelessWidget {
   final bool hasAttachmentsForSend;
   final Key expandCollapseKey;
   final Key closeKey;
-  final Key topToolbarKey;
-  final Key bottomToolbarKey;
+  final Key toolbarRowKey;
   final Key sendButtonKey;
   final GlobalKey visibilityButtonKey;
   final VoidCallback onCollapse;
@@ -162,8 +160,7 @@ class NoteInputFullscreenCompose extends StatelessWidget {
       ),
       expandCollapseKey: expandCollapseKey,
       closeKey: closeKey,
-      topToolbarKey: topToolbarKey,
-      bottomToolbarKey: bottomToolbarKey,
+      toolbarRowKey: toolbarRowKey,
       visibilityButtonKey: visibilityButtonKey,
       visibilityLabel: visibilityLabel,
       visibilityIcon: visibilityIcon,
@@ -206,17 +203,17 @@ class NoteInputFullscreenSendButton extends StatelessWidget {
       message: context.t.strings.legacy.msg_create_memo,
       child: InkResponse(
         onTap: buttonEnabled ? onPressed : null,
-        radius: 17,
+        radius: 14,
         child: SizedBox(
-          width: 30,
-          height: 30,
+          width: 28,
+          height: 28,
           child: Stack(
             alignment: Alignment.center,
             children: [
               if (deferredProgress != null)
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 28,
+                  height: 28,
                   child: CircularProgressIndicator(
                     value: deferredProgress,
                     strokeWidth: 2,
@@ -229,7 +226,7 @@ class NoteInputFullscreenSendButton extends StatelessWidget {
               Center(
                 child: busy
                     ? SizedBox.square(
-                        dimension: 14,
+                        dimension: 13,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: buttonColor,
@@ -242,7 +239,7 @@ class NoteInputFullscreenSendButton extends StatelessWidget {
                           final showSend = hasText || hasAttachmentsForSend;
                           return Icon(
                             showSend ? Icons.send_rounded : Icons.graphic_eq,
-                            size: showSend ? 17 : 18,
+                            size: showSend ? 16 : 17,
                             color: buttonColor,
                           );
                         },

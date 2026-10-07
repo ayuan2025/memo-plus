@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/app_motion.dart';
 import '../../../core/image_error_logger.dart';
 import '../../../core/memoflow_palette.dart';
+import '../../../core/attachment_url.dart';
 import '../../../core/url.dart';
 import '../../../core/windows_adaptive_surface.dart';
 import '../../../data/models/attachment.dart';
@@ -520,10 +521,8 @@ class _MemoEngagementSurfaceState extends ConsumerState<MemoEngagementSurface> {
           : resolved;
     }
     if (baseUrl == null) return '';
-    final url = joinBaseUrl(
-      baseUrl,
-      'file/${attachment.name}/${attachment.filename}',
-    );
+    final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+    if (url == null) return '';
     return thumbnail ? appendThumbnailParam(url) : url;
   }
 

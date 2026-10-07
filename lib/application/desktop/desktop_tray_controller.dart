@@ -48,11 +48,11 @@ class DesktopTrayController with TrayListener {
     } else {
       await trayManager.setIcon(iconPath);
     }
-    await trayManager.setToolTip('MemoFlow');
+    await trayManager.setToolTip('memo+');
     await trayManager.setContextMenu(
       Menu(
         items: <MenuItem>[
-          MenuItem(key: _trayActionShow, label: '\u6253\u5f00 MemoFlow'),
+          MenuItem(key: _trayActionShow, label: '\u6253\u5f00 memo+'),
           MenuItem(
             key: _trayActionOpenSettings,
             label: '\u6253\u5f00\u8bbe\u7f6e',

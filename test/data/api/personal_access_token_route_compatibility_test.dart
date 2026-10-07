@@ -24,7 +24,7 @@ void main() {
 
       final created = await api.createPersonalAccessToken(
         userName: 'users/1',
-        description: 'MemoFlow test token',
+        description: 'memo+ test token',
         expiresInDays: 0,
       );
       expect(created.token, 'memos_pat_created');
@@ -70,7 +70,7 @@ void main() {
 
       final created = await api.createPersonalAccessToken(
         userName: 'users/1',
-        description: 'MemoFlow test token',
+        description: 'memo+ test token',
         expiresInDays: 0,
       );
       expect(
@@ -182,7 +182,7 @@ class _FakePatServer {
         'token': 'memos_pat_created',
         'personalAccessToken': <String, Object?>{
           'name': '$userName/personalAccessTokens/created-token',
-          'description': 'MemoFlow test token',
+          'description': 'memo+ test token',
           'createdAt': '2026-04-18T12:00:00Z',
         },
       });

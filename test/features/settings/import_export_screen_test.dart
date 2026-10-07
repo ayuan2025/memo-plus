@@ -17,8 +17,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(SettingsPage), findsOneWidget);
-    expect(find.byType(SettingsSection), findsNWidgets(3));
-    expect(find.byType(SettingsNavigationRow), findsNWidgets(3));
+    expect(find.byType(SettingsSection), findsNWidgets(4));
+    expect(find.byType(SettingsNavigationRow), findsNWidgets(4));
     expect(find.text('Import / Export'), findsOneWidget);
     expect(find.text('Export'), findsNWidgets(2));
     expect(find.text('Markdown + ZIP'), findsOneWidget);
@@ -42,17 +42,17 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(SettingsPage), findsOneWidget);
-      expect(find.byType(SettingsSection), findsNWidgets(3));
-      expect(find.byType(SettingsNavigationRow), findsNWidgets(3));
+      expect(find.byType(SettingsSection), findsNWidgets(4));
+      expect(find.byType(SettingsNavigationRow), findsNWidgets(4));
       expect(find.text('Import / Export'), findsOneWidget);
       expect(find.text('Local Network Migration'), findsNWidgets(2));
-      expect(find.text('MemoFlow / Obsidian'), findsOneWidget);
+      expect(find.text('memo+ / Obsidian'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.devices_outlined));
       await tester.pumpAndSettle();
 
       expect(find.text('Local Network Migration'), findsOneWidget);
-      expect(find.text('MemoFlow Migration'), findsOneWidget);
+      expect(find.text('memo+ Migration'), findsOneWidget);
       expect(find.text('Connect Obsidian'), findsOneWidget);
     },
   );

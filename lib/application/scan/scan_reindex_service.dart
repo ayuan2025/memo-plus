@@ -6,11 +6,12 @@
 // server: the caller hands in a `save` callback. That keeps the batch testable
 // on a desk, where there is no camera and no Memos instance.
 //
-// The one policy worth stating plainly: a page is only rewritten when the new
-// read is *longer* than what is already stored. Re-running the same engine on
-// the same page returns a slightly different answer every time, and writing
-// whichever came back last would let a worse read replace a better one. Only a
-// read that found more is evidence the old one was missing something.
+// The one policy worth stating plainly: a memo is only rewritten when there is
+// reason to believe it came out better than what is stored. Re-running the same
+// engine on the same page returns a slightly different answer every time, and
+// writing whichever came back last would let a worse read replace a better one.
+// Only a read that found *more* — more text, or a document type the note is not
+// filed under yet — is evidence the old one was missing something.
 
 import 'dart:typed_data';
 
@@ -24,6 +25,9 @@ import '../../data/scan/local_scan_metadata_service.dart';
 /// Fixed by [buildScanFilename] and unchanged since, so it is how a page is
 /// recognised as ours rather than a photo the user attached themselves.
 const String kScanFilenamePrefix = 'scan-';
+
+/// A tag made of nothing but digits: the year each scanned memo is filed under.
+final RegExp _kYearLike = RegExp(r'^\d+$');
 
 /// Why one memo came out of a batch the way it did.
 enum ScanReindexOutcome {
@@ -203,9 +207,10 @@ class ScanReindexService {
       return ScanReindexOutcome.noImage;
     }
 
+    final ScanMetadataDraft? draft;
     final String text;
     try {
-      final draft = await _ocr.generate(
+      draft = await _ocr.generate(
         imageBytes: bytes,
         scannedAt: memo.createTime,
       );
@@ -220,18 +225,44 @@ class ScanReindexService {
     if (text.isEmpty) return ScanReindexOutcome.unchanged;
 
     final previous = extractHiddenScanOcr(memo.content).trim();
-    if (text.runes.length <= previous.runes.length) {
-      return ScanReindexOutcome.unchanged;
-    }
+    final readMore = text.runes.length > previous.runes.length;
+
+    // A page can also gain from being *filed* better even though it read just
+    // as well as before: an old batch unlocked no "type" at all, whereas a card
+    // now recognised as an ID card can be given the tag to find it by. Tags are
+    // only ever added, never rewritten, so nothing the user filed themselves is
+    // taken away.
+    final newTag = _missingTypeTag(draft?.tags, memo.content);
+
+    final next = readMore
+        ? withHiddenScanOcr(stripHiddenScanOcr(memo.content), text)
+        : memo.content;
+    final updated = newTag == null ? next : appendScanTag(next, newTag);
+    if (updated == memo.content) return ScanReindexOutcome.unchanged;
 
     try {
-      await save(
-        memo,
-        withHiddenScanOcr(stripHiddenScanOcr(memo.content), text),
-      );
+      await save(memo, updated);
     } catch (_) {
       return ScanReindexOutcome.failed;
     }
     return ScanReindexOutcome.improved;
+  }
+
+  /// The first document-type tag [tags] proposes that [content] does not carry
+  /// yet, or null.
+  ///
+  /// The year a scan was made is proposed as a tag too, and every scanned memo
+  /// already carries one, so those are skipped: the year of an old page is its
+  /// own business and appending this year's would misdate it.
+  String? _missingTypeTag(List<String>? tags, String content) {
+    if (tags == null) return null;
+    for (final tag in tags) {
+      if (_kYearLike.hasMatch(tag)) continue;
+      final token = '#${sanitizeScanTag(tag)}';
+      if (token.length <= 1) continue;
+      if (content.contains(token)) continue;
+      return tag;
+    }
+    return null;
   }
 }

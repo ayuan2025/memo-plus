@@ -144,21 +144,24 @@ void main() {
     expect(context.composeDrafts.savedEditDrafts, isEmpty);
   });
 
-  testWidgets('page editor shows fullscreen action instead of top save', (
+  testWidgets('page editor opens directly in fullscreen compose', (
     tester,
   ) async {
     await _pumpEditor(tester, presentation: MemoEditorPresentation.page);
 
-    expect(_pageFullscreenButton, findsOneWidget);
-    expect(find.byTooltip('Maximize'), findsOneWidget);
+    expect(_fullscreenTextField, findsOneWidget);
+    expect(_fullscreenSaveButton, findsOneWidget);
+    expect(find.byTooltip('Save'), findsOneWidget);
+    // 全屏界面没有收起键，也没有旧的卡片式底部大保存键。
+    expect(_fullscreenCollapseButton, findsNothing);
+    expect(_pageFullscreenButton, findsNothing);
     expect(
       find.byKey(const ValueKey<String>('memo-editor-bottom-save-button')),
-      findsOneWidget,
+      findsNothing,
     );
-    expect(find.byIcon(Icons.check_rounded), findsOneWidget);
   });
 
-  testWidgets('page editor fullscreen preserves text and collapses cleanly', (
+  testWidgets('page editor keeps text while editing in fullscreen compose', (
     tester,
   ) async {
     final context = await _pumpEditor(
@@ -167,17 +170,10 @@ void main() {
     );
 
     await tester.enterText(find.byType(TextField).first, 'Fullscreen edit');
-    await tester.tap(_pageFullscreenButton);
     await _pumpRouteFrames(tester);
 
     expect(_fullscreenTextField, findsOneWidget);
     expect(find.text('Fullscreen edit'), findsOneWidget);
-
-    await tester.tap(_fullscreenCollapseButton);
-    await _pumpRouteFrames(tester);
-
-    expect(_fullscreenTextField, findsNothing);
-    expect(_pageFullscreenButton, findsOneWidget);
     expect(find.text('Save edit draft?'), findsNothing);
     expect(context.editorController.savedContents, isEmpty);
   });
@@ -191,7 +187,6 @@ void main() {
     );
 
     await tester.enterText(find.byType(TextField).first, 'Needs decision');
-    await tester.tap(_pageFullscreenButton);
     await _pumpRouteFrames(tester);
     await tester.tap(_fullscreenCloseButton);
     await _pumpRouteFrames(tester);
@@ -217,8 +212,6 @@ void main() {
       find.byType(TextField).first,
       'Save from fullscreen',
     );
-    await tester.tap(_pageFullscreenButton);
-    await _pumpRouteFrames(tester);
     await tester.tap(_fullscreenSaveButton);
     await _pumpRouteFrames(tester);
 
@@ -226,7 +219,7 @@ void main() {
     expect(context.editorController.savedExistingUids, ['memo-1']);
   });
 
-  testWidgets('new memo page also supports fullscreen save', (tester) async {
+  testWidgets('new memo page saves from fullscreen compose', (tester) async {
     final context = await _pumpEditor(
       tester,
       presentation: MemoEditorPresentation.page,
@@ -234,9 +227,7 @@ void main() {
       initialText: 'New memo body',
     );
 
-    expect(_pageFullscreenButton, findsOneWidget);
-    await tester.tap(_pageFullscreenButton);
-    await _pumpRouteFrames(tester);
+    expect(_fullscreenTextField, findsOneWidget);
     await tester.tap(_fullscreenSaveButton);
     await _pumpRouteFrames(tester);
 

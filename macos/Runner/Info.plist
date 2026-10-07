@@ -30,13 +30,13 @@
 		<string>_memoflow-migrate._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>MemoFlow uses your local network to discover and connect nearby MemoFlow or Obsidian migration devices.</string>
+	<string>memo+ uses your local network to discover and connect nearby memo+ or Obsidian migration devices.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>MemoFlow uses your location only when you choose to attach the current place to a note.</string>
+	<string>memo+ uses your location only when you choose to attach the current place to a note.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>MemoFlow uses the microphone only when you record voice memos or audio attachments.</string>
+	<string>memo+ uses the microphone only when you record voice memos or audio attachments.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

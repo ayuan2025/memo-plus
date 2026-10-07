@@ -123,7 +123,7 @@ Future<String> _resolveMemoFlowDeviceName() async {
       if (next.isNotEmpty) return next;
     }
   } catch (_) {}
-  return 'MemoFlow Mobile';
+  return 'memo+ Mobile';
 }
 
 Map<String, dynamic> _expectMap(dynamic data) {
@@ -161,7 +161,7 @@ class _MemoFlowBridgeScreenState extends ConsumerState<MemoFlowBridgeScreen> {
   bool _pairing = false;
   bool _discovering = false;
   bool _checkingHealth = false;
-  String _deviceName = 'MemoFlow Mobile';
+  String _deviceName = 'memo+ Mobile';
   String? _statusMessage;
   List<_DiscoveredServer> _servers = const [];
 

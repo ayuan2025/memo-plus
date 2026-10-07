@@ -136,7 +136,7 @@ class WebDavClient {
     final startedAt = DateTime.now();
     try {
       final request = await _client.openUrl(method, url);
-      request.headers.set('User-Agent', 'MemoFlow');
+      request.headers.set('User-Agent', 'memo+');
       if (headers != null) {
         headers.forEach(request.headers.set);
       }

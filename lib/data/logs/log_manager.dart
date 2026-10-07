@@ -419,7 +419,7 @@ class LogManager {
     final zipData = ZipEncoder().encode(archive);
 
     final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    final outPath = p.join(dir.path, 'MemoFlow_logs_$timestamp.zip');
+    final outPath = p.join(dir.path, 'memo+_logs_$timestamp.zip');
     final outFile = File(outPath);
     await outFile.writeAsBytes(zipData, flush: true);
     return outFile;
@@ -526,11 +526,11 @@ class LogManager {
       final info = await PackageInfo.fromPlatform();
       final version = info.version.trim();
       final build = info.buildNumber.trim();
-      if (version.isEmpty && build.isEmpty) return 'MemoFlow';
-      if (build.isEmpty) return 'MemoFlow v$version';
-      return 'MemoFlow v$version (Build $build)';
+      if (version.isEmpty && build.isEmpty) return 'memo+';
+      if (build.isEmpty) return 'memo+ v$version';
+      return 'memo+ v$version (Build $build)';
     } catch (_) {
-      return 'MemoFlow';
+      return 'memo+';
     }
   }
 

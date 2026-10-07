@@ -282,7 +282,7 @@ class _DesktopQuickInputDialogState
                 child: Row(
                   children: [
                     Text(
-                      'MemoFlow',
+                      'memo+',
                       style: TextStyle(
                         fontSize: 34 / 1.8,
                         fontWeight: FontWeight.w700,

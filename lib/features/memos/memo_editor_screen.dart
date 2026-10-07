@@ -28,6 +28,7 @@ import '../../core/scene_micro_guide_widgets.dart';
 import '../../core/tags.dart';
 import '../../core/top_toast.dart';
 import '../../core/uid.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/logs/log_manager.dart';
 import '../../data/models/attachment.dart';
@@ -40,7 +41,6 @@ import '../../data/repositories/scene_micro_guide_repository.dart';
 import '../../platform/platform_target.dart';
 import '../../platform/widgets/platform_controls.dart';
 import '../../platform/widgets/platform_dialog.dart';
-import '../../platform/widgets/platform_page.dart';
 import '../../state/settings/location_settings_provider.dart';
 import '../../state/attachments/queued_attachment_stager_provider.dart';
 import '../../state/memos/memo_composer_controller.dart';
@@ -71,6 +71,7 @@ import 'memo_compose_surface.dart';
 import 'memo_video_grid.dart';
 import 'scan_attachment_entry.dart';
 import 'tag_autocomplete.dart';
+import 'theme/memo_themed_preview_sheet.dart';
 import 'widgets/attachment_processing_overlay.dart';
 import 'widgets/memo_compose_fullscreen_surface.dart';
 import '../location_picker/show_location_picker.dart';
@@ -123,8 +124,6 @@ enum _TodoShortcutAction { checkbox, codeBlock }
 
 enum _EditorCloseDecision { continueEditing, discard, addToDraftBox }
 
-enum _MemoEditorPagePresentationMode { normal, fullscreen }
-
 class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
   late final MemoComposerController _composer;
   // OCR captured from scans, kept out of the editable text and re-attached to
@@ -149,20 +148,11 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
       _composer.pendingAttachments;
   final _attachmentsToDelete = <Attachment>[];
   static const String _newDraftMemoUid = '__memo_editor_new__';
-  static const _pageFullscreenExpandButtonKey = ValueKey<String>(
-    'memo-editor-page-fullscreen-button',
-  );
-  static const _pageFullscreenCollapseButtonKey = ValueKey<String>(
-    'memo-editor-fullscreen-collapse-button',
-  );
   static const _pageFullscreenCloseButtonKey = ValueKey<String>(
     'memo-editor-fullscreen-close-button',
   );
-  static const _pageFullscreenTopToolbarKey = ValueKey<String>(
-    'memo-editor-fullscreen-top-toolbar-row',
-  );
-  static const _pageFullscreenBottomToolbarKey = ValueKey<String>(
-    'memo-editor-fullscreen-bottom-toolbar-row',
+  static const _pageFullscreenToolbarRowKey = ValueKey<String>(
+    'memo-editor-fullscreen-toolbar-row',
   );
   static const _pageFullscreenSaveButtonKey = ValueKey<String>(
     'memo-editor-fullscreen-save-button',
@@ -189,7 +179,6 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
   late bool _pinned;
   var _saving = false;
   bool _allowRoutePop = false;
-  var _pagePresentationMode = _MemoEditorPagePresentationMode.normal;
   MemoLocation? _location;
   MemoLocation? _initialLocation;
   final _locating = false;
@@ -200,10 +189,6 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
 
   bool get _isPagePresentation =>
       widget.presentation == MemoEditorPresentation.page;
-
-  bool get _isPageFullscreenCompose =>
-      _isPagePresentation &&
-      _pagePresentationMode == _MemoEditorPagePresentationMode.fullscreen;
 
   bool get _isDesktopFullscreenPresentation =>
       widget.presentation == MemoEditorPresentation.desktopFullscreen;
@@ -296,45 +281,6 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     return (mediaQuery?.viewInsets.bottom ?? 0) > 0;
   }
 
-  void _requestEditorFocusAfterLayout({
-    required _MemoEditorPagePresentationMode expectedMode,
-  }) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      if (!_isPagePresentation) return;
-      if (_pagePresentationMode != expectedMode) return;
-      _editorFocusNode.requestFocus();
-    });
-  }
-
-  void _enterPageFullscreenCompose() {
-    if (_saving || !_isPagePresentation || _isPageFullscreenCompose) return;
-    if (_editorFocusNode.hasFocus) {
-      _editorFocusNode.unfocus();
-      FocusManager.instance.applyFocusChangesIfNeeded();
-    }
-    setState(() {
-      _pagePresentationMode = _MemoEditorPagePresentationMode.fullscreen;
-    });
-    _requestEditorFocusAfterLayout(
-      expectedMode: _MemoEditorPagePresentationMode.fullscreen,
-    );
-  }
-
-  void _collapsePageFullscreenCompose() {
-    if (_saving || !_isPageFullscreenCompose) return;
-    if (_editorFocusNode.hasFocus) {
-      _editorFocusNode.unfocus();
-      FocusManager.instance.applyFocusChangesIfNeeded();
-    }
-    setState(() {
-      _pagePresentationMode = _MemoEditorPagePresentationMode.normal;
-    });
-    _requestEditorFocusAfterLayout(
-      expectedMode: _MemoEditorPagePresentationMode.normal,
-    );
-  }
-
   void _handleContentChanged() {
     if (!mounted) return;
     _syncTagAutocompleteState();
@@ -408,8 +354,8 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     }
 
     if (event is KeyDownEvent && key == LogicalKeyboardKey.escape) {
-      if (_isPageFullscreenCompose) {
-        _collapsePageFullscreenCompose();
+      if (_isPagePresentation) {
+        unawaited(_requestCloseEditor());
         return KeyEventResult.handled;
       }
       if (_isDesktopFullscreenPresentation) {
@@ -2270,10 +2216,8 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
           : resolved;
     }
     if (baseUrl == null) return '';
-    final url = joinBaseUrl(
-      baseUrl,
-      'file/${attachment.name}/${attachment.filename}',
-    );
+    final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+    if (url == null) return '';
     return thumbnail ? appendThumbnailParam(url) : url;
   }
 
@@ -2380,6 +2324,7 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
           skipCompression: existing.skipCompression,
         ),
       );
+      if (!mounted) return;
       setState(() {
         _composer.replacePendingAttachment(uid, stagedReplacement);
       });
@@ -2396,11 +2341,15 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
 
     if (!id.startsWith('existing:')) return;
     final name = id.substring('existing:'.length);
-    final index = _existingAttachments.indexWhere(
+    // Checked before the wait only to fail fast on a stale id. The attachment
+    // is looked up again afterwards: compressing the replacement takes long
+    // enough for the user to remove the attachment being replaced, and
+    // removing by the index found before the wait would then take a different
+    // attachment with it and queue that one for deletion.
+    final stillThere = _existingAttachments.any(
       (a) => a.name == name || a.uid == name,
     );
-    if (index < 0) return;
-    final removed = _existingAttachments[index];
+    if (!stillThere) return;
     final newUid = generateUid();
     final stagedReplacement = await _stagePendingAttachment(
       _PendingAttachment(
@@ -2412,6 +2361,12 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
         skipCompression: false,
       ),
     );
+    if (!mounted) return;
+    final index = _existingAttachments.indexWhere(
+      (a) => a.name == name || a.uid == name,
+    );
+    if (index < 0) return;
+    final removed = _existingAttachments[index];
     setState(() {
       _existingAttachments.removeAt(index);
       _queueDeletedAttachment(removed);
@@ -3188,6 +3143,31 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     );
   }
 
+  /// 头部右侧的「美化预览」常驻按钮：把当前草稿按卡片主题渲染成纸面卡片预览。
+  ///
+  /// 这是常驻 chrome（不属于可自定义工具栏），编辑时随手就能看到成稿外观。
+  Widget _buildFullscreenBeautifyPreviewButton(bool isDark) {
+    final iconColor = isDark ? Colors.white70 : Colors.black54;
+    return IconButton(
+      tooltip: '美化预览',
+      onPressed: _saving
+          ? null
+          : () {
+              unawaited(
+                MemoThemedPreviewSheet.show(
+                  context,
+                  content: _contentController.text,
+                  time: DateTime.now(),
+                ),
+              );
+            },
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints.tightFor(width: 32, height: 32),
+      splashRadius: 16,
+      icon: Icon(Icons.auto_awesome_outlined, size: 20, color: iconColor),
+    );
+  }
+
   Widget _buildFullscreenEditorSaveButton() {
     final buttonEnabled = !_saving;
     final buttonColor = buttonEnabled
@@ -3198,23 +3178,23 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
       child: InkResponse(
         key: _pageFullscreenSaveButtonKey,
         onTap: buttonEnabled ? _save : null,
-        radius: 17,
+        radius: 14,
         child: SizedBox(
-          width: 30,
-          height: 30,
+          width: 28,
+          height: 28,
           child: Stack(
             alignment: Alignment.center,
             children: [
               if (_saving)
                 SizedBox.square(
-                  dimension: 14,
+                  dimension: 13,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
                     color: MemoFlowPalette.primary,
                   ),
                 )
               else
-                Icon(Icons.check_rounded, size: 18, color: buttonColor),
+                Icon(Icons.check_rounded, size: 17, color: buttonColor),
             ],
           ),
         ),
@@ -3259,6 +3239,7 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
         sheetColor: sheetColor,
         toolbarPreferences: toolbarPreferences,
         toolbarActions: toolbarActions,
+        toolbarRowKey: _pageFullscreenToolbarRowKey,
         metadataChildren: _buildFullscreenMetadataChildren(
           context: context,
           isDark: isDark,
@@ -3289,18 +3270,15 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
           onTagSelect: (query, tag) => _applyTagSuggestion(query, tag),
         ),
         primaryAction: _buildFullscreenEditorSaveButton(),
-        expandCollapseKey: _pageFullscreenCollapseButtonKey,
         closeKey: _pageFullscreenCloseButtonKey,
-        topToolbarKey: _pageFullscreenTopToolbarKey,
-        bottomToolbarKey: _pageFullscreenBottomToolbarKey,
         visibilityButtonKey: _visibilityMenuKey,
         visibilityLabel: visibilityLabel,
         visibilityIcon: visibilityIcon,
         visibilityColor: visibilityColor,
         busy: _saving,
-        onCollapse: _collapsePageFullscreenCompose,
         onClose: () => unawaited(_requestCloseEditor()),
         onVisibilityPressed: () => unawaited(_openVisibilityMenuFromKey()),
+        trailingAction: _buildFullscreenBeautifyPreviewButton(isDark),
       ),
     );
   }
@@ -3319,10 +3297,6 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     final borderColor = isDark
         ? MemoFlowPalette.borderDark
         : MemoFlowPalette.borderLight;
-    final textColor = isDark
-        ? MemoFlowPalette.textDark
-        : MemoFlowPalette.textLight;
-    final hintColor = isDark ? const Color(0xFF666666) : Colors.grey.shade500;
     final chipBg = isDark
         ? Colors.white.withValues(alpha: 0.06)
         : MemoFlowPalette.audioSurfaceLight;
@@ -3380,7 +3354,8 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     final editorTextStyle = TextStyle(
       fontSize: 16,
       height: 1.35,
-      color: textColor,
+      color: chipText,
+      fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
     );
     final templateSettings = ref.watch(memoTemplateSettingsProvider);
     final availableTemplates = templateSettings.enabled
@@ -3395,7 +3370,9 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
     final editorHintText =
         context.t.strings.legacy.msg_write_something_supports_tag_tasks_x;
 
-    if (_isPageFullscreenCompose) {
+    // 手机页面表现形式全局使用全屏写稿界面（与「记一笔」全屏一致）：
+    // 不再有卡片式普通模式，顶部只有关闭键，底部为压缩后的单行工具栏。
+    if (_isPagePresentation) {
       final fullscreenEditor = _buildFullscreenEditorCompose(
         isDark: isDark,
         background: background,
@@ -3431,12 +3408,6 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
       );
     }
 
-    final pageFullscreenAction = IconButton(
-      key: _pageFullscreenExpandButtonKey,
-      tooltip: context.t.strings.legacy.msg_maximize,
-      onPressed: _saving ? null : _enterPageFullscreenCompose,
-      icon: Icon(Icons.fullscreen_rounded, color: MemoFlowPalette.primary),
-    );
     final composeContent = Column(
       children: [
         Expanded(
@@ -3470,22 +3441,27 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
                           key: _editorFieldKey,
                           child: Focus(
                             canRequestFocus: false,
-                            child: PlatformTextField(
-                              controller: _contentController,
-                              focusNode: _editorFocusNode,
-                              autofocus: widget.autoFocus,
-                              enabled: !_saving,
-                              inputFormatters: const [
-                                SmartEnterTextInputFormatter(),
-                              ],
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              expands: true,
-                              style: editorTextStyle,
-                              decoration: InputDecoration(
-                                hintText: editorHintText,
-                                hintStyle: TextStyle(color: hintColor),
-                                border: InputBorder.none,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 10,
+                              ),
+                              child: PlatformTextField(
+                                controller: _contentController,
+                                focusNode: _editorFocusNode,
+                                autofocus: widget.autoFocus,
+                                enabled: !_saving,
+                                inputFormatters: const [
+                                  SmartEnterTextInputFormatter(),
+                                ],
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                expands: true,
+                                style: editorTextStyle,
+                                decoration: InputDecoration(
+                                  hintText: editorHintText,
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                           ),
@@ -3788,20 +3764,7 @@ class _MemoEditorScreenState extends ConsumerState<MemoEditorScreen> {
       return wrappedComposeSurface;
     }
 
-    final page = PlatformPage(
-      safeArea: false,
-      backgroundColor: background,
-      title: Text(titleText),
-      actions: [pageFullscreenAction],
-      body: wrappedComposeSurface,
-    );
-    return PopScope(
-      canPop: _allowRoutePop,
-      onPopInvokedWithResult: (didPop, _) {
-        if (didPop) return;
-        unawaited(_requestCloseEditor());
-      },
-      child: page,
-    );
+    // 手机页面表现形式已在上方提前返回全屏界面；到这里只剩桌面/嵌入表现形式。
+    return wrappedComposeSurface;
   }
 }

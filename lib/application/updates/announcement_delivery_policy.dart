@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../core/app_channel.dart';
+import '../../core/app_version.dart';
 import '../../data/updates/update_config.dart';
 import 'update_announcement_channel_policy.dart';
 
@@ -251,26 +252,5 @@ class AnnouncementDeliveryPolicy {
   }
 }
 
-int _compareVersionTriplets(String left, String right) {
-  final leftParts = _parseVersionTriplet(left);
-  final rightParts = _parseVersionTriplet(right);
-  for (var i = 0; i < 3; i++) {
-    final diff = leftParts[i].compareTo(rightParts[i]);
-    if (diff != 0) return diff;
-  }
-  return 0;
-}
-
-List<int> _parseVersionTriplet(String version) {
-  if (version.trim().isEmpty) return const [0, 0, 0];
-  final trimmed = version.split(RegExp(r'[-+]')).first;
-  final parts = trimmed.split('.');
-  final values = <int>[0, 0, 0];
-  for (var i = 0; i < 3; i++) {
-    if (i >= parts.length) break;
-    final match = RegExp(r'\d+').firstMatch(parts[i]);
-    if (match == null) continue;
-    values[i] = int.tryParse(match.group(0) ?? '') ?? 0;
-  }
-  return values;
-}
+int _compareVersionTriplets(String left, String right) =>
+    compareVersionTriplets(left, right);

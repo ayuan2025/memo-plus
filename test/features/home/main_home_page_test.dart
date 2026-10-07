@@ -27,7 +27,7 @@ void main() {
 
   setUp(() {
     PackageInfo.setMockInitialValues(
-      appName: 'MemoFlow',
+      appName: 'memo+',
       packageName: 'com.example.memoflow',
       version: MemoFlowLegalConsentPolicy.requiredSinceAppVersion,
       buildNumber: '27',

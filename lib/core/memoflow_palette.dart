@@ -43,8 +43,18 @@ class MemoFlowPalette {
   static Color borderLight = _defaultBorderLight;
   static Color borderDark = _defaultBorderDark;
 
-  static const textLight = Color(0xFF3C3C3C);
-  static const textDark = Color(0xFFE5E9F0);
+  // 以下五组由当前选中的应用主题（见 MemoCardTheme.applyToPalette）覆盖。
+  // 保留可写而非 const，是为了让「主题一换，全 App 跟着换」只需要在 MaterialApp
+  // 根上投影一次，而不必去改散落在 88 个文件里的 854 处静态引用。
+  static Color textLight = _defaultTextLight;
+  static Color textDark = _defaultTextDark;
+  static Color onSurface = _defaultTextLight;
+  static Color onSurfaceDark = _defaultTextDark;
+  static Color surfaceLight = _defaultCardLight;
+  static Color surfaceDark = _defaultCardDark;
+
+  static const Color _defaultTextLight = Color(0xFF3C3C3C);
+  static const Color _defaultTextDark = Color(0xFFE5E9F0);
 
   static Color audioSurfaceLight = _defaultAudioSurfaceLight;
   static Color audioSurfaceDark = _defaultAudioSurfaceDark;
@@ -99,5 +109,12 @@ class MemoFlowPalette {
     borderDark = _defaultBorderDark;
     audioSurfaceLight = _defaultAudioSurfaceLight;
     audioSurfaceDark = _defaultAudioSurfaceDark;
+    textLight = _defaultTextLight;
+    textLight = _defaultTextLight;
+    textDark = _defaultTextDark;
+    onSurface = _defaultTextLight;
+    onSurfaceDark = _defaultTextDark;
+    surfaceLight = _defaultCardLight;
+    surfaceDark = _defaultCardDark;
   }
 }

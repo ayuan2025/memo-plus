@@ -247,6 +247,50 @@ String applyScanMetadataToContent({
   return parts.join('\n\n');
 }
 
+/// Adds [rawTag] to the visible tag line of [content], unless it is already
+/// there.
+///
+/// Returns [content] untouched when there is nothing to add, or when the content
+/// has no place a tag belongs — a memo written entirely by hand has no title or
+/// tag line, and inventing one would be editing the user's note rather than
+/// filing their scan.
+///
+/// Kept separate from [applyScanMetadataToContent] because this one runs against
+/// memos that already have a title and tags of their own.
+String appendScanTag(String content, String rawTag) {
+  final tag = sanitizeScanTag(rawTag);
+  if (tag.isEmpty) return content;
+
+  final token = '#$tag';
+  if (content.contains(token)) return content;
+
+  final lines = content.split('\n');
+  final tagLine = lines.indexWhere(_looksLikeTagLine);
+  if (tagLine >= 0) {
+    lines[tagLine] = '${lines[tagLine].trimRight()} $token';
+    return lines.join('\n');
+  }
+
+  // No tag line yet. Every generated heading puts its tags under the title, so
+  // that is where this one goes — as its own paragraph, which is how the
+  // heading above it and the body below it are separated to begin with.
+  if (lines.isNotEmpty && lines.first.startsWith('# ')) {
+    lines.insertAll(1, <String>['', token]);
+    return lines.join('\n').replaceAll(RegExp(r'\n{3,}'), '\n\n');
+  }
+
+  return content;
+}
+
+/// A line of nothing but `#tags` — the shape [applyScanMetadataToContent]
+/// writes them in.
+///
+/// A Markdown heading is `#` *followed by a space*, so `# Something` does not
+/// match; what is being looked for here is a line of flat tags.
+final RegExp _kTagLine = RegExp(r'^#[^\s#]+(?:\s+#[^\s#]+)*\s*$');
+
+bool _looksLikeTagLine(String line) => _kTagLine.hasMatch(line);
+
 String _truncate(String value, int maxRunes) {
   final runes = value.runes;
   if (runes.length <= maxRunes) return value;

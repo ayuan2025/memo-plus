@@ -123,7 +123,7 @@ class _DonationDialogState extends State<DonationDialog>
       final data = await rootBundle.load('assets/images/donation_qr.png');
       final bytes = data.buffer.asUint8List();
       final name =
-          'MemoFlow_QR_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}';
+          'memo+_QR_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}';
       final result = await ImageGallerySaver.saveImage(
         bytes,
         name: name,

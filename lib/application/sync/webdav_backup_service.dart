@@ -306,7 +306,7 @@ abstract class _WebDavBackupServiceBase {
     required WebDavBackupIndex exportIndex,
     required String backupBaseDir,
   });
-  Future<WebDavBackupIndex> _applyRetention({
+  Future<_RetentionPlan> _planRetention({
     required WebDavClient client,
     required Uri baseUrl,
     required String rootPath,
@@ -314,6 +314,13 @@ abstract class _WebDavBackupServiceBase {
     required SecretKey masterKey,
     required WebDavBackupIndex index,
     required int retention,
+  });
+  Future<void> _applyRetention({
+    required WebDavClient client,
+    required Uri baseUrl,
+    required String rootPath,
+    required String accountId,
+    required _RetentionPlan plan,
   });
   Future<void> _uploadSnapshot(
     WebDavClient client,

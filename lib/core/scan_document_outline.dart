@@ -14,8 +14,11 @@
 // Deliberately Flutter-free so the matching rules are unit-testable.
 
 import 'memo_scan_metadata.dart';
+import 'scan_document_kind.dart'
+    show ScannedDocumentKind, ScanLabelLanguage, classifyScannedDocument;
 
-/// Document-type words, mapped to the tag a page mentioning one is filed under.
+/// Documents that name themselves in their own first line, mapped to the tag a
+/// page mentioning one is filed under.
 ///
 /// Insertion order is priority order. Only the first matching word counts, so
 /// the list runs from specific to generic: a page whose headline names both
@@ -147,22 +150,68 @@ ScanMetadataDraft? outlineScannedText(
   String rawText, {
   required DateTime scannedAt,
   String fallbackPrefix = '扫描件',
+  ScanLabelLanguage labels = ScanLabelLanguage.chinese,
 }) {
   final lines = scanTextLines(rawText);
+  final classified = classifyScannedDocument(rawText);
   final typeWord = scanDocumentTypeWord(rawText);
-  if (lines.isEmpty && typeWord == null) return null;
+  if (lines.isEmpty && classified == null && typeWord == null) return null;
 
-  final typeTag = typeWord == null ? null : kScanDocumentTypeTags[typeWord];
-  final headline = _pickHeadline(lines, typeWord);
-  final title = headline == null
-      ? scanDateFallbackTitle(scannedAt, prefix: fallbackPrefix)
-      : sanitizeScanTitle(headline);
+  // A recognised card or slip outranks the generic word table: the word table
+  // files a driving licence under whatever word its first line happens to
+  // contain, whereas the classifier knows what the page actually is.
+  final kindTag = classified?.tag(labels);
+  final typeTag = kindTag ?? (typeWord == null ? null : kScanDocumentTypeTags[typeWord]);
+
+  // A recognised kind names the note itself, so the page's own headline is only
+  // consulted when nothing was recognised.
+  final headline = classified == null ? _pickHeadline(lines, typeWord) : null;
+  final title = _kindAwareTitle(
+    classified,
+    headline: headline,
+    scannedAt: scannedAt,
+    fallbackPrefix: fallbackPrefix,
+    labels: labels,
+  );
   final tags = sanitizeScanTags(<String>[
     if (typeTag != null) typeTag,
     scannedAt.year.toString(),
   ]);
 
   return ScanMetadataDraft(title: title, tags: tags, text: rawText);
+}
+
+/// What to call a page the classification has an opinion about.
+///
+/// The type word is the whole title, and it is the short one — `身份证`, not
+/// the `中华人民共和国居民身份证` the card prints across its own face. Cards
+/// are filed under their type tag anyway, so a title repeating the full
+/// inscription says nothing the tag does not, and listing scans is easier when
+/// every title of a kind starts the same way.
+///
+/// The holder's name, when the page gave one up, follows it after a separator:
+/// two ID cards in a row are told apart by whose they are, and the type alone
+/// would make them look like duplicates. Without a name the date follows
+/// instead, which is what keeps a second scan from looking like the first.
+String _kindAwareTitle(
+  ScannedDocumentKind? classified, {
+  required String? headline,
+  required DateTime scannedAt,
+  required String fallbackPrefix,
+  required ScanLabelLanguage labels,
+}) {
+  if (classified == null) {
+    return headline == null
+        ? scanDateFallbackTitle(scannedAt, prefix: fallbackPrefix)
+        : sanitizeScanTitle(headline);
+  }
+
+  final label = classified.tag(labels);
+  final subject = classified.subject;
+  final titled = subject == null || subject.isEmpty
+      ? scanDateFallbackTitle(scannedAt, prefix: label)
+      : '$label · $subject';
+  return sanitizeScanTitle(titled);
 }
 
 /// What to call a scan when the page itself says nothing usable.

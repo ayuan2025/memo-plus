@@ -16,6 +16,7 @@ import '../../state/memos/memo_mutation_service.dart';
 import '../../state/scan/scan_metadata_provider.dart';
 import '../../state/system/database_provider.dart';
 import '../../state/system/session_provider.dart';
+import 'settings_ui.dart';
 
 /// Re-reads every page this app has already scanned.
 ///
@@ -63,6 +64,7 @@ class _ScanReindexScreenState extends ConsumerState<ScanReindexScreen> {
         .toList(growable: false);
   }
 
+  /// Refreshes the count, since the page may have sat open through another scan.
   Future<void> _countScans() async {
     final memos = await _scanMemos();
     if (!mounted) return;
@@ -160,64 +162,106 @@ class _ScanReindexScreenState extends ConsumerState<ScanReindexScreen> {
     final theme = Theme.of(context);
     final progress = _progress;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(t.msg_reindex_scans)),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
+    return SettingsPage(
+      title: Text(t.msg_reindex_scans),
+      onRefresh: _running ? null : _countScans,
+      children: <Widget>[
+        SettingsSection(
           children: <Widget>[
-            Text(
-              t.msg_reindex_scans_intro,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.textTheme.bodySmall?.color,
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    t.msg_reindex_scans_intro,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.textTheme.bodySmall?.color,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  if (_counting)
+                    const Center(child: CircularProgressIndicator())
+                  else
+                    Text(
+                      _found == 0
+                          ? t.msg_reindex_scans_none
+                          : t.msg_reindex_scans_found
+                              .replaceAll('{count}', '$_found'),
+                      style: theme.textTheme.titleMedium,
+                    ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16),
-            if (_counting)
-              const Center(child: CircularProgressIndicator())
-            else
-              Text(
-                _found == 0
-                    ? t.msg_reindex_scans_none
-                    : t.msg_reindex_scans_found
-                        .replaceAll('{count}', '$_found'),
-                style: theme.textTheme.titleMedium,
-              ),
-            if (_running && progress != null) ...<Widget>[
-              const SizedBox(height: 16),
-              LinearProgressIndicator(
-                value: progress.total == 0
-                    ? null
-                    : progress.completed / progress.total,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${progress.completed} / ${progress.total}',
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-            if (_report != null) ...<Widget>[
-              const SizedBox(height: 16),
-              Text(_summary(), style: theme.textTheme.titleMedium),
-              if (_report!.failed > 0) ...<Widget>[
-                const SizedBox(height: 4),
-                Text(
-                  t.msg_reindex_scans_failed
-                      .replaceAll('{failed}', '${_report!.failed}'),
-                  style: theme.textTheme.bodySmall,
-                ),
-              ],
-            ],
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: _running
-                  ? _stop
-                  : (_counting || _found == 0 ? null : _start),
-              child: Text(_running ? t.msg_reindex_scans_stop : t.msg_reindex_scans_start),
             ),
           ],
         ),
-      ),
+        if (_running && progress != null) ...<Widget>[
+          const SizedBox(height: 12),
+          SettingsSection(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    LinearProgressIndicator(
+                      value: progress.total == 0
+                          ? null
+                          : progress.completed / progress.total,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${progress.completed} / ${progress.total}',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+        if (_report != null) ...<Widget>[
+          const SizedBox(height: 12),
+          SettingsSection(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(_summary(), style: theme.textTheme.titleMedium),
+                    if (_report!.failed > 0) ...<Widget>[
+                      const SizedBox(height: 4),
+                      Text(
+                        t.msg_reindex_scans_failed
+                            .replaceAll('{failed}', '${_report!.failed}'),
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+        const SizedBox(height: 20),
+        SettingsSection(
+          children: <Widget>[
+            SettingsNavigationRow(
+              label: _running
+                  ? t.msg_reindex_scans_stop
+                  : t.msg_reindex_scans_start,
+              leading: Icon(
+                _running ? Icons.stop_outlined : Icons.auto_awesome_outlined,
+                size: 20,
+              ),
+              trailingIcon: Icons.chevron_right,
+              enabled: !_counting && (_running || _found > 0),
+              onTap: _running ? _stop : _start,
+            ),
+          ],
+        ),
+      ],
     );
   }
 

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "locale": "zh-Hans",
+  "fallback_locale": "zh-Hans",
+  "version_info": {
+    "latest_version": "1.0.69",
+    "_note": "更新判定只比较版本号前三段数字(1.0.69->[1,0,69])，完全不读 versionCode/buildNumber。必须写比用户当前更高的版本名，否则 App 内「检查更新」会回「已是最新版本」。",
+    "is_force": false,
+    "url": "https://github.com/ayuan2025/memo-plus/releases/download/v1.0.69/memo-plus-v1070.apk",
+    "update_source": "https://github.com/ayuan2025/memo-plus/releases/latest/download/",
+    "publish_at": "2026-10-07T06:10:00Z",
+    "debug_version": "",
+    "skip_update_version": ""
+  },
+  "announcement": {
+    "enabled": true,
+    "title": "v1.0.69 · 新图标 + 模板预览",
+    "message": "全新橙色 M+ 图标（自适应图标已按规范修正，满铺不裁边）；卡片模板不再只用于导出图片——编辑器与阅读页都能直接「美化预览」并切换 7 套主题。",
+    "severity": "info",
+    "url": "https://github.com/ayuan2025/memo-plus/releases/tag/v1.0.69"
+  },
+  "notice_enabled": false,
+  "notice": null,
+  "notices": [],
+  "updates": [],
+  "donors": [],
+  "release_notes": [
+    {
+      "version": "1.0.69",
+      "date": "2026-10-07",
+      "items": [
+        "全新橙色 M+ 图标，并修正自适应图标几何：背景满铺 108dp、字形居中 66dp 安全区，各种启动器遮罩下都不再裁边",
+        "卡片模板不再只用于导出图片：编辑器与阅读页均可「美化预览」",
+        "编辑/预览页可直接切换 7 套卡片主题，选择即写回全局",
+        "抽出共享卡片排版组件，导出图与内嵌预览外观完全一致"
+      ]
+    }
+  ]
+}

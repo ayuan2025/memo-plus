@@ -2,21 +2,32 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
+import '../../core/app_links.dart';
 import 'update_config.dart';
 
 const Duration kUpdateConfigTimeout = Duration(seconds: 3);
-const List<String> kUpdateConfigUrls = [
-  'https://juanzeng.hzc073.com/memoflow/update/latest.json',
-  'https://hzc073.github.io/memoflow_config/update/latest.json',
-  'https://raw.githubusercontent.com/hzc073/memoflow_config/gh-pages/update/latest.json',
-  'https://raw.githubusercontent.com/hzc073/memoflow_config/main/memoflow_update.json',
+
+/// memo+ 改版：更新源指向 GitHub Releases。
+///
+/// 上游 memoflow 的 latest.json 发布的是上游 APK，与本包
+/// （com.memoflow.hzc073.pro，Debug 签名）签名不一致，弹窗引导只会装失败；
+/// 且更新文案属于上游版本线，对改版没有意义。所以改成读 GitHub Releases 上的
+/// latest.json：发布新 release 时把该文件（含各语言副本 `latest.<locale>.json`）
+/// 与 APK 一起作为附件上传，「检查更新」就会提示。`releases/latest/download/`
+/// 永远指向最新 release，地址稳定。
+///
+/// 列表是**按序回退**：GitHub 仓库尚未创建（或某次网络失败）时，落到旧的自建
+/// 发布页兜底，保证「检查更新」不会彻底断粮。仓库稳定发布后可移除兜底项。
+///
+/// 注意 URL 用 ASCII 文件名（memo-plus-v1057.apk），中文名在部分网络与
+/// 浏览器上会被转义成 %xx 导致 404。
+const List<String> kUpdateConfigUrls = <String>[
+  '${MemoPlusLinks.updateConfigBaseUrl}/latest.json',
+  // 兜底：GitHub 仓库建好并完成首次发布前，检查更新仍走自建发布页。
+  'https://memo-plus-apk.app.workbuddy.host/latest.json',
 ];
 
-const List<String> kPreviewUpdateConfigUrls = [
-  'https://hzc073.github.io/memoflow_config/update/latest.preview.json',
-  'https://raw.githubusercontent.com/hzc073/memoflow_config/gh-pages/update/latest.preview.json',
-  'https://raw.githubusercontent.com/hzc073/memoflow_config/main/memoflow_update.preview.json',
-];
+const List<String> kPreviewUpdateConfigUrls = <String>[];
 const String kUpdateConfigFallbackLocale = 'en';
 const Set<String> kSupportedUpdateConfigLocales = {
   'zh-Hans',

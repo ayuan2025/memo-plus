@@ -98,7 +98,7 @@ class _ExportLogsScreenState extends ConsumerState<ExportLogsScreen> {
         await logDir.create(recursive: true);
       }
       final now = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-      final reportPath = p.join(logDir.path, 'MemoFlow_log_$now.txt');
+      final reportPath = p.join(logDir.path, 'memo+_log_$now.txt');
       await File(reportPath).writeAsString(text, flush: true);
       final networkEnabled = ref
           .read(devicePreferencesProvider)

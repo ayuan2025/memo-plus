@@ -167,7 +167,7 @@ Widget _buildTitleBar({
     screenshotModeEnabled: screenshotModeEnabled,
     desktopWindowMaximized: desktopWindowMaximized,
     debugApiVersionText: debugApiVersionText,
-    titleChild: const Text('MemoFlow'),
+    titleChild: const Text('memo+'),
     searchFieldChild: const SizedBox(key: Key('search-field')),
     sortButton: const SizedBox(key: Key('sort-button')),
     onToggleSearch: onToggleSearch ?? () {},

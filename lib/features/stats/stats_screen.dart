@@ -867,7 +867,7 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'MemoFlow',
+                            'memo+',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w900,
@@ -1242,7 +1242,7 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
       child: PlatformPage(
         backgroundColor: bg,
         desktopWindowChromeSafeArea: true,
-        title: const Text('MemoFlow'),
+        title: const Text('memo+'),
         leading: widget.showBackButton
             ? IconButton(
                 tooltip: context.t.strings.legacy.msg_back,

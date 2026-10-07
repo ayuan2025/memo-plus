@@ -735,7 +735,7 @@ class MemosListRouteDelegate extends ChangeNotifier {
   Future<void> toggleMemoFlowVisibilityFromShortcut() async {
     final context = _context;
     if (!_desktopAdapter.desktopShortcutsEnabled) {
-      showShortcutPlaceholder('\u663e\u793a/\u9690\u85cf MemoFlow');
+      showShortcutPlaceholder('\u663e\u793a/\u9690\u85cf memo+');
       return;
     }
     try {

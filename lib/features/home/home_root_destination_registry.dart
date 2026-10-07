@@ -147,7 +147,7 @@ Widget buildHomeRootScreen({
       final effectiveMemosTag = memosTag?.trim();
       final hasMemosTag = effectiveMemosTag?.isNotEmpty ?? false;
       return MemosListScreen(
-        title: hasMemosTag ? '#$effectiveMemosTag' : 'MemoFlow',
+        title: hasMemosTag ? '#$effectiveMemosTag' : 'memo+',
         state: 'NORMAL',
         tag: hasMemosTag ? effectiveMemosTag : null,
         showDrawer: true,

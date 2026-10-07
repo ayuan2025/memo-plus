@@ -426,7 +426,7 @@ class DesktopQuickInputController {
       _desktopQuickInputWindow = window;
       _desktopQuickInputWindowId = window.windowId;
       _onWindowIdChanged(window.windowId);
-      await window.setTitle('MemoFlow');
+      await window.setTitle('memo+');
       await window.setFrame(const Offset(0, 0) & Size(420, 760));
       await window.center();
       return window;

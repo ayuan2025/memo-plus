@@ -124,7 +124,7 @@ class _AiSummaryScreenState extends ConsumerState<AiSummaryScreen> {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
         builder: (_) => const MemosListScreen(
-          title: 'MemoFlow',
+          title: 'memo+',
           state: 'NORMAL',
           showDrawer: true,
           enableCompose: true,

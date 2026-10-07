@@ -1,85 +1,35 @@
 # memo+
 
-> 基于 [memoflow](https://github.com/memoflow/memoflow)（**GPL-3.0**）与 OpenScan（**BSD-3-Clause**）二次开发的安卓笔记应用：
-> **文档扫描 + 离线 OCR + 笔记管理 + 同步**。
+memo+ 是一款本地优先的笔记客户端，基于开源项目 [MemoFlow](https://github.com/hzc073/memoflow)（GPL-3.0）深度改进而来，兼容 [Memos](https://github.com/usememos/memos) 服务器协议。
 
-拍一张纸质材料，自动找边、透视矫正、增强，离线 OCR 出中文，文字进笔记可被搜索——
-扫描、识别、归档全在本机完成，页面不出设备。
+在 MemoFlow 的记录、标签、集合、回顾等基础能力之上，memo+ 重点强化了：
 
----
+- **文档扫描**：拍照或导入图片 → 自动检测纸张边界 → 透视校正 → 扫描仪色彩滤镜 → 存为笔记附件，全程离线；支持满页智能判定、批量重扫与页内旋转。
+- **文字识别（OCR）**：扫描件内置 ML Kit 离线文字识别，可全文检索扫描内容，不上传任何图片。
+- **笔记卡片导出**：把一条笔记渲染成可分享的纸面卡片并导出为图片，内置暖白纸感、深夜便签、备忘录深浅色等多套主题（设计取自开源的锤子便签复刻项目 [zhaoolee/notes](https://github.com/zhaoolee/notes)）。
+- **本地优先**：无账号、无遥测；数据完全存放在本机，可选同步到自建 Memos 服务器，可选 WebDAV 备份（加密）。
+- **桌面端**：Windows / macOS 桌面形态，快捷输入、托盘、多窗口。
+
+## 下载安装
+
+前往 [Releases](../../releases) 页面下载最新的 APK（Android，arm64）安装。
+
+应用内「设置 → 关于 → 检查更新」会从本仓库的 Releases 读取 `latest.json` 提示新版本。发布新版本时，把 `latest.json`（含各语言副本 `latest.<locale>.json`）与 APK 一起作为 Release 附件上传即可，`releases/latest/download/` 地址永远指向最新一版。
+
+## 版权与致谢
+
+memo+ 由多个开源项目组成，主要来源：
+
+| 项目 | 许可证 | 用途 |
+| --- | --- | --- |
+| [MemoFlow](https://github.com/hzc073/memoflow) | GPL-3.0 | 应用基底，memo+ 是其衍生作品 |
+| [OpenScan](https://github.com/ethereal-developers/OpenScan) | BSD-3-Clause | 文档扫描引擎（边界检测 / 透视校正 / 色彩滤镜） |
+| [zhaoolee/notes](https://github.com/zhaoolee/notes) | Apache-2.0 | 锤子便签风格的笔记卡片主题（导出图片 / 模板） |
+
+完整第三方组件清单（含 libcaesium、image_gallery_saver、phosphor_flutter、Readability.js 等）见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 
 ## 许可证
 
-**本项目以 GNU General Public License v3.0（GPL-3.0）发布。**
+本项目基于 MemoFlow 衍生，依 GPL-3.0 以同许可证发布。完整许可证文本见 [LICENSE](./LICENSE)。
 
-memo+ 是 memoflow 的衍生作品。依 GPL-3.0 第 3 条，分发目标代码（APK）时必须同时提供
-对应源码——本仓库即源码，发布 APK 时源码随仓库/Release 一同公开。
-
-任何基于 memo+ 的衍生作品，**必须同样以 GPL-3.0 开源**，且不得附加限制。
-
-| 文件 | 内容 |
-|---|---|
-| `LICENSE` | GPL-3.0 完整文本 |
-| `THIRD_PARTY_LICENSES.md` | 第三方组件授权明细 |
-| `发布声明.md` | 源码来源、上游致谢、改动说明、使用场景 |
-
----
-
-## 功能（v1.0.49）
-
-- **文档扫描**：相机 / 相册入口，自动选边（描边检测）+ 透视矫正 + 多页导出；相机锁 AF/AE、长按对焦
-- **离线 OCR**：Google ML Kit 中文模型（bundled，不依赖 Google Play 服务），全程本机，无网也能用
-  - 识别到的文字以**隐藏正文**写入笔记，可被全文搜索，但不在编辑区显示
-  - 多档图像预处理（含原图兜底），取识别字符数最长的一档，提高准确率
-- **扫描件增强**：默认套 Auto 滤镜；支持**批量重扫**（设置 → 导入导出 → 重新识别扫描件）
-- **笔记管理与同步**：笔记、附件、同步沿用 memoflow 原有能力（含服务器 / WebDAV 同步）
-- **语音便签**：原版纯录音（只存音频、不转文字），**不依赖 Google 语音服务**，无网也能录
-
-> v1.0.49 相较上游移除了「语音转写」这一实验性功能，录音恢复为官方原版行为。
-
----
-
-## 下载
-
-GitHub Releases 提供已构建 APK：
-
-- 标签：`v1.0.49`
-- 架构：`arm64-v8a`（安卓）
-- 签名：✅ **发布签名（Release keystore）**
-
-> **升级提示**：本版本起改用发布签名。若你之前装过 Debug 签名版本（1.0.48/1.0.49 调试包），
-> 两者签名不同，**需先卸载旧版再安装**（数据会被清空）。全新安装不受影响，后续更新可覆盖安装。
-
----
-
-## 从源码构建
-
-仓库根目录即 Flutter 应用根（含 `pubspec.yaml`）。
-
-```bash
-git clone <本仓库地址>
-cd <仓库根目录>
-flutter pub get
-flutter build apk --release --flavor full --target-platform android-arm64
-```
-
-环境要求：Flutter 3.x / Dart 3.x、JDK 17、Android SDK（compileSdk 36）。
-
-如需自行签名，在 `android/key.properties` 填入你的签名信息（注意该文件已被 `.gitignore` 排除，切勿提交）。
-
----
-
-## 上游致谢
-
-- **memoflow** — 应用骨架与笔记能力（GPL-3.0）
-- **OpenScan** — 文档扫描与图像处理核心算法（BSD-3-Clause，Copyright (c) 2021, Vijay T S and Vikram H）
-
-本项目仅对新增的扫描、离线 OCR、本地标题生成、批量重扫等部分主张工作成果；
-其余笔记管理、同步、编辑器等基础能力均为上游 memoflow 原有实现，版权归其原作者。
-
----
-
-## 免责声明
-
-本项目为个人二次开发，**非成熟商业产品**，按"现状"提供，不提供担保，亦不保证适销性或特定用途适用性。
-敏感材料请自行评估风险。
+分发本软件时须遵守 GPL-3.0：保留上游版权声明、标明修改、并提供对应源码。

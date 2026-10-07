@@ -952,7 +952,7 @@ extension _FirstOrNullAccountExt<T> on List<T> {
   T? get firstOrNull => isEmpty ? null : first;
 }
 
-const String _kPasswordLoginTokenDescription = 'MemoFlow (password login)';
+const String _kPasswordLoginTokenDescription = 'memo+ (password login)';
 const Duration _kLoginConnectTimeout = Duration(seconds: 20);
 const Duration _kLoginReceiveTimeout = Duration(seconds: 30);
 

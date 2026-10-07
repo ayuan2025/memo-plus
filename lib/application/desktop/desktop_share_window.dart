@@ -69,7 +69,7 @@ Future<DesktopShareTaskWindowOpenResult> openDesktopShareTaskWindow({
         'payload': payloadJson,
       }),
     );
-    await window.setTitle('MemoFlow Share');
+    await window.setTitle('memo+ Share');
     final frame = switch (resolvedPlatform) {
       TargetPlatform.macOS => const Offset(0, 0) & Size(760, 720),
       _ => const Offset(0, 0) & Size(860, 760),

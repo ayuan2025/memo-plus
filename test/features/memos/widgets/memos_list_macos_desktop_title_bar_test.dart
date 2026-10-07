@@ -31,7 +31,7 @@ void main() {
     );
 
     expect(find.byType(MemosListPillRow), findsOneWidget);
-    expect(find.text('MemoFlow'), findsOneWidget);
+    expect(find.text('memo+'), findsOneWidget);
     expect(
       tester.getSize(find.byKey(kMemosListMacosTrafficSafeInsetKey)).width,
       kMemosListMacosTrafficLightSafeInset,
@@ -77,7 +77,7 @@ void main() {
     await tester.pumpWidget(_buildHarness(width: 520, child: _buildTitleBar()));
 
     expect(find.byType(MemosListPillRow), findsOneWidget);
-    expect(find.text('MemoFlow'), findsNothing);
+    expect(find.text('memo+'), findsNothing);
     expect(find.byIcon(Icons.search), findsOneWidget);
   });
 
@@ -169,7 +169,7 @@ Widget _buildTitleBar({
     enableSearch: true,
     showLeadingTitle: true,
     showDivider: showDivider,
-    titleChild: const Text('MemoFlow'),
+    titleChild: const Text('memo+'),
     searchFieldChild: const SizedBox(key: Key('macos-search-field')),
     quickActions: quickActions ?? _buildQuickActions(),
     onOpenSearch: onOpenSearch ?? () {},

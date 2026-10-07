@@ -128,7 +128,7 @@ class _VersionFooter extends StatelessWidget {
       future: WidgetsScreen._packageInfoFuture,
       builder: (context, snapshot) {
         final version = snapshot.data?.version.trim() ?? '';
-        final label = version.isEmpty ? 'MemoFlow' : 'MemoFlow | v$version';
+        final label = version.isEmpty ? 'memo+' : 'memo+ | v$version';
         return Text(
           label,
           style: TextStyle(

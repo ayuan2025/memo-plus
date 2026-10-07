@@ -174,7 +174,7 @@ class _DailyReviewScreenState extends ConsumerState<DailyReviewScreen> {
       buildPlatformPageRoute<void>(
         context: context,
         builder: (_) => const MemosListScreen(
-          title: 'MemoFlow',
+          title: 'memo+',
           state: 'NORMAL',
           showDrawer: true,
           enableCompose: true,

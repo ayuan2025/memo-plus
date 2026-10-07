@@ -126,7 +126,7 @@ void main() {
     expect(extractHiddenScanOcr(saved['a']!), '发票号码 04412836 金额 1200 元');
   });
 
-  test('a read that found less leaves the stored one alone', () async {
+  test('a read that found less keeps the stored text, and files what is missing', () async {
     final stored = '发票号码 04412836 金额 1200 元 税额 一百二十';
     final memo = _memo(
       uid: 'a',
@@ -137,6 +137,34 @@ void main() {
 
     final report = await ScanReindexService(
       // Same page, worse day: the engine returned a fragment this time.
+      ocr: _ocr('发票'),
+      readBytes: (_) async => pageBytes,
+    ).reindex(
+      memos: <LocalMemo>[memo],
+      save: (m, content) async => saved[m.uid] = content,
+    );
+
+    // The worse read did not get anywhere near the stored one: the block is
+    // still the old text, and nothing the note said was taken out. What did
+    // change is the filing — this note was never tagged as an invoice, and a
+    // batch that cannot improve the reading can still improve being found.
+    expect(extractHiddenScanOcr(saved['a']!), stored);
+    expect(saved['a'], contains('#发票'));
+    expect(saved['a'], contains('# 发票'));
+    expect(report.improved, 1);
+    expect(report.unchanged, 0);
+  });
+
+  test('a note already filed under the type is left completely alone', () async {
+    final stored = '发票号码 04412836 金额 1200 元 税额 一百二十';
+    final memo = _memo(
+      uid: 'a',
+      content: withHiddenScanOcr('# 发票\n\n#发票 #2026', stored),
+      attachments: <Attachment>[_image(_scanFilename)],
+    );
+    final saved = <String, String>{};
+
+    final report = await ScanReindexService(
       ocr: _ocr('发票'),
       readBytes: (_) async => pageBytes,
     ).reindex(

@@ -22,7 +22,7 @@ class ReminderTapHandlerImpl {
         navigator.pushAndRemoveUntil(
           MaterialPageRoute<void>(
             builder: (_) => const MemosListScreen(
-              title: 'MemoFlow',
+              title: 'memo+',
               state: 'NORMAL',
               showDrawer: true,
               enableCompose: true,

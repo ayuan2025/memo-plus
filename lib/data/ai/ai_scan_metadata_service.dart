@@ -129,13 +129,37 @@ class AiScanMetadataService {
     if (_isChinese(language)) {
       return '你负责阅读纸质文档的照片，并为这条备忘录起标题和打标签。'
           '只输出一个 JSON 对象，形如 {"title": "标题", "tags": ["标签"]}。'
-          '不要输出任何解释、前言或 Markdown 代码块。';
+          '不要输出任何解释、前言或 Markdown 代码块。'
+          '$_kKindInstructionZh';
     }
     return 'You read photos of paper documents and propose a memo title and tags. '
         'Reply with a single JSON object shaped like '
         '{"title": "...", "tags": ["..."]}. '
-        'Output nothing else — no explanation, no Markdown fences.';
+        'Output nothing else — no explanation, no Markdown fences. '
+        '$_kKindInstructionEn';
   }
+
+  /// Telling the model what the offline rules look for keeps the two readers in
+  /// agreement: whichever of them answers, the same card lands under the same
+  /// tag, and searching for it works whether the device could read it offline
+  /// or had to ask.
+  static const String _kKindInstructionZh =
+      '如果这是常见的证件或票据，tags 里必须包含它的类别词：'
+      '身份证、护照、驾照、行驶证、居住证、通行证、社保卡、营业执照、'
+      '发票、收据、小票、银行卡、登机牌、车票、名片；'
+      'title 写成「类别词 · 姓名或单位名」，类别词一律用上面这些短词'
+      '（要写「身份证」，不要写「中华人民共和国居民身份证」），'
+      '读不到姓名或单位名就只写类别词。';
+
+  static const String _kKindInstructionEn =
+      'When the page is a card or slip, tags must include its type word: '
+      'passport, id-card, driving-licence, vehicle-registration, '
+      'residence-permit, travel-permit, social-security, business-licence, '
+      'invoice, receipt, till-receipt, bank-card, boarding-pass, ticket, '
+      'business-card; and title must start with that same short type word '
+      'followed by " · " and the name it bears — write "id-card", not '
+      '"National Identity Card". Use the type word alone when no name can be '
+      'read.';
 
   static String _instruction(AppLanguage language) {
     if (_isChinese(language)) {
@@ -144,15 +168,18 @@ class AiScanMetadataService {
           '概括文档内容与用途，不要以标点结尾，不要带 # 号；'
           'tags 是不超过 $kScanMetadataMaxTags 个的短标签，'
           '每个不超过 $kScanMetadataMaxTagChars 个字，'
-          '只含中文、字母或数字，不要空格，不要带 # 前缀。';
+          '类别词要写成下面准备好的样子（身份证/护照/驾照/营业执照/发票/小票 等），'
+          '只含中文、字母、数字或 -，不要用其它近义词替代，不要空格，不要带 # 前缀。';
     }
     return 'Read the attached scan and answer with JSON: '
         '"title" is a title of at most $kScanMetadataMaxTitleChars characters '
         'summarising what the document is, without trailing punctuation and '
         'without a leading #; '
         '"tags" is at most $kScanMetadataMaxTags short keyword tags, each at '
-        'most $kScanMetadataMaxTagChars characters, letters/digits only, no '
-        'spaces and no leading #.';
+        'most $kScanMetadataMaxTagChars characters, using the prepared type '
+        'words (passport, id-card, driving-licence, business-licence, invoice, '
+        'till-receipt and so on) rather than synonyms, letters/digits/- only, '
+        'no spaces and no leading #.';
   }
 
   static bool _isChinese(AppLanguage language) =>

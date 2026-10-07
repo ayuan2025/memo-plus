@@ -13,6 +13,7 @@ import '../../application/sync/sync_request.dart';
 import '../../core/debug_ephemeral_storage.dart';
 import '../../core/tags.dart';
 import '../../core/uid.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/api/memo_api_version.dart';
 import '../../data/db/app_database.dart';
@@ -365,41 +366,69 @@ class MemoTimelineService {
     );
   }
 
-  Future<void> restoreRecycleBinItem(RecycleBinItem item) async {
-    if (item.type == RecycleBinItemType.memo) {
-      await _restoreMemoFromRecycleItem(item);
-    } else {
-      await _restoreAttachmentFromRecycleItem(item);
-    }
-    await _deleteRecycleItemStorage(item.payload);
-    await _mutations.deleteRecycleBinItemById(item.id);
-    unawaited(triggerSync());
+  /// Runs the recycle bin's storage work one caller at a time.
+  ///
+  /// Restoring an entry copies its attachments back out of
+  /// `recycle/<storageKey>` while clearing — or a second restore, or the
+  /// expiry sweep — deletes that very directory. When the two overlap, one of
+  /// them pulls the files out from under the other: the memo comes back with
+  /// none of its attachments, and the per-file `catch` that keeps a missing
+  /// file from failing the whole restore swallows it without a word. Queueing
+  /// the calls is the only arrangement here that cannot lose them.
+  Future<void> _recycleBinStorageQueue = Future<void>.value();
+
+  Future<T> _withRecycleBinStorage<T>(Future<T> Function() action) {
+    final previous = _recycleBinStorageQueue;
+    final release = Completer<void>();
+    _recycleBinStorageQueue = release.future;
+    return previous.then((_) => action()).whenComplete(() {
+      if (!release.isCompleted) release.complete();
+    });
   }
 
-  Future<void> deleteRecycleBinItem(RecycleBinItem item) async {
-    await _deleteRecycleItemStorage(item.payload);
-    await _mutations.deleteRecycleBinItemById(item.id);
-  }
-
-  Future<void> purgeExpiredRecycleBin() async {
-    final rows = await db.listRecycleBinItems();
-    if (rows.isEmpty) return;
-    final now = DateTime.now();
-    for (final row in rows) {
-      final item = RecycleBinItem.fromDb(row);
-      if (!item.isExpired && !now.isAfter(item.expireTime)) continue;
+  Future<void> restoreRecycleBinItem(RecycleBinItem item) {
+    return _withRecycleBinStorage(() async {
+      if (item.type == RecycleBinItemType.memo) {
+        await _restoreMemoFromRecycleItem(item);
+      } else {
+        await _restoreAttachmentFromRecycleItem(item);
+      }
       await _deleteRecycleItemStorage(item.payload);
       await _mutations.deleteRecycleBinItemById(item.id);
-    }
+      unawaited(triggerSync());
+    });
   }
 
-  Future<void> clearRecycleBin() async {
-    final rows = await db.listRecycleBinItems();
-    for (final row in rows) {
-      final item = RecycleBinItem.fromDb(row);
+  Future<void> deleteRecycleBinItem(RecycleBinItem item) {
+    return _withRecycleBinStorage(() async {
       await _deleteRecycleItemStorage(item.payload);
-    }
-    await _mutations.clearRecycleBinItems();
+      await _mutations.deleteRecycleBinItemById(item.id);
+    });
+  }
+
+  Future<void> purgeExpiredRecycleBin() {
+    return _withRecycleBinStorage(() async {
+      final rows = await db.listRecycleBinItems();
+      if (rows.isEmpty) return;
+      final now = DateTime.now();
+      for (final row in rows) {
+        final item = RecycleBinItem.fromDb(row);
+        if (!item.isExpired && !now.isAfter(item.expireTime)) continue;
+        await _deleteRecycleItemStorage(item.payload);
+        await _mutations.deleteRecycleBinItemById(item.id);
+      }
+    });
+  }
+
+  Future<void> clearRecycleBin() {
+    return _withRecycleBinStorage(() async {
+      final rows = await db.listRecycleBinItems();
+      for (final row in rows) {
+        final item = RecycleBinItem.fromDb(row);
+        await _deleteRecycleItemStorage(item.payload);
+      }
+      await _mutations.clearRecycleBinItems();
+    });
   }
 
   Future<void> _restoreMemoFromRecycleItem(RecycleBinItem item) async {
@@ -929,10 +958,7 @@ class MemoTimelineService {
     if (account != null &&
         attachment.name.trim().isNotEmpty &&
         attachment.filename.trim().isNotEmpty) {
-      return joinBaseUrl(
-        account!.baseUrl,
-        'file/${attachment.name}/${attachment.filename}',
-      );
+      return resolveAttachmentRemoteUrl(account!.baseUrl, attachment) ?? '';
     }
     return '';
   }

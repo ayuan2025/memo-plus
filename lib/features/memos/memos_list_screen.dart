@@ -1967,7 +1967,7 @@ class _MemosListScreenState extends ConsumerState<MemosListScreen>
 
   MemosListScreen _buildHomeScreen({String? toastMessage}) {
     return MemosListScreen(
-      title: 'MemoFlow',
+      title: 'memo+',
       state: 'NORMAL',
       showDrawer: true,
       enableCompose: true,

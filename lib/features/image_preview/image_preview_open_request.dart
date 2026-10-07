@@ -7,7 +7,7 @@ class ImagePreviewOpenRequest {
     required this.initialIndex,
     this.onReplace,
     this.enableDownload = true,
-    this.albumName = 'MemoFlow',
+    this.albumName = 'memo+',
   });
 
   final List<ImagePreviewItem> items;

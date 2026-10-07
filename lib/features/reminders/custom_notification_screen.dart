@@ -232,7 +232,7 @@ class _PreviewCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'MemoFlow',
+                  'memo+',
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: textMuted),
                 ),
                 const SizedBox(height: 4),

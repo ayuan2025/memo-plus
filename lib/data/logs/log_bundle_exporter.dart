@@ -233,7 +233,7 @@ class LogBundleExporter {
     final zipData = ZipEncoder().encode(archive);
     final bundlePath = p.join(
       outputDirectory.path,
-      'MemoFlow_log_bundle_$exportId.zip',
+      'memo+_log_bundle_$exportId.zip',
     );
     final outFile = File(bundlePath);
     await outFile.writeAsBytes(zipData, flush: true);
@@ -428,11 +428,11 @@ class LogBundleExporter {
       final info = await PackageInfo.fromPlatform();
       final version = info.version.trim();
       final build = info.buildNumber.trim();
-      if (version.isEmpty && build.isEmpty) return 'MemoFlow';
-      if (build.isEmpty) return 'MemoFlow v$version';
-      return 'MemoFlow v$version (Build $build)';
+      if (version.isEmpty && build.isEmpty) return 'memo+';
+      if (build.isEmpty) return 'memo+ v$version';
+      return 'memo+ v$version (Build $build)';
     } catch (_) {
-      return 'MemoFlow';
+      return 'memo+';
     }
   }
 

@@ -506,7 +506,7 @@ class _LanguageSelectionScreenState
                       ),
                       const SizedBox(height: 14),
                       Text(
-                        'MemoFlow',
+                        'memo+',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,

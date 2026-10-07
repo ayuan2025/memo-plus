@@ -3,7 +3,7 @@
 //
 // Pure-Dart document boundary detection, perspective correction and scanner
 // colour filters, extracted from the OpenScan Android document scanner and
-// adapted for MemoFlow. See `third_party/openscan_cv/` for the full license text
+// adapted for memo+. See `third_party/openscan_cv/` for the full license text
 // and the list of local adaptations.
 //
 // Nothing in here depends on Flutter: it is `dart:math`, `dart:typed_data` and
@@ -21,6 +21,12 @@ export 'src/contours.dart'
         sortCorners,
         kMinQuadAngleDegrees,
         kMinQuadAreaRatio;
+export 'src/deskew.dart'
+    show
+        deskewPage,
+        estimatePageSkewAngle,
+        kDeskewMaxAngleDegrees,
+        kDeskewMinAngleDegrees;
 export 'src/edge_detection.dart'
     show
         dilate,
@@ -29,6 +35,18 @@ export 'src/edge_detection.dart'
         rgbaToGrayscale,
         sobelMagnitude,
         threshold;
+export 'src/full_frame_page.dart'
+    show
+        PageBoundaryEvidence,
+        FullPageDecision,
+        FullPageReason,
+        documentEdgeThreshold,
+        fullFrameQuad,
+        insetFrameQuad,
+        isFullFrameQuad,
+        measurePageBoundary,
+        quadArea,
+        resolveDocumentBoundary;
 export 'src/models/detection_result.dart'
     show DetectionFailure, DetectionNotFound, DetectionResult, DetectionSuccess;
 export 'src/models/point.dart' show Pt;

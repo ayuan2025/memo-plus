@@ -155,8 +155,8 @@ class _SupportHero extends StatelessWidget {
               const SizedBox(height: 18),
               Text(
                 context.tr(
-                  zh: 'MemoFlow 会尽量保持核心体验的完整。你的赞赏会用于项目维护、版本更新，以及未来体验的持续打磨。',
-                  en: 'MemoFlow will keep its core experience intact. Your support helps with maintenance, updates, and steady product refinement.',
+                  zh: 'memo+ 会尽量保持核心体验的完整。你的赞赏会用于项目维护、版本更新，以及未来体验的持续打磨。',
+                  en: 'memo+ will keep its core experience intact. Your support helps with maintenance, updates, and steady product refinement.',
                 ),
                 textAlign: compact ? TextAlign.center : TextAlign.start,
                 style: TextStyle(
@@ -329,7 +329,7 @@ class _PublicAppreciationSection extends StatelessWidget {
             context.tr(
               zh: showQr ? '使用手机支付宝扫码完成赞赏。' : '点击下方按钮后，将在浏览器中打开赞赏链接。',
               en: showQr
-                  ? 'Scan with Alipay on your phone to support MemoFlow.'
+                  ? 'Scan with Alipay on your phone to support memo+.'
                   : 'Tap the button below to open the support link in a browser.',
             ),
             textAlign: TextAlign.center,
@@ -421,8 +421,8 @@ class _BaseCapabilityPromise extends StatelessWidget {
           Expanded(
             child: Text(
               context.tr(
-                zh: '无论是否成为支持者，MemoFlow 的基础记录、整理和数据管理能力都会继续保持可用。',
-                en: 'Whether or not you become a supporter, MemoFlow will keep its basic recording, organizing, and data management capabilities available.',
+                zh: '无论是否成为支持者，memo+ 的基础记录、整理和数据管理能力都会继续保持可用。',
+                en: 'Whether or not you become a supporter, memo+ will keep its basic recording, organizing, and data management capabilities available.',
               ),
               style: TextStyle(
                 fontSize: 14,
@@ -453,8 +453,8 @@ class _SupportFooter extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           context.tr(
-            zh: '感谢你愿意支持 MemoFlow。',
-            en: 'Thank you for supporting MemoFlow.',
+            zh: '感谢你愿意支持 memo+。',
+            en: 'Thank you for supporting memo+.',
           ),
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 14, height: 1.4, color: tokens.textMuted),
@@ -462,8 +462,8 @@ class _SupportFooter extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           context.tr(
-            zh: '赞赏完全自愿，不会影响 MemoFlow 基础功能的正常使用。',
-            en: 'Support is fully voluntary and does not affect normal use of MemoFlow basics.',
+            zh: '赞赏完全自愿，不会影响 memo+ 基础功能的正常使用。',
+            en: 'Support is fully voluntary and does not affect normal use of memo+ basics.',
           ),
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12, height: 1.4, color: tokens.textMuted),
@@ -638,5 +638,5 @@ class _CoffeeMark extends StatelessWidget {
 }
 
 String _supportTitle(BuildContext context) {
-  return context.tr(zh: '支持 MemoFlow', en: 'Support MemoFlow');
+  return context.tr(zh: '支持 memo+', en: 'Support memo+');
 }

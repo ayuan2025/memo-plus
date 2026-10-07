@@ -157,7 +157,7 @@ String desktopShortcutActionLabel(DesktopShortcutAction action) {
     case DesktopShortcutAction.enableAppLock:
       return 'Enable app lock';
     case DesktopShortcutAction.toggleFlomo:
-      return 'Show / hide MemoFlow';
+      return 'Show / hide memo+';
     case DesktopShortcutAction.shortcutOverview:
       return 'Shortcuts overview';
     case DesktopShortcutAction.previousPage:

@@ -101,7 +101,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('MemoFlow'), findsOneWidget);
+    expect(find.text('memo+'), findsOneWidget);
     expect(find.text('bottom-nav-shell'), findsNothing);
     expect(find.text('classic-home'), findsNothing);
     debugDefaultTargetPlatformOverride = null;

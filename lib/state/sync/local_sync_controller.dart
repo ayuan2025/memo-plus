@@ -85,10 +85,10 @@ class LocalSyncController extends SyncControllerBase {
   }) async {
     final settings = await bridgeSettingsRepository.read();
     if (!settings.enabled) {
-      throw StateError('MemoFlow Bridge is disabled');
+      throw StateError('memo+ Bridge is disabled');
     }
     if (!settings.isPaired) {
-      throw StateError('MemoFlow Bridge is not paired');
+      throw StateError('memo+ Bridge is not paired');
     }
 
     final rows = await db.listMemosForExport(includeArchived: includeArchived);
@@ -241,7 +241,7 @@ class LocalSyncController extends SyncControllerBase {
 
   String _buildIndexContent() {
     final now = DateTime.now().toIso8601String();
-    return ['# MemoFlow Local Library', '', '- Updated: $now', ''].join('\n');
+    return ['# memo+ Local Library', '', '- Updated: $now', ''].join('\n');
   }
 
   Future<void> _scanIncremental({required String stage}) async {

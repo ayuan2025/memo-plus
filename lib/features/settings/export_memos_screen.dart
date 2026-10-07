@@ -352,7 +352,7 @@ class _ExportMemosScreenState extends ConsumerState<ExportMemosScreen> {
         exportDir.createSync(recursive: true);
       }
       final now = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-      final outPath = p.join(exportDir.path, 'MemoFlow_export_$now.zip');
+      final outPath = p.join(exportDir.path, 'memo+_export_$now.zip');
       await File(outPath).writeAsBytes(zipData, flush: true);
 
       if (!mounted) return;

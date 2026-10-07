@@ -157,7 +157,7 @@ Uri debugBuildAmapAppUri({
     CanonicalCoordinate(latitude: latitude, longitude: longitude),
   );
   return Uri.parse(
-    'androidamap://viewMap?sourceApplication=MemoFlow&lat=${converted.latitude.toStringAsFixed(6)}&lon=${converted.longitude.toStringAsFixed(6)}&dev=0&poiname=${Uri.encodeComponent(label)}',
+    'androidamap://viewMap?sourceApplication=memo+&lat=${converted.latitude.toStringAsFixed(6)}&lon=${converted.longitude.toStringAsFixed(6)}&dev=0&poiname=${Uri.encodeComponent(label)}',
   );
 }
 
@@ -171,7 +171,7 @@ Uri debugBuildAmapWebUri({
     'position':
         '${longitude.toStringAsFixed(6)},${latitude.toStringAsFixed(6)}',
     'name': label,
-    'src': 'MemoFlow',
+    'src': 'memo+',
     'coordinate': 'wgs84',
     'callnative': '1',
   });
@@ -196,7 +196,7 @@ List<Uri> debugBuildBaiduCandidates({
       'https://api.map.baidu.com/marker?location=$lat,$lng&title=${Uri.encodeComponent(label)}&content=${Uri.encodeComponent(label)}&output=html&coord_type=wgs84',
     ),
     Uri.parse(
-      'baidumap://map/marker?location=$lat,$lng&title=${Uri.encodeComponent(label)}&content=${Uri.encodeComponent(label)}&coord_type=wgs84&src=MemoFlow',
+      'baidumap://map/marker?location=$lat,$lng&title=${Uri.encodeComponent(label)}&content=${Uri.encodeComponent(label)}&coord_type=wgs84&src=memo+',
     ),
   ];
 }

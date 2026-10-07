@@ -18,6 +18,7 @@ import '../../core/drawer_navigation.dart';
 import '../../core/memo_relations.dart';
 import '../../core/memoflow_palette.dart';
 import '../../core/platform_layout.dart';
+import '../../core/attachment_url.dart';
 import '../../core/url.dart';
 import '../../data/models/attachment.dart';
 import '../../data/models/app_preferences.dart';
@@ -274,7 +275,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
         builder: (_) => const MemosListScreen(
-          title: 'MemoFlow',
+          title: 'memo+',
           state: 'NORMAL',
           showDrawer: true,
           enableCompose: true,
@@ -2400,10 +2401,8 @@ class _ExploreMemoCardState extends State<_ExploreMemoCard> {
     }
     final baseUrl = widget.baseUrl;
     if (baseUrl == null) return '';
-    final url = joinBaseUrl(
-      baseUrl,
-      'file/${attachment.name}/${attachment.filename}',
-    );
+    final url = resolveAttachmentRemoteUrl(baseUrl, attachment);
+    if (url == null) return '';
     return thumbnail ? appendThumbnailParam(url) : url;
   }
 

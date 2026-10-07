@@ -141,7 +141,7 @@ class DesktopQuickInputWindowApp extends ConsumerWidget {
     return TranslationProvider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'MemoFlow',
+        title: 'memo+',
         theme: applyPreferencesToTheme(
           buildAppTheme(Brightness.light),
           legacyThemePrefs,

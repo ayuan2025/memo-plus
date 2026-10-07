@@ -800,7 +800,7 @@ class _FlomoImportEngine {
               : (baseUrl.isNotEmpty ? baseUrl : 'local'));
     final accountHash = fnv1a64Hex(key);
     final dir = Directory(
-      p.join(base.path, 'MemoFlow_imports', accountHash, fileMd5),
+      p.join(base.path, 'memo+_imports', accountHash, fileMd5),
     );
     if (create && !dir.existsSync()) {
       await dir.create(recursive: true);
