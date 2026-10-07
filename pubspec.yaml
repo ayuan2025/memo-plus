@@ -1,5 +1,5 @@
 name: memos_flutter_app
-description: "memo+ - a local-first note-taking app with document scanning, based on MemoFlow (GPL-3.0)."
+description: "memo+ - a local-first note-taking app (MemoFlow, GPL-3.0) extended with offline document scanning & OCR, and shareable note-card templates."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
