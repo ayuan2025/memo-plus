@@ -7,12 +7,12 @@
 memo+ 是一款本地优先的笔记客户端，基于开源项目 [MemoFlow](https://github.com/hzc073/memoflow)（GPL-3.0）深度改进而来，兼容 [Memos](https://github.com/usememos/memos) 服务器协议。
 
 <p align="center">
-  <img src="./docs/images/card-warm-white.jpg" width="30%" alt="暖白纸感卡片主题">
-  <img src="./docs/images/card-midnight.jpg" width="30%" alt="深夜便签卡片主题">
-  <img src="./docs/images/card-memo-orange.jpg" width="30%" alt="备忘录卡片主题">
+  <img src="./docs/images/card-pain-ocr.jpg" width="30%" alt="痛点一：图片里的文字搜不到">
+  <img src="./docs/images/card-pain-scan.jpg" width="30%" alt="痛点二：证件档案存进去就乱">
+  <img src="./docs/images/card-pain-beautify.jpg" width="30%" alt="痛点三：笔记不好看、分享很丑">
 </p>
 
-<p align="center"><sub>同一条笔记 · 三套卡片主题 · 锤子便签风格（设计取自 <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>）</sub></p>
+<p align="center"><sub>三个痛点，三张真实卡片 · 锤子便签风格（设计取自 <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>）</sub></p>
 
 ---
 

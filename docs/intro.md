@@ -5,12 +5,12 @@
 > 三个开源项目缝在一起，专治一件事：**笔记存进去之后，找不回来。**
 
 <p align="center">
-  <img src="./images/card-warm-white.jpg" width="30%" alt="暖白纸感卡片主题">
-  <img src="./images/card-midnight.jpg" width="30%" alt="深夜便签卡片主题">
-  <img src="./images/card-memo-orange.jpg" width="30%" alt="备忘录卡片主题">
+  <img src="./images/card-pain-ocr.jpg" width="30%" alt="痛点一：图片里的文字搜不到">
+  <img src="./images/card-pain-scan.jpg" width="30%" alt="痛点二：证件档案存进去就乱">
+  <img src="./images/card-pain-beautify.jpg" width="30%" alt="痛点三：笔记不好看、分享很丑">
 </p>
 
-<p align="center"><sub>同一条笔记 · 三套卡片主题 · 设计取自 <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a></sub></p>
+<p align="center"><sub>三个痛点，三张真实卡片 · 设计取自 <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a></sub></p>
 
 ---
 
@@ -23,6 +23,8 @@ memo+ 缝了三个开源项目进来，解决三个痛点：
 | **图片里的文字搜不到** | ML Kit **离线 OCR**，识别结果直接进全文索引 |
 | **证件档案存进去就乱** | 文档扫描识别引擎 + **15 类证件/单据自动分类** |
 | **笔记不好看、分享很丑** | 锤子便签风格**卡片主题**，编辑/阅读页内可直接预览 |
+
+（上方的三张卡片，就是这三件事的真实产出。）
 
 **前两点都是围绕「怎么搜回来」，第三点解决「怎么好看地分享出去」。**
 
