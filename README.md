@@ -92,7 +92,7 @@ memo+ is built around *local-first*:
 
 ## Download & update
 
-Get the latest APK (Android, arm64) from the [Releases](../../releases) page.
+Get the latest APK (Android, arm64) from the [Releases](releases) page.
 
 Inside the app, **Settings → About → Check for updates** reads `latest.json` from this repo's Releases and prompts you when a new version is available. To publish, upload `latest.json` (plus its per-language copies `latest.<locale>.json`) together with the APK as Release assets; `releases/latest/download/` always points to the newest version.
 
