@@ -47,6 +47,7 @@ Plain-text screenshots look cheap. memo+ renders a note as a **themed, shareable
 - 🛡️ **Privacy-first & fully offline** — no account, no telemetry. Everything (OCR, indexing, scanning) happens on your device.
 - 🔍 **Offline OCR full-text search** — find any text inside any scanned image, no cloud needed.
 - 📸 **Document & ID scanner** — edge detection, perspective correction, color filters, batch re-scan, in-page rotation.
+- 🏷️ **Automatic document-type tagging** — each scan is recognized by type (ID card, passport, driver licence, business licence, invoice, receipt, bank card…) and tagged automatically using **offline OCR-text rules** (checksums, credit-code patterns, machine-readable zones). No cloud needed; find every licence by its type tag.
 - 🎨 **Beautiful shareable cards** — themed paper cards with one-tap PNG export.
 - ☁️ **You control your sync** — optional sync to a **self-hosted Memos server** you run, or **encrypted WebDAV backup**. Nothing is sent to us.
 - 🌐 **7 languages** — 简体中文, 繁體中文, English, 日本語, 한국어, Deutsch, Português.
@@ -80,7 +81,7 @@ Full third-party component list (libcaesium, image_gallery_saver, phosphor_flutt
 
 ## Roadmap
 
-- [ ] Automatic document / ID type classification (currently manual organization)
+- [ ] Broader document-type coverage and finer sub-categories (the offline classifier already tags 15 common types)
 - [ ] Broader offline OCR language models (balanced against app size)
 - [ ] F-Droid build
 - [ ] Polished desktop (Windows / macOS / Linux) releases
@@ -101,6 +102,7 @@ memo+ 是一款**本地优先、隐私优先**的安卓笔记客户端，把三�
 
 - **图片里的文字搜不到 → 离线 OCR 全文检索**：内置 ML Kit 离线识别，扫描件文字直接进入全文索引，搜关键词即可命中图片内文字（印象笔记的付费功能，这里免费且全程离线）。
 - **证件档案存进去就乱 → 真实扫描引擎**（改编自 OpenScan）：自动边界检测、透视校正、扫描仪滤镜、满页智能判定、批量重扫、页内旋转，全程离线。
+- **分不清是什么 → 离线自动分类打标签**：扫描件按 OCR 文本结构（身份证号 GB11643 校验和、统一社会信用代码、护照机读区等）自动识别为 15 类常见证件票据（身份证、护照、驾照、营业执照、发票、收据、银行卡…），并打上对应短标签，按类型即可检索。全程离线，无需联网。
 - **笔记不好看、分享很丑 → 锤子便签风格卡片**：多套主题（暖白纸感、深夜便签、深浅色），编辑器/阅读页内可直接「美化预览」，一键导出 PNG。
 
 **隐私与离线**：无账号、无遥测；OCR、索引、扫描全部在本机完成。同步/备份（可选）只连你自己的基础设施——自建 Memos 服务器或加密 WebDAV，没有 memo+ 云端。
