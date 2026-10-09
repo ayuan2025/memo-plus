@@ -1,84 +1,110 @@
 # memo+
 
-> **缝合怪** —— [MemoFlow](https://github.com/hzc073/memoflow) ＋ 文档扫描识别 ＋ 锤子便签模板
->
-> 三个开源项目缝在一起，专治一件事：**笔记存进去之后，找不回来。**
+> **A local-first, privacy-focused note & document scanner for Android.**
+> Capture thoughts like flowing cards, scan paper and IDs with on-device OCR, and find any word inside any image — all offline, no account, no telemetry.
 
-memo+ 是一款本地优先的笔记客户端，基于开源项目 [MemoFlow](https://github.com/hzc073/memoflow)（GPL-3.0）深度改进而来，兼容 [Memos](https://github.com/usememos/memos) 服务器协议。
+memo+ is an open-source Android app that combines three proven open-source building blocks into one privacy-first tool. It is derived from **[MemoFlow](https://github.com/hzc073/memoflow)** (GPL-3.0) and adds offline document scanning and beautiful, shareable card themes.
 
 <p align="center">
-  <img src="./docs/images/card-pain-ocr.jpg" width="30%" alt="痛点一：图片里的文字搜不到">
-  <img src="./docs/images/card-pain-scan.jpg" width="30%" alt="痛点二：证件档案存进去就乱">
-  <img src="./docs/images/card-pain-beautify.jpg" width="30%" alt="痛点三：笔记不好看、分享很丑">
+  <img src="./docs/images/card-pain-ocr.jpg" width="30%" alt="Pain point 1: text inside images can't be searched">
+  <img src="./docs/images/card-pain-scan.jpg" width="30%" alt="Pain point 2: scanned IDs end up in a mess">
+  <img src="./docs/images/card-pain-beautify.jpg" width="30%" alt="Pain point 3: notes look ugly when shared">
 </p>
 
-<p align="center"><sub>三个痛点，三张真实卡片 · 锤子便签风格（设计取自 <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>）</sub></p>
+<p align="center"><sub>Three pain points, three real cards · card theme inspired by Smartisan Notes (design from <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>)</sub></p>
 
 ---
 
-## 它解决什么痛点
+## Why memo+
 
-笔记App 最大的坑是**存得进、搜不到**。尤其是纸质资料——证件、合同、发票、说明书，拍完存进相册就等于存进了黑洞。memo+ 主要解决三件事：
+The biggest trap with note apps is **you can store it, but you can't find it again** — especially paper: IDs, contracts, receipts, manuals. You photograph them, they vanish into a black hole. memo+ fixes three things:
 
-### 痛点一：图片里的文字搜不到 → 离线 OCR 全文检索
+### 1. Words trapped inside images → offline OCR full-text search
+A receipt or ID saved as a photo is invisible to search in most note apps. memo+ runs **ML Kit on-device OCR**: scans are recognized locally and **the text goes straight into a full-text index**, so a keyword finds the sentence inside the picture.
 
-纸质文件、证件、发票拍成图片后，普通笔记 App 无法检索里面的文字 —— 你记得存过，却想不起那句内容写了什么。
+> This is a *paid* feature in Evernote. Here it's free and **100% offline** — images never leave your device.
 
-memo+ 内置 **ML Kit 离线文字识别**：扫描件在本地完成 OCR，**识别结果直接进全文索引**，之后搜关键词就能搜到图片里的文字。
+### 2. Scanned documents turn into a mess → a real scan engine
+Photographs or imported images go through a document-scanning pipeline adapted from **OpenScan**: auto edge detection → perspective correction → scanner color filters → saved as a note attachment, **entirely offline**.
 
-> 这是印象笔记的**付费功能**。这里免费、且**全程离线**——图片不上传任何服务器。
+- Full-page detection (skips cropping when the image is already a clean page)
+- Batch re-scan and in-page rotation
+- Rotation takes effect instantly (reloaded via a fresh widget key)
 
-### 痛点二：证件档案存进去就乱 → 扫描自动分类 + 智能识别
+### 3. Notes look ugly when shared → elegant shareable cards
+Plain-text screenshots look cheap. memo+ renders a note as a **themed, shareable paper card** inspired by Smartisan Notes:
 
-证件扫描件混在一起，几年后根本分不清哪张是哪张。
+- Multiple built-in themes (warm paper, night memo, light/dark memo…)
+- **Beautify preview inside the editor and reader** — no need to export to see the result
+- One-tap PNG export to share
 
-memo+ 加上**文档扫描识别**引擎：拍照或导入图片 → 自动检测纸张边界 → 透视校正 → 扫描仪色彩滤镜 → 存为笔记附件，**全程离线**。
-
-- 满页智能判定（已是整页图就跳过裁剪）
-- 批量重扫、页内旋转
-- 证件类型分类器自动给证件归类
-
-### 痛点三：笔记不好看、分享出去很丑 → 锤子便签模板
-
-纯文本笔记截图分享出去很丑。memo+ 加入**锤子便签风格**的卡片主题，把一条笔记渲染成可分享的纸面卡片：
-
-- 内置暖白纸感、深夜便签、备忘录深浅色等多套主题
-- **编辑器和阅读页内可直接「美化预览」**，不必等到导出才看效果
-- 一键导出 PNG 分享
-
-> 卡片主题与排版取自开源复刻项目 [zhaoolee/notes](https://github.com/zhaoolee/notes)（锤子便签）。
-
-**前两点都是围绕「怎么搜回来」，第三点解决「怎么好看地分享出去」。**
+> Card theme & layout are adapted from the open-source reimplementation **[zhaoolee/notes](https://github.com/zhaoolee/notes)** (Smartisan Notes).
 
 ---
 
-## 缝合怪的三个来源
+## Features
 
-| 项目 | 许可证 | 缝进来做什么 |
+- 🛡️ **Privacy-first & fully offline** — no account, no telemetry. Everything (OCR, indexing, scanning) happens on your device.
+- 🔍 **Offline OCR full-text search** — find any text inside any scanned image, no cloud needed.
+- 📸 **Document & ID scanner** — edge detection, perspective correction, color filters, batch re-scan, in-page rotation.
+- 🎨 **Beautiful shareable cards** — themed paper cards with one-tap PNG export.
+- ☁️ **You control your sync** — optional sync to a **self-hosted Memos server** you run, or **encrypted WebDAV backup**. Nothing is sent to us.
+- 🌐 **7 languages** — 简体中文, 繁體中文, English, 日本語, 한국어, Deutsch, Português.
+- 🌗 **Light & dark themes.**
+- 💻 **Flutter / Dart** — modern, cross-platform codebase (Android is the released target; desktop builds live in source).
+
+## Privacy & offline
+
+memo+ is built around *local-first*:
+
+- No account, no sign-up, no analytics, no network calls unless you explicitly enable sync/backup.
+- All OCR and indexing run on-device via ML Kit.
+- Sync/backup, if enabled, goes only to infrastructure **you** provide (your Memos server or your WebDAV). There is no memo+ cloud.
+
+## Download & update
+
+Get the latest APK (Android, arm64) from the [Releases](../../releases) page.
+
+Inside the app, **Settings → About → Check for updates** reads `latest.json` from this repo's Releases and prompts you when a new version is available. To publish, upload `latest.json` (plus its per-language copies `latest.<locale>.json`) together with the APK as Release assets; `releases/latest/download/` always points to the newest version.
+
+## Built on open source
+
+| Project | License | What it contributes |
 | --- | --- | --- |
-| [MemoFlow](https://github.com/hzc073/memoflow) | GPL-3.0 | **应用基底**：记录、标签、集合、回顾，memo+ 是其衍生作品 |
-| [OpenScan](https://github.com/ethereal-developers/OpenScan) | BSD-3-Clause | **文档扫描识别**：边界检测 / 透视校正 / 色彩滤镜 |
-| [zhaoolee/notes](https://github.com/zhaoolee/notes) | Apache-2.0 | **锤子便签卡片主题**：排版与视觉模板 |
+| [MemoFlow](https://github.com/hzc073/memoflow) | GPL-3.0 | **App foundation**: capture, tags, collections, review — memo+ is a derivative work |
+| [OpenScan](https://github.com/ethereal-developers/OpenScan) | BSD-3-Clause | **Document scanning**: edge detection / perspective correction / color filters |
+| [zhaoolee/notes](https://github.com/zhaoolee/notes) | Apache-2.0 | **Card theme & layout** (Smartisan Notes) |
+| Google **ML Kit** | — | On-device OCR |
 
-再加上 Google **ML Kit** 的离线 OCR 能力。
+Full third-party component list (libcaesium, image_gallery_saver, phosphor_flutter, Readability.js, …) is in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
-## 其他特性
+## Roadmap
 
-- **本地优先**：无账号、无遥测；数据完全存放在本机，可选同步到自建 Memos 服务器，可选 WebDAV 备份（加密）。
-- **桌面端**：Windows / macOS 桌面形态，快捷输入、托盘、多窗口。
+- [ ] Automatic document / ID type classification (currently manual organization)
+- [ ] Broader offline OCR language models (balanced against app size)
+- [ ] F-Droid build
+- [ ] Polished desktop (Windows / macOS / Linux) releases
 
-## 下载安装
+## License
 
-前往 [Releases](../../releases) 页面下载最新的 APK（Android，arm64）安装。
+memo+ is a derivative of MemoFlow and is released under **GPL-3.0**. See [LICENSE](./LICENSE).
 
-应用内「设置 → 关于 → 检查更新」会从本仓库的 Releases 读取 `latest.json` 提示新版本。发布新版本时，把 `latest.json`（含各语言副本 `latest.<locale>.json`）与 APK 一起作为 Release 附件上传即可，`releases/latest/download/` 地址永远指向最新一版。
+Redistribution must follow GPL-3.0: keep upstream copyright notices, mark your modifications, and provide corresponding source. This repository *is* the corresponding source.
 
-## 版权与致谢
+---
 
-完整第三方组件清单（含 libcaesium、image_gallery_saver、phosphor_flutter、Readability.js 等）见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
+## 简体中文
 
-## 许可证
+memo+ 是一款**本地优先、隐私优先**的安卓笔记客户端，把三个开源项目缝合成一个工具：基于 [MemoFlow](https://github.com/hzc073/memoflow)（GPL-3.0）的笔记基底，加入离线文档扫描与锤子便签风格的卡片主题。
 
-本项目基于 MemoFlow 衍生，依 GPL-3.0 以同许可证发布。完整许可证文本见 [LICENSE](./LICENSE)。
+**它解决什么**：笔记 App 最大的坑是「存得进、搜不到」，尤其纸质资料（证件、合同、发票、说明书）拍完就进了黑洞。
 
-分发本软件时须遵守 GPL-3.0：保留上游版权声明、标明修改、并提供对应源码。本仓库即对应源码。
+- **图片里的文字搜不到 → 离线 OCR 全文检索**：内置 ML Kit 离线识别，扫描件文字直接进入全文索引，搜关键词即可命中图片内文字（印象笔记的付费功能，这里免费且全程离线）。
+- **证件档案存进去就乱 → 真实扫描引擎**（改编自 OpenScan）：自动边界检测、透视校正、扫描仪滤镜、满页智能判定、批量重扫、页内旋转，全程离线。
+- **笔记不好看、分享很丑 → 锤子便签风格卡片**：多套主题（暖白纸感、深夜便签、深浅色），编辑器/阅读页内可直接「美化预览」，一键导出 PNG。
+
+**隐私与离线**：无账号、无遥测；OCR、索引、扫描全部在本机完成。同步/备份（可选）只连你自己的基础设施——自建 Memos 服务器或加密 WebDAV，没有 memo+ 云端。
+
+**下载**：[Releases](../../releases) 页面获取最新 APK（Android，arm64）。应用内「设置 → 关于 → 检查更新」会读取本仓库 Releases 的 `latest.json` 提示新版本。
+
+**许可证**：基于 MemoFlow 衍生，依 GPL-3.0 发布。分发须保留上游版权、标明修改并提供对应源码（本仓库即对应源码）。
