@@ -6,12 +6,10 @@
 memo+ is an open-source Android app that combines three proven open-source building blocks into one privacy-first tool. It is derived from **[MemoFlow](https://github.com/hzc073/memoflow)** (GPL-3.0) and adds offline document scanning and beautiful, shareable card themes.
 
 <p align="center">
-  <img src="./docs/images/card-pain-ocr.jpg" width="30%" alt="Pain point 1: text inside images can't be searched">
-  <img src="./docs/images/card-pain-scan.jpg" width="30%" alt="Pain point 2: scanned IDs end up in a mess">
-  <img src="./docs/images/card-pain-beautify.jpg" width="30%" alt="Pain point 3: notes look ugly when shared">
+  <img src="./docs/images/auto_tag_demo.png" width="80%" alt="memo+ auto-tags a scanned ID card offline">
 </p>
 
-<p align="center"><sub>Three pain points, three real cards · card theme inspired by Smartisan Notes (design from <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>)</sub></p>
+<p align="center"><sub>Scan a document and memo+ tags it by type — offline, no cloud. Card theme inspired by Smartisan Notes (design from <a href="https://github.com/zhaoolee/notes">zhaoolee/notes</a>)</sub></p>
 
 ---
 
@@ -135,7 +133,7 @@ memo+ 是一款**本地优先、隐私优先**的安卓笔记客户端，把三�
 
 **隐私与离线**：无账号、无遥测；OCR、索引、扫描全部在本机完成。同步/备份（可选）只连你自己的基础设施——自建 Memos 服务器或加密 WebDAV，没有 memo+ 云端。
 
-**下载**：[Releases](../../releases) 页面获取最新 APK（Android，arm64）。应用内「设置 → 关于 → 检查更新」会读取本仓库 Releases 的 `latest.json` 提示新版本。
+**下载**：[Releases](releases) 页面获取最新 APK（Android，arm64）。应用内「设置 → 关于 → 检查更新」会读取本仓库 Releases 的 `latest.json` 提示新版本。
 
 **自动文档分类（离线）**
 
