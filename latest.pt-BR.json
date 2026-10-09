@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "locale": "zh-Hans",
+  "locale": "pt-BR",
   "fallback_locale": "zh-Hans",
   "version_info": {
-    "latest_version": "1.0.69",
-    "_note": "更新判定只比较版本号前三段数字(1.0.69->[1,0,69])，完全不读 versionCode/buildNumber。必须写比用户当前更高的版本名，否则 App 内「检查更新」会回「已是最新版本」。",
+    "latest_version": "1.0.72",
+    "_note": "更新判定只比较版本号前三段数字(1.0.71->[1,0,71])，完全不读 versionCode/buildNumber。必须写比用户当前更高的版本名，否则 App 内「检查更新」会回「已是最新版本」。",
     "is_force": false,
-    "url": "https://github.com/ayuan2025/memo-plus/releases/download/v1.0.69/memo-plus-v1070.apk",
+    "url": "https://github.com/ayuan2025/memo-plus/releases/download/v1.0.72/memo-plus-v1073.apk",
     "update_source": "https://github.com/ayuan2025/memo-plus/releases/latest/download/",
-    "publish_at": "2026-10-07T06:10:00Z",
+    "publish_at": "2026-10-09T00:15:00Z",
     "debug_version": "",
     "skip_update_version": ""
   },
   "announcement": {
     "enabled": true,
-    "title": "v1.0.69 · 新图标 + 模板预览",
-    "message": "全新橙色 M+ 图标（自适应图标已按规范修正，满铺不裁边）；卡片模板不再只用于导出图片——编辑器与阅读页都能直接「美化预览」并切换 7 套主题。",
+    "title": "v1.0.72 · 修复同步重复 + 卡片主题精简",
+    "message": "修复一条笔记被同步成多条的问题；卡片主题精简为 4 套并统一命名；分享卡片清晰度恢复。",
     "severity": "info",
-    "url": "https://github.com/ayuan2025/memo-plus/releases/tag/v1.0.69"
+    "url": "https://github.com/ayuan2025/memo-plus/releases/tag/v1.0.72"
   },
   "notice_enabled": false,
   "notice": null,
@@ -26,13 +26,14 @@
   "donors": [],
   "release_notes": [
     {
-      "version": "1.0.69",
-      "date": "2026-10-07",
+      "version": "1.0.72",
+      "date": "2026-10-09",
       "items": [
-        "全新橙色 M+ 图标，并修正自适应图标几何：背景满铺 108dp、字形居中 66dp 安全区，各种启动器遮罩下都不再裁边",
-        "卡片模板不再只用于导出图片：编辑器与阅读页均可「美化预览」",
-        "编辑/预览页可直接切换 7 套卡片主题，选择即写回全局",
-        "抽出共享卡片排版组件，导出图与内嵌预览外观完全一致"
+        "修复同步重复：一条笔记此前可能被追加多条 create_memo 到本地队列，每条都会在服务器上生成一份，导致同一笔记同步成多条",
+        "卡片主题从 7 套精简为 4 套——红色极简/杂志衬线/深棕夜色与其它主题纸面几乎无差别，在中文笔记里看起来完全相同",
+        "主题命名统一为「色调+质感」四字：米白纸质、暖橙纸质、素白清雅、墨黑夜色",
+        "分享卡片保存的图片恢复原始清晰度（此前被误设为 90，现已回到插件默认的 100）",
+        "保存成功提示按平台区分：安卓显示「已保存到相册」，桌面端显示「已保存」"
       ]
     }
   ]
